@@ -27,4 +27,9 @@ public class Cart_Item {
 
     @Column(name = "quantity")
     int quantity;
+
+    @ManyToOne
+    @JoinColumn(name = "product_id")
+    Product product;
+
 }

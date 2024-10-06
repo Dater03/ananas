@@ -32,4 +32,9 @@ public class Order_Item {
     @Column(name = "price")
     double price;
 
+    @ManyToOne
+    @JoinColumn(name = "product_id")
+    Product product;
+
+
 }

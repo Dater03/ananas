@@ -1,5 +1,6 @@
 package com.example.ananas.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -8,6 +9,7 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.FieldDefaults;
 
 import java.time.Instant;
+import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -28,6 +30,10 @@ public class Category {
     String description;
     private Instant createdAt;
     private Instant updateAt;
+
+    @OneToMany(mappedBy = "category")
+    @JsonManagedReference("category-products")
+    List<Product> products;
 
     @PrePersist
     public void handleBeforeCreate()

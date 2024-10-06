@@ -55,6 +55,24 @@ public class Product {
     @Column(name = "material")
     String material;
 
+    @ManyToOne
+    @JoinColumn(name = "category_id")
+    @JsonManagedReference("category-products")
+    Category category;
+
+    @OneToMany(mappedBy = "product")
+    @JsonManagedReference("product-productImages")
+    List<Product_Image> productImages;
+
+    @OneToMany(mappedBy = "product")
+    List<Cart_Item> cartItems;
+
+    @OneToMany(mappedBy = "product")
+    List<Review> reviews;
+
+    @OneToMany(mappedBy = "product")
+    List<Order_Item> orderItems;
+
     private Instant createdAt;
     private Instant updateAt;
 
