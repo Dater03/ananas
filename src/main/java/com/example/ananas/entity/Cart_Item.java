@@ -1,14 +1,14 @@
 package com.example.ananas.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import lombok.experimental.FieldDefaults;
+
 
 @Entity
 @Data
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
@@ -16,17 +16,22 @@ import lombok.experimental.FieldDefaults;
 public class Cart_Item {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "card_item_id")
-    int cardItemId;
+    @Column(name = "cart_item_id")
+    int cartItemId;
 
-    @Column(name = "card_id")
-    int cardId;
+    @Column(name = "cart_id")
+    int cartId;
 
     @Column(name = "product_id")
     int productId;
 
     @Column(name = "quantity")
     int quantity;
+
+    @ManyToOne
+    @JsonBackReference
+    @JoinColumn(name = "cart_id")
+    Cart cart;
 
     @ManyToOne
     @JoinColumn(name = "product_id")

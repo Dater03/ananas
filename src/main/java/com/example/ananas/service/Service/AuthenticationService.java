@@ -36,7 +36,7 @@ public class AuthenticationService {
         JWSHeader header = new JWSHeader(JWSAlgorithm.HS256); // xac dinh header cua token
         JWTClaimsSet jwtClaimsSet = new JWTClaimsSet.Builder() // noidung gui di cua token
                 .subject(user.getUsername())
-                .issuer("dat2003") // dinh dang nguoi tao ra token
+                .issuer("Ananas") // dinh dang nguoi tao ra token
                 .issueTime(new Date()) // tgian tao hien tai
                 .expirationTime(new Date(
                         Instant.now().plus(1, ChronoUnit.HOURS).toEpochMilli() // thoi han dung
