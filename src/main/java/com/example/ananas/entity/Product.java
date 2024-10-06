@@ -9,6 +9,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.FieldDefaults;
 
+import java.time.Instant;
+
 import java.util.List;
 
 @Entity
@@ -26,7 +28,7 @@ public class Product {
     @Column(name = "product_name")
     String productName;
 
-    @Column(name = "description")
+    @Column(name = "description", columnDefinition = "MEDIUMTEXT")
     String description;
 
     @Column(name = "price")
@@ -52,5 +54,19 @@ public class Product {
 
     @Column(name = "material")
     String material;
+
+    private Instant createdAt;
+    private Instant updateAt;
+
+    @PrePersist
+    public void handleBeforeCreate()
+    {
+        this.createdAt = Instant.now();
+    }
+    @PreUpdate
+    public void handleBeforeUpdate()
+    {
+        this.updateAt = Instant.now();
+    }
 
 }

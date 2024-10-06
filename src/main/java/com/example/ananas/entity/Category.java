@@ -7,6 +7,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.FieldDefaults;
 
+import java.time.Instant;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -22,6 +24,19 @@ public class Category {
     @Column(name = "category_name")
     String categoryName;
 
-    @Column(name = "description")
+    @Column(name = "description", columnDefinition = "MEDIUMTEXT")
     String description;
+    private Instant createdAt;
+    private Instant updateAt;
+
+    @PrePersist
+    public void handleBeforeCreate()
+    {
+        this.createdAt = Instant.now();
+    }
+    @PreUpdate
+    public void handleBeforeUpdate()
+    {
+        this.updateAt = Instant.now();
+    }
 }
