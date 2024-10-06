@@ -1,7 +1,5 @@
 package com.example.ananas.entity;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -9,7 +7,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.FieldDefaults;
 
-import java.util.List;
+import java.time.Instant;
+
 
 @Entity
 @Data
@@ -26,7 +25,7 @@ public class Product {
     @Column(name = "product_name")
     String productName;
 
-    @Column(name = "description")
+    @Column(name = "description", columnDefinition = "MEDIUMTEXT")
     String description;
 
     @Column(name = "price")
@@ -52,5 +51,19 @@ public class Product {
 
     @Column(name = "material")
     String material;
+
+    private Instant createdAt;
+    private Instant updateAt;
+
+    @PrePersist
+    public void handleBeforeCreate()
+    {
+        this.createdAt = Instant.now();
+    }
+    @PreUpdate
+    public void handleBeforeUpdate()
+    {
+        this.updateAt = Instant.now();
+    }
 
 }

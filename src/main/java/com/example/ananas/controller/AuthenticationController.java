@@ -18,11 +18,11 @@ import org.springframework.web.bind.annotation.RestController;
 @FieldDefaults(level = AccessLevel.PRIVATE,makeFinal = true)
 public class AuthenticationController {
     AuthenticationService authenticationService;
-    @PostMapping("/token")
-    public ApiResponse<AuthenticationResponse> createToken(@RequestBody AuthenticationRequest authenticationRequest) {
-        return ApiResponse.<AuthenticationResponse>builder()
-                .result(authenticationService.authenticationResponse(authenticationRequest))
-                .code(200)
-                .build();
-    }
+//    @PostMapping("/token")
+//    public ApiResponse<AuthenticationResponse> createToken(@RequestBody AuthenticationRequest authenticationRequest) {
+//        return ApiResponse.<AuthenticationResponse>builder()
+//                .result(authenticationService.authenticationResponse(authenticationRequest))
+//                .code(200)
+//                .build();
+//    }
 }
