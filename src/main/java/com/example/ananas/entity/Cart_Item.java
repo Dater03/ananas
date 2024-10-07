@@ -5,7 +5,6 @@ import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
-import javax.smartcardio.Card;
 
 @Entity
 @Data
@@ -33,4 +32,9 @@ public class Cart_Item {
     @JsonBackReference
     @JoinColumn(name = "cart_id",insertable = false, nullable = false, updatable = false)
     Cart cart;
+
+    @ManyToOne
+    @JoinColumn(name = "product_id")
+    Product product;
+
 }
