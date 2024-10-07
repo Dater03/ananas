@@ -13,8 +13,8 @@ import java.util.Set;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "user")
 @FieldDefaults(level = AccessLevel.PRIVATE)
+@Table(name = "user")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -45,9 +45,13 @@ public class User {
     @ElementCollection
     Set<String>roles;
 
-    @OneToMany(mappedBy = "user")
-    @JsonManagedReference("user-messages")
-    List<Messages> messages;
+    @OneToMany(mappedBy = "sender")
+    @JsonManagedReference(value = "sent-messages")
+    List<Messages> sentMessages;
+
+    @OneToMany(mappedBy = "receiver")
+    @JsonManagedReference(value = "received-messages")
+    List<Messages> receivedMessages;
 
     @OneToMany(mappedBy = "user")
     @JsonManagedReference("user-cart")
@@ -59,5 +63,5 @@ public class User {
 
     @OneToMany(mappedBy = "user")
     @JsonManagedReference("user-order")
-    List<Order> order;
+    List<Order> orders;
 }

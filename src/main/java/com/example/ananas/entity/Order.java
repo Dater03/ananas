@@ -16,7 +16,7 @@ import java.util.Set;
 @AllArgsConstructor
 @NoArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
-@Table(name = "order")
+@Table(name = "orders")
 public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -53,5 +53,14 @@ public class Order {
     @Column(name = "recipient_address")
     String recipientAddress;
 
+    @Column(name = "create_at")
+    Date createAt;
 
+    @Column(name = "update_at")
+    Date updateAt;
+
+    @ManyToOne
+    @JsonBackReference("user-order")
+    @JoinColumn(name = "user_id",insertable = false,updatable = false, nullable = false)
+    User user;
 }
