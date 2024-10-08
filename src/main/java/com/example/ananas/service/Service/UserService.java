@@ -3,6 +3,7 @@ package com.example.ananas.service.Service;
 import com.example.ananas.dto.request.UserCreateRequest;
 import com.example.ananas.dto.request.UserUpdateRequest;
 import com.example.ananas.dto.response.UserResponse;
+import com.example.ananas.entity.Role;
 import com.example.ananas.entity.User;
 import com.example.ananas.exception.AppException;
 import com.example.ananas.exception.ErrException;
@@ -21,9 +22,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
-import java.util.List;
-import java.util.Objects;
-import java.util.UUID;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -33,6 +32,7 @@ public class UserService implements IUserService {
     User_Repository userRepository;
     IUserMapper userMapper;
     PasswordEncoder passwordEncoder;
+    EmailService emailService;
 
     @Override
     public UserResponse createUser(UserCreateRequest userCreateRequest) {
@@ -44,6 +44,14 @@ public class UserService implements IUserService {
         }
         User user = userMapper.toUser(userCreateRequest);
         user.setPassword(passwordEncoder.encode(user.getPassword()));
+        HashSet<String> roles = new HashSet<>(); // HashSet đảm bảo rằng mỗi vai trò của người dùng là duy nhất,tối ưu hóa các thao tác và kiểm tra vai trò
+        roles.add(Role.User.name()); // cho phep user them nguoidungmoi
+        user.setRoles(roles);
+        if (userCreateRequest.getEmail() != null && !userCreateRequest.getEmail().isEmpty()) {
+            String subject = "Welcome to our service";
+            String text = "Dear "+userCreateRequest.getUsername()+","+userCreateRequest.getEmail()+","+userCreateRequest.getPassword();
+            emailService.sendMessage(userCreateRequest.getEmail(), subject, text);
+        }
         return userMapper.toUserResponse(userRepository.save(user));
     }
 
@@ -112,5 +120,10 @@ public class UserService implements IUserService {
         String fileName = storeFile(file);
         user.setAvatar(fileName);
         return userMapper.toUserResponse(userRepository.save(user));
+    }
+
+    public Optional<UserResponse> getEmail(String email) {
+        return userRepository.findByEmail(email)
+                .map(userMapper::toUserResponse);
     }
 }
