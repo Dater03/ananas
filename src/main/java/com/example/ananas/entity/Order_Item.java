@@ -1,39 +1,36 @@
 package com.example.ananas.entity;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AccessLevel;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.experimental.FieldDefaults;
 
-@Entity
+import java.math.BigDecimal;
+
 @Data
-@Builder
-@AllArgsConstructor
 @NoArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
+@Entity
 @Table(name = "order_item")
 public class Order_Item {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "order_item_id")
-    int orderitemId;
-
-    @Column(name = "order_id")
-    int orderId;
-
-    @Column(name = "product_id")
-    int productId;
-
-    @Column(name = "quantity")
-    int quantity;
-
-    @Column(name = "price")
-    double price;
+    Integer orderItemId;
 
     @ManyToOne
-    @JsonBackReference
-    @JoinColumn(name = "product_id", insertable = false, updatable = false, nullable = false)
+    @JoinColumn(name = "order_id", nullable = false)
+    Order order;
+
+    @ManyToOne
+    @JoinColumn(name = "product_id", nullable = false)
     Product product;
 
+    @Column(name = "quantity", nullable = false)
+    Integer quantity;
 
+    @Column(name = "price", nullable = false)
+    BigDecimal price;
 }
+
