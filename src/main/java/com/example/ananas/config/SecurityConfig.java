@@ -20,9 +20,9 @@ import javax.crypto.spec.SecretKeySpec;
 @Configuration
 public class SecurityConfig {
     protected static final String KEY_SIGN = "lQgnbki8rjdh62RZ2FNXZB9KWYB1IjajiY04z011BXjjagnc7a";
-    private final String[] PUBLIC_POST_ENDPOINTS = {"/user","/authen/token"};
-    private final String[] PUBLIC_PUT_ENDPOINTS = {"/upload/photo/{id}"};
-    private final String[] PUBLIC_GET_ENDPOINTS = {"/user"};
+    private final String[] PUBLIC_POST_ENDPOINTS = {"/user","/authen/token","/category"};
+    private final String[] PUBLIC_PUT_ENDPOINTS = {"/upload/photo/{id}","/category"};
+    private final String[] PUBLIC_GET_ENDPOINTS = {"/user","/category"};
 
     @Bean
     PasswordEncoder passwordEncoder() {
