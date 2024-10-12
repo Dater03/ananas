@@ -21,12 +21,13 @@ public class Cart {
     @Column(name = "cart_id")
     int cartId;
 
-    @Column(name = "user_id")
-    int userId;
+    int sumQuantity; // tổng số lượng mặt hàng
+
+    Double sumPrice;//tổng giá tiền
 
     @ManyToOne
     @JsonBackReference("user-cart")
-    @JoinColumn(name = "user_id",insertable = false, updatable = false, nullable = false)
+    @JoinColumn(name = "user_id")
     User user;
 
     @OneToMany(mappedBy = "cart")

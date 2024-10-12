@@ -21,4 +21,8 @@ public class OrderItemController {
 // Phương thức riêng cho User
 
     // Xem sản phẩm trong đơn hàng của người dùng - OrderItemResponse getOrderItemsByOrderId(Long orderId)
+
+    /*
+    * Phương thức này sao giống hệt phương thức đầu tiên vậy Vũ */
+
 }

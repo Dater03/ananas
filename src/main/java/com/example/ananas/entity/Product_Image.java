@@ -1,5 +1,6 @@
 package com.example.ananas.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
@@ -20,7 +21,7 @@ public class Product_Image {
 
     @ManyToOne
     @JoinColumn(name = "product_id")
-    @JsonManagedReference("product-productImages")
+    @JsonBackReference("product-productImages")
     private Product product;
 
 }

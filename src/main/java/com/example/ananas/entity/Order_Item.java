@@ -1,5 +1,6 @@
 package com.example.ananas.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Data;
@@ -21,10 +22,12 @@ public class Order_Item {
 
     @ManyToOne
     @JoinColumn(name = "order_id", nullable = false)
+    @JsonBackReference("order-orderItems")
     Order order;
 
     @ManyToOne
     @JoinColumn(name = "product_id", nullable = false)
+    @JsonBackReference("product-orderItems")
     Product product;
 
     @Column(name = "quantity", nullable = false)
