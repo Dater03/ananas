@@ -14,10 +14,14 @@ import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.oauth2.jwt.Jwt;
+import org.springframework.security.oauth2.jwt.JwtDecoder;
+import org.springframework.security.oauth2.jwt.JwtException;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
 import java.time.Instant;
+import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.Collection;
 import java.util.Date;
@@ -30,6 +34,7 @@ import java.util.StringJoiner;
 public class AuthenticationService {
     User_Repository userRepository;
     PasswordEncoder passwordEncoder;
+    JwtDecoder jwtDecoder;
 
     protected static final String KEY_SIGN = "lQgnbki8rjdh62RZ2FNXZB9KWYB1IjajiY04z011BXjjagnc7a";
 
@@ -76,5 +81,14 @@ public class AuthenticationService {
             user.getRoles().forEach(scopeJoiner::add);
         }
         return scopeJoiner.toString();
+    }
+
+    public String decodeToken(String token) {
+        try {
+            Jwt jwt = jwtDecoder.decode(token);
+            return jwt.getSubject();
+        } catch (JwtException e) {
+            throw new RuntimeException("Invalid token", e);
+        }
     }
 }

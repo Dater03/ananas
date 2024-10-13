@@ -28,13 +28,20 @@ public class Cart_Item {
     @Column(name = "quantity")
     int quantity;
 
+    @Column(name = "card_id")
+    int cardId;
+
+    @Column(name = "product_id")
+    int productId;
+
     @ManyToOne
     @JsonBackReference
-    @JoinColumn(name = "cart_id")
+    @JoinColumn(name = "cart_id", nullable = false,updatable = false, insertable = false)
     Cart cart;
 
     @ManyToOne
-    @JoinColumn(name = "product_id")
+    @JsonBackReference
+    @JoinColumn(name = "product_id", nullable = false,updatable = false, insertable = false)
     Product product;
 
 }

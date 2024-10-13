@@ -18,7 +18,8 @@ public class Order_Item {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Integer orderItemId;
+    int orderItemId;
+
 
     @ManyToOne
     @JoinColumn(name = "order_id", nullable = false)
@@ -31,9 +32,9 @@ public class Order_Item {
     Product product;
 
     @Column(name = "quantity", nullable = false)
-    Integer quantity;
+    int quantity;
 
     @Column(name = "price", nullable = false)
-    BigDecimal price;
+    Double price;
 }
 

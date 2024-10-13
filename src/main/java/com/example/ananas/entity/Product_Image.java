@@ -16,12 +16,12 @@ import lombok.experimental.FieldDefaults;
 public class Product_Image {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
-    private String imageUrl;
+    int id;
+    String imageUrl;
 
     @ManyToOne
     @JoinColumn(name = "product_id")
     @JsonBackReference("product-productImages")
-    private Product product;
+    Product product;
 
 }

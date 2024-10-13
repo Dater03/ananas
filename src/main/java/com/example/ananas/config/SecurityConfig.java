@@ -20,9 +20,6 @@ import javax.crypto.spec.SecretKeySpec;
 @Configuration
 public class SecurityConfig {
     protected static final String KEY_SIGN = "lQgnbki8rjdh62RZ2FNXZB9KWYB1IjajiY04z011BXjjagnc7a";
-    private final String[] PUBLIC_POST_ENDPOINTS = {"/user","/authen/token","/category"};
-    private final String[] PUBLIC_PUT_ENDPOINTS = {"/upload/photo/{id}","/category"};
-    private final String[] PUBLIC_GET_ENDPOINTS = {"/user","/category"};
 
     @Bean
     PasswordEncoder passwordEncoder() {
@@ -32,29 +29,30 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.authorizeHttpRequests(request ->
-                request.requestMatchers(HttpMethod.POST, PUBLIC_POST_ENDPOINTS).permitAll()
-                        .requestMatchers(HttpMethod.GET, PUBLIC_GET_ENDPOINTS).permitAll()
+                request.requestMatchers("/admin/**").hasRole("ADMIN")
+                        .requestMatchers("/user/**").hasAnyRole("USER","ADMIN")
+                        .requestMatchers("/auth/**").permitAll()
                         .anyRequest().authenticated()
                 );
-        http.oauth2ResourceServer(request -> request.jwt(jwtConfigurer -> jwtConfigurer.decoder(jwtD())));
+        http.oauth2ResourceServer(request -> request.jwt(jwtConfigurer -> jwtConfigurer.decoder(jwtDecoder())));
         http.csrf(AbstractHttpConfigurer::disable);
         return http.build();
     }
 
     @Bean
-    JwtDecoder jwtD() {
+    JwtDecoder jwtDecoder() {
         SecretKeySpec secretKeySpec = new SecretKeySpec(KEY_SIGN.getBytes(), "HmacSHA256");
         return NimbusJwtDecoder.withSecretKey(secretKeySpec)
                 .macAlgorithm(MacAlgorithm.HS256)
                 .build();
     }
-
     @Bean
-    JwtAuthenticationConverter jwtConverter() {
+        // chuyen SCOPE -> ROLE
+    JwtAuthenticationConverter jwtAuthenticationConverter(){
         JwtGrantedAuthoritiesConverter grantedConverter = new JwtGrantedAuthoritiesConverter();
         grantedConverter.setAuthorityPrefix("ROLE_");
-        JwtAuthenticationConverter converter = new JwtAuthenticationConverter();
-        converter.setJwtGrantedAuthoritiesConverter(grantedConverter);
-        return converter;
+        JwtAuthenticationConverter authenConverter = new JwtAuthenticationConverter();
+        authenConverter.setJwtGrantedAuthoritiesConverter(grantedConverter);
+        return authenConverter;
     }
 }

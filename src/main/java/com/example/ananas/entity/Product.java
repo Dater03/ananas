@@ -61,12 +61,15 @@ public class Product {
     List<Product_Image> productImages;
 
     @OneToMany(mappedBy = "product")
+    @JsonManagedReference
     List<Cart_Item> cartItems;
 
     @OneToMany(mappedBy = "product")
+    @JsonManagedReference
     List<Review> reviews;
 
     @OneToMany(mappedBy = "product")
+    @JsonManagedReference
     List<Order_Item> orderItems;
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", timezone = "UTC")

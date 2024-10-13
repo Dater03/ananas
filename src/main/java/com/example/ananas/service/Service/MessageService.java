@@ -41,7 +41,6 @@ public class MessageService implements IMessageService {
         User receiver = userRepository.findById(messageDto.getReceiverId())
                 .orElseThrow(() -> new RuntimeException("Receiver not found"));
         Messages newMessage = messageMapper.toMessages(messageDto,sender,receiver);
-        newMessage.setCreatedAt(new Date());
         return messageMapper.toMessageDTO(messageRepository.save(newMessage));
     }
 

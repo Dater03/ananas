@@ -1,7 +1,10 @@
 package com.example.ananas.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -12,20 +15,29 @@ import java.util.List;
 
 @Data
 @NoArgsConstructor
+@AllArgsConstructor
 @Entity
-@Table(name = "order")
+@Table(name = "orders")
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Integer id;
+    int id;
+
+    @Column(name = "user_id")
+    int userId;
+
+    @Column(name = "voucher_id")
+    int voucherId;
 
     @ManyToOne
-    @JoinColumn(name = "user_id", nullable = false)
+    @JoinColumn(name = "user_id", nullable = false,updatable = false, insertable = false)
+    @JsonBackReference
     User user;
 
     @ManyToOne
-    @JoinColumn(name = "voucher_id")
+    @JoinColumn(name = "voucher_id", nullable = false,updatable = false, insertable = false)
+    @JsonBackReference
     Voucher voucher;
 
     @Column(name = "total_amount", nullable = false)
@@ -62,7 +74,8 @@ public class Order {
     Timestamp updatedAt;
 
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
-    List<Order_Item> orderItems;
+    @JsonManagedReference
+    List<Order_Item> order_item;
 }
 
 enum OrderStatus {
