@@ -15,5 +15,7 @@ public interface IProductMapper {
     ProductResponse toProductResponse(Product product);
 
     List<ProductResponse> toProductResponseList(List<Product> products);
+    @Mapping(target = "category.categoryName", source = "category")
+    Product toProduct(ProductCreateRequest productCreateRequest);
 
 }

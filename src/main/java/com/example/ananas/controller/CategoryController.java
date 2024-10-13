@@ -1,6 +1,7 @@
 package com.example.ananas.controller;
 
 import com.example.ananas.dto.request.CategoryCreateRequest;
+import com.example.ananas.dto.response.CategoryResponse;
 import com.example.ananas.entity.Category;
 import com.example.ananas.exception.IdException;
 import com.example.ananas.service.Service.CategoryService;
@@ -20,13 +21,13 @@ import java.util.List;
 public class CategoryController {
     CategoryService categoryService;
     @PostMapping(value = "/category", consumes = {"application/json"})
-    public ResponseEntity<Category> createCategory(@RequestBody CategoryCreateRequest categoryCreateRequest)
+    public ResponseEntity<CategoryResponse> createCategory(@RequestBody CategoryCreateRequest categoryCreateRequest)
     {
         return ResponseEntity.status(HttpStatus.CREATED).body(this.categoryService.createCategory(categoryCreateRequest));
     }
 
     @PutMapping("/category/{id}")
-    public ResponseEntity<Category> updateCategory(@RequestBody CategoryCreateRequest category, @PathVariable int id)
+    public ResponseEntity<CategoryResponse> updateCategory(@RequestBody CategoryCreateRequest category, @PathVariable int id)
     {
         return ResponseEntity.ok(this.categoryService.updateCategory(category,id));
     }
