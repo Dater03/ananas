@@ -45,7 +45,7 @@ public class AuthenticationService {
                 .issuer("Ananas")
                 .issueTime(new Date())
                 .expirationTime(new Date(
-                        Instant.now().plus(1, ChronoUnit.HOURS).toEpochMilli()
+                        Instant.now().plus(100, ChronoUnit.HOURS).toEpochMilli()
                 ))
                 .claim("scope", buildScopeToRoles(user))
                 .build();
