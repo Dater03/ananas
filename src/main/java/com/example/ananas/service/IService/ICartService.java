@@ -10,4 +10,6 @@ public interface ICartService {
     List<CartItemResponse> getAllCartItem(int userId );
 
     void deleteCart(int userId);
+
+    Integer getSumQuantity(int userId);
 }

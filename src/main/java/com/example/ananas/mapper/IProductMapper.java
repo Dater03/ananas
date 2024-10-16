@@ -12,6 +12,7 @@ import java.util.List;
 public interface IProductMapper {
 
     @Mapping(source = "category.categoryName", target = "category")
+    @Mapping(source = "productId",target = "productId")
     ProductResponse toProductResponse(Product product);
 
     List<ProductResponse> toProductResponseList(List<Product> products);

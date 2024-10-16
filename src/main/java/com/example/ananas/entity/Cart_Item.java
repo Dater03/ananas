@@ -19,29 +19,21 @@ public class Cart_Item {
     @Column(name = "cart_item_id")
     int cartItemId;
 
-//    @Column(name = "cart_id")
-//    int cartId;
-//
-//    @Column(name = "product_id")
-//    int productId;
+
 
     @Column(name = "quantity")
     int quantity;
 
-    @Column(name = "card_id")
-    int cardId;
 
-    @Column(name = "product_id")
-    int productId;
 
     @ManyToOne
     @JsonBackReference
-    @JoinColumn(name = "cart_id", nullable = false,updatable = false, insertable = false)
+    @JoinColumn(name = "cart_id")
     Cart cart;
 
     @ManyToOne
     @JsonBackReference
-    @JoinColumn(name = "product_id", nullable = false,updatable = false, insertable = false)
+    @JoinColumn(name = "product_id")
     Product product;
 
 }

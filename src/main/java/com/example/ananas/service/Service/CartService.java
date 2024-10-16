@@ -88,4 +88,11 @@ public class CartService implements ICartService {
         this.cartRepository.deleteByUser(user);
 
     }
+
+    @Override
+    public Integer getSumQuantity(int userId) {
+        User user = this.userRepository.findById(userId).get();
+        Cart currentCart = this.cartRepository.findByUser(user);
+        return currentCart.getSumQuantity();
+    }
 }

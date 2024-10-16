@@ -5,6 +5,7 @@ import com.example.ananas.dto.response.ProductImagesResponse;
 import com.example.ananas.dto.response.ProductResponse;
 import com.example.ananas.exception.IdException;
 import com.example.ananas.service.Service.ProductService;
+import jakarta.validation.Valid;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -25,10 +26,11 @@ public class ProductController {
 
 
     @PostMapping("/product")
-    public ResponseEntity<ProductCreateRequest> createProduct(@RequestBody ProductCreateRequest productCreateRequest)
+    public ResponseEntity<ProductCreateRequest> createProduct(@RequestBody @Valid ProductCreateRequest productCreateRequest)
     {
         return ResponseEntity.status(HttpStatus.CREATED).body(productService.createProduct(productCreateRequest));
     }
+
     @GetMapping("/product/{id}")
     public ResponseEntity<ProductResponse> getOneProduct(@PathVariable int id) throws IdException
     {
@@ -76,5 +78,5 @@ public class ProductController {
 
     //phương thức xóa ảnh của sản phaam
 
-    // phương thức update ảnh sản phẩm
+
 }

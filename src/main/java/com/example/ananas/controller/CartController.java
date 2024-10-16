@@ -56,5 +56,10 @@ public class CartController {
             return ResponseEntity.badRequest().body("xay ra loi: "+ e.getMessage());
         }
     }
+    @GetMapping("/cart/quantity")
+    public ResponseEntity<Integer> getSumQuantity(@RequestParam int userId)
+    {
+        return ResponseEntity.ok(this.cartService.getSumQuantity(userId) );
+    }
 
 }
