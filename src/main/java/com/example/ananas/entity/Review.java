@@ -7,6 +7,7 @@ import lombok.*;
 import lombok.experimental.FieldDefaults;
 
 import java.time.Instant;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Entity
@@ -22,22 +23,20 @@ public class Review {
     @Column(name = "review_id")
     int reviewId;
 
-    @Column(name = "user_id")
-    int userId;
-
-    @Column(name = "product_id")
-    int productId;
-
     @Column(name = "rating")
     int rating;
-
 
     @Column(name = "comment", columnDefinition = "MEDIUMTEXT")
     String comment;
 
     @Column(name = "created_at")
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", timezone = "UTC")
     Instant createdAt;
+
+    @Column(name = "user_id")
+    int userId;
+
+    @Column(name = "product_id")
+    int productId;
 
     @ManyToOne
     @JoinColumn(name = "user_id",insertable = false, updatable = false, nullable = false)
@@ -50,8 +49,7 @@ public class Review {
     Product product;
 
     @PrePersist
-    public void handleBeforeCreate()
-    {
+    public void prePersist() {
         this.createdAt = Instant.now();
     }
 }

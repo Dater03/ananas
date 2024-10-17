@@ -62,8 +62,8 @@ public class AuthenticationService {
     }
 
     public AuthenticationResponse authenticationResponse(AuthenticationRequest authenticationRequest) {
-        var user = userRepository.findByEmail(authenticationRequest.getEmail())
-                .orElseThrow(() -> new AppException((ErrException.EMAIL_NOT_EXISTED)));
+        var user = userRepository.findByUsername(authenticationRequest.getUsername())
+                .orElseThrow(() -> new AppException((ErrException.USER_NOT_EXISTED)));
         boolean checked = passwordEncoder.matches(authenticationRequest.getPassword(), user.getPassword());
         if (!checked) {
             throw new AppException(ErrException.USER_NOT_EXISTED);
@@ -81,14 +81,5 @@ public class AuthenticationService {
             user.getRoles().forEach(scopeJoiner::add);
         }
         return scopeJoiner.toString();
-    }
-
-    public String decodeToken(String token) {
-        try {
-            Jwt jwt = jwtDecoder.decode(token);
-            return jwt.getSubject();
-        } catch (JwtException e) {
-            throw new RuntimeException("Invalid token", e);
-        }
     }
 }

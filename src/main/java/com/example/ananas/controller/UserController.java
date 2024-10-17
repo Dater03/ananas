@@ -1,13 +1,16 @@
 package com.example.ananas.controller;
 
-import com.example.ananas.dto.request.UserCreateRequest;
-import com.example.ananas.dto.request.UserUpdateRequest;
+import com.example.ananas.dto.request.*;
 import com.example.ananas.dto.response.ApiResponse;
+import com.example.ananas.dto.response.AuthenticationResponse;
 import com.example.ananas.dto.response.UserResponse;
+import com.example.ananas.entity.Review;
+import com.example.ananas.service.Service.AuthenticationService;
 import com.example.ananas.service.Service.UserService;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -22,6 +25,7 @@ import java.util.Map;
 @RequestMapping("/user")
 public class UserController {
     UserService userService;
+    private final AuthenticationService authenticationService;
 
     @PostMapping
     public ApiResponse<UserResponse> addUser(@RequestBody UserCreateRequest userCreateRequest) {
@@ -72,30 +76,26 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestBody Map<String, String> user) {
-        String token = userService.login(user.get("username"), user.get("password"));
-        return ResponseEntity.ok(Collections.singletonMap("token", token));
+    public ApiResponse<AuthenticationResponse> createToken(@RequestBody AuthenticationRequest authenticationRequest) {
+        return ApiResponse.<AuthenticationResponse>builder()
+                .result(authenticationService.authenticationResponse(authenticationRequest))
+                .code(200)
+                .build();
     }
 
     @PostMapping("/forgot-password")
-    public ResponseEntity<?> forgotPassword(@RequestBody Map<String, String> request) {
-        userService.forgotPassword(request.get("email"));
-        return ResponseEntity.ok("Reset token sent to email");
-    }
-
-    @PostMapping("/confirm-password")
-    public ResponseEntity<?> confirmPassword(@RequestBody Map<String, String> request) {
-        userService.confirmPassword(request.get("token"), request.get("newPassword"));
-        return ResponseEntity.ok("Password changed successfully");
+    public ResponseEntity<String> forgotPassword(@RequestBody ForgotPasswordRequest forgotPasswordRequest) {
+        userService.forgotPassword(forgotPasswordRequest.getEmail());
+        return ResponseEntity.ok("Verification code sent to your email.");
     }
 
     @PostMapping("/change-password")
-    public ResponseEntity<?> changePassword(@RequestBody Map<String, String> request) {
-        userService.changePassword(
-                request.get("username"),
-                request.get("oldPassword"),
-                request.get("newPassword")
-        );
-        return ResponseEntity.ok("Password updated successfully");
+    public ResponseEntity<String> resetPassword(@RequestBody ChangePasswordRequest changePasswordRequest) {
+        boolean isReset = userService.changePassword(changePasswordRequest);
+        if (isReset) {
+            return ResponseEntity.ok("Password has been reset successfully.");
+        } else {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid verification code or password.");
+        }
     }
 }
