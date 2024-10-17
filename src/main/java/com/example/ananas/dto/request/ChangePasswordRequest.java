@@ -3,12 +3,13 @@ package com.example.ananas.dto.request;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
-@Data
-@Builder
 @AllArgsConstructor
+@Data
 @NoArgsConstructor
+@Builder
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class AuthenticationRequest {
+public class ChangePasswordRequest {
     String username;
-    String password;
+    String oldPassword;
+    String newPassword;
 }

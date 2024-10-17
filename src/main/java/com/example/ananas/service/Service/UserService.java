@@ -1,5 +1,6 @@
 package com.example.ananas.service.Service;
 
+import com.example.ananas.dto.request.ChangePasswordRequest;
 import com.example.ananas.dto.request.UserCreateRequest;
 import com.example.ananas.dto.request.UserUpdateRequest;
 import com.example.ananas.dto.response.UserResponse;
@@ -146,49 +147,42 @@ public class UserService implements IUserService {
         return token;
     }
 
-
-    // Quên mật khẩu - Gửi mã xác nhận qua email
+    // Quên mật khẩu - Gửi qua email
     public void forgotPassword(String email) {
         User user = userRepository.findByEmail(email)
                 .orElseThrow(() -> new UsernameNotFoundException("User not found"));
 
-        String subject = "Dear, "+user.getUsername()+", your account has been reset token successfully.";
-        String resetToken = UUID.randomUUID().toString();
-        emailService.sendMessage(email, subject , resetToken);
+        String subject = "Dear, "+user.getUsername()+", your account has been reset password successfully.";
+        String resetPassword = generateRandomPassword(6);
+        emailService.sendMessage(email, subject , "Your new password: "+resetPassword);
+        user.setPassword(passwordEncoder.encode(resetPassword));
+        userRepository.save(user);
     }
 
-    // Xác nhận tạo mật khẩu mới qua token
-    // chua chay
-    public void confirmPassword(String token, String newPassword) {
-        User user = validateToken(token);
-        user.setPassword(passwordEncoder.encode(newPassword));
-        userRepository.save(user);
-        // Xóa token sau khi sử dụng để reset mật khẩu
+    // Hàm để tạo chuỗi ngẫu nhiên dài `length` ký tự
+    private String generateRandomPassword(int length) {
+        String allowedChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+        Random random = new Random();
+        StringBuilder password = new StringBuilder();
+
+        for (int i = 0; i < length; i++) {
+            int index = random.nextInt(allowedChars.length());
+            password.append(allowedChars.charAt(index));
+        }
+
+        return password.toString();
     }
 
     // Đổi mật khẩu
-    public void changePassword(String username, String oldPassword, String newPassword) {
-        User user = userRepository.findByUsername(username)
-                .orElseThrow(() -> new UsernameNotFoundException("User not found"));
-
-        if (!passwordEncoder.matches(oldPassword, user.getPassword())) {
-            throw new BadCredentialsException("Invalid old password");
+    public boolean changePassword(ChangePasswordRequest request) {
+        User user = userRepository.findByUsername(request.getUsername())
+                .orElseThrow(() -> new RuntimeException("User not found"));
+        if (user != null && passwordEncoder.matches(request.getOldPassword(), user.getPassword())) {
+            user.setPassword(passwordEncoder.encode(request.getNewPassword()));
+            userRepository.save(user);
+            return true;
         }
-
-        user.setPassword(passwordEncoder.encode(newPassword));
-        userRepository.save(user);
-    }
-
-    private User validateToken(String token) {
-        String username;
-        try {
-            username = authenticationService.decodeToken(token);
-        } catch (JwtException e) {
-            throw new RuntimeException("Invalid token");
-        }
-
-        return userRepository.findByUsername(username)
-                .orElseThrow(() -> new UsernameNotFoundException("User not found for the provided token"));
+        return false;
     }
 
 }
