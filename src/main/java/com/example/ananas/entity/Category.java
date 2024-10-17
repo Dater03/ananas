@@ -1,6 +1,5 @@
 package com.example.ananas.entity;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
@@ -27,11 +26,7 @@ public class Category {
 
     @Column(name = "description", columnDefinition = "MEDIUMTEXT")
     String description;
-
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", timezone = "UTC")
     private Instant createdAt;
-
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", timezone = "UTC")
     private Instant updateAt;
 
     @OneToMany(mappedBy = "category")
@@ -48,6 +43,4 @@ public class Category {
     {
         this.updateAt = Instant.now();
     }
-
-
 }

@@ -13,11 +13,7 @@ import com.example.ananas.service.IService.IUserService;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
-import org.springframework.security.access.prepost.PostAuthorize;
-import org.springframework.security.authentication.BadCredentialsException;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.oauth2.jwt.JwtException;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
@@ -37,7 +33,6 @@ public class UserService implements IUserService {
     IUserMapper userMapper;
     PasswordEncoder passwordEncoder;
     EmailService emailService;
-    private final AuthenticationService authenticationService;
 
     @Override
     public UserResponse createUser(UserCreateRequest userCreateRequest) {
@@ -69,7 +64,7 @@ public class UserService implements IUserService {
         return userMapper.toUserResponse(userRepository.save(user));
     }
 
-    @PostAuthorize("hasRole('Admin')")
+    @Override
     public String deleteUser(int id) {
         User userDelete = userRepository.findById(id)
                 .orElseThrow(() -> new AppException(ErrException.USER_NOT_EXISTED));
@@ -131,64 +126,4 @@ public class UserService implements IUserService {
         return userRepository.findByEmail(email)
                 .map(userMapper::toUserResponse);
     }
-
-    // Đăng nhập và tạo JWT
-    public String login(String username, String password) {
-        User user = userRepository.findByUsername(username)
-                .orElseThrow(() -> new UsernameNotFoundException("User not found"));
-
-        if (!passwordEncoder.matches(password, user.getPassword())) {
-            throw new BadCredentialsException("Invalid password");
-        }
-
-        String token = authenticationService.createToken(user);
-
-        return token;
-    }
-
-
-    // Quên mật khẩu - Gửi mã xác nhận qua email
-    public void forgotPassword(String email) {
-        User user = userRepository.findByEmail(email)
-                .orElseThrow(() -> new UsernameNotFoundException("User not found"));
-
-        String subject = "Dear, "+user.getUsername()+", your account has been reset token successfully.";
-        String resetToken = UUID.randomUUID().toString();
-        emailService.sendMessage(email, subject , resetToken);
-    }
-
-    // Xác nhận tạo mật khẩu mới qua token
-    // chua chay
-    public void confirmPassword(String token, String newPassword) {
-        User user = validateToken(token);
-        user.setPassword(passwordEncoder.encode(newPassword));
-        userRepository.save(user);
-        // Xóa token sau khi sử dụng để reset mật khẩu
-    }
-
-    // Đổi mật khẩu
-    public void changePassword(String username, String oldPassword, String newPassword) {
-        User user = userRepository.findByUsername(username)
-                .orElseThrow(() -> new UsernameNotFoundException("User not found"));
-
-        if (!passwordEncoder.matches(oldPassword, user.getPassword())) {
-            throw new BadCredentialsException("Invalid old password");
-        }
-
-        user.setPassword(passwordEncoder.encode(newPassword));
-        userRepository.save(user);
-    }
-
-    private User validateToken(String token) {
-        String username;
-        try {
-            username = authenticationService.decodeToken(token);
-        } catch (JwtException e) {
-            throw new RuntimeException("Invalid token");
-        }
-
-        return userRepository.findByUsername(username)
-                .orElseThrow(() -> new UsernameNotFoundException("User not found for the provided token"));
-    }
-
 }

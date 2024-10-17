@@ -25,6 +25,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.sql.Timestamp;
@@ -83,6 +84,7 @@ public class OrderService implements IOrderService {
         // Duyệt danh sách chuẩn bị tạo để chuyển thành dạng entity lưu database
         for (Order_Items_Create item : items) {
             Product product = productRepository.findById(item.getProductId()).get();
+            if(product == null) throw new AppException(ErrException.ORDER_ERROR_FIND_PRODUCT);
             Order_Item orderItem = new Order_Item();
             orderItem.setProduct(product);
             orderItem.setOrder(order);
@@ -93,7 +95,7 @@ public class OrderService implements IOrderService {
             orderItems.add(orderItem);
 
             // Tính toán luôn thuộc tính suy biến ở bảng order
-            sum_before.add(orderItem.getPrice().multiply(BigDecimal.valueOf(orderItem.getQuantity())));
+            sum_before = sum_before.add(orderItem.getPrice().multiply(BigDecimal.valueOf(orderItem.getQuantity())));
         }
         order.setTotalAmount(sum_before);
 
@@ -175,24 +177,57 @@ public class OrderService implements IOrderService {
         return true; // Trả về true nếu xóa thành công
     }
 
-    public Order changeOrderStatus (String orderId, OrderStatus status) {
+    public Order changeOrderStatusShipped (String orderId) {
         Order order = orderRepository.findById(orderId)
                 .orElseThrow(() -> new AppException(ErrException.ORDER_NOT_EXISTED));
         if(order.getStatus() == OrderStatus.DELIVERED || order.getStatus() == OrderStatus.CANCELED) {
             throw new AppException(ErrException.ORDER_ERROR_STATUS);
         }
-        order.setStatus(status);
+        order.setStatus(OrderStatus.SHIPPED);
         order.setUpdatedAt(new Timestamp(System.currentTimeMillis()));
         return orderRepository.save(order);
     }
 
-    public Order changePaymentStatus (String orderId, PaymentStatus status) {
+    public Order changeOrderStatusDelivered (String orderId) {
         Order order = orderRepository.findById(orderId)
                 .orElseThrow(() -> new AppException(ErrException.ORDER_NOT_EXISTED));
         if(order.getStatus() == OrderStatus.DELIVERED || order.getStatus() == OrderStatus.CANCELED) {
             throw new AppException(ErrException.ORDER_ERROR_STATUS);
         }
-        order.setPaymentStatus(status);
+        order.setStatus(OrderStatus.DELIVERED);
+        order.setUpdatedAt(new Timestamp(System.currentTimeMillis()));
+        return orderRepository.save(order);
+    }
+
+    public Order changeOrderStatusPending (String orderId) {
+        Order order = orderRepository.findById(orderId)
+                .orElseThrow(() -> new AppException(ErrException.ORDER_NOT_EXISTED));
+        if(order.getStatus() == OrderStatus.DELIVERED || order.getStatus() == OrderStatus.CANCELED) {
+            throw new AppException(ErrException.ORDER_ERROR_STATUS);
+        }
+        order.setStatus(OrderStatus.PENDING);
+        order.setUpdatedAt(new Timestamp(System.currentTimeMillis()));
+        return orderRepository.save(order);
+    }
+
+    public Order changePaymentStatusPaid (String orderId) {
+        Order order = orderRepository.findById(orderId)
+                .orElseThrow(() -> new AppException(ErrException.ORDER_NOT_EXISTED));
+        if(order.getStatus() == OrderStatus.DELIVERED || order.getStatus() == OrderStatus.CANCELED) {
+            throw new AppException(ErrException.ORDER_ERROR_STATUS);
+        }
+        order.setPaymentStatus(PaymentStatus.PAID);
+        order.setUpdatedAt(new Timestamp(System.currentTimeMillis()));
+        return orderRepository.save(order);
+    }
+
+    public Order changePaymentStatusUnPaid (String orderId) {
+        Order order = orderRepository.findById(orderId)
+                .orElseThrow(() -> new AppException(ErrException.ORDER_NOT_EXISTED));
+        if(order.getStatus() == OrderStatus.DELIVERED || order.getStatus() == OrderStatus.CANCELED) {
+            throw new AppException(ErrException.ORDER_ERROR_STATUS);
+        }
+        order.setPaymentStatus(PaymentStatus.UNPAID);
         order.setUpdatedAt(new Timestamp(System.currentTimeMillis()));
         return orderRepository.save(order);
     }

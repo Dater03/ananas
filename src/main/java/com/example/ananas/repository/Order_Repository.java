@@ -5,6 +5,7 @@ import com.example.ananas.entity.order.OrderStatus;
 import com.example.ananas.entity.order.PaymentStatus;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -28,5 +29,5 @@ public interface Order_Repository extends JpaRepository<Order, String> {
     */
 
     @Query(value = "SELECT o FROM Order o WHERE o.user.username = :username AND o.paymentStatus = :status")
-    List<Order> findByUser_UsernameAndPaymentStats(String username, PaymentStatus paymentStatus);
+    List<Order> findByUser_UsernameAndPaymentStats(@Param("username") String username, @Param("status") PaymentStatus paymentStatus);
 }

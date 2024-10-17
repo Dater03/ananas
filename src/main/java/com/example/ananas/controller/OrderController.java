@@ -23,7 +23,7 @@ public class OrderController {
 
     // Tạo đơn hàng
     @PostMapping("/create/{userId}")
-    public ResponseEntity<ApiResponse<OrderResponse>> createOrder(@PathVariable("userId") String userId, @RequestBody OrderCreate order) {
+    public ResponseEntity<ApiResponse<OrderResponse>> createOrder(@PathVariable("userId") Integer userId, @RequestBody OrderCreate order) {
         ApiResponse<OrderResponse> apiResponse = new ApiResponse<>();
         apiResponse.setCode(1);
         apiResponse.setMessage("Success");
@@ -98,21 +98,45 @@ public class OrderController {
         return ResponseEntity.ok(apiResponse);
     }
     //  Cập nhật trạng thái đơn hàng
-    @PutMapping("/admin/statusOrder/{id}")
-    public ResponseEntity<ApiResponse<Order>> getOrdersForAdminStatus(@PathVariable String id, @RequestBody OrderStatus status) {
+    @PutMapping("/admin/statusOrderPending/{id}")
+    public ResponseEntity<ApiResponse<Order>> getOrderStatusPending(@PathVariable String id) {
         ApiResponse<Order> apiResponse = new ApiResponse<>();
         apiResponse.setCode(1112);
         apiResponse.setMessage("Success");
-        apiResponse.setResult(orderService.changeOrderStatus(id, status));
+        apiResponse.setResult(orderService.changeOrderStatusPending(id));
+        return ResponseEntity.ok(apiResponse);
+    }
+    @PutMapping("/admin/statusOrderShipped/{id}")
+    public ResponseEntity<ApiResponse<Order>> getOrderStatusShipped(@PathVariable String id) {
+        ApiResponse<Order> apiResponse = new ApiResponse<>();
+        apiResponse.setCode(1112);
+        apiResponse.setMessage("Success");
+        apiResponse.setResult(orderService.changeOrderStatusShipped(id));
+        return ResponseEntity.ok(apiResponse);
+    }
+    @PutMapping("/admin/statusOrderDelivered/{id}")
+    public ResponseEntity<ApiResponse<Order>> getOrderStatusDelivered(@PathVariable String id) {
+        ApiResponse<Order> apiResponse = new ApiResponse<>();
+        apiResponse.setCode(1112);
+        apiResponse.setMessage("Success");
+        apiResponse.setResult(orderService.changeOrderStatusDelivered(id));
         return ResponseEntity.ok(apiResponse);
     }
     // Cập nhật trạng thái thanh toán
-    @PutMapping("/admin/PaymentStatus/{id}")
-    public ResponseEntity<ApiResponse<Order>> changeOrderStatus(@PathVariable String id, @RequestBody PaymentStatus status) {
+    @PutMapping("/admin/PaymentStatusPaid/{id}")
+    public ResponseEntity<ApiResponse<Order>> changeOrderStatusPaid(@PathVariable String id) {
         ApiResponse<Order> apiResponse = new ApiResponse<>();
         apiResponse.setCode(1113);
         apiResponse.setMessage("Success");
-        apiResponse.setResult(orderService.changePaymentStatus(id, status));
+        apiResponse.setResult(orderService.changePaymentStatusPaid(id));
+        return ResponseEntity.ok(apiResponse);
+    }
+    @PutMapping("/admin/PaymentStatusUnpaid/{id}")
+    public ResponseEntity<ApiResponse<Order>> changeOrderStatusUnpaid(@PathVariable String id) {
+        ApiResponse<Order> apiResponse = new ApiResponse<>();
+        apiResponse.setCode(1113);
+        apiResponse.setMessage("Success");
+        apiResponse.setResult(orderService.changePaymentStatusUnPaid(id));
         return ResponseEntity.ok(apiResponse);
     }
     // Xóa đơn hàng theo ID

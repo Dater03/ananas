@@ -1,12 +1,10 @@
 package com.example.ananas.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
-import java.time.Instant;
 import java.util.Date;
 
 @Entity
@@ -36,8 +34,7 @@ public class Review {
     String comment;
 
     @Column(name = "created_at")
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", timezone = "UTC")
-    Instant createdAt;
+    Date createdAt;
 
     @ManyToOne
     @JoinColumn(name = "user_id",insertable = false, updatable = false, nullable = false)
@@ -48,10 +45,4 @@ public class Review {
     @JoinColumn(name = "product_id",insertable = false, updatable = false, nullable = false)
     @JsonBackReference
     Product product;
-
-    @PrePersist
-    public void handleBeforeCreate()
-    {
-        this.createdAt = Instant.now();
-    }
 }

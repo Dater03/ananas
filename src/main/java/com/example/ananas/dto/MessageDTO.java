@@ -3,7 +3,6 @@ package com.example.ananas.dto;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
-import java.time.Instant;
 import java.util.Date;
 
 @AllArgsConstructor
@@ -16,5 +15,5 @@ public class MessageDTO {
     int senderId;
     int receiverId;
     String message;
-    Instant createdAt;
+    Date createdAt;
 }
