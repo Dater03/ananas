@@ -42,6 +42,9 @@ public class Product {
     @Column(name = "sold_quantity")
     int soldQuantity;
 
+    @Column(name = "image")
+    String image;
+
     @Column(name = "size")
     int size;
 

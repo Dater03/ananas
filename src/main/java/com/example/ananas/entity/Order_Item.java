@@ -1,6 +1,6 @@
 package com.example.ananas.entity;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.example.ananas.entity.order.Order;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Data;
@@ -17,24 +17,21 @@ import java.math.BigDecimal;
 public class Order_Item {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    int orderItemId;
-
+    @GeneratedValue(strategy = GenerationType.UUID)
+    String orderItemId;
 
     @ManyToOne
     @JoinColumn(name = "order_id", nullable = false)
-    @JsonBackReference("order-orderItems")
     Order order;
 
     @ManyToOne
     @JoinColumn(name = "product_id", nullable = false)
-    @JsonBackReference("product-orderItems")
     Product product;
 
     @Column(name = "quantity", nullable = false)
-    int quantity;
+    Integer quantity;
 
-    @Column(name = "price", nullable = false)
-    Double price;
+    @Column(name = "price")
+    BigDecimal price;
 }
 

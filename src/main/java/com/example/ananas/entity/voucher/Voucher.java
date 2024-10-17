@@ -1,9 +1,7 @@
-package com.example.ananas.entity;
+package com.example.ananas.entity.voucher;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -11,19 +9,17 @@ import lombok.experimental.FieldDefaults;
 import java.math.BigDecimal;
 import java.sql.Date;
 import java.sql.Timestamp;
-import java.util.List;
 
 @Data
 @NoArgsConstructor
-@AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @Entity
 @Table(name = "voucher")
 public class Voucher {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Integer voucherId;
+    @GeneratedValue(strategy = GenerationType.UUID)
+    String voucherId;
 
     @Column(name = "code", nullable = false, unique = true)
     String code;
@@ -35,23 +31,25 @@ public class Voucher {
     @Column(name = "discount_value", nullable = false)
     BigDecimal discountValue;
 
-    @Column(name = "start_date")
-    Date startDate;
-
-    @Column(name = "end_date")
-    Date endDate;
+    @Column(name = "description")
+    String description;
 
     @Column(name = "usage_limit", nullable = false)
     Integer usageLimit;
 
+    @Column(name = "min_order_value", nullable = false)
+    BigDecimal minOrderValue; // giá trị tối thiểu của đơn hàng mà voucher có thể áp dụng
+
+    @Column(name = "max_discount")
+    BigDecimal maxDiscount; //  Quy định số tiền giảm tối đa
+
+    @Column(name = "start_date", nullable = false)
+    Date startDate;
+
+    @Column(name = "end_date", nullable = false)
+    Date endDate;
+
     @Column(name = "created_at", nullable = false)
-    Timestamp createdAt;
+    Timestamp createdAt; // Thời gian tạo
 
-    @OneToMany(mappedBy = "voucher")
-    @JsonManagedReference
-    List<Order> order;
-}
-
-enum DiscountType {
-    PERCENTAGE, FIXED_AMOUNT
 }
