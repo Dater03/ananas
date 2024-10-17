@@ -3,6 +3,7 @@ package com.example.ananas.entity.order;
 import com.example.ananas.entity.Order_Item;
 import com.example.ananas.entity.User;
 import com.example.ananas.entity.voucher.Voucher;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Data;
@@ -25,10 +26,12 @@ public class Order {
 
     @ManyToOne
     @JoinColumn(name = "user_id")
+    @JsonBackReference
     User user;
 
     @ManyToOne
     @JoinColumn(name = "voucher_id")
+    @JsonBackReference
     Voucher voucher;
 
     @Column(name = "total_amount", nullable = false)

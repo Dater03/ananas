@@ -1,6 +1,7 @@
 package com.example.ananas.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
@@ -41,9 +42,6 @@ public class Product {
     @Column(name = "sold_quantity")
     int soldQuantity;
 
-    @Column(name = "image")
-    String image;
-
     @Column(name = "size")
     int size;
 
@@ -55,7 +53,7 @@ public class Product {
 
     @ManyToOne
     @JoinColumn(name = "category_id")
-    @JsonManagedReference("category-products")
+    @JsonBackReference("category-products")
     Category category;
 
     @OneToMany(mappedBy = "product")
@@ -63,16 +61,23 @@ public class Product {
     List<Product_Image> productImages;
 
     @OneToMany(mappedBy = "product")
+    @JsonManagedReference
     List<Cart_Item> cartItems;
 
     @OneToMany(mappedBy = "product")
+    @JsonManagedReference
     List<Review> reviews;
 
     @OneToMany(mappedBy = "product")
+    @JsonManagedReference
     List<Order_Item> orderItems;
 
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", timezone = "UTC")
     private Instant createdAt;
+
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", timezone = "UTC")
     private Instant updateAt;
+
 
     @PrePersist
     public void handleBeforeCreate()

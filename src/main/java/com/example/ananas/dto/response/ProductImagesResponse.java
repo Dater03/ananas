@@ -3,12 +3,11 @@ package com.example.ananas.dto.response;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
-@Data
-@Builder
 @AllArgsConstructor
 @NoArgsConstructor
+@Data
+@Builder
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class AuthenticationResponse {
-    String token;
-    boolean check;
+public class ProductImagesResponse {
+    String imageUrl;
 }

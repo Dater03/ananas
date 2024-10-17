@@ -1,6 +1,7 @@
 package com.example.ananas.entity;
 
 import com.example.ananas.entity.order.Order;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;

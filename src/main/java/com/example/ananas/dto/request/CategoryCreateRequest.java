@@ -1,14 +1,14 @@
-package com.example.ananas.dto.response;
+package com.example.ananas.dto.request;
 
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
-@Data
-@Builder
 @AllArgsConstructor
 @NoArgsConstructor
+@Data
+@Builder
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class AuthenticationResponse {
-    String token;
-    boolean check;
+public class CategoryCreateRequest {
+    String categoryName;
+    String description;
 }

@@ -28,7 +28,6 @@ public interface IOrderMapper {
     @Mapping(source = "product.description", target = "description")
     @Mapping(source = "product.price", target = "price_original")
     @Mapping(source = "product.discount", target = "discount")
-    @Mapping(source = "product.image", target = "image")
     @Mapping(source = "price", target = "price")
     @Mapping(source = "quantity", target = "quantity")
     Order_Item_Response orderItemToOrderItemResponse(Order_Item orderItem);

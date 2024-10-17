@@ -1,5 +1,6 @@
 package com.example.ananas.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
@@ -15,12 +16,12 @@ import lombok.experimental.FieldDefaults;
 public class Product_Image {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
-    private String imageUrl;
+    int id;
+    String imageUrl;
 
     @ManyToOne
     @JoinColumn(name = "product_id")
-    @JsonManagedReference("product-productImages")
-    private Product product;
+    @JsonBackReference("product-productImages")
+    Product product;
 
 }
