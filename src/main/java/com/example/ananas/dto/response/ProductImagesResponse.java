@@ -10,4 +10,6 @@ import lombok.experimental.FieldDefaults;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class ProductImagesResponse {
     String imageUrl;
+    int productId;
+    int id;
 }
