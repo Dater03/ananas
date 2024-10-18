@@ -8,6 +8,7 @@ import com.example.ananas.exception.AppException;
 import com.example.ananas.exception.ErrException;
 import com.example.ananas.mapper.IVoucherMapper;
 import com.example.ananas.repository.Voucher_Repository;
+import com.example.ananas.service.IService.IVoucherService;
 import lombok.AccessLevel;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
@@ -24,30 +25,30 @@ import java.util.*;
 @RequiredArgsConstructor
 @Data
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
-public class VoucherService {
+public class VoucherService implements IVoucherService {
 
     private Voucher_Repository voucherRepository;
     private IVoucherMapper  mapper;
 
+    @Override
     public List<Voucher> getAllVouchersForAdmin() {
         return voucherRepository.findAll();
     }
 
-    public Voucher findVoucherByCode(String code) {
-        return voucherRepository.findVoucherByCode(code);
-    }
-
+    @Override
     public VoucherResponse getVouchersForUser(String code)
     {
         Voucher voucher = voucherRepository.findVoucherByCode(code);
         return mapper.voucherToVoucherResponse(voucher);
     }
 
+    @Override
     public Voucher createVoucher(VoucherResquest voucherResquest) {
         // Kiểm tra xem mã voucher có tồn tại hay không
         if (voucherRepository.findVoucherByCode(voucherResquest.getCode()) != null) {
             throw new AppException(ErrException.VOUCHER_EXISTED);
         }
+        if(voucherResquest.getDiscountType().isEmpty()) throw new AppException(ErrException.VALIDATION_ERROR);
 
         // Nếu không có createdAt trong request thì tự động gán thời gian hiện tại
         if (voucherResquest.getCreatedAt() == null) {
@@ -63,11 +64,14 @@ public class VoucherService {
 
         // Ánh xạ từ VoucherResquest sang entity Voucher
         Voucher voucher = mapper.voucherRequestToVoucher(voucherResquest);
-
+        if(voucherResquest.getDiscountType().equalsIgnoreCase("FIXED")) voucher.setDiscountType(DiscountType.FIXED);
+        else if(voucherResquest.getDiscountType().equalsIgnoreCase("PERCENTAGE")) voucher.setDiscountType(DiscountType.PERCENTAGE);
+        else throw new AppException(ErrException.VALIDATION_ERROR);
         // Lưu voucher vào cơ sở dữ liệu
         return voucherRepository.save(voucher);
     }
 
+    @Override
     public Voucher updateVoucher(VoucherResquest voucherResquest) {
         Voucher voucher = voucherRepository.findVoucherByCode(voucherResquest.getCode());
         if (voucher == null) throw new AppException(ErrException.VOUCHER_NOT_EXISTED);
@@ -75,6 +79,7 @@ public class VoucherService {
         return voucherRepository.save(voucher);
     }
 
+    @Override
     public boolean deleteVoucher(String code) {
         Voucher voucher = voucherRepository.findVoucherByCode(code);
         if (voucher == null) throw new AppException(ErrException.VOUCHER_NOT_EXISTED);
@@ -82,6 +87,7 @@ public class VoucherService {
         return true;
     }
 
+    @Override
     public boolean checkVoucher(String code) {
         Voucher voucher = voucherRepository.findVoucherByCode(code);
         if (voucher == null)
@@ -97,6 +103,7 @@ public class VoucherService {
         return true;
     }
 
+    @Override
     public BigDecimal applyVoucher(Voucher voucher, BigDecimal priceBefore) {
         // Kiểm tra điều kiện tối thiểu
         if(priceBefore.compareTo(voucher.getMinOrderValue()) < 0)

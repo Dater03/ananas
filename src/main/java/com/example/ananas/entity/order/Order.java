@@ -21,8 +21,8 @@ import java.util.List;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class Order {
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    String id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    Integer id;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
@@ -70,6 +70,9 @@ public class Order {
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
     List<Order_Item> orderItems;
 
+    public void addOrderItem(Order_Item orderItem) {
+        orderItems.add(orderItem);
+    }
     @PrePersist
     public void prePersist() {
         if (this.status == null) this.status = OrderStatus.PENDING;

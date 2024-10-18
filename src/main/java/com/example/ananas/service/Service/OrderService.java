@@ -15,10 +15,7 @@ import com.example.ananas.entity.voucher.Voucher;
 import com.example.ananas.exception.AppException;
 import com.example.ananas.exception.ErrException;
 import com.example.ananas.mapper.IOrderMapper;
-import com.example.ananas.repository.Order_Repository;
-import com.example.ananas.repository.Product_Repository;
-import com.example.ananas.repository.User_Repository;
-import com.example.ananas.repository.Voucher_Repository;
+import com.example.ananas.repository.*;
 import com.example.ananas.service.IService.IOrderService;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
@@ -48,20 +45,25 @@ public class OrderService implements IOrderService {
     @Autowired
     Product_Repository productRepository;
     @Autowired
+    Order_Item_Repository orderItemRepository;
+    @Autowired
     VoucherService voucherService;
     @Autowired
     IOrderMapper orderMapper;
 
-    public List<Order> getOrdersForAdmin() {
-       return orderRepository.findAll();
+    @Override
+    public List<OrderResponse> getOrdersForAdmin() {
+       return orderMapper.listOrderToOrderResponse(orderRepository.findAll());
     }
 
+    @Override
     public List<OrderResponse> getOrderByUsername(String username) {
         List<Order> order = orderRepository.findByUser_Username(username);
         if (order == null) throw new AppException(ErrException.ORDER_NOT_EXISTED);
         return orderMapper.listOrderToOrderResponse(order);
     }
 
+    @Override
     public OrderResponse createOrder(Integer userId, OrderCreate orderCreate) {
         Order order = new Order();
         if(userId != null)
@@ -101,7 +103,7 @@ public class OrderService implements IOrderService {
 
         // tổng tổng giá trị của đơn hàng sau khi áp dụng voucher
         BigDecimal sum_after;
-        if(order.getVoucher() != null) sum_after = voucherService.applyVoucher(order.getVoucher(), sum_before);
+        if(order.getVoucher() != null && voucherService.checkVoucher(order.getVoucher().getCode())) sum_after = voucherService.applyVoucher(order.getVoucher(), sum_before);
         else sum_after = sum_before;
         order.setTotalPrice(sum_after);
         order.setStatus(OrderStatus.PENDING);
@@ -117,20 +119,32 @@ public class OrderService implements IOrderService {
         return orderMapper.orderToOrderResponse(order);
     }
 
+
     // Cập nhật đơn hàng
-    public OrderResponse updateOrder(String orderId, OrderUpdateUser orderUpdateUser)
+    @Transactional
+    @Override
+    public OrderResponse updateOrder(Integer orderId, OrderUpdateUser orderUpdateUser)
     {
-        Optional<Order> order = orderRepository.findById(orderId);
-        if(order.isEmpty()) throw new AppException(ErrException.ORDER_NOT_EXISTED);
-        order.get().setPaymentMethod(orderUpdateUser.getPaymentMethod());
-        order.get().setRecipientName(orderUpdateUser.getRecipientName());
-        order.get().setRecipientPhone(orderUpdateUser.getRecipientPhone());
-        order.get().setRecipientAddress(orderUpdateUser.getRecipientAddress());
-        // Xóa dữ liệu cũ
-        order.get().getOrderItems().clear();
+        Order order = orderRepository.findById(orderId)
+                .orElseThrow(() -> new AppException(ErrException.ORDER_NOT_EXISTED));
+
+        // Kiểm tra trạng thái đơn hàng
+        if (order.getPaymentStatus() == PaymentStatus.PAID || order.getStatus() == OrderStatus.DELIVERED) {
+            throw new AppException(ErrException.NOT_UPDATE_ORDER);
+        }
+
+        // Cập nhật thông tin đơn hàng
+        order.setPaymentMethod(orderUpdateUser.getPaymentMethod());
+        order.setRecipientName(orderUpdateUser.getRecipientName());
+        order.setRecipientPhone(orderUpdateUser.getRecipientPhone());
+        order.setRecipientAddress(orderUpdateUser.getRecipientAddress());
+
+        // Xóa các sản phẩm cũ
+        order.getOrderItems().clear(); // Xóa danh sách các sản phẩm cũ
+
         //
         List<Order_Items_Create> newDataRequest = orderUpdateUser.getOrderItems();
-        List<Order_Item> newDataEntity = new ArrayList<>();
+        List<Order_Item> newDataEntity = order.getOrderItems();
         BigDecimal sum_before = BigDecimal.valueOf(0);
         BigDecimal sum_after;
         for (Order_Items_Create item : newDataRequest) {
@@ -141,29 +155,30 @@ public class OrderService implements IOrderService {
             orderItem.setPrice(BigDecimal.valueOf(product.getPrice())
                     .multiply(BigDecimal.valueOf(product.getDiscount())
                             .divide(BigDecimal.valueOf(100))));
-            orderItem.setOrder(order.get());
-            newDataEntity.add(orderItem);
+            orderItem.setOrder(order);
+            order.addOrderItem(orderItem);
 
             // Tính toán giá trị Total
             sum_before.add(orderItem.getPrice().multiply(BigDecimal.valueOf(orderItem.getQuantity())));
         }
-        order.get().setTotalAmount(sum_before);
-        order.get().setOrderItems(newDataEntity);
+        order.setTotalAmount(sum_before);
+        order.setOrderItems(newDataEntity);
         if(orderUpdateUser.getCode() != null)
         {
             Voucher voucher = voucherRepository.findVoucherByCode(orderUpdateUser.getCode());
             if(voucher == null) throw new AppException(ErrException.VOUCHER_NOT_EXISTED);
-            order.get().setVoucher(voucher);
+            order.setVoucher(voucher);
         }
-        if(order.get().getVoucher() != null) sum_after = voucherService.applyVoucher(order.get().getVoucher(), sum_before);
+        if(order.getVoucher() != null) sum_after = voucherService.applyVoucher(order.getVoucher(), sum_before);
         else sum_after = sum_before;
-        order.get().setTotalPrice(sum_after);
-        orderRepository.save(order.get());
-        return orderMapper.orderToOrderResponse(order.get());
+        order.setTotalPrice(sum_after);
+        orderRepository.save(order);
+        return orderMapper.orderToOrderResponse(order);
     }
 
     // Trong thực tế không nên xóa hẳn đơn hàng
-    public boolean deleteOrder(String orderId) {
+    @Override
+    public boolean deleteOrder(Integer orderId) {
         // Tìm đơn hàng theo ID
         Order order = orderRepository.findById(orderId)
                 .orElseThrow(() -> new AppException(ErrException.ORDER_NOT_EXISTED));
@@ -177,7 +192,8 @@ public class OrderService implements IOrderService {
         return true; // Trả về true nếu xóa thành công
     }
 
-    public Order changeOrderStatusShipped (String orderId) {
+    @Override
+    public OrderResponse changeOrderStatusShipped (Integer orderId) {
         Order order = orderRepository.findById(orderId)
                 .orElseThrow(() -> new AppException(ErrException.ORDER_NOT_EXISTED));
         if(order.getStatus() == OrderStatus.DELIVERED || order.getStatus() == OrderStatus.CANCELED) {
@@ -185,10 +201,11 @@ public class OrderService implements IOrderService {
         }
         order.setStatus(OrderStatus.SHIPPED);
         order.setUpdatedAt(new Timestamp(System.currentTimeMillis()));
-        return orderRepository.save(order);
+        return orderMapper.orderToOrderResponse(orderRepository.save(order));
     }
 
-    public Order changeOrderStatusDelivered (String orderId) {
+    @Override
+    public OrderResponse changeOrderStatusDelivered (Integer orderId) {
         Order order = orderRepository.findById(orderId)
                 .orElseThrow(() -> new AppException(ErrException.ORDER_NOT_EXISTED));
         if(order.getStatus() == OrderStatus.DELIVERED || order.getStatus() == OrderStatus.CANCELED) {
@@ -196,10 +213,11 @@ public class OrderService implements IOrderService {
         }
         order.setStatus(OrderStatus.DELIVERED);
         order.setUpdatedAt(new Timestamp(System.currentTimeMillis()));
-        return orderRepository.save(order);
+        return orderMapper.orderToOrderResponse(orderRepository.save(order));
     }
 
-    public Order changeOrderStatusPending (String orderId) {
+    @Override
+    public OrderResponse changeOrderStatusPending (Integer orderId) {
         Order order = orderRepository.findById(orderId)
                 .orElseThrow(() -> new AppException(ErrException.ORDER_NOT_EXISTED));
         if(order.getStatus() == OrderStatus.DELIVERED || order.getStatus() == OrderStatus.CANCELED) {
@@ -207,10 +225,11 @@ public class OrderService implements IOrderService {
         }
         order.setStatus(OrderStatus.PENDING);
         order.setUpdatedAt(new Timestamp(System.currentTimeMillis()));
-        return orderRepository.save(order);
+        return orderMapper.orderToOrderResponse(orderRepository.save(order));
     }
 
-    public Order changePaymentStatusPaid (String orderId) {
+    @Override
+    public OrderResponse changePaymentStatusPaid (Integer orderId) {
         Order order = orderRepository.findById(orderId)
                 .orElseThrow(() -> new AppException(ErrException.ORDER_NOT_EXISTED));
         if(order.getStatus() == OrderStatus.DELIVERED || order.getStatus() == OrderStatus.CANCELED) {
@@ -218,10 +237,11 @@ public class OrderService implements IOrderService {
         }
         order.setPaymentStatus(PaymentStatus.PAID);
         order.setUpdatedAt(new Timestamp(System.currentTimeMillis()));
-        return orderRepository.save(order);
+        return orderMapper.orderToOrderResponse(orderRepository.save(order));
     }
 
-    public Order changePaymentStatusUnPaid (String orderId) {
+    @Override
+    public OrderResponse changePaymentStatusUnPaid (Integer orderId) {
         Order order = orderRepository.findById(orderId)
                 .orElseThrow(() -> new AppException(ErrException.ORDER_NOT_EXISTED));
         if(order.getStatus() == OrderStatus.DELIVERED || order.getStatus() == OrderStatus.CANCELED) {
@@ -229,10 +249,11 @@ public class OrderService implements IOrderService {
         }
         order.setPaymentStatus(PaymentStatus.UNPAID);
         order.setUpdatedAt(new Timestamp(System.currentTimeMillis()));
-        return orderRepository.save(order);
+        return orderMapper.orderToOrderResponse(orderRepository.save(order));
     }
 
-    public boolean cancelOrder (String orderId) {
+    @Override
+    public boolean cancelOrder (Integer orderId) {
         Order order = orderRepository.findById(orderId)
                 .orElseThrow(() -> new AppException(ErrException.ORDER_NOT_EXISTED));
         if(order.getStatus() == OrderStatus.DELIVERED || order.getStatus() == OrderStatus.CANCELED) {
@@ -244,6 +265,7 @@ public class OrderService implements IOrderService {
         return true;
     }
 
+    @Override
     public List<OrderResponse> getNowOrder(String username)
     {
         List<OrderStatus> orderStatuses = Arrays.asList(OrderStatus.PENDING, OrderStatus.SHIPPED, OrderStatus.DELIVERED);
@@ -251,6 +273,7 @@ public class OrderService implements IOrderService {
         return orderMapper.listOrderToOrderResponse(orders);
     }
 
+    @Override
     public List<OrderResponse> getCancelOrder(String username)
     {
         List<OrderStatus> orderStatuses = Arrays.asList(OrderStatus.CANCELED);
@@ -258,6 +281,7 @@ public class OrderService implements IOrderService {
         return orderMapper.listOrderToOrderResponse(orders);
     }
 
+    @Override
     public List<OrderResponse> getHistoryOrder(String username)
     {
         List<Order> orders = orderRepository.findByUser_UsernameAndPaymentStats(username, PaymentStatus.PAID);

@@ -9,13 +9,15 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public enum ErrException {
     USER_EXISTED(101,"User existed"),
+    PRODUCT_NOT_EXISTED(404, "Product not existed"),
     VOUCHER_EXISTED(101,"Voucher existed"),
     VOUCHER_NOT_EXISTED(101,"Voucher not existed"),
+    VALIDATION_ERROR(102,"Enter the correct requirements!"),
     ORDER_NOT_EXISTED(101,"Order not existed"),
     ORDER_EXISTED(101,"Order existed"),
     ORDER_ERROR_STATUS(100, "Not change order with status DELIVERED or CANCELED"),
     ORDER_ERROR_FIND_PRODUCT(100, "Not find product"),
-    VALIDATION_ERROR(102,"Validation Error"),
+    NOT_UPDATE_ORDER(404, "Don't update this order!"),
     USER_NOT_EXISTED(102,"User not existed"),
     INVALID_KEY(105,"Invalid key"),
     EMAIL_NOT_EXISTED(106,"Email not existed"),

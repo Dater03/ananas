@@ -20,6 +20,7 @@ public interface IOrderMapper {
     List<OrderResponse> listOrderToOrderResponse (List<Order> orders);
     @Mapping(source = "user.userId", target = "userId")
     @Mapping(source = "voucher.code", target = "code")
+    @Mapping(source = "id", target = "id")
     OrderResponse orderToOrderResponse(Order order);
     // Map Order_Item to Order_Item_Response
     List<Order_Item_Response> orderItemsToOrderItemResponses(List<Order_Item> orderItems);

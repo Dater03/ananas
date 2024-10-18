@@ -41,7 +41,7 @@ public class OrderController {
     }
     // Cập nhật đơn hàng
     @PutMapping("/updateOrder/{orderId}")
-    public ResponseEntity<OrderResponse> updateOrder(@PathVariable String orderId, @RequestBody OrderUpdateUser orderUpdateUser)
+    public ResponseEntity<OrderResponse> updateOrder(@PathVariable Integer orderId, @RequestBody OrderUpdateUser orderUpdateUser)
     {
         return ResponseEntity.ok(orderService.updateOrder(orderId,orderUpdateUser));
     }
@@ -52,8 +52,8 @@ public class OrderController {
     }
 
     // Hủy đơn hàng
-    @GetMapping("/cancelOrder/{orderId}")
-    public ResponseEntity<String> cancelOrder(@PathVariable String orderId) {
+    @PutMapping("/cancelOrder/{orderId}")
+    public ResponseEntity<String> cancelOrder(@PathVariable Integer orderId) {
         String result = "Failed";
         if(orderService.cancelOrder(orderId)) result = "Successed";
         return ResponseEntity.ok(result);
@@ -62,35 +62,35 @@ public class OrderController {
 
     // Xem danh sách đơn hàng
     @GetMapping("/admin/list")
-    public ResponseEntity<List<Order>> getOrdersForAdmin () {
+    public ResponseEntity<List<OrderResponse>> getOrdersForAdmin () {
         return ResponseEntity.ok(orderService.getOrdersForAdmin());
     }
     //  Cập nhật trạng thái đơn hàng
     @PutMapping("/admin/statusOrderPending/{id}")
-    public ResponseEntity<Order> getOrderStatusPending(@PathVariable String id) {
+    public ResponseEntity<OrderResponse> getOrderStatusPending(@PathVariable Integer id) {
         ApiResponse<Order> apiResponse = new ApiResponse<>();
         return ResponseEntity.ok(orderService.changeOrderStatusPending(id));
     }
     @PutMapping("/admin/statusOrderShipped/{id}")
-    public ResponseEntity<Order> getOrderStatusShipped(@PathVariable String id) {
+    public ResponseEntity<OrderResponse> getOrderStatusShipped(@PathVariable Integer id) {
         return ResponseEntity.ok(orderService.changeOrderStatusShipped(id));
     }
     @PutMapping("/admin/statusOrderDelivered/{id}")
-    public ResponseEntity<Order> getOrderStatusDelivered(@PathVariable String id) {
+    public ResponseEntity<OrderResponse> getOrderStatusDelivered(@PathVariable Integer id) {
         return ResponseEntity.ok(orderService.changeOrderStatusDelivered(id));
     }
     // Cập nhật trạng thái thanh toán
     @PutMapping("/admin/PaymentStatusPaid/{id}")
-    public ResponseEntity<Order> changeOrderStatusPaid(@PathVariable String id) {
+    public ResponseEntity<OrderResponse> changeOrderStatusPaid(@PathVariable Integer id) {
         return ResponseEntity.ok(orderService.changePaymentStatusPaid(id));
     }
     @PutMapping("/admin/PaymentStatusUnpaid/{id}")
-    public ResponseEntity<Order> changeOrderStatusUnpaid(@PathVariable String id) {
+    public ResponseEntity<OrderResponse> changeOrderStatusUnpaid(@PathVariable Integer id) {
         return ResponseEntity.ok(orderService.changePaymentStatusUnPaid(id));
     }
     // Xóa đơn hàng theo ID
     @DeleteMapping("/admin/{id}")
-    public ResponseEntity<String> deleteOrder(@PathVariable String id) {
+    public ResponseEntity<String> deleteOrder(@PathVariable Integer id) {
         return ResponseEntity.ok(orderService.deleteOrder(id)? "Xóa thành công" : "Xóa không thành công");
     }
 }

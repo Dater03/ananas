@@ -12,5 +12,4 @@ import java.math.BigDecimal;
 public class Order_Items_Create {
     int productId;
     Integer quantity;
-    BigDecimal price;
 }

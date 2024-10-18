@@ -18,8 +18,8 @@ import java.sql.Timestamp;
 public class Voucher {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    String voucherId;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    Integer voucherId;
 
     @Column(name = "code", nullable = false, unique = true)
     String code;

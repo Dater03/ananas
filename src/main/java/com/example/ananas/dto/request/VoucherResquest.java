@@ -19,10 +19,11 @@ public class VoucherResquest {
     String code;
 
     @NotNull(message = "Loại giảm giá không được để trống")
-    DiscountType discountType;
+    String discountType;
 
     @NotNull(message = "Giá trị giảm giá không được để trống")
-    @DecimalMin(value = "0.0", inclusive = false, message = "Giá trị giảm giá phải lớn hơn 0")
+    @DecimalMin(value = "1.0", inclusive = true, message = "Giá trị giảm giá phải lớn hơn hoặc bằng 1")
+    @DecimalMax(value = "100.0", inclusive = true, message = "Giá trị giảm giá phải nhỏ hơn hoặc bằng 100")
     BigDecimal discountValue;
 
     @Size(max = 255, message = "Mô tả không được vượt quá 255 ký tự")
@@ -49,4 +50,5 @@ public class VoucherResquest {
 
     @NotNull(message = "Thời gian tạo không được để trống")
     Timestamp createdAt;
+
 }

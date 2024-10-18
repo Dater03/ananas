@@ -1,9 +1,8 @@
 package com.example.ananas.controller;
 import com.example.ananas.dto.request.VoucherResquest;
-import com.example.ananas.dto.response.ApiResponse;
 import com.example.ananas.dto.response.VoucherResponse;
 import com.example.ananas.entity.voucher.Voucher;
-import com.example.ananas.service.Service.VoucherService;
+import com.example.ananas.service.IService.IVoucherService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +18,7 @@ import java.util.List;
 public class VoucherController {
 
     @Autowired
-    private VoucherService voucherService;
+    private IVoucherService voucherService;
 
 // Phương thức chung
 
@@ -42,9 +41,10 @@ public class VoucherController {
         Voucher voucher1 = voucherService.createVoucher(voucher);
         return ResponseEntity.ok(voucher1);
     }
+
     // Cập nhật voucher - void updateVoucher(VoucherUpdateRequest voucherUpdateRequest)
     @PutMapping("/admin/update")
-    public  ResponseEntity<Voucher> updateVoucher(@Valid @RequestBody VoucherResquest voucher) {
+    public  ResponseEntity<Voucher> updateVoucher( @Valid @RequestBody VoucherResquest voucher){
         Voucher voucher1 = voucherService.updateVoucher(voucher);
         return ResponseEntity.ok(voucher1);
     }

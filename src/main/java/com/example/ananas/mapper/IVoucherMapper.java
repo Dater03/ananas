@@ -18,6 +18,7 @@ public interface IVoucherMapper {
     void updateVoucher(@MappingTarget Voucher voucher, VoucherResquest voucherResquest);
 
     @Mapping(source = "createdAt", target = "createdAt")
+    @Mapping(target = "discountType", ignore = true)
     Voucher voucherRequestToVoucher(VoucherResquest voucherResquest);
 
 }
