@@ -1,10 +1,11 @@
-package com.example.ananas.entity;
+package com.example.ananas.entity.order;
 
+import com.example.ananas.entity.Order_Item;
+import com.example.ananas.entity.User;
+import com.example.ananas.entity.voucher.Voucher;
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -15,36 +16,29 @@ import java.util.List;
 
 @Data
 @NoArgsConstructor
-@AllArgsConstructor
 @Entity
 @Table(name = "orders")
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class Order {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    int id;
-
-    @Column(name = "user_id")
-    int userId;
-
-    @Column(name = "voucher_id")
-    int voucherId;
+    @GeneratedValue(strategy = GenerationType.UUID)
+    String id;
 
     @ManyToOne
-    @JoinColumn(name = "user_id", nullable = false,updatable = false, insertable = false)
+    @JoinColumn(name = "user_id")
     @JsonBackReference
     User user;
 
     @ManyToOne
-    @JoinColumn(name = "voucher_id", nullable = false,updatable = false, insertable = false)
+    @JoinColumn(name = "voucher_id")
     @JsonBackReference
     Voucher voucher;
 
     @Column(name = "total_amount", nullable = false)
-    BigDecimal totalAmount; // Được sử dụng để lưu trữ số thực với độ chính xác cao
+    BigDecimal totalAmount; // tổng giá trị của đơn hàng trước khi áp dụng voucher
 
     @Column(name = "total_price")
-    BigDecimal totalPrice;
+    BigDecimal totalPrice; // tổng tổng giá trị của đơn hàng sau khi áp dụng voucher
 
     @Column(name = "status", nullable = false)
     @Enumerated(EnumType.STRING)
@@ -74,18 +68,13 @@ public class Order {
     Timestamp updatedAt;
 
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonManagedReference
-    List<Order_Item> order_item;
+    List<Order_Item> orderItems;
+
+    @PrePersist
+    public void prePersist() {
+        if (this.status == null) this.status = OrderStatus.PENDING;
+        if(this.paymentStatus == null)  this.paymentStatus = PaymentStatus.UNPAID;
+        if(this.createdAt == null)  this.createdAt = new Timestamp(System.currentTimeMillis());
+    }
 }
 
-enum OrderStatus {
-    PENDING, SHIPPED, DELIVERED, CANCELED
-}
-
-enum PaymentMethod {
-    CREDIT_CARD, PAYPAL, CASH_ON_DELIVERY
-}
-
-enum PaymentStatus {
-    PAID, UNPAID
-}
