@@ -9,6 +9,7 @@ import com.example.ananas.entity.Category;
 import com.example.ananas.entity.Product;
 import com.example.ananas.entity.ProductVariant;
 import com.example.ananas.entity.Product_Image;
+import com.example.ananas.exception.IdException;
 import com.example.ananas.mapper.IProductImageMapper;
 import com.example.ananas.mapper.IProductMapper;
 import com.example.ananas.mapper.IProductVariantMapper;
@@ -24,6 +25,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -126,8 +128,12 @@ public class ProductService implements IProductService {
     }
 
     @Override
-    public void deleteProduct(int id) {
-        this.productVariantRepository.deleteProductVariantsByProduct(this.productRepository.findById(id).get());
+    @Transactional
+    public void deleteProduct(int id)  {
+//        List<ProductVariant> productVariants = this.productVariantRepository.findProductVariantsByProduct(this.productRepository.findById(id).get());
+//        if (productVariants.size() != 0)
+//            this.productVariantRepository.deleteProductVariantsByProduct(this.productRepository.findById(id).get());
+
         this.productRepository.deleteById(id);
     }
 

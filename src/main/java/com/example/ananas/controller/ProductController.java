@@ -67,7 +67,7 @@ public class ProductController {
     //xoa san pham
     @DeleteMapping("product/{id}") //luu y khi xoa san pham can xoa tat ca cac bien the cua no truoc moi có the xoa duoc
 
-    public ResponseEntity<String> delteProduct(@PathVariable int id) throws IdException
+    public ResponseEntity<String> deleteProduct(@PathVariable int id) throws IdException
     {
         if(!this.productService.exisById(id))
             throw new IdException("không tồn tại id sản phẩm");
