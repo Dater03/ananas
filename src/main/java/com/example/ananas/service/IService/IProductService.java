@@ -5,6 +5,7 @@ import com.example.ananas.dto.response.ProductImagesResponse;
 import com.example.ananas.dto.response.ProductResponse;
 import com.example.ananas.dto.response.ResultPaginationDTO;
 import com.example.ananas.entity.Product;
+import com.example.ananas.entity.ProductVariant;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.web.multipart.MultipartFile;
@@ -13,7 +14,7 @@ import java.io.IOException;
 import java.util.List;
 
 public interface IProductService {
-    ProductCreateRequest createProduct(ProductCreateRequest productCreateRequest);
+    ProductResponse createProduct(ProductCreateRequest productCreateRequest);
 
     ProductResponse getOneProduct(int id);
 
@@ -30,4 +31,6 @@ public interface IProductService {
     List<ProductImagesResponse> getAllImages(int id);
 
     void deleteImages(int id);
+
+    List<ProductVariant> getAllProductVariants(int id);
 }

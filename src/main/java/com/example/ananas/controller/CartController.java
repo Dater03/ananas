@@ -23,15 +23,17 @@ public class CartController {
     // thêm một sản phẩm vào giỏ hàng
     @PostMapping("/cart")
     public ResponseEntity<String> addProductToCart(@RequestParam(name = "userId") int userId,
-                                                   @RequestParam(name = "productId") int productId, @RequestParam(name = "quantity") int quantity)
+                                                   @RequestParam(name = "productId") int productId, @RequestParam(name = "quantity") int quantity,
+                                                   @RequestParam(name = "size") int size, @RequestParam(name = "color") String color)
     {
+
         if(!this.userRepository.existsById(userId))
         {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body("Đã xảy ra lỗi khi thêm vào giỏ hàng: id người dùng không tồn tại" );
         }
         try {
-            this.cartService.addProductToCart(userId, productId, quantity);
+            this.cartService.addProductToCart(userId, productId,size, color, quantity);
             return ResponseEntity.ok("Thêm thành công vào giỏ hàng");
         } catch (Exception e) {
             e.printStackTrace();

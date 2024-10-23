@@ -1,7 +1,10 @@
 package com.example.ananas.dto.request;
 
+import com.example.ananas.dto.ProductVatriantDTO;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
+
+import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -12,11 +15,8 @@ public class ProductCreateRequest {
     String productName;
     String description;
     double price;
-    int stock;
     double discount;
-    int size;
-    String color;
     String material;
     String category;
-
+    List<ProductVatriantDTO> variants; // danh sach ca bien the
 }

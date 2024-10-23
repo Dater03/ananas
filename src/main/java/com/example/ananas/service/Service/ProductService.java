@@ -1,15 +1,19 @@
 package com.example.ananas.service.Service;
 
+import com.example.ananas.dto.ProductVatriantDTO;
 import com.example.ananas.dto.request.ProductCreateRequest;
 import com.example.ananas.dto.response.ProductImagesResponse;
 import com.example.ananas.dto.response.ProductResponse;
 import com.example.ananas.dto.response.ResultPaginationDTO;
 import com.example.ananas.entity.Category;
 import com.example.ananas.entity.Product;
+import com.example.ananas.entity.ProductVariant;
 import com.example.ananas.entity.Product_Image;
 import com.example.ananas.mapper.IProductImageMapper;
 import com.example.ananas.mapper.IProductMapper;
+import com.example.ananas.mapper.IProductVariantMapper;
 import com.example.ananas.repository.Category_Repository;
+import com.example.ananas.repository.ProductVariant_Repository;
 import com.example.ananas.repository.Product_Image_Repository;
 import com.example.ananas.repository.Product_Repository;
 import com.example.ananas.service.IService.IProductService;
@@ -40,21 +44,27 @@ public class ProductService implements IProductService {
     Category_Repository categoryRepository;
     IProductMapper productMapper;
     IProductImageMapper productImageMapper;
+    ProductVariant_Repository productVariantRepository;
+    IProductVariantMapper productVariantMapper;
     @Override
-    public ProductCreateRequest createProduct(ProductCreateRequest productCreateRequest) {
-        Product product = new Product();
-        product.setProductName(productCreateRequest.getProductName());
-        product.setCategory(this.categoryRepository.findByCategoryName(productCreateRequest.getCategory()));
-        product.setColor(productCreateRequest.getColor());
-        product.setDescription(productCreateRequest.getDescription());
-        product.setDiscount(productCreateRequest.getDiscount());
-        product.setMaterial(productCreateRequest.getMaterial());
-        product.setPrice(productCreateRequest.getPrice());
-        product.setSize(productCreateRequest.getSize());
-        product.setStock(productCreateRequest.getStock());
-        product.setSoldQuantity(0);
-        this.productRepository.save(product);
-        return productCreateRequest;
+    public ProductResponse createProduct(ProductCreateRequest productCreateRequest) {
+
+        Product createProduct = this.productMapper.toProduct(productCreateRequest);
+        Category category = this.categoryRepository.findByCategoryName(productCreateRequest.getCategory());
+        createProduct.setCategory(category);
+
+        Product product =  this.productRepository.save(createProduct);
+        List<ProductVatriantDTO> productVatriantDTOList = productCreateRequest.getVariants();
+        productVatriantDTOList.stream().forEach(item ->{
+            ProductVariant productVariant = new ProductVariant();
+            productVariant.setSize(item.getSize());
+            productVariant.setColor(item.getColor());
+            productVariant.setStock(item.getStock());
+            productVariant.setProduct(product);
+            this.productVariantRepository.save(productVariant);
+        });
+
+        return this.productMapper.toProductResponse(createProduct);
     }
 
     @Override
@@ -90,15 +100,23 @@ public class ProductService implements IProductService {
         product.setProductName(productCreateRequest.getProductName());
         Category updateCategory = this.categoryRepository.findByCategoryName(productCreateRequest.getCategory());
         product.setCategory(updateCategory);
-        product.setColor(productCreateRequest.getColor());
         product.setDescription(productCreateRequest.getDescription());
         product.setDiscount(productCreateRequest.getDiscount());
         product.setMaterial(productCreateRequest.getMaterial());
         product.setPrice(productCreateRequest.getPrice());
-        product.setSize(productCreateRequest.getSize());
-        product.setStock(productCreateRequest.getStock());
         this.productRepository.save(product);
-        return this.productMapper.toProductResponse(this.productRepository.save(product));
+
+
+        List<ProductVatriantDTO> productVatriantDTOList = productCreateRequest.getVariants();
+        productVatriantDTOList.stream().forEach(item ->{
+            ProductVariant productVariant = new ProductVariant();
+            productVariant.setSize(item.getSize());
+            productVariant.setColor(item.getColor());
+            productVariant.setStock(item.getStock());
+            productVariant.setProduct(product);
+            this.productVariantRepository.save(productVariant);
+        });
+        return this.productMapper.toProductResponse(product);
 
     }
 
@@ -109,6 +127,7 @@ public class ProductService implements IProductService {
 
     @Override
     public void deleteProduct(int id) {
+        this.productVariantRepository.deleteProductVariantsByProduct(this.productRepository.findById(id).get());
         this.productRepository.deleteById(id);
     }
 
@@ -147,5 +166,11 @@ public class ProductService implements IProductService {
     @Override
     public void deleteImages(int id) {
         this.productImageRepository.deleteById(id);
+    }
+
+    @Override
+    public List<ProductVariant> getAllProductVariants(int id) {
+
+        return this.productVariantRepository.findProductVariantsByProduct(this.productRepository.findById(id).get());
     }
 }

@@ -7,6 +7,7 @@ import com.example.ananas.dto.response.ResultPaginationDTO;
 import com.example.ananas.entity.Product;
 import com.example.ananas.exception.IdException;
 import com.example.ananas.service.Service.ProductService;
+import com.example.ananas.entity.ProductVariant;
 import com.turkraft.springfilter.boot.Filter;
 import jakarta.validation.Valid;
 import lombok.AccessLevel;
@@ -30,12 +31,13 @@ public class ProductController {
     ProductService productService;
 
 
-    @PostMapping("/product")
-    public ResponseEntity<ProductCreateRequest> createProduct(@RequestBody @Valid ProductCreateRequest productCreateRequest)
+    @PostMapping("/product") //
+    public ResponseEntity<ProductResponse> createProduct(@RequestBody @Valid ProductCreateRequest productCreateRequest)
     {
         return ResponseEntity.status(HttpStatus.CREATED).body(productService.createProduct(productCreateRequest));
     }
 
+    //lay ra một ẩn pham
     @GetMapping("/product/{id}")
     public ResponseEntity<ProductResponse> getOneProduct(@PathVariable int id) throws IdException
     {
@@ -45,19 +47,26 @@ public class ProductController {
         }
         return ResponseEntity.ok(productService.getOneProduct(id));
     }
+
+    //lay ra toan bo san pham
     @GetMapping("/product")
     public ResponseEntity<ResultPaginationDTO> getAllProduct(@Filter Specification<Product> spec , Pageable pageable)
     {
         return ResponseEntity.ok(productService.getAllProduct(spec, pageable));
     }
-    @PutMapping("product/{id}")
+
+    //cap nhat san pham va cac bien the cua no
+    @PutMapping("product/{id}") // can sua tinh nang sua cac bien the cua san pham
     public ResponseEntity<ProductResponse> updateProduct(@PathVariable int id, @RequestBody ProductCreateRequest productCreateRequest) throws IdException
     {
         if(!this.productService.exisById(id))
             throw new IdException("id sản phẩm không tồn tại");
         return ResponseEntity.ok(productService.updateProduct(id,productCreateRequest));
     }
-    @DeleteMapping("product/{id}")
+
+    //xoa san pham
+    @DeleteMapping("product/{id}") //luu y khi xoa san pham can xoa tat ca cac bien the cua no truoc moi có the xoa duoc
+
     public ResponseEntity<String> delteProduct(@PathVariable int id) throws IdException
     {
         if(!this.productService.exisById(id))
@@ -66,6 +75,7 @@ public class ProductController {
         return ResponseEntity.ok("xóa thành công sản phẩm có id: "+id);
     }
 
+    //them anh cho san pham
     @PutMapping("product/add_images/{id}")
     public ResponseEntity<String> addImages(@PathVariable int id, @RequestParam(name = "image")MultipartFile[] files) throws IdException, IOException {
         if(!this.productService.exisById(id))
@@ -73,6 +83,8 @@ public class ProductController {
         this.productService.uploadImages(id,files);
         return ResponseEntity.ok("them thanh cong");
     }
+
+    //lay ra toan bo anh cua san pham
     @GetMapping("/product/images/{id}")
     public ResponseEntity<List<ProductImagesResponse>> getAllImages(@PathVariable int id) throws IdException
     {
@@ -81,8 +93,8 @@ public class ProductController {
         return ResponseEntity.ok(this.productService.getAllImages(id));
     }
 
-    //phương thức xóa ảnh của sản phaam
 
+    //phương thức xóa ảnh của sản phaam
     @DeleteMapping("product/images/{id}")
     public ResponseEntity<String> deleteImages(@PathVariable int id) throws IdException
     {
@@ -92,5 +104,18 @@ public class ProductController {
 
         return ResponseEntity.ok("xoa thành công");
     }
+
+// các phương thức liên quan đến biến thể của sản phẩm
+    //phương thức lấy ra tất cả các biến thể của sản phẩm
+    @GetMapping("product/variants/{id}")
+    public ResponseEntity<List<ProductVariant>> getAllProductvariants(@PathVariable int id) throws IdException
+    {
+        if(!this.productService.exisById(id))
+        {
+            throw new IdException("id sản phẩm không tồn tại");
+        }
+        return ResponseEntity.ok(this.productService.getAllProductVariants(id));
+    }
+
 
 }

@@ -13,10 +13,11 @@ public class ProductResponse {
     String productName;
     String description;
     double price;
-    int stock;
+//    int stock;
+//    int size;
+//    String color;
     double discount;
-    int size;
-    String color;
     String material;
     String category;
+    int soldQuantity;
 }

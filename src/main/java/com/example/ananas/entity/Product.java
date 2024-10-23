@@ -33,20 +33,20 @@ public class Product {
     @Column(name = "price")
     double price;
 
-    @Column(name = "stock")
-    int stock;
-
     @Column(name = "discount")
     double discount;
 
-    @Column(name = "sold_quantity")
-    int soldQuantity;
+    @Column(name = "sold_quantity", columnDefinition = "int default 0")
+    int soldQuantity; //
 
-    @Column(name = "size")
-    int size;
-
-    @Column(name = "color")
-    String color;
+//    @Column(name = "size")
+//    int size;
+//
+//    @Column(name = "color")
+//    String color;
+//
+//    @Column(name = "stock")
+//    int stock;
 
     @Column(name = "material")
     String material;
@@ -60,9 +60,6 @@ public class Product {
     @JsonManagedReference("product-productImages")
     List<Product_Image> productImages;
 
-    @OneToMany(mappedBy = "product")
-    @JsonManagedReference
-    List<Cart_Item> cartItems;
 
     @OneToMany(mappedBy = "product")
     @JsonManagedReference
@@ -71,6 +68,10 @@ public class Product {
     @OneToMany(mappedBy = "product")
     @JsonManagedReference
     List<Order_Item> orderItems;
+
+    @OneToMany(mappedBy = "product")
+    @JsonManagedReference
+    List<ProductVariant> productVariants;
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", timezone = "UTC")
     private Instant createdAt;
