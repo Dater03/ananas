@@ -88,7 +88,9 @@ public class ProductService implements IProductService {
         mt.setTotal(productPage.getTotalElements());
 
         rs.setMeta(mt);
-        rs.setResult(this.productMapper.toProductResponseList(productPage.getContent()));
+        List<Product> productList = productPage.getContent();
+        List<ProductResponse> productResponseList = this.productMapper.toProductResponseList(productPage.getContent());
+        rs.setResult(productResponseList);
 
         return rs;
 
