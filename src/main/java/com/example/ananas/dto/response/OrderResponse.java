@@ -43,6 +43,8 @@ public class OrderResponse {
 
     String recipientAddress;
 
+    String description;
+
     Timestamp createdAt;
 
     Timestamp updatedAt;

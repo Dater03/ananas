@@ -61,6 +61,9 @@ public class Order {
     @Column(name = "recipient_address", nullable = false)
     String recipientAddress;
 
+    @Column(name = "description")
+    String description;
+
     @Column(name = "created_at", nullable = false)
     Timestamp createdAt; // bao gồm cả phần giây, phút, giờ, ngày, tháng, và năm
 

@@ -2,53 +2,51 @@ package com.example.ananas.controller;
 
 import com.example.ananas.dto.request.OrderCreate;
 import com.example.ananas.dto.request.OrderUpdateUser;
-import com.example.ananas.dto.response.ApiResponse;
 import com.example.ananas.dto.response.OrderResponse;
-import com.example.ananas.entity.order.Order;
+import com.example.ananas.dto.response.ResultPaginationDTO;
 import com.example.ananas.service.Service.OrderService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("/order")
 public class OrderController {
 
     @Autowired
     private OrderService orderService;
 
+    @GetMapping("/admin/list")
+    public ResponseEntity<ResultPaginationDTO> getOrdersForAdmin (Pageable pageable) {
+        return ResponseEntity.ok(orderService.getOrdersForAdmin(pageable));
+    }
+
+    // Xem tất cả các đơn hàng theo username
+    @GetMapping("/{username}")
+    public ResponseEntity<ResultPaginationDTO> getOrderByUsername(@PathVariable String username, Pageable pageable) {
+        return ResponseEntity.ok(orderService.getOrderByUsername(username, pageable));
+    }
+
     // Tạo đơn hàng
     @PostMapping("/create/{userId}")
     public ResponseEntity<OrderResponse> createOrder(@PathVariable("userId") Integer userId, @RequestBody OrderCreate order) {
         return ResponseEntity.ok(orderService.createOrder(userId,order));
     }
-    // Xem các đơn hàng mới tạo (PENDING, SHIPPED)
-    @GetMapping("/newOrder/{username}")
-    public ResponseEntity<List<OrderResponse>> getNewOrder(@PathVariable String username) {
-        return ResponseEntity.ok(orderService.getNowOrder(username));
-    }
-    // Xem lịch sử mua hàng (đã thanh toan)
-    @GetMapping("/historyOrder/{username}")
-    public ResponseEntity<List<OrderResponse>> getHistoryOrder(@PathVariable String username) {
-        return ResponseEntity.ok(orderService.getHistoryOrder(username));
-    }
-    // Xem các đơn hàng đã hủy
-    @GetMapping("/listCancelOrder/{username}")
-    public ResponseEntity<List<OrderResponse>> getListCancelOrder(@PathVariable String username) {
-        return ResponseEntity.ok(orderService.getCancelOrder(username));
-    }
+
     // Cập nhật đơn hàng
     @PutMapping("/updateOrder/{orderId}")
     public ResponseEntity<OrderResponse> updateOrder(@PathVariable Integer orderId, @RequestBody OrderUpdateUser orderUpdateUser)
     {
         return ResponseEntity.ok(orderService.updateOrder(orderId,orderUpdateUser));
     }
-    // Xem tất cả các đơn hàng theo username
-    @GetMapping("/{username}")
-    public ResponseEntity<List<OrderResponse>> getOrderByUsername(@PathVariable String username) {
-        return ResponseEntity.ok(orderService.getOrderByUsername(username));
+
+    // Xóa đơn hàng theo ID
+    @DeleteMapping("/admin/{id}")
+    public ResponseEntity<String> deleteOrder(@PathVariable Integer id) {
+        return ResponseEntity.ok(orderService.deleteOrder(id)? "Xóa thành công" : "Xóa không thành công");
     }
 
     // Hủy đơn hàng
@@ -58,40 +56,34 @@ public class OrderController {
         if(orderService.cancelOrder(orderId)) result = "Successed";
         return ResponseEntity.ok(result);
     }
-// Phương thức Admin riêng
 
-    // Xem danh sách đơn hàng
-    @GetMapping("/admin/list")
-    public ResponseEntity<List<OrderResponse>> getOrdersForAdmin () {
-        return ResponseEntity.ok(orderService.getOrdersForAdmin());
-    }
     //  Cập nhật trạng thái đơn hàng
-    @PutMapping("/admin/statusOrderPending/{id}")
-    public ResponseEntity<OrderResponse> getOrderStatusPending(@PathVariable Integer id) {
-        ApiResponse<Order> apiResponse = new ApiResponse<>();
-        return ResponseEntity.ok(orderService.changeOrderStatusPending(id));
+    @PutMapping("/admin/statusOrder/{id}")
+    public ResponseEntity<OrderResponse> getOrderStatus(@PathVariable Integer id, @RequestParam("status") String status) {
+        return ResponseEntity.ok(orderService.changeOrderStatus(id, status));
     }
-    @PutMapping("/admin/statusOrderShipped/{id}")
-    public ResponseEntity<OrderResponse> getOrderStatusShipped(@PathVariable Integer id) {
-        return ResponseEntity.ok(orderService.changeOrderStatusShipped(id));
+    @PutMapping("/admin/paymentStatus/{id}")
+    public ResponseEntity<OrderResponse> getOrderPaymentStatus(@PathVariable Integer id, @RequestParam("paymentStatus") String paymentStatus) {
+        return ResponseEntity.ok(orderService.changePaymentStatus(id, paymentStatus));
     }
-    @PutMapping("/admin/statusOrderDelivered/{id}")
-    public ResponseEntity<OrderResponse> getOrderStatusDelivered(@PathVariable Integer id) {
-        return ResponseEntity.ok(orderService.changeOrderStatusDelivered(id));
+
+    @GetMapping("/listOrderByStatus/{username}") //
+    public ResponseEntity<ResultPaginationDTO> getOrdersByStatus(@PathVariable String username, @RequestParam("status") String status, Pageable pageable) {
+        return ResponseEntity.ok(orderService.getOrderByUserNameAndStatusOrder(username, status, pageable));
     }
-    // Cập nhật trạng thái thanh toán
-    @PutMapping("/admin/PaymentStatusPaid/{id}")
-    public ResponseEntity<OrderResponse> changeOrderStatusPaid(@PathVariable Integer id) {
-        return ResponseEntity.ok(orderService.changePaymentStatusPaid(id));
+    @GetMapping("/admin/listOrderByStatus")
+    public ResponseEntity<ResultPaginationDTO> getOrdersByStatusForAdmin(@RequestParam("status") String status, Pageable pageable) {
+        return ResponseEntity.ok(orderService.getOrderByStatusOrder(status, pageable));
     }
-    @PutMapping("/admin/PaymentStatusUnpaid/{id}")
-    public ResponseEntity<OrderResponse> changeOrderStatusUnpaid(@PathVariable Integer id) {
-        return ResponseEntity.ok(orderService.changePaymentStatusUnPaid(id));
+
+    @GetMapping("/listOrderByPaymentStatus/{username}")
+    public ResponseEntity<ResultPaginationDTO> getOrderByUserNameAndPaymentStatus(@PathVariable String username, @RequestParam("paymentStatus") String paymentStatus, Pageable pageable) {
+        return ResponseEntity.ok(orderService.getOrderByUserNameAndPaymentStatus(username, paymentStatus, pageable));
     }
-    // Xóa đơn hàng theo ID
-    @DeleteMapping("/admin/{id}")
-    public ResponseEntity<String> deleteOrder(@PathVariable Integer id) {
-        return ResponseEntity.ok(orderService.deleteOrder(id)? "Xóa thành công" : "Xóa không thành công");
+    @GetMapping("/admin/listOrderByPaymentStatus")
+    public ResponseEntity<ResultPaginationDTO> getOrderByPaymentStatus(@RequestParam("paymentStatus") String paymentStatus, Pageable pageable) {
+        return ResponseEntity.ok(orderService.getOrderByPaymentStatus(paymentStatus, pageable));
     }
+
 }
 

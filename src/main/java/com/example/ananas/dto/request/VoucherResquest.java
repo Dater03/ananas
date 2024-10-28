@@ -48,7 +48,6 @@ public class VoucherResquest {
     @FutureOrPresent(message = "Ngày kết thúc phải là ngày hiện tại hoặc trong tương lai")
     Date endDate;
 
-    @NotNull(message = "Thời gian tạo không được để trống")
     Timestamp createdAt;
 
 }

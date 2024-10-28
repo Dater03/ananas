@@ -1,6 +1,7 @@
 package com.example.ananas.service.Service;
 
 import com.example.ananas.dto.request.VoucherResquest;
+import com.example.ananas.dto.response.ResultPaginationDTO;
 import com.example.ananas.dto.response.VoucherResponse;
 import com.example.ananas.entity.voucher.DiscountType;
 import com.example.ananas.entity.voucher.Voucher;
@@ -13,12 +14,14 @@ import lombok.AccessLevel;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.time.Instant;
-import java.time.LocalDateTime;
 import java.util.*;
 
 @Service
@@ -27,12 +30,24 @@ import java.util.*;
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class VoucherService implements IVoucherService {
 
-    private Voucher_Repository voucherRepository;
-    private IVoucherMapper  mapper;
+     Voucher_Repository voucherRepository;
+     IVoucherMapper  mapper;
 
     @Override
-    public List<Voucher> getAllVouchersForAdmin() {
-        return voucherRepository.findAll();
+    public ResultPaginationDTO getAllVouchersForAdmin(Specification<Voucher> specification, Pageable pageable) {
+        Page<Voucher> vouchers = voucherRepository.findAll(specification, pageable);
+        ResultPaginationDTO paginationDTO = new ResultPaginationDTO();
+        ResultPaginationDTO.Meta meta = new ResultPaginationDTO.Meta();
+
+        meta.setPage(pageable.getPageNumber() + 1);
+        meta.setPageSize(pageable.getPageSize());
+
+        meta.setTotal(vouchers.getTotalElements());
+        meta.setPages(vouchers.getTotalPages());
+
+        paginationDTO.setMeta(meta);
+        paginationDTO.setResult(vouchers.getContent());
+        return paginationDTO;
     }
 
     @Override
@@ -96,10 +111,9 @@ public class VoucherService implements IVoucherService {
         }
         Date now = new Date(System.currentTimeMillis());
 
-        if(now.before(voucher.getCreatedAt()) || now.after(voucher.getCreatedAt()))  return false; // Chưa được áp dụng or hết hạn áp dụng
+        if(now.before(voucher.getStartDate()) || now.after(voucher.getEndDate())) return false; // Chưa được áp dụng or hết hạn áp dụng
 
-        if(voucher.getUsageLimit() != null && voucher.getUsageLimit() <= 0) return false; // Hết số lượng
-
+        if(voucher.getUsageLimit() != null && voucher.getUsageLimit() <= 0) return false;
         return true;
     }
 
@@ -116,7 +130,7 @@ public class VoucherService implements IVoucherService {
 
         else sumPriceDiscount = voucher.getDiscountValue().multiply(BigDecimal.valueOf(1000));
 
-        if(sumPriceDiscount.compareTo(voucher.getMaxDiscount()) <= 0) return sumPriceDiscount;
-        return voucher.getMaxDiscount();
+        if(sumPriceDiscount.compareTo(voucher.getMaxDiscount()) <= 0) return priceBefore.subtract(sumPriceDiscount);
+        return priceBefore.subtract(voucher.getMaxDiscount());
     }
 }

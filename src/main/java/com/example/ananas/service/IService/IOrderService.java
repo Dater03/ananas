@@ -3,15 +3,16 @@ package com.example.ananas.service.IService;
 import com.example.ananas.dto.request.OrderCreate;
 import com.example.ananas.dto.request.OrderUpdateUser;
 import com.example.ananas.dto.response.OrderResponse;
-import com.example.ananas.entity.order.Order;
+import com.example.ananas.dto.response.ResultPaginationDTO;
+import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 
 public interface IOrderService {
 
-    List<OrderResponse> getOrdersForAdmin();
+    ResultPaginationDTO getOrdersForAdmin(Pageable pageable);
 
-    List<OrderResponse> getOrderByUsername(String username);
+    ResultPaginationDTO getOrderByUsername(String username, Pageable pageable);
 
     OrderResponse createOrder(Integer userId, OrderCreate orderCreate);
 
@@ -19,23 +20,18 @@ public interface IOrderService {
 
     boolean deleteOrder(Integer orderId);
 
-    OrderResponse changeOrderStatusShipped(Integer orderId);
+    OrderResponse changeOrderStatus(Integer orderId, String orderStatus);
 
-    OrderResponse changeOrderStatusDelivered(Integer orderId);
-
-    OrderResponse changeOrderStatusPending(Integer orderId);
-
-    OrderResponse changePaymentStatusPaid(Integer orderId);
-
-    OrderResponse changePaymentStatusUnPaid(Integer orderId);
+    OrderResponse changePaymentStatus(Integer orderId, String paymentStatus);
 
     boolean cancelOrder(Integer orderId);
 
-    List<OrderResponse> getNowOrder(String username);
+    ResultPaginationDTO getOrderByUserNameAndStatusOrder(String username, String status, Pageable pageable);
 
-    List<OrderResponse> getCancelOrder(String username);
+    ResultPaginationDTO getOrderByStatusOrder(String status, Pageable pageable);
 
-    List<OrderResponse> getHistoryOrder(String username);
+    ResultPaginationDTO  getOrderByUserNameAndPaymentStatus(String username, String paymentStatus, Pageable pageable);
 
+    ResultPaginationDTO getOrderByPaymentStatus(String payMentStatus, Pageable pageable);
 
 }
