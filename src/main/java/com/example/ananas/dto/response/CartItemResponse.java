@@ -9,7 +9,17 @@ import lombok.experimental.FieldDefaults;
 @Builder
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class CartItemResponse {
-    int variantId;
-    String product;
+    ProductVariantCart product;
     int quantity;
+
+    @AllArgsConstructor
+    @NoArgsConstructor
+    @Data
+    @FieldDefaults(level = AccessLevel.PRIVATE)
+    public static class ProductVariantCart{
+        String productName;
+        String color;
+        int size;
+        int stock;
+    }
 }

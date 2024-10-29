@@ -20,4 +20,5 @@ public class ProductResponse {
     String material;
     String category;
     int soldQuantity;
+
 }

@@ -65,6 +65,9 @@ public class PaymentController {
         if (computedHash.equals(vnp_SecureHash)) {
             String vnp_ResponseCode = params.get("vnp_ResponseCode");
             if ("00".equals(vnp_ResponseCode)) {
+                // thao tác lưu hóa đơn <<thêm sau :v
+                //dùng một bảng phụ để lưu các thông tin liên quan đến đơn hàng gửi đi trước khi thanh toán.
+
                 return "Giao dịch thành công";
             } else {
                 return "Giao dịch thất bại";

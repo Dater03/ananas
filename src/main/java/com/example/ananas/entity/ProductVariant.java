@@ -26,7 +26,7 @@ public class ProductVariant {
     @Column(name = "size")
     int size;
 
-    @Column(name = "color")
+    @Column(name = "color",columnDefinition = "TEXT")
     String color;
 
     @Column(name = "stock")

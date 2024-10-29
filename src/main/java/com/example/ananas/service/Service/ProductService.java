@@ -72,7 +72,8 @@ public class ProductService implements IProductService {
     @Override
     public ProductResponse getOneProduct(int id) {
 
-        return productMapper.toProductResponse(this.productRepository.findById(id).get());
+        Product product = this.productRepository.findById(id).get();
+        return productMapper.toProductResponse(product);
     }
 
     @Override
