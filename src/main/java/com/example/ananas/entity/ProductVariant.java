@@ -38,6 +38,10 @@ public class ProductVariant {
     @JsonIgnore
     List<Cart_Item> cartItems;
 
+    @OneToMany(mappedBy = "productVariant", cascade = CascadeType.REMOVE)
+    @JsonManagedReference
+    List<Order_Item> orderItems;
+
     @ManyToOne
     @JoinColumn(name = "product_id")
     @JsonBackReference

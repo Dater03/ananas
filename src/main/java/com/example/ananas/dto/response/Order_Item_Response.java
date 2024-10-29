@@ -12,8 +12,10 @@ import java.math.BigDecimal;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class Order_Item_Response {
-    int productId;
+    int productVariantId;
     String productName;
+    int size;
+    String color;
     Integer quantity;
     String description;
     double price_original;

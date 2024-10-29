@@ -10,6 +10,6 @@ import java.math.BigDecimal;
 @NoArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class Order_Items_Create {
-    int productId;
+    int productVariantId;
     Integer quantity;
 }

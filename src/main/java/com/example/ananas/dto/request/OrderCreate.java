@@ -29,6 +29,8 @@ public class OrderCreate {
     @NotBlank(message = "Địa chỉ người nhận không được để trống")
     String recipientAddress;
 
+    String description;
+
     @NotEmpty(message = "Danh sách sản phẩm không được để trống")
     List<Order_Items_Create> orderItems;
 }

@@ -1,11 +1,15 @@
 package com.example.ananas.controller;
 import com.example.ananas.dto.request.VoucherResquest;
+import com.example.ananas.dto.response.ResultPaginationDTO;
 import com.example.ananas.dto.response.VoucherResponse;
 import com.example.ananas.entity.voucher.Voucher;
 import com.example.ananas.service.IService.IVoucherService;
+import com.turkraft.springfilter.boot.Filter;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -31,8 +35,8 @@ public class VoucherController {
 // Admin riêng
 
     @GetMapping("/admin/list")
-    public ResponseEntity<List<Voucher>> getAllVouchersForAdmin() {
-        return ResponseEntity.ok(voucherService.getAllVouchersForAdmin());
+    public ResponseEntity<ResultPaginationDTO> getAllVouchersForAdmin(@Filter Specification<Voucher> specification, Pageable pageable) {
+        return ResponseEntity.ok(voucherService.getAllVouchersForAdmin(specification, pageable));
     }
 
     // Tạo voucher mới - VoucherResponse createVoucher(VoucherRequest voucherRequest)

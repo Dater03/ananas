@@ -21,16 +21,18 @@ public interface IOrderMapper {
     @Mapping(source = "user.userId", target = "userId")
     @Mapping(source = "voucher.code", target = "code")
     @Mapping(source = "id", target = "id")
+    @Mapping(source = "description", target = "description")
     OrderResponse orderToOrderResponse(Order order);
     // Map Order_Item to Order_Item_Response
     List<Order_Item_Response> orderItemsToOrderItemResponses(List<Order_Item> orderItems);
-    @Mapping(source = "product.productId", target = "productId")
-    @Mapping(source = "product.productName", target = "productName")
-    @Mapping(source = "product.description", target = "description")
-    @Mapping(source = "product.price", target = "price_original")
-    @Mapping(source = "product.discount", target = "discount")
+    @Mapping(source = "productVariant.variantId", target = "productVariantId")
+    @Mapping(source = "productVariant.product.productName", target = "productName")
+    @Mapping(source = "productVariant.product.description", target = "description")
+    @Mapping(source = "productVariant.product.price", target = "price_original")
+    @Mapping(source = "productVariant.product.discount", target = "discount")
     @Mapping(source = "price", target = "price")
-    @Mapping(source = "quantity", target = "quantity")
+    @Mapping(source = "productVariant.size", target = "size")
+    @Mapping(source = "productVariant.color", target = "color")
     Order_Item_Response orderItemToOrderItemResponse(Order_Item orderItem);
 //
 

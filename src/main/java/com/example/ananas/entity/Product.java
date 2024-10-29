@@ -67,10 +67,6 @@ public class Product {
 
     @OneToMany(mappedBy = "product", cascade = CascadeType.REMOVE)
     @JsonManagedReference
-    List<Order_Item> orderItems;
-
-    @OneToMany(mappedBy = "product", cascade = CascadeType.REMOVE)
-    @JsonManagedReference
     List<ProductVariant> productVariants;
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", timezone = "UTC")
