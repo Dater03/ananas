@@ -2,6 +2,7 @@ package com.example.ananas.entity;
 
 import com.example.ananas.entity.Product;
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
@@ -34,6 +35,7 @@ public class ProductVariant {
 
     @OneToMany(mappedBy = "productVariant")
     @JsonManagedReference
+    @JsonIgnore
     List<Cart_Item> cartItems;
 
     @ManyToOne

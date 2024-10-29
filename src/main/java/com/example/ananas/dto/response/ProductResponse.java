@@ -3,6 +3,8 @@ package com.example.ananas.dto.response;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
+import java.util.List;
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
@@ -20,5 +22,6 @@ public class ProductResponse {
     String material;
     String category;
     int soldQuantity;
+    List<String> images;
 
 }

@@ -20,14 +20,13 @@ public class PaymentController {
     VnpayService vnpayService;
 
     @GetMapping("/createPayment")
-    public String createPayment(@RequestParam String orderInfo, @RequestParam long amount) throws UnsupportedEncodingException {
+    public String createPayment(@RequestParam String orderInfo, @RequestParam long amount)   {
         try {
             return vnpayService.createPaymentURL(orderInfo, amount);
         }
         catch (Exception e){
-            e.getMessage().toString();
+           return "xay ra loi: " + e.getMessage().toString();
         }
-        return "";
     }
 
     @GetMapping("/vnpay-return")

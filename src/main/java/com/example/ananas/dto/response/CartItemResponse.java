@@ -3,6 +3,8 @@ package com.example.ananas.dto.response;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
+import java.util.List;
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
@@ -21,5 +23,6 @@ public class CartItemResponse {
         String color;
         int size;
         int stock;
+        List<String> images;
     }
 }
