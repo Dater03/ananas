@@ -35,7 +35,7 @@ public class VnpayService {
 
 
 
-    public String createPaymentURL(String orderInfo, long amount) throws UnsupportedEncodingException {
+    public String createPaymentURL(String orderInfo, long amount ) throws UnsupportedEncodingException {
         String vnpVersion = "2.1.0";
         String vnpCommand = "pay";
         String vnpCurrCode = "VND";
@@ -43,7 +43,7 @@ public class VnpayService {
         String vnpTxnRef = String.valueOf(System.currentTimeMillis()); // Mã tham chiếu giao dịch
         String vnpOrderType = "billpayment"; // Ví dụ mã danh mục hàng hóa
         String vnpCreateDate = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
-        String vnpExpireDate = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date(System.currentTimeMillis() + 30 * 60 * 1000)); // Hết hạn trong 30 phút
+        String vnpExpireDate = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date(System.currentTimeMillis() + 10 * 60 * 1000)); // Hết hạn trong 30 phút
 
         // Tạo Map tham số
         Map<String, String> vnpParams = new HashMap<>();

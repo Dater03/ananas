@@ -4,6 +4,7 @@ import com.example.ananas.entity.order.Order;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
@@ -30,6 +31,7 @@ public class User {
     String password;
 
     @Column(name = "email")
+            @Email(message = "")
     String email;
 
     @Column(name = "address")
