@@ -399,10 +399,10 @@
     });
 
     // Hiển thị modal quên mật khẩu khi nhấp vào liên kết
-document.querySelector(".forget-pwd").addEventListener("click", function (e) {
-    e.preventDefault();
-    document.getElementById("forgotPasswordModal").style.display = "block";
-});
+    document.querySelector(".forget-pwd").addEventListener("click", function (e) {
+        e.preventDefault();
+        document.getElementById("forgotPasswordModal").style.display = "block";
+    });
 
     // Xử lý form quên mật khẩu
     document.getElementById("forgotPasswordForm").addEventListener("submit", async function (e) {
