@@ -99,6 +99,7 @@ public class ProductService implements IProductService {
 
 
     @Override
+    @Transactional
     public ProductResponse updateProduct(int id, ProductCreateRequest productCreateRequest) {
         Product product = this.productRepository.findById(id).get();
         Product updateProduct = this.productMapper.toProduct(productCreateRequest);
@@ -111,7 +112,7 @@ public class ProductService implements IProductService {
         product.setPrice(productCreateRequest.getPrice());
         this.productRepository.save(product);
 
-
+        this.productVariantRepository.deleteProductVariantsByProduct(product);
         List<ProductVatriantDTO> productVatriantDTOList = productCreateRequest.getVariants();
         productVatriantDTOList.stream().forEach(item ->{
             ProductVariant productVariant = new ProductVariant();

@@ -1,6 +1,7 @@
 package com.example.ananas.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
@@ -36,6 +37,7 @@ public class Category {
 
     @OneToMany(mappedBy = "category")
     @JsonManagedReference("category-products")
+            @JsonIgnore
     List<Product> products;
 
     @PrePersist
