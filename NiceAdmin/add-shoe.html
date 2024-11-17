@@ -25,6 +25,8 @@
   <link href="assets/vendor/quill/quill.bubble.css" rel="stylesheet">
   <link href="assets/vendor/remixicon/remixicon.css" rel="stylesheet">
   <link href="assets/vendor/simple-datatables/style.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 
   <!-- Template Main CSS File -->
   <link href="assets/css/style.css" rel="stylesheet">
@@ -284,120 +286,487 @@
   <main id="main" class="main">
 
     <div class="container mt-5">
-        <div class="row">
-            <div class="col-12">
-                <h2 class="text-center mb-4">Quản lí giày</h2>
-                <!-- Button to Add New Shoe -->
-                <button type="button" class="btn btn-success mb-3" data-toggle="modal" data-target="#addShoeModal">Thêm mới</button>
-                
-                <!-- Shoes Table -->
-                <table class="table table-bordered table-striped">
-                    <thead class="thead-dark">
-                        <tr>
-                            <th>#</th>
-                            <th>Tên giày</th>
-                            <th>Nhãn hiệu</th>
-                            <th>Giá</th>
-                            <th>Số lượng</th>
-                            <th></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <!-- Sample Row -->
-                        <tr>
-                            <td>1</td>
-                            <td>Nike Air Max</td>
-                            <td>Nike</td>
-                            <td>$120</td>
-                            <td>50</td>
-                            <td>
-                                <button class="btn btn-warning btn-sm" data-toggle="modal" data-target="#editShoeModal">Edit</button>
-                                <button class="btn btn-danger btn-sm" onclick="confirmDelete()">Delete</button>
-                            </td>
-                        </tr>
-                        <!-- Additional rows will be here -->
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </div>
+      <h2 class="text-center mb-4">Quản lí giày</h2>
+      <button class="btn btn-success mb-3" data-bs-toggle="modal" data-bs-target="#addProductModal">Thêm mới</button>
+      <table class="table table-bordered text-center">
+          <thead class="table-light">
+              <tr>
+                  <th>#</th>
+                  <th>Tên sản phẩm</th>
+                  <th>Giá</th>
+                  <th>Giảm giá (%)</th>
+                  <th>Chất liệu</th>
+                  <th>Danh mục</th>
+                  <th>Đã bán</th>
+                  <th>Hành động</th>
+              </tr>
+          </thead>
+          <tbody id="productTable">
+              <!-- Dữ liệu sẽ được thêm động ở đây -->
+          </tbody>
+      </table>
+      <nav aria-label="Page navigation" id="pagination" class="mt-4">
+          <!-- Phân trang sẽ được thêm động ở đây -->
+      </nav>
+  </div>
 
-    <!-- Add Shoe Modal -->
-    <div class="modal fade" id="addShoeModal" tabindex="-1" aria-labelledby="addShoeModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="addShoeModalLabel">Add New Shoe</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <form>
-                        <div class="form-group">
-                            <label for="shoeName">Shoe Name</label>
-                            <input type="text" class="form-control" id="shoeName" placeholder="Enter shoe name">
-                        </div>
-                        <div class="form-group">
-                            <label for="brand">Brand</label>
-                            <input type="text" class="form-control" id="brand" placeholder="Enter brand name">
-                        </div>
-                        <div class="form-group">
-                            <label for="price">Price</label>
-                            <input type="number" class="form-control" id="price" placeholder="Enter price">
-                        </div>
-                        <div class="form-group">
-                            <label for="quantity">Quantity</label>
-                            <input type="number" class="form-control" id="quantity" placeholder="Enter quantity">
-                        </div>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Save changes</button>
-                </div>
-            </div>
-        </div>
-    </div>
+  <!-- Modal Thêm sản phẩm -->
+  <div class="modal fade" id="addProductModal" tabindex="-1" aria-labelledby="addProductModalLabel"
+      aria-hidden="true">
+      <div class="modal-dialog modal-lg">
+          <div class="modal-content">
+              <div class="modal-header">
+                  <h5 class="modal-title" id="addProductModalLabel">Thêm sản phẩm mới</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                  <form id="productForm">
+                      <!-- Thông tin cơ bản -->
+                      <div class="mb-3">
+                          <label for="productName" class="form-label">Tên sản phẩm</label>
+                          <input type="text" id="productName" class="form-control" required>
+                      </div>
+                      <div class="mb-3">
+                          <label for="description" class="form-label">Mô tả</label>
+                          <textarea id="description" class="form-control" rows="3" required></textarea>
+                      </div>
+                      <div class="mb-3">
+                          <label for="price" class="form-label">Giá</label>
+                          <input type="number" id="price" class="form-control" step="0.01" required>
+                      </div>
+                      <div class="mb-3">
+                          <label for="discount" class="form-label">Giảm giá (%)</label>
+                          <input type="number" id="discount" class="form-control" step="0.01">
+                      </div>
+                      <div class="mb-3">
+                          <label for="material" class="form-label">Chất liệu</label>
+                          <input type="text" id="material" class="form-control" required>
+                      </div>
+                      <div class="mb-3">
+                          <label for="category" class="form-label">Danh mục</label>
+                          <input type="text" id="category" class="form-control" required>
+                      </div>
 
-    <!-- Edit Shoe Modal -->
-    <div class="modal fade" id="editShoeModal" tabindex="-1" aria-labelledby="editShoeModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="editShoeModalLabel">Edit Shoe</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <form>
-                        <div class="form-group">
-                            <label for="editShoeName">Shoe Name</label>
-                            <input type="text" class="form-control" id="editShoeName" value="Nike Air Max">
-                        </div>
-                        <div class="form-group">
-                            <label for="editBrand">Brand</label>
-                            <input type="text" class="form-control" id="editBrand" value="Nike">
-                        </div>
-                        <div class="form-group">
-                            <label for="editPrice">Price</label>
-                            <input type="number" class="form-control" id="editPrice" value="120">
-                        </div>
-                        <div class="form-group">
-                            <label for="editQuantity">Quantity</label>
-                            <input type="number" class="form-control" id="editQuantity" value="50">
-                        </div>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Save changes</button>
-                </div>
-            </div>
-        </div>
-    </div>
-    </section>
+                      <!-- Biến thể sản phẩm -->
+                      <h4 class="mt-4">Biến thể sản phẩm</h4>
+                      <div id="variantsContainer">
+                          <div class="variant mb-3">
+                              <div class="row g-3">
+                                  <div class="col-md-4">
+                                      <label for="size" class="form-label">Size</label>
+                                      <input type="number" class="form-control size" required>
+                                  </div>
+                                  <div class="col-md-4">
+                                    <label class="form-label">Màu sắc</label>
+                                    <select class="form-select color" required>
+                                        <option value="Black">Đen</option>
+                                        <option value="White">Trắng</option>
+                                        <option value="Blue">Xanh</option>
+                                        <option value="Red">Đỏ</option>
+                                    </select>
+                                </div>
+                                  <div class="col-md-4">
+                                      <label for="stock" class="form-label">Số lượng</label>
+                                      <input type="number" class="form-control stock" required>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                      <button type="button" id="addVariant" class="btn btn-secondary mb-3">Thêm biến thể</button>
+
+                      <!-- Nút gửi -->
+                      <button type="submit" class="btn btn-primary">Thêm sản phẩm</button>
+                  </form>
+              </div>
+          </div>
+      </div>
+  </div>
+
+  <!-- Modal sửa sản phẩm -->
+  <div class="modal fade" id="updateProductModal" tabindex="-1" aria-labelledby="updateProductModalLabel"
+      aria-hidden="true">
+      <div class="modal-dialog modal-lg">
+          <div class="modal-content">
+              <div class="modal-header">
+                  <h5 class="modal-title" id="updateProductModalLabel">Sửa sản phẩm</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                  <form id="uproductForm">
+                      <!-- Thông tin sản phẩm -->
+                      <div class="mb-3">
+                          <label for="uproductName" class="form-label">Tên sản phẩm</label>
+                          <input type="text" class="form-control" id="uproductName" required>
+                      </div>
+                      <div class="mb-3">
+                          <label for="udescription" class="form-label">Mô tả</label>
+                          <textarea class="form-control" id="udescription" required></textarea>
+                      </div>
+                      <div class="mb-3">
+                          <label for="uprice" class="form-label">Giá</label>
+                          <input type="number" class="form-control" id="uprice" required>
+                      </div>
+                      <div class="mb-3">
+                          <label for="udiscount" class="form-label">Giảm giá</label>
+                          <input type="number" class="form-control" id="udiscount">
+                      </div>
+                      <div class="mb-3">
+                          <label for="umaterial" class="form-label">Chất liệu</label>
+                          <input type="text" class="form-control" id="umaterial" required>
+                      </div>
+                      <div class="mb-3">
+                          <label for="ucategory" class="form-label">Danh mục</label>
+                          <input type="text" class="form-control" id="ucategory" required>
+                      </div>
+
+                      <!-- Thông tin biến thể sản phẩm -->
+                      <div id="uvariantsContainer">
+                          <!-- Các biến thể sẽ được thêm vào đây động -->
+                      </div>
+
+                      <!-- Ẩn productId để gửi khi chỉnh sửa -->
+                      <input type="hidden" id="uproductId">
+                      <button type="button" id="uaddVariant" class="btn btn-secondary mb-3">Thêm biến thể</button>
+
+                      <div class="modal-footer">
+                          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+                          <button type="submit" class="btn btn-primary">Lưu thay đổi</button>
+                      </div>
+                  </form>
+              </div>
+          </div>
+      </div>
+  </div>
+
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+      $(document).ready(function () {
+          const apiUrl = "http://localhost:8080/product";
+          let currentPage = 0;
+          let pageSize = 10;
+
+          // Hàm lấy danh sách sản phẩm
+          function fetchProducts(page) {
+              $.ajax({
+                  url: `${apiUrl}?page=${page}&size=${pageSize}`,
+                  method: "GET",
+                  success: function (response) {
+                      if (response.code === 200) {
+                          displayProducts(response.result.result);
+                          setupPagination(response.result.meta);
+                      } else {
+                          alert("Lỗi khi lấy dữ liệu sản phẩm.");
+                      }
+                  },
+                  error: function () {
+                      alert("Không thể kết nối đến API.");
+                  }
+              });
+          }
+
+          // Hàm hiển thị danh sách sản phẩm
+          function displayProducts(products) {
+              const productTable = $("#productTable");
+              productTable.empty();
+              products.forEach((product, index) => {
+                  const productRow = `
+                  <tr data-id="${product.productId}">
+                      <td>${index + 1}</td>
+                      <td>${product.productName}</td>
+                      <td>${product.price.toFixed(2)}</td>
+                      <td>${product.discount}%</td>
+                      <td>${product.material}</td>
+                      <td>${product.category}</td>
+                      <td>${product.soldQuantity}</td>
+                      <td>
+                          <button class="btn btn-warning btn-sm">Sửa</button>
+                          <button class="btn btn-danger btn-sm delete-product">Xóa</button>
+                      </td>
+                  </tr>
+              `;
+                  productTable.append(productRow);
+              });
+              // Thêm sự kiện xóa sau khi hiển thị sản phẩm
+              attachDeleteEvents();
+          }
+
+          // Hàm tạo phân trang
+          function setupPagination(meta) {
+              const pagination = $("#pagination");
+              pagination.empty();
+
+              let pageLinks = `
+                  <ul class="pagination justify-content-center">
+                      ${meta.page > 0
+                      ? `<li class="page-item"><a class="page-link" href="#" data-page="${meta.page - 1}">Trước</a></li>`
+                      : ""}
+              `;
+
+              for (let i = 0; i < meta.pages; i++) {
+                  pageLinks += `
+                      <li class="page-item ${i === meta.page -1 ? "active" : ""}">
+                          <a class="page-link" href="#" data-page="${i}">${i +1}</a>
+                      </li>
+                  `;
+              }
+
+              pageLinks += `
+                      ${meta.page < meta.pages - 1
+                      ? `<li class="page-item"><a class="page-link" href="#" data-page="${meta.page + 1}">Sau</a></li>`
+                      : ""}
+                  </ul>
+              `;
+
+              pagination.append(pageLinks);
+
+              // Bắt sự kiện chuyển trang
+              $(".page-link").on("click", function (e) {
+                  e.preventDefault();
+                  const page = $(this).data("page");
+                  if (page !== undefined) {
+                      currentPage = page;
+                      fetchProducts(page);
+                  }
+              });
+          }
+
+          // Hàm xóa sản phẩm
+          function deleteProduct(productId) {
+              console.log(productId)
+              if (confirm("Bạn có chắc chắn muốn xóa sản phẩm này?")) {
+                  $.ajax({
+                      url: `${apiUrl}/${productId}`,
+                      method: "DELETE",
+                      success: function () {
+                          fetchProducts(currentPage); // Tải lại danh sách sản phẩm
+                          alert("Xóa sản phẩm thành công!");
+                      },
+                      error: function () {
+                          alert("Lỗi khi xóa sản phẩm!");
+                      }
+                  });
+              }
+          }
+
+          // Thêm sự kiện cho nút xóa
+          function attachDeleteEvents() {
+              $(".delete-product").on("click", function () {
+                  const productId = $(this).closest("tr").data("id");
+                  deleteProduct(productId);
+              });
+          }
+
+          // Gọi API lần đầu
+          fetchProducts(currentPage);
+
+          // Thêm biến thể mới
+          $('#addVariant').on('click', function () {
+              const variantTemplate = `
+                  <div class="variant mb-3">
+                      <div class="row g-3">
+                          <div class="col-md-4">
+                              <label class="form-label">Size</label>
+                              <input type="number" class="form-control size" required>
+                          </div>
+                          <div class="col-md-4">
+                              <label class="form-label">Màu sắc</label>
+                              <select class="form-select color" required>
+                                  <option value="Black">Đen</option>
+                                  <option value="White">Trắng</option>
+                                  <option value="Blue">Xanh</option>
+                                  <option value="Red">Đỏ</option>
+                              </select>
+                          </div>
+                          <div class="col-md-4">
+                              <label class="form-label">Số lượng</label>
+                              <input type="number" class="form-control stock" required>
+                          </div>
+                      </div>
+                  </div>`;
+              $('#variantsContainer').append(variantTemplate);
+          });
+           // Thêm biến thể mới
+           $('#uaddVariant').on('click', function () {
+              const variantTemplate = `
+                  <div class="variant mb-3">
+                      <div class="row g-3">
+                          <div class="col-md-4">
+                              <label class="form-label">Size</label>
+                              <input type="number" class="form-control size" required>
+                          </div>
+                          <div class="col-md-4">
+                              <label class="form-label">Màu sắc</label>
+                              <select class="form-select color" required>
+                                  <option value="Black">Đen</option>
+                                  <option value="White">Trắng</option>
+                                  <option value="Blue">Xanh</option>
+                                  <option value="Red">Đỏ</option>
+                              </select>
+                          </div>
+
+                          <div class="col-md-4">
+                              <label class="form-label">Số lượng</label>
+                              <input type="number" class="form-control stock" required>
+                          </div>
+                      </div>
+                  </div>`;
+              $('#uvariantsContainer').append(variantTemplate);
+          });
+
+
+          // Xử lý gửi form
+          $('#productForm').on('submit', function (e) {
+              e.preventDefault();
+
+              // Thu thập dữ liệu sản phẩm
+              const product = {
+                  productName: $('#productName').val(),
+                  description: $('#description').val(),
+                  price: parseFloat($('#price').val()),
+                  discount: parseFloat($('#discount').val() || 0),
+                  material: $('#material').val(),
+                  category: $('#category').val(),
+                  variants: []
+              };
+
+              // Thu thập dữ liệu biến thể
+              $('#variantsContainer .variant').each(function () {
+                  const size = parseInt($(this).find('.size').val());
+                  const color = $(this).find('.color').val();
+                  const stock = parseInt($(this).find('.stock').val());
+                  product.variants.push({ size, color, stock });
+              });
+
+              console.log(product);
+
+              // Gửi dữ liệu đến API
+              $.ajax({
+                  url: 'http://localhost:8080/product',
+                  method: 'POST',
+                  contentType: 'application/json',
+                  data: JSON.stringify(product),
+                  success: function () {
+                      alert('Thêm sản phẩm thành công!');
+                      location.reload();
+                  },
+                  error: function () {
+                      alert('Lỗi khi thêm sản phẩm!');
+                  }
+              });
+          });
+
+
+          // Sự kiện khi người dùng nhấn nút Sửa
+          $(document).on('click', '.btn-warning', function () {
+              const productId = $(this).closest("tr").data("id");
+              $.ajax({
+                  url: `${apiUrl}/${productId}`,
+                  method: "GET",
+                  success: function (response) {
+                      if (response.code === 200) {
+                          const product = response.result;
+                          $('#uproductId').val(product.productId); // Lưu productId
+                          $('#uproductName').val(product.productName);
+                          $('#udescription').val(product.description);
+                          $('#uprice').val(product.price);
+                          $('#udiscount').val(product.discount);
+                          $('#umaterial').val(product.material);
+                          $('#ucategory').val(product.category);
+
+                          // Lấy danh sách biến thể của sản phẩm
+                          $.ajax({
+                              url: `${apiUrl}/variants/${productId}`,
+                              method: "GET",
+                              success: function (variantResponse) {
+                                  if (variantResponse.code === 200) {
+                                      const variants = variantResponse.result;
+                                      $('#uvariantsContainer').empty(); // Xóa các biến thể cũ
+                                      variants.forEach(variant => {
+                                          const variantTemplate = `
+                                          <div class="variant mb-3" data-variant-id="${variant.variantId}">
+                                              <div class="row g-3">
+                                                  <div class="col-md-4">
+                                                      <label class="form-label">Size</label>
+                                                      <input type="number" class="form-control size" value="${variant.size}" required>
+                                                  </div>
+                                                 
+                                                  <div class="col-md-4">
+                                                      <label class="form-label">Màu sắc</label>
+                                                      <select class="form-select color" required>
+                                                          <option value="Black" ${variant.color === "Black" ? "selected" : ""}>Đen</option>
+                                                          <option value="White" ${variant.color === "White" ? "selected" : ""}>Trắng</option>
+                                                          <option value="Blue" ${variant.color === "Blue" ? "selected" : ""}>Xanh</option>
+                                                          <option value="Red" ${variant.color === "Red" ? "selected" : ""}>Đỏ</option>
+                                                      </select>
+                                                  </div>
+                                                  <div class="col-md-4">
+                                                      <label class="form-label">Số lượng</label>
+                                                      <input type="number" class="form-control stock" value="${variant.stock}" required>
+                                                  </div>
+                                              </div>
+                                          </div>
+                                      `;
+                                          $('#uvariantsContainer').append(variantTemplate);
+                                      });
+                                  } else {
+                                      alert("Lỗi khi lấy danh sách biến thể.");
+                                  }
+                              },
+                              error: function () {
+                                  alert("Không thể kết nối đến API.");
+                              }
+                          });
+
+                          $('#updateProductModal').modal('show');
+                      } else {
+                          alert("Lỗi khi lấy dữ liệu sản phẩm.");
+                      }
+                  },
+                  error: function () {
+                      alert("Không thể kết nối đến API.");
+                  }
+              });
+          });
+
+          // Sự kiện khi người dùng gửi form sửa sản phẩm
+          $('#uproductForm').on('submit', function (e) {
+              e.preventDefault();
+              const productId = $('#uproductId').val();
+              const product = {
+                  productName: $('#uproductName').val(),
+                  description: $('#udescription').val(),
+                  price: parseFloat($('#uprice').val()),
+                  discount: parseFloat($('#udiscount').val() || 0),
+                  material: $('#umaterial').val(),
+                  category: $('#ucategory').val(),
+                  variants: []
+              };
+
+              $('#uvariantsContainer .variant').each(function () {
+                  const variantId = $(this).data("variant-id");
+                  const size = parseInt($(this).find('.size').val());
+                  const color = $(this).find('.color').val();
+                  const stock = parseInt($(this).find('.stock').val());
+                  product.variants.push({ variantId, size, color, stock });
+              });
+
+              $.ajax({
+                  url: `${apiUrl}/${productId}`,
+                  method: 'PUT',
+                  contentType: 'application/json',
+                  data: JSON.stringify(product),
+                  success: function () {
+                      alert('Sửa sản phẩm thành công!');
+                      location.reload();
+                  },
+                  error: function () {
+                      alert('Lỗi khi sửa sản phẩm!');
+                  }
+              });
+          });
+      });
+  </script>
 
   </main><!-- End #main -->
 

@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thêm Sản Phẩm</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+</head>
+<body>
+    <div class="container mt-5">
+        <h2 class="mb-4">Thêm Sản Phẩm Mới</h2>
+        <form id="productForm">
+            <!-- Thông tin cơ bản -->
+            <div class="mb-3">
+                <label for="productName" class="form-label">Tên sản phẩm</label>
+                <input type="text" id="productName" class="form-control" required>
+            </div>
+            <div class="mb-3">
+                <label for="description" class="form-label">Mô tả</label>
+                <textarea id="description" class="form-control" rows="3" required></textarea>
+            </div>
+            <div class="mb-3">
+                <label for="price" class="form-label">Giá</label>
+                <input type="number" id="price" class="form-control" step="0.01" required>
+            </div>
+            <div class="mb-3">
+                <label for="discount" class="form-label">Giảm giá (%)</label>
+                <input type="number" id="discount" class="form-control" step="0.01">
+            </div>
+            <div class="mb-3">
+                <label for="material" class="form-label">Chất liệu</label>
+                <input type="text" id="material" class="form-control" required>
+            </div>
+            <div class="mb-3">
+                <label for="category" class="form-label">Danh mục</label>
+                <input type="text" id="category" class="form-control" required>
+            </div>
+
+            <!-- Biến thể sản phẩm -->
+            <h4 class="mt-4">Biến thể sản phẩm</h4>
+            <div id="variantsContainer">
+                <div class="variant mb-3">
+                    <div class="row g-3">
+                        <div class="col-md-4">
+                            <label for="size" class="form-label">Size</label>
+                            <input type="number" class="form-control size" required>
+                        </div>
+                        <div class="col-md-4">
+                            <label for="color" class="form-label">Màu sắc</label>
+                            <input type="text" class="form-control color" required>
+                        </div>
+                        <div class="col-md-4">
+                            <label for="stock" class="form-label">Số lượng</label>
+                            <input type="number" class="form-control stock" required>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <button type="button" id="addVariant" class="btn btn-secondary mb-3">Thêm biến thể</button>
+
+            <!-- Nút gửi -->
+            <button type="submit" class="btn btn-primary">Thêm sản phẩm</button>
+        </form>
+    </div>
+
+    <script>
+        $(document).ready(function () {
+            // Thêm biến thể mới
+            $('#addVariant').on('click', function () {
+                const variantTemplate = `
+                    <div class="variant mb-3">
+                        <div class="row g-3">
+                            <div class="col-md-4">
+                                <label class="form-label">Size</label>
+                                <input type="number" class="form-control size" required>
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-label">Màu sắc</label>
+                                <input type="text" class="form-control color" required>
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-label">Số lượng</label>
+                                <input type="number" class="form-control stock" required>
+                            </div>
+                        </div>
+                    </div>`;
+                $('#variantsContainer').append(variantTemplate);
+            });
+
+            // Xử lý gửi form
+            $('#productForm').on('submit', function (e) {
+                e.preventDefault();
+
+                // Thu thập dữ liệu sản phẩm
+                const product = {
+                    productName: $('#productName').val(),
+                    description: $('#description').val(),
+                    price: parseFloat($('#price').val()),
+                    discount: parseFloat($('#discount').val() || 0),
+                    material: $('#material').val(),
+                    category: $('#category').val(),
+                    variants: []
+                };
+
+                // Thu thập dữ liệu biến thể
+                $('#variantsContainer .variant').each(function () {
+                    const size = parseInt($(this).find('.size').val());
+                    const color = $(this).find('.color').val();
+                    const stock = parseInt($(this).find('.stock').val());
+                    product.variants.push({ size, color, stock });
+                });
+
+                console.log(product);
+
+                // Gửi dữ liệu đến API
+                $.ajax({
+                    url: '/api/products',
+                    method: 'POST',
+                    contentType: 'application/json',
+                    data: JSON.stringify(product),
+                    success: function () {
+                        alert('Thêm sản phẩm thành công!');
+                        location.reload();
+                    },
+                    error: function () {
+                        alert('Lỗi khi thêm sản phẩm!');
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
