@@ -12,6 +12,7 @@ public enum ErrException {
     PRODUCT_NOT_EXISTED(404, "Product not existed"),
     VOUCHER_EXISTED(101,"Voucher existed"),
     VOUCHER_NOT_EXISTED(101,"Voucher not existed"),
+    NOT_ENOUGH_STOCK(110, "Not enough stock"),
     VALIDATION_ERROR(102,"Enter the correct requirements!"),
     ORDER_NOT_EXISTED(101,"Order not existed"),
     ORDER_EXISTED(101,"Order existed"),

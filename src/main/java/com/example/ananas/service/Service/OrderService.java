@@ -124,6 +124,11 @@ public class OrderService implements IOrderService {
             productVariant.getProduct().setSoldQuantity(totalQuantity + item.getQuantity());
             productRepository.save(productVariant.getProduct());
 
+            // Cap nhat stock
+            int stock = productVariant.getStock();
+            if(stock < item.getQuantity()) throw new AppException(ErrException.NOT_ENOUGH_STOCK);
+            productVariant.setStock(stock - item.getQuantity());
+            productVariantRepository.save(productVariant);
             // Tính toán luôn thuộc tính suy biến ở bảng order
             sum_before = sum_before.add(orderItem.getPrice().multiply(BigDecimal.valueOf(orderItem.getQuantity())));
         }
@@ -175,6 +180,10 @@ public class OrderService implements IOrderService {
             int nowQuantity = temp.getProductVariant().getProduct().getSoldQuantity();
             temp.getProductVariant().getProduct().setSoldQuantity(nowQuantity - quantity);
             productRepository.save(temp.getProductVariant().getProduct());
+
+            int stock = temp.getProductVariant().getStock();
+            temp.getProductVariant().setStock(stock + temp.getQuantity());
+            productVariantRepository.save(temp.getProductVariant());
         }
         dataEntity.clear(); // Xóa danh sách các sản phẩm cũ
 
@@ -199,6 +208,12 @@ public class OrderService implements IOrderService {
             int totalQuantity = productVariant.getProduct().getSoldQuantity();
             productVariant.getProduct().setSoldQuantity(totalQuantity + item.getQuantity());
             productRepository.save(productVariant.getProduct());
+
+            // Cap nhat stock
+            int stock = productVariant.getStock();
+            if(stock < item.getQuantity()) throw new AppException(ErrException.NOT_ENOUGH_STOCK);
+            productVariant.setStock(stock - item.getQuantity());
+            productVariantRepository.save(productVariant);
         }
         order.setTotalAmount(sum_before);
         if(orderUpdateUser.getCode() != null)
@@ -272,6 +287,10 @@ public class OrderService implements IOrderService {
             int quantity  = orderItem.getProductVariant().getProduct().getSoldQuantity();
             orderItem.getProductVariant().getProduct().setSoldQuantity(quantity - orderItem.getQuantity());
             productRepository.save(orderItem.getProductVariant().getProduct());
+
+            int stock = orderItem.getProductVariant().getStock();
+            orderItem.getProductVariant().setStock(stock + orderItem.getQuantity());
+            productVariantRepository.save(orderItem.getProductVariant());
         }
         order.setStatus(OrderStatus.CANCELED);
         order.setUpdatedAt(new Timestamp(System.currentTimeMillis()));
