@@ -319,38 +319,51 @@
 
 <script>
     async function sendMessage(event) {
-        event.preventDefault(); // Ngăn không cho form reload trang
-
-        // Lấy thông tin từ input
-        const messageContent = document.getElementById('message').value;
-        const senderId = 2; // ID của người dùng đang đăng nhập, cập nhật khi có session hoặc lưu trữ thông tin này
-        const receiverId = 1; // Admin ID là 1
-
-        // Tạo đối tượng tin nhắn
+        event.preventDefault();
+    
+        const messageContent = document.getElementById("message").value.trim();
+    
+        if (!messageContent) {
+            alert("Message cannot be empty.");
+            return;
+        }
+    
+        // Lấy token từ localStorage
+        const token = localStorage.getItem("token");
+        const userId = localStorage.getItem("userId");
+    
+        if (!token) {
+            alert("You need to log in to send messages.");
+            return;
+        }
+    
+        // Tạo dữ liệu gửi
         const messageData = {
-            senderId: senderId,
-            receiverId: receiverId,
-            message: messageContent
+            senderId: userId, // Lấy thông tin userId nếu lưu trong payload của token
+            receiverId: 1, // ID admin
+            message: messageContent,
         };
-
+    
         try {
-            const response = await fetch('http://localhost:8080/message', {
-                method: 'POST',
+            const response = await fetch("http://localhost:8080/message", {
+                method: "POST",
                 headers: {
-                    'Content-Type': 'application/json'
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${token}`, // Đính kèm token trong header
                 },
-                body: JSON.stringify(messageData)
+                body: JSON.stringify(messageData),
             });
-
+    
             if (response.ok) {
-                document.querySelector('.form-message').textContent = 'Message sent successfully!';
-                document.getElementById('message').value = ''; // Xóa nội dung tin nhắn sau khi gửi
+                alert("Message sent successfully!");
+                document.getElementById("message").value = "";
             } else {
-                document.querySelector('.form-message').textContent = 'Failed to send message. Please try again.';
+                alert("Failed to send message. Please try again.");
             }
         } catch (error) {
-            console.error('Error sending message:', error);
-            document.querySelector('.form-message').textContent = 'An error occurred. Please try again.';
+            console.error("Error sending message:", error);
+            alert("An error occurred. Please try again.");
         }
     }
+    
 </script>

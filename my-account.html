@@ -293,8 +293,10 @@
                                         <div class="tab-pane fade" id="account-info" role="tabpanel" aria-labelledby="account-info_btn">
                                             <div class="myaccount-content">
                                                 <h3>Account Details</h3>
+                                                
+                                                <!-- Account Details Form Start -->
                                                 <div class="account-details-form">
-                                                    <form action="#">
+                                                    <form action="#" id="account-details-form">
                                                         <div class="row">
                                                             <div class="col-lg-6">
                                                                 <div class="single-input-item">
@@ -314,37 +316,47 @@
                                                             <input type="text" id="display-name" placeholder="Display Name" />
                                                         </div>
                                                         <div class="single-input-item">
-                                                            <label for="email" class="required">Email Addres</label>
+                                                            <label for="email" class="required">Email Address</label>
                                                             <input type="email" id="email" placeholder="Email Address" />
                                                         </div>
-                                                        <fieldset>
-                                                            <legend>Password change</legend>
-                                                            <div class="single-input-item">
-                                                                <label for="current-pwd" class="required">Current Password</label>
-                                                                <input type="password" id="current-pwd" placeholder="Current Password" />
-                                                            </div>
-                                                            <div class="row">
-                                                                <div class="col-lg-6">
-                                                                    <div class="single-input-item">
-                                                                        <label for="new-pwd" class="required">New Password</label>
-                                                                        <input type="password" id="new-pwd" placeholder="New Password" />
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-lg-6">
-                                                                    <div class="single-input-item">
-                                                                        <label for="confirm-pwd" class="required">Confirm Password</label>
-                                                                        <input type="password" id="confirm-pwd" placeholder="Confirm Password" />
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </fieldset>
                                                         <div class="single-input-item">
-                                                            <button class="check-btn sqr-btn ">Save Changes</button>
+                                                            <button class="check-btn sqr-btn" type="submit">Save Account Details</button>
                                                         </div>
                                                     </form>
                                                 </div>
+                                                <!-- Account Details Form End -->
+                                                
+                                                <!-- Password Change Form Start -->
+                                                <fieldset> 
+                                                    <legend>Password Change</legend>
+                                                    <form id="password-change-form">
+                                                        <div class="single-input-item">
+                                                            <label for="current-pwd" class="required">Current Password</label>
+                                                            <input type="password" id="current-pwd" placeholder="Current Password" required />
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-lg-6">
+                                                                <div class="single-input-item">
+                                                                    <label for="new-pwd" class="required">New Password</label>
+                                                                    <input type="password" id="new-pwd" placeholder="New Password" required />
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-lg-6">
+                                                                <div class="single-input-item">
+                                                                    <label for="confirm-pwd" class="required">Confirm Password</label>
+                                                                    <input type="password" id="confirm-pwd" placeholder="Confirm Password" required />
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="single-input-item">
+                                                            <button class="check-btn sqr-btn" type="submit">Save Password</button>
+                                                        </div>
+                                                    </form>
+                                                </fieldset>
+                                                <!-- Password Change Form End -->
                                             </div>
-                                        </div> <!-- Single Tab Content End -->
+                                        </div>
+                                         <!-- Single Tab Content End -->
                                     </div>
                                 </div> <!-- My Account Tab Content End -->
                             </div>
@@ -502,3 +514,44 @@
 
 <!-- Mirrored from htmldemo.net/juan/juan/my-account.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 17 Oct 2024 04:44:53 GMT -->
 </html>
+
+<script>
+    const API_BASE_URL = "http://localhost:8080/user";
+
+    document.getElementById("password-change-form").addEventListener("submit", async function(event) {
+        event.preventDefault();
+    
+        const currentPassword = document.getElementById("current-pwd").value;
+        const newPassword = document.getElementById("new-pwd").value;
+        const confirmPassword = document.getElementById("confirm-pwd").value;
+    
+        // Xác thực "Confirm Password"
+        if (newPassword !== confirmPassword) {
+            alert("New Password and Confirm Password do not match.");
+            return;
+        }
+    
+        // Chuẩn bị dữ liệu để gửi đến API
+        const payload = {
+            oldPassword: currentPassword,
+            newPassword: newPassword
+        };
+    
+        const token = localStorage.getItem("token");
+
+if (token) {
+    const response = await fetch(`${API_BASE_URL}/change-password`, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${token}`
+        },
+        body: JSON.stringify(payload)
+    });
+} else {
+    alert("No token found. Please log in.");
+}
+
+    });
+    
+</script>
