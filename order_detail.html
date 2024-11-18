@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html class="no-js" lang="zxx">
+
+<!-- Mirrored from htmldemo.net/juan/juan/cart.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 17 Oct 2024 04:44:52 GMT -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="meta description">
+    <title>Ananas - Shoes Store</title>
+    <!--=== Favicon ===-->
+    <link rel="shortcut icon" href="assets/img/favicon.ico" type="image/x-icon" />
+    <!--=== All Plugins CSS ===-->
+    <link href="assets/css/plugins.css" rel="stylesheet">
+    <!--=== All Vendor CSS ===-->
+    <link href="assets/css/vendor.css" rel="stylesheet">
+    <!--=== Main Style CSS ===-->
+    <link href="assets/css/style.css" rel="stylesheet">
+    <!-- Modernizer JS -->
+    <script src="assets/js/modernizr-2.8.3.min.js"></script>
+
+    <!--[if lt IE 9]>
+<script src="//oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+<script src="//oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+<![endif]-->
+</head>
+
+<body>
+
+    <!-- Start Header Area -->
+    <header class="header-area">
+        <!-- main header start -->
+        <div class="main-header d-none d-lg-block">
+            
+
+            <!-- header middle area start -->
+            <div class="header-main-area sticky">
+                <div class="container">
+                    <div class="row align-items-center position-relative">
+                        <!-- start logo area -->
+                        <div class="col-lg-2">
+                            <div class="logo">
+                                <a href="index-2.html">
+                                    <img src="assets/img/logo/logo.png" alt="">
+                                </a>
+                            </div>
+                        </div>
+                        <!-- start logo area -->
+
+                        <!-- main menu area start -->
+                        <div class="col-lg-8 position-static">
+                            <div class="main-menu-area">
+                                <div class="main-menu">
+                                    <!-- main menu navbar start -->
+                                    <nav class="desktop-menu">
+                                        <ul>
+                                            <li class="active"><a href="index-2.html">Home </a></li>
+                                            <li><a href="shop.html">shop</a></li>
+                                            <li><a href="contact-us.html">Contact us</a></li>
+                                        </ul>
+                                    </nav>
+                                    <!-- main menu navbar end -->
+                                </div>
+                            </div>
+                        </div>
+                        <!-- main menu area end -->
+
+                        <!-- mini cart area start -->
+                        <div class="col-lg-2">
+                            <div class="header-configure-wrapper">
+                                <div class="header-configure-area">
+                                    <ul class="nav justify-content-end">
+                                        <li>
+                                            <a href="#" class="offcanvas-btn">
+                                                <i class="ion-ios-search-strong"></i>
+                                            </a>
+                                        </li>
+                                        <li class="user-hover">
+                                            <a href="#">
+                                                <i class="ion-ios-gear-outline"></i>
+                                            </a>
+                                            <ul class="dropdown-list">
+                                                <li><a href="login-register.html">login</a></li>
+                                                <li><a href="login-register.html">register</a></li>
+                                                <li><a href="my-account.html">my account</a></li>
+                                            </ul>
+                                        </li>
+                                        <li>
+                                            <a href="#" class="minicart-btn">
+                                                <i class="ion-bag"></i>
+                                                <div class="notification">2</div>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- mini cart area end -->
+                    </div>
+                </div>
+            </div>
+            <!-- header middle area end -->
+        </div>
+        <!-- main header start -->
+
+        
+    </header>
+    <!-- end Header Area -->
+
+    <!-- off-canvas menu start -->
+    <aside class="off-canvas-wrapper">
+        <div class="off-canvas-overlay"></div>
+        <div class="off-canvas-inner-content">
+            <div class="btn-close-off-canvas">
+                <i class="ion-android-close"></i>
+            </div>
+
+            <div class="off-canvas-inner">
+                <!-- search box start -->
+                <div class="search-box-offcanvas">
+                    <form>
+                        <input type="text" placeholder="Search Here...">
+                        <button class="search-btn"><i class="ion-ios-search-strong"></i></button>
+                    </form>
+                </div>
+                <!-- search box end -->
+
+                
+                
+
+                
+            </div>
+        </div>
+    </aside>
+    <!-- off-canvas menu end -->
+
+    <!-- main wrapper start -->
+    <main>
+        <!-- breadcrumb area start -->
+        <div class="breadcrumb-area">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="breadcrumb-wrap text-center">
+                            <h3 class="breadcrumb-title">MY ORDER</h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- breadcrumb area end -->
+
+        <!-- cart main wrapper start -->
+        <div class="cart-main-wrapper section-padding">
+            <div class="container">
+                <div class="section-bg-color">
+                    <div class="mb-3">
+                        <label for="exampleFormControlInput1" class="form-label">Thông tin người nhận</label>
+                        <div id="user-info" class="p-4 rounded border">
+                            <div class="row mb-4">
+                                <!-- Cột đầu tiên: Tên người nhận -->
+                                <div class="col-lg-6 mb-3">
+                                    <label for="recipient-name" class="form-label">Recipient Name</label>
+                                    <input type="text" class="form-control" id="recipient-name" placeholder="Enter recipient's name" required>
+                                </div>
+                                <!-- Cột thứ hai: Số điện thoại -->
+                                <div class="col-lg-6 mb-3">
+                                    <label for="phone-number" class="form-label">Phone Number</label>
+                                    <input type="text" class="form-control" id="phone-number" placeholder="Enter phone number" required>
+                                </div>
+                            </div>
+                            <div class="row mb-4">
+                                <!-- Cột đầu tiên: Địa chỉ -->
+                                <div class="col-lg-6 mb-3">
+                                    <label for="address" class="form-label">Address</label>
+                                    <input type="text" class="form-control" id="address" placeholder="Enter your address" required>
+                                </div>
+                                <!-- Cột thứ hai: Phương thức thanh toán -->
+                                <div class="col-lg-6 mb-3">
+                                    <label for="payment-method" class="form-label">Payment Method</label>
+                                    <div class="form-group">
+                                        <select id="payment-method" class="form-control py-2">
+                                            <option value="credit-card">Credit Card</option>
+                                            <option value="paypal">PayPal</option>
+                                            <option value="bank-transfer">Bank Transfer</option>
+                                            <option value="cash-on-delivery">Cash on Delivery</option>
+                                        </select>
+                                    </div>                                    
+                                </div>
+                            </div>    
+                        </div>                    
+                    </div>
+                </div>
+                <div class="section-bg-color">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <!-- Cart Table Area -->
+                            <div class="cart-table table-responsive">
+                                <table class="table table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th class="pro-thumbnail">Thumbnail</th>
+                                            <th class="pro-title">Product</th>
+                                            <th class="pro-price">Price</th>
+                                            <th class="pro-quantity">Quantity</th>
+                                            <th class="pro-subtotal">Total</th>
+                                            <th class="pro-remove">Remove</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td class="pro-thumbnail"><a href="#"><img class="img-fluid" src="assets/img/product/product-1.jpg" alt="Product" /></a></td>
+                                            <td class="pro-title"><a href="#">Leather Mens Slipper</a></td>
+                                            <td class="pro-price"><span>$295.00</span></td>
+                                            <td class="pro-quantity">
+                                                <div class="pro-qty"><input type="text" value="1"></div>
+                                            </td>
+                                            <td class="pro-subtotal"><span>$295.00</span></td>
+                                            <td class="pro-remove"><a href="#"><i class="fa fa-trash-o"></i></a></td>
+                                        </tr>
+                                        <tr>
+                                            <td class="pro-thumbnail"><a href="#"><img class="img-fluid" src="assets/img/product/product-2.jpg" alt="Product" /></a></td>
+                                            <td class="pro-title"><a href="#">Quickiin Mens Shoes</a></td>
+                                            <td class="pro-price"><span>$275.00</span></td>
+                                            <td class="pro-quantity">
+                                                <div class="pro-qty"><input type="text" value="2"></div>
+                                            </td>
+                                            <td class="pro-subtotal"><span>$550.00</span></td>
+                                            <td class="pro-remove"><a href="#"><i class="fa fa-trash-o"></i></a></td>
+                                        </tr>
+                                        <tr>
+                                            <td class="pro-thumbnail"><a href="#"><img class="img-fluid" src="assets/img/product/product-3.jpg" alt="Product" /></a></td>
+                                            <td class="pro-title"><a href="#">Rexpo Womens Shoes</a></td>
+                                            <td class="pro-price"><span>$295.00</span></td>
+                                            <td class="pro-quantity">
+                                                <div class="pro-qty">
+                                                    <input type="text" value="1" />
+                                                </div>
+                                            </td>
+                                            <td class="pro-subtotal"><span>$295.00</span></td>
+                                            <td class="pro-remove"><a href="#"><i class="fa fa-trash-o"></i></a></td>
+                                        </tr>
+                                        <tr>
+                                            <td class="pro-thumbnail"><a href="#"><img class="img-fluid" src="assets/img/product/product-4.jpg" alt="Product" /></a></td>
+                                            <td class="pro-title"><a href="#">Primitive Mens Shoes</a></td>
+                                            <td class="pro-price"><span>$110.00</span></td>
+                                            <td class="pro-quantity">
+                                                <div class="pro-qty">
+                                                    <input type="text" value="3" />
+                                                </div>
+                                            </td>
+                                            <td class="pro-subtotal"><span>$110.00</span></td>
+                                            <td class="pro-remove"><a href="#"><i class="fa fa-trash-o"></i></a></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <!-- Cart Update Option -->
+                            <div class="cart-update-option d-block d-md-flex justify-content-between">
+                                <div class="apply-coupon-wrapper">
+                                    <form action="#" method="post" class=" d-block d-md-flex">
+                                        <input type="text" placeholder="Enter Your Coupon Code" required />
+                                        <button class="btn">Apply Coupon</button>
+                                    </form>
+                                </div>
+                                <div class="cart-update">
+                                    <a href="#" class="btn">Update Order</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-5 ms-auto">
+                            <!-- Cart Calculation Area -->
+                            <div class="cart-calculator-wrapper">
+                                <div class="cart-calculate-items">
+                                    <h3>Cart Totals</h3>
+                                    <div class="table-responsive">
+                                        <table class="table">
+                                            <tr>
+                                                <td>Sub Total</td>
+                                                <td>$230</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Shipping</td>
+                                                <td>$70</td>
+                                            </tr>
+                                            <tr class="total">
+                                                <td>Total</td>
+                                                <td class="total-amount">$300</td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- cart main wrapper end -->
+    </main>
+    <!-- main wrapper end -->
+
+    <!-- Start Footer Area Wrapper -->
+    <footer class="footer-wrapper">
+        <!-- footer main area start -->
+        <div class="footer-widget-area section-padding">
+            <div class="container">
+                <div class="row mtn-40">
+                    <!-- footer widget item start -->
+                    <div class="col-xl-5 col-lg-3 col-md-6">
+                        <div class="widget-item mt-40">
+                            <h5 class="widget-title">My Account</h5>
+                            <div class="widget-body">
+                                <ul class="location-wrap">
+                                    <li><i class="ion-ios-location-outline"></i>Minh Khai Ward, Bac Tu Liem District, Hanoi City.</li>
+                                    <li><i class="ion-ios-email-outline"></i>Mail: <a href="mailto:yourmail@gmail.com">yourmail@gmail.com</a></li>
+                                    <li><i class="ion-ios-telephone-outline"></i>Phone: <a href="%2b0025425456554.html">+0123456789</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- footer widget item end -->
+
+                    
+                </div>
+            </div>
+        </div>
+        <!-- footer main area end -->
+
+        
+    </footer>
+    <!-- End Footer Area Wrapper -->
+
+    <!-- offcanvas search form start -->
+    <div class="offcanvas-search-wrapper">
+        <div class="offcanvas-search-inner">
+            <div class="offcanvas-close">
+                <i class="ion-android-close"></i>
+            </div>
+            <div class="container">
+                <div class="offcanvas-search-box">
+                    <form class="d-flex bdr-bottom w-100">
+                        <input type="text" placeholder="Search entire storage here...">
+                        <button class="search-btn"><i class="ion-ios-search-strong"></i>search</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- offcanvas search form end -->
+
+    <!-- offcanvas mini cart start -->
+    <div class="offcanvas-minicart-wrapper">
+        <div class="minicart-inner">
+            <div class="offcanvas-overlay"></div>
+            <div class="minicart-inner-content">
+                <div class="minicart-close">
+                    <i class="ion-android-close"></i>
+                </div>
+                <div class="minicart-content-box">
+                    <div class="minicart-item-wrapper">
+                        <ul>
+                            <li class="minicart-item">
+                                <div class="minicart-thumb">
+                                    <a href="product-details.html">
+                                        <img src="assets/img/cart/cart-1.jpg" alt="product">
+                                    </a>
+                                </div>
+                                <div class="minicart-content">
+                                    <h3 class="product-name">
+                                        <a href="product-details.html">Flowers bouquet pink for all flower lovers</a>
+                                    </h3>
+                                    <p>
+                                        <span class="cart-quantity">1 <strong>&times;</strong></span>
+                                        <span class="cart-price">$100.00</span>
+                                    </p>
+                                </div>
+                                <button class="minicart-remove"><i class="ion-android-close"></i></button>
+                            </li>
+                            <li class="minicart-item">
+                                <div class="minicart-thumb">
+                                    <a href="product-details.html">
+                                        <img src="assets/img/cart/cart-2.jpg" alt="product">
+                                    </a>
+                                </div>
+                                <div class="minicart-content">
+                                    <h3 class="product-name">
+                                        <a href="product-details.html">Jasmine flowers white for all flower lovers</a>
+                                    </h3>
+                                    <p>
+                                        <span class="cart-quantity">1 <strong>&times;</strong></span>
+                                        <span class="cart-price">$80.00</span>
+                                    </p>
+                                </div>
+                                <button class="minicart-remove"><i class="ion-android-close"></i></button>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="minicart-pricing-box">
+                        <ul>
+                            <li>
+                                <span>sub-total</span>
+                                <span><strong>$300.00</strong></span>
+                            </li>
+                            <li>
+                                <span>Eco Tax (-2.00)</span>
+                                <span><strong>$10.00</strong></span>
+                            </li>
+                            <li>
+                                <span>VAT (20%)</span>
+                                <span><strong>$60.00</strong></span>
+                            </li>
+                            <li class="total">
+                                <span>total</span>
+                                <span><strong>$370.00</strong></span>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="minicart-button">
+                        <a href="cart.html"><i class="fa fa-shopping-cart"></i> view cart</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- offcanvas mini cart end -->
+
+    <!-- Scroll to top start -->
+    <div class="scroll-top not-visible">
+        <i class="fa fa-angle-up"></i>
+    </div>
+    <!-- Scroll to Top End -->
+
+    <!--=======================Javascript============================-->
+    <!--=== All Vendor Js ===-->
+    <script src="assets/js/vendor.js"></script>
+    <!--=== All Plugins Js ===-->
+    <script src="assets/js/plugins.js"></script>
+    <!--=== Active Js ===-->
+    <script src="assets/js/active.js"></script>
+</body>
+    
+
+<!-- Mirrored from htmldemo.net/juan/juan/cart.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 17 Oct 2024 04:44:52 GMT -->
+</html>
