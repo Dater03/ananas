@@ -41,7 +41,7 @@ public class AuthenticationService {
     String createToken(User user) {
         JWSHeader header = new JWSHeader(JWSAlgorithm.HS256);
         JWTClaimsSet jwtClaimsSet = new JWTClaimsSet.Builder()
-                .subject(user.getEmail())
+                .subject(user.getUsername())
                 .issuer("Ananas")
                 .issueTime(new Date())
                 .expirationTime(new Date(
@@ -72,6 +72,7 @@ public class AuthenticationService {
         return AuthenticationResponse.builder()
                 .token(token)
                 .check(true)
+                .userId(user.getUserId())
                 .build();
     }
 

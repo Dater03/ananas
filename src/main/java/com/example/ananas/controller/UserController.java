@@ -15,6 +15,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -37,8 +38,12 @@ public class UserController {
 
     @GetMapping
     public ApiResponse<List<UserResponse>> getAllUsers() {
+        List<UserResponse> users = userService.getAllUsers();
+        if (users == null) {
+            users = new ArrayList<>(); // Trả về một mảng rỗng nếu không có người dùng
+        }
         return ApiResponse.<List<UserResponse>>builder()
-                .result(userService.getAllUsers())
+                .result(users)
                 .code(200)
                 .build();
     }

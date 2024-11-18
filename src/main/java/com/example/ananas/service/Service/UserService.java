@@ -103,7 +103,7 @@ public class UserService implements IUserService {
         }
         String fileName = StringUtils.cleanPath(Objects.requireNonNull(file.getOriginalFilename()));
         String uniqueFilename = UUID.randomUUID().toString()+"_"+fileName;
-        java.nio.file.Path uploadDir = java.nio.file.Paths.get("upload");
+        java.nio.file.Path uploadDir = java.nio.file.Paths.get("upload/user");
         if (!Files.exists(uploadDir)) {
             try {
                 Files.createDirectories(uploadDir);

@@ -6,7 +6,8 @@ import com.example.ananas.dto.response.UserResponse;
 
 import java.util.List;
 
-public interface IUserService {
+public interface
+IUserService {
     UserResponse createUser(UserCreateRequest userCreateRequest);
     UserResponse updateUser(int id, UserUpdateRequest userUpdateRequest);
     String deleteUser(int id);
