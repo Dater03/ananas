@@ -319,28 +319,56 @@
                             <td>2024-10-30</td>
                             <td>Nguyễn Văn A</td>
                             <td>1,500,000 VND</td>
-                            <td><span class="badge bg-primary">Đơn Hàng Mới</span></td>
+                            <td>
+                              <select class="form-control">
+                                  <option value="new" selected>Đơn Hàng Mới</option>
+                                  <option value="processing">Đang Xử Lý</option>
+                                  <option value="completed">Đã Hoàn Thành</option>
+                                  <option value="cancelled">Đã Hủy</option>
+                              </select>
+                          </td>
                         </tr>
                         <tr data-status="processing">
                             <td>DH789101</td>
                             <td>2024-10-29</td>
                             <td>Trần Thị B</td>
                             <td>2,000,000 VND</td>
-                            <td><span class="badge bg-warning">Đang Xử Lý</span></td>
+                            <td>
+                              <select class="form-control">
+                                  <option value="new" selected>Đơn Hàng Mới</option>
+                                  <option value="processing">Đang Xử Lý</option>
+                                  <option value="completed">Đã Hoàn Thành</option>
+                                  <option value="cancelled">Đã Hủy</option>
+                              </select>
+                          </td>
                         </tr>
                         <tr data-status="returned">
                             <td>DH112233</td>
                             <td>2024-10-28</td>
                             <td>Phạm Văn C</td>
                             <td>3,000,000 VND</td>
-                            <td><span class="badge bg-danger">Hoàn Trả</span></td>
+                            <td>
+                              <select class="form-control">
+                                  <option value="new" selected>Đơn Hàng Mới</option>
+                                  <option value="processing">Đang Xử Lý</option>
+                                  <option value="completed">Đã Hoàn Thành</option>
+                                  <option value="cancelled">Đã Hủy</option>
+                              </select>
+                          </td>
                         </tr>
                         <tr data-status="new">
                             <td>DH445566</td>
                             <td>2024-10-27</td>
                             <td>Lê Thị D</td>
                             <td>750,000 VND</td>
-                            <td><span class="badge bg-primary">Đơn Hàng Mới</span></td>
+                            <td>
+                              <select class="form-control">
+                                  <option value="new" selected>Đơn Hàng Mới</option>
+                                  <option value="processing">Đang Xử Lý</option>
+                                  <option value="completed">Đã Hoàn Thành</option>
+                                  <option value="cancelled">Đã Hủy</option>
+                              </select>
+                          </td>
                         </tr>
                         <!-- Thêm nhiều đơn hàng khác tại đây -->
                     </tbody>
@@ -367,6 +395,8 @@
                 }
             }
         });
+
+
     </script>
   </main><!-- End #main -->
 
