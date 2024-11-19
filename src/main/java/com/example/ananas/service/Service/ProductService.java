@@ -9,7 +9,6 @@ import com.example.ananas.entity.Category;
 import com.example.ananas.entity.Product;
 import com.example.ananas.entity.ProductVariant;
 import com.example.ananas.entity.Product_Image;
-import com.example.ananas.exception.IdException;
 import com.example.ananas.mapper.IProductImageMapper;
 import com.example.ananas.mapper.IProductMapper;
 import com.example.ananas.mapper.IProductVariantMapper;
@@ -171,6 +170,13 @@ public class ProductService implements IProductService {
         Product product = this.productRepository.findById(id).get();
         List<Product_Image> list = this.productImageRepository.findAllByProduct(product);
         return this.productImageMapper.toProductImagesResponseList(list);
+    }
+
+    @Override
+    public ProductImagesResponse getImageById(int id){
+        Product product = this.productRepository.findById(id).get();
+        Product_Image image = this.productImageRepository.findById(id).get();
+        return this.productImageMapper.toProductImagesResponse(image);
     }
 
     @Override

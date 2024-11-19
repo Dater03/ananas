@@ -30,6 +30,8 @@ public interface IProductService {
 
     List<ProductImagesResponse> getAllImages(int id);
 
+    ProductImagesResponse getImageById(int id);
+
     void deleteImages(int id);
 
     List<ProductVariant> getAllProductVariants(int id);

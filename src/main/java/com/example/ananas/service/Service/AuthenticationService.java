@@ -2,6 +2,7 @@ package com.example.ananas.service.Service;
 
 import com.example.ananas.dto.request.AuthenticationRequest;
 import com.example.ananas.dto.response.AuthenticationResponse;
+import com.example.ananas.entity.Role;
 import com.example.ananas.entity.User;
 import com.example.ananas.exception.AppException;
 import com.example.ananas.exception.ErrException;
