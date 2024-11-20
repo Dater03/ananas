@@ -196,6 +196,9 @@
                                         <input type="email" id="registerEmail" placeholder="Enter your Email" required />
                                     </div>
                                     <div class="single-input-item">
+                                        <input type="text" id="registerPhone" placeholder="Enter your Phone" required />
+                                    </div>
+                                    <div class="single-input-item">
                                         <input type="text" id="registerAddress" placeholder="Address" required />
                                     </div>
                                     <div class="single-input-item">
@@ -366,7 +369,7 @@
 
 
 <script>
-    const API_BASE_URL = "http://localhost:8080/user"; // Cập nhật URL API cho phù hợp với cấu trúc backend
+    const API_BASE_URL = "http://localhost:8080/auth"; // Cập nhật URL API cho phù hợp với cấu trúc backend
 
     // Xử lý form đăng nhập
     document.getElementById("loginForm").addEventListener("submit", async function (e) {
@@ -403,11 +406,18 @@
                 // Lưu thông tin người dùng nếu cần
                 localStorage.setItem("userId", result.result.result.userId); 
 
-                // Thông báo đăng nhập thành công
-                alert("Login successful! Redirecting...");
 
+                if(result.result.result.userId != 1){
+                    // Thông báo đăng nhập thành công
+                alert("Login successful! Redirecting...");
                 // Chuyển hướng người dùng
                 window.location.href = "index-2.html";
+                } else {
+                    // Thông báo đăng nhập thành công
+                alert("Login false! Redirecting...");
+                }
+
+                
             } else {
                 // Nếu thông tin đăng nhập sai hoặc lỗi từ server
                 const errorData = await response.json();
@@ -460,6 +470,7 @@
         const firstname = document.getElementById("registerFirstName").value;
         const lastname = document.getElementById("registerLastName").value;
         const email = document.getElementById("registerEmail").value;
+        const phone = document.getElementById("registerPhone").value;
         const address = document.getElementById("registerAddress").value;
         const password = document.getElementById("registerPassword").value;
         const confirmPassword = document.getElementById("confirmPassword").value;
@@ -475,7 +486,7 @@
                 headers: {
                     "Content-Type": "application/json",
                 },
-                body: JSON.stringify({ username, password, email, address, firstname, lastname }),
+                body: JSON.stringify({ username, password, email, phone, address, firstname, lastname }),
             });
 
             if (response.ok) {
