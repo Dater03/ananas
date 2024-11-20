@@ -102,7 +102,7 @@ public class UserService implements IUserService {
             throw new AppException(ErrException.NOT_FILE);
         }
         String fileName = StringUtils.cleanPath(Objects.requireNonNull(file.getOriginalFilename()));
-        String uniqueFilename = UUID.randomUUID().toString()+"_"+fileName;
+        String uniqueFilename = UUID.randomUUID().toString() + "_" + fileName;
         java.nio.file.Path uploadDir = java.nio.file.Paths.get("upload/user");
         if (!Files.exists(uploadDir)) {
             try {
@@ -117,14 +117,16 @@ public class UserService implements IUserService {
         } catch (IOException e) {
             throw new AppException(ErrException.FILE_STORAGE_FAILED);
         }
+        // Generate URL for the uploaded file
+        //String baseUrl = "http://localhost:8080/files/"; // Change to your server's base URL
         return uniqueFilename;
     }
 
     public UserResponse uploadAvatar(int id, MultipartFile file) {
         User user = userRepository.findById(id)
                 .orElseThrow(() -> new AppException(ErrException.USER_NOT_EXISTED));
-        String fileName = storeFile(file);
-        user.setAvatar(fileName);
+        String fileUrl = storeFile(file); // Store file and get the HTTP URL
+        user.setAvatar(fileUrl); // Save the HTTP URL into the database
         return userMapper.toUserResponse(userRepository.save(user));
     }
 

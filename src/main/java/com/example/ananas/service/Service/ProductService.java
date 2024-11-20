@@ -39,7 +39,7 @@ import java.util.UUID;
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class ProductService implements IProductService {
 
-    private static final String UPLOAD_DIR = "upload/";
+    private static final String UPLOAD_DIR = "upload/product";
     Product_Repository productRepository;
     Product_Image_Repository productImageRepository;
     Category_Repository categoryRepository;
@@ -158,7 +158,7 @@ public class ProductService implements IProductService {
 
             // Lưu thông tin ảnh vào database
             Product_Image image = new Product_Image();
-            image.setImageUrl(filePath.toString());
+            image.setImageUrl(fileName);
             image.setProduct(product);
             this.productImageRepository.save(image);
         }
