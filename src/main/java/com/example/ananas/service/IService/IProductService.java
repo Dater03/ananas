@@ -35,4 +35,8 @@ public interface IProductService {
     void deleteImages(int id);
 
     List<ProductVariant> getAllProductVariants(int id);
+
+    List<ProductResponse> getTopSeller();
+
+    Boolean imagesExisById(int id);
 }
