@@ -127,7 +127,7 @@
 			{
 				breakpoint: 1600, // Màn hình lớn hơn 1600px
 				settings: {
-					slidesToShow: 5 // Hiển thị 5 sản phẩm trên màn hình lớn hơn 1600px
+					slidesToShow: 4 // Hiển thị 5 sản phẩm trên màn hình lớn hơn 1600px
 				}
 			},
 			{
