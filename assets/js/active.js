@@ -119,32 +119,44 @@
 	});
 
 
-	// product carousel active
 	$('.product-carousel-4').slick({
 		slidesToShow: 4,
 		prevArrow: '<button type="button" class="slick-prev"><i class="fa fa-angle-left"></i></button>',
 		nextArrow: '<button type="button" class="slick-next"><i class="fa fa-angle-right"></i></button>',
 		responsive: [
 			{
-				breakpoint: 1200,
+				breakpoint: 1600, // Màn hình lớn hơn 1600px
+				settings: {
+					slidesToShow: 5 // Hiển thị 5 sản phẩm trên màn hình lớn hơn 1600px
+				}
+			},
+			{
+				breakpoint: 1400, // Màn hình lớn hơn 1400px
+				settings: {
+					slidesToShow: 4 // Hiển thị 4 sản phẩm trên màn hình lớn hơn 1400px
+				}
+			},
+			{
+				breakpoint: 1200, // Màn hình lớn hơn 1200px
 				settings: {
 					slidesToShow: 3
 				}
 			},
 			{
-				breakpoint: 992,
+				breakpoint: 992, // Màn hình lớn hơn 992px
 				settings: {
 					slidesToShow: 2
 				}
 			},
 			{
-				breakpoint: 576,
+				breakpoint: 576, // Màn hình nhỏ hơn 576px
 				settings: {
 					slidesToShow: 1
 				}
 			}
 		]
 	});
+	
 
 
 	// blog carousel active-2 js
@@ -153,6 +165,18 @@
 		arrows: false,
 		slidesToShow: 2,
 		responsive: [
+			{
+				breakpoint: 1600, // Màn hình lớn hơn 1600px
+				settings: {
+					slidesToShow: 2 // Hiển thị 5 sản phẩm trên màn hình lớn hơn 1600px
+				}
+			},
+			{
+				breakpoint: 1400, // Màn hình lớn hơn 1400px
+				settings: {
+					slidesToShow: 2 // Hiển thị 4 sản phẩm trên màn hình lớn hơn 1400px
+				}
+			},
 			{
 				breakpoint: 1200,
 				settings: {
