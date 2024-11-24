@@ -562,7 +562,7 @@
                                                 class="ion-android-favorite-outline"></i></a>
                                         <a href="#" data-bs-toggle="tooltip" title="Add To Cart"><i
                                                 class="ion-bag"></i></a>
-                                        <a href="#" data-bs-toggle="modal" data-bs-target="#quick_view" data-product-id="${product.id}"> <span
+                                        <a href="#" data-bs-toggle="modal" data-bs-target="#quick_view" data-product-id="${product.productId}"> <span
                                                 data-bs-toggle="tooltip" title="Quick View"><i
                                                     class="ion-ios-eye-outline"></i></span> </a>
                                     </div>
@@ -632,7 +632,7 @@
                                 <div class="product-link-2">
                                     <a href="#" data-bs-toggle="tooltip" title="Wishlist"><i class="ion-android-favorite-outline"></i></a>
                                     <a href="#" data-bs-toggle="tooltip" title="Add To Cart"><i class="ion-bag"></i></a>
-                                    <a href="#" data-bs-toggle="modal" data-bs-target="#quick_view" data-product-id="${product.id}>
+                                    <a href="#" data-bs-toggle="modal" data-bs-target="#quick_view" data-product-id="${product.productId}" >
                                         <span data-bs-toggle="tooltip" title="Quick View"><i class="ion-ios-eye-outline"></i></span>
                                     </a>
                                 </div>
@@ -652,11 +652,13 @@
             });
 
             // quickview
-            $(document).on("click", ".product-link-2 a[data-bs-target='#quick_view']", function (e) {
+            $(document).on("click", ".product-link-2 a[data-bs-target='#quick_view'], .product-action-link a[data-bs-target='#quick_view']", function (e) {
                 e.preventDefault();
 
+                console.log("abcd");
                 // Lấy ID sản phẩm từ thuộc tính data (hoặc các thuộc tính khác tùy vào cấu trúc HTML của bạn)
                 const productId = $(this).data("product-id");
+                console.log(productId)
 
                 if (!productId) {
                     console.error("Product ID not found");
@@ -673,6 +675,7 @@
                     success: function (response) {
                         if (response.code === 200 && response.result) {
                             const product = response.result;
+                            console.log("abcd");
 
                             // Cập nhật nội dung modal
                             updateQuickViewModal(product);
@@ -738,9 +741,6 @@
         `);
                 }
             }
-
-
-
 
         });
     </script>
