@@ -63,5 +63,10 @@ public class CartController {
     {
         return ResponseEntity.ok(this.cartService.getSumQuantity(userId) );
     }
+    @GetMapping("/cart/sumprice")
+    public ResponseEntity<Double> getSumPrice(@RequestParam int userId)
+    {
+        return ResponseEntity.ok(this.cartService.getSumPrice(userId));
+    }
 
 }
