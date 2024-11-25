@@ -82,7 +82,7 @@
                                         <li>
                                             <a href="#" class="minicart-btn">
                                                 <i class="ion-bag"></i>
-                                                <div class="notification">2</div>
+                                                <div class="notification" id="cart-quantity">0</div>
                                             </a>
                                         </li>
                                     </ul>
@@ -168,7 +168,7 @@
                             </div>
                             <!-- single sidebar end -->
 
-                            
+
 
                             <!-- single sidebar end -->
 
@@ -472,6 +472,47 @@
             let currentPage = 0; // Khởi đầu trang
             var condition = "";
 
+            const categoryApi = "http://localhost:8080/category";
+            const productCountApi = "http://localhost:8080/product/category/";
+
+            // Lấy danh sách category
+            $.get(categoryApi, function (response) {
+                if (response.code === 200) {
+                    const categories = response.result;
+                    const categoryList = $(".color-list");
+                    categoryList.empty(); // Xóa danh sách hiện tại (nếu có)
+
+                    // Lặp qua từng category
+                    categories.forEach(category => {
+                        // Gọi API lấy số lượng sản phẩm theo categoryId
+                        $.get(productCountApi + category.categoryId, function (countResponse) {
+                            if (countResponse.code === 200) {
+                                const productCount = countResponse.result;
+
+                                // Tạo item trong danh sách
+                                const categoryItem = `
+                            <li>
+                                <a href="#">${category.categoryName} <span>(${productCount})</span></a>
+                            </li>`;
+                                categoryList.append(categoryItem); // Thêm vào danh sách
+                            }
+                        });
+                    });
+                }
+            });
+
+             //số lượng sp trong giỏ hàng
+             $.ajax({
+                url: "http://localhost:8080/cart/quantity",
+                data: { userId: 1 },
+                type: "GET",
+                success: function (response) {
+                    let numberOfProduct = response.result;
+                    $('#cart-quantity').text(numberOfProduct)
+                }
+            })
+
+
             // Hàm gọi API và render dữ liệu
             function loadProducts(page, condition) {
                 $.ajax({
@@ -583,7 +624,7 @@
                 loadProducts(currentPage, "");
             });
 
-            
+
             $(document).on("click", ".nice-select ul li", function () {
                 condition = $(this).data("value"); // Lấy giá trị từ thuộc tính data-value
                 console.log("Selected value:", condition); // Ghi log giá trị
@@ -599,6 +640,6 @@
 </body>
 
 
-
+<!-- Mirrored from htmldemo.net/juan/juan/shop.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 17 Oct 2024 04:44:52 GMT -->
 
 </html>
