@@ -130,6 +130,8 @@ public class ProductService implements IProductService {
         return this.productRepository.existsById(id);
     }
 
+
+
     @Override
     @Transactional
     public void deleteProduct(int id)  {
@@ -180,6 +182,7 @@ public class ProductService implements IProductService {
     }
 
     @Override
+    @Transactional
     public void deleteImages(int id) {
         this.productImageRepository.deleteById(id);
     }
@@ -188,5 +191,15 @@ public class ProductService implements IProductService {
     public List<ProductVariant> getAllProductVariants(int id) {
 
         return this.productVariantRepository.findProductVariantsByProduct(this.productRepository.findById(id).get());
+    }
+
+    @Override
+    public List<ProductResponse> getTopSeller() {
+        return this.productMapper.toProductResponseList(this.productRepository.findTop4ByOrderBySoldQuantityDesc());
+    }
+
+    @Override
+    public Boolean imagesExisById(int id) {
+        return this.productImageRepository.existsById(id);
     }
 }

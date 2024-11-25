@@ -55,6 +55,13 @@ public class ProductController {
         return ResponseEntity.ok(productService.getAllProduct(spec, pageable));
     }
 
+    //lay ra top san pham ban chay
+    @GetMapping("/product/topseller")
+    public ResponseEntity<List< ProductResponse>> getTopSeller()
+    {
+        return ResponseEntity.ok(productService.getTopSeller());
+    }
+
     //cap nhat san pham va cac bien the cua no
     @PutMapping("product/{id}") // can sua tinh nang sua cac bien the cua san pham
     public ResponseEntity<ProductResponse> updateProduct(@PathVariable int id, @RequestBody ProductCreateRequest productCreateRequest) throws IdException
@@ -63,6 +70,7 @@ public class ProductController {
             throw new IdException("id sản phẩm không tồn tại");
         return ResponseEntity.ok(productService.updateProduct(id,productCreateRequest));
     }
+
 
     //xoa san pham
     @DeleteMapping("product/{id}") //luu y khi xoa san pham can xoa tat ca cac bien the cua no truoc moi có the xoa duoc
@@ -98,7 +106,7 @@ public class ProductController {
     @DeleteMapping("product/images/{id}")
     public ResponseEntity<String> deleteImages(@PathVariable int id) throws IdException
     {
-        if (!this.productService.exisById(id))
+        if (!this.productService.imagesExisById(id))
             throw new IdException("id ảnh không tồn tại");
         this.productService.deleteImages(id);
 
