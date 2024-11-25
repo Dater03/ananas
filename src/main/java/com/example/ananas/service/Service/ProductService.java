@@ -9,7 +9,6 @@ import com.example.ananas.entity.Category;
 import com.example.ananas.entity.Product;
 import com.example.ananas.entity.ProductVariant;
 import com.example.ananas.entity.Product_Image;
-import com.example.ananas.exception.IdException;
 import com.example.ananas.mapper.IProductImageMapper;
 import com.example.ananas.mapper.IProductMapper;
 import com.example.ananas.mapper.IProductVariantMapper;
@@ -24,6 +23,7 @@ import lombok.experimental.FieldDefaults;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -40,7 +40,7 @@ import java.util.UUID;
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class ProductService implements IProductService {
 
-    private static final String UPLOAD_DIR = "upload/";
+    private static final String UPLOAD_DIR = "upload/product";
     Product_Repository productRepository;
     Product_Image_Repository productImageRepository;
     Category_Repository categoryRepository;
@@ -131,6 +131,8 @@ public class ProductService implements IProductService {
         return this.productRepository.existsById(id);
     }
 
+
+
     @Override
     @Transactional
     public void deleteProduct(int id)  {
@@ -159,7 +161,7 @@ public class ProductService implements IProductService {
 
             // Lưu thông tin ảnh vào database
             Product_Image image = new Product_Image();
-            image.setImageUrl(filePath.toString());
+            image.setImageUrl(fileName);
             image.setProduct(product);
             this.productImageRepository.save(image);
         }
@@ -174,6 +176,14 @@ public class ProductService implements IProductService {
     }
 
     @Override
+    public ProductImagesResponse getImageById(int id){
+        Product product = this.productRepository.findById(id).get();
+        Product_Image image = this.productImageRepository.findById(id).get();
+        return this.productImageMapper.toProductImagesResponse(image);
+    }
+
+    @Override
+    @Transactional
     public void deleteImages(int id) {
         this.productImageRepository.deleteById(id);
     }
@@ -182,5 +192,20 @@ public class ProductService implements IProductService {
     public List<ProductVariant> getAllProductVariants(int id) {
 
         return this.productVariantRepository.findProductVariantsByProduct(this.productRepository.findById(id).get());
+    }
+
+    @Override
+    public List<ProductResponse> getTopSeller() {
+        return this.productMapper.toProductResponseList(this.productRepository.findTop4ByOrderBySoldQuantityDesc());
+    }
+
+    @Override
+    public Boolean imagesExisById(int id) {
+        return this.productImageRepository.existsById(id);
+    }
+
+    @Override
+    public int getNumberProductOfCategory(int id) {
+        return this.productRepository.getNumberProductOfCategory(id);
     }
 }

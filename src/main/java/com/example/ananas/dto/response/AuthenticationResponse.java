@@ -1,5 +1,6 @@
 package com.example.ananas.dto.response;
 
+import com.example.ananas.entity.Role;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
@@ -11,4 +12,5 @@ import lombok.experimental.FieldDefaults;
 public class AuthenticationResponse {
     String token;
     boolean check;
+    int userId;
 }

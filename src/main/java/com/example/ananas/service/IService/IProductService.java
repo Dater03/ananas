@@ -8,6 +8,7 @@ import com.example.ananas.entity.Product;
 import com.example.ananas.entity.ProductVariant;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -30,7 +31,15 @@ public interface IProductService {
 
     List<ProductImagesResponse> getAllImages(int id);
 
+    ProductImagesResponse getImageById(int id);
+
     void deleteImages(int id);
 
     List<ProductVariant> getAllProductVariants(int id);
+
+    List<ProductResponse> getTopSeller();
+
+    Boolean imagesExisById(int id);
+
+    int getNumberProductOfCategory(int id);
 }

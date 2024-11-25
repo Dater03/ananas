@@ -11,8 +11,8 @@ import lombok.experimental.FieldDefaults;
 public class UserResponse {
     int userId;
     String username;
-    String password;
     String email;
+    String phone;
     String address;
     String firstname;
     String lastname;

@@ -2,6 +2,7 @@ package com.example.ananas.service.Service;
 
 import com.example.ananas.dto.request.AuthenticationRequest;
 import com.example.ananas.dto.response.AuthenticationResponse;
+import com.example.ananas.entity.Role;
 import com.example.ananas.entity.User;
 import com.example.ananas.exception.AppException;
 import com.example.ananas.exception.ErrException;
@@ -41,7 +42,7 @@ public class AuthenticationService {
     String createToken(User user) {
         JWSHeader header = new JWSHeader(JWSAlgorithm.HS256);
         JWTClaimsSet jwtClaimsSet = new JWTClaimsSet.Builder()
-                .subject(user.getEmail())
+                .subject(user.getUsername())
                 .issuer("Ananas")
                 .issueTime(new Date())
                 .expirationTime(new Date(
@@ -72,6 +73,7 @@ public class AuthenticationService {
         return AuthenticationResponse.builder()
                 .token(token)
                 .check(true)
+                .userId(user.getUserId())
                 .build();
     }
 

@@ -23,6 +23,8 @@ public class PaymentController {
     public String createPayment(@RequestParam String orderInfo, @RequestParam long amount)   {
         try {
             return vnpayService.createPaymentURL(orderInfo, amount);
+            // lưu thông tin order vào bảng tạm để đối chiếu xử lý sau khi thanh toán
+
         }
         catch (Exception e){
            return "xay ra loi: " + e.getMessage().toString();

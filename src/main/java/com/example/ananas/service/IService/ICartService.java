@@ -14,4 +14,6 @@ public interface ICartService {
     void deleteCart(int userId);
 
     Integer getSumQuantity(int userId);
+
+    Double getSumPrice(int userId);
 }

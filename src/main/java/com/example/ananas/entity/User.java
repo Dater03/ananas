@@ -34,6 +34,9 @@ public class User {
             @Email(message = "")
     String email;
 
+    @Column(name = "phone")
+    String phone;
+
     @Column(name = "address")
     String address;
 

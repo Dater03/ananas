@@ -7,6 +7,7 @@ import com.example.ananas.mapper.IReviewMapper;
 import com.example.ananas.repository.Product_Repository;
 import com.example.ananas.repository.Review_Repository;
 import com.example.ananas.repository.User_Repository;
+import com.example.ananas.service.IService.IReviewService;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -19,7 +20,7 @@ import java.util.Optional;
 @Service
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
-public class ReviewService {
+public class ReviewService implements IReviewService {
     Review_Repository reviewRepository;
     User_Repository userRepository;
     Product_Repository productRepository;

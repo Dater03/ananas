@@ -12,9 +12,11 @@ import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -37,8 +39,12 @@ public class UserController {
 
     @GetMapping
     public ApiResponse<List<UserResponse>> getAllUsers() {
+        List<UserResponse> users = userService.getAllUsers();
+        if (users == null) {
+            users = new ArrayList<>(); // Trả về một mảng rỗng nếu không có người dùng
+        }
         return ApiResponse.<List<UserResponse>>builder()
-                .result(userService.getAllUsers())
+                .result(users)
                 .code(200)
                 .build();
     }
@@ -75,13 +81,13 @@ public class UserController {
                 .build();
     }
 
-    @PostMapping("/login")
-    public ApiResponse<AuthenticationResponse> createToken(@RequestBody AuthenticationRequest authenticationRequest) {
-        return ApiResponse.<AuthenticationResponse>builder()
-                .result(authenticationService.authenticationResponse(authenticationRequest))
-                .code(200)
-                .build();
-    }
+//    @PostMapping("/login")
+//    public ApiResponse<AuthenticationResponse> createToken(@RequestBody AuthenticationRequest authenticationRequest) {
+//        return ApiResponse.<AuthenticationResponse>builder()
+//                .result(authenticationService.authenticationResponse(authenticationRequest))
+//                .code(200)
+//                .build();
+//    }
 
     @PostMapping("/forgot-password")
     public ResponseEntity<String> forgotPassword(@RequestBody ForgotPasswordRequest forgotPasswordRequest) {
