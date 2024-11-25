@@ -24,7 +24,6 @@ public class VoucherController {
     @Autowired
     private IVoucherService voucherService;
 
-// Phương thức chung
 
     // Xem chi tiết voucher -  getVoucherDetail(String code)
     @GetMapping("/{code}")
@@ -32,7 +31,6 @@ public class VoucherController {
         return ResponseEntity.ok(voucherService.getVouchersForUser(code));
     }
 
-// Admin riêng
 
     @GetMapping("/admin/list")
     public ResponseEntity<ResultPaginationDTO> getAllVouchersForAdmin(@Filter Specification<Voucher> specification, Pageable pageable) {
