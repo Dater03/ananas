@@ -187,7 +187,7 @@
         <!-- banner statistic area end -->
 
         <!-- our product area start -->
-        <section class="our-product section-padding">
+        <section class="our-product mt-5 mb-5">
             <div class="container">
                 <div class="row">
                     <div class="col-12">
@@ -210,7 +210,7 @@
         <!-- our product area end -->
 
         <!-- top seller area start -->
-        <section class="top-seller-area section-padding">
+        <section class="top-seller-area mt-5 mb-5">
             <div class="container">
                 <div class="row">
                     <div class="col-12">
@@ -239,7 +239,7 @@
         <!-- top seller area end -->
 
         <!-- service features start -->
-        <section class="service-policy-area section-padding">
+        <section class="service-policy-area mt-5 mb-5">
             <div class="container">
                 <div class="row mtn-30">
                     <!-- single policy item start -->
@@ -349,7 +349,7 @@
     <!-- Start Footer Area Wrapper -->
     <footer class="footer-wrapper">
         <!-- footer main area start -->
-        <div class="footer-widget-area section-padding">
+        <div class="footer-widget-area mt-5">
             <div class="container">
                 <div class="row mtn-40">
                     <!-- footer widget item start -->
@@ -493,6 +493,7 @@
     <script type="text/javascript">
         document.addEventListener('DOMContentLoaded', async () => {
             const token = localStorage.getItem('token'); // Lấy token đăng nhập
+            const id = localStorage.getItem('userId');
             const productContainer = document.querySelector('.product-carousel'); // Container chứa sản phẩm
     
             const topProductContainer = document.querySelector('.top-seller-carousel'); // Container chứa sản phẩm
@@ -536,7 +537,7 @@
                     const productHTML = `
                         <div class="product-item mb-50">
                                     <div class="product-thumb">
-                                        <a href="product-details.html">
+                                        <a href="product-details.html?id=${product.productId}">
                                             <img src="http://localhost:8080/images/product/${product.images[0]}" alt="">
                                         </a>
                                     </div>
@@ -560,7 +561,6 @@
                                     </div>
                                 </div>
                     `;
-                        console.log("product",product)
                     const topProductHTML = `
                         <div class="slide-item">
                             <div class="pro-item-small mt-30">
@@ -599,67 +599,79 @@
                 }
 
                 // Khởi tạo slider sau khi thêm sản phẩm
-        $('.product-carousel').slick({
-            slidesToShow: 4, // Hiển thị 4 sản phẩm
-            infinite: true,
-            arrows: true, // Hiển thị nút điều hướng
-            prevArrow: '<button type="button" class="slick-prev"><i class="fa fa-angle-left"></i></button>',
-            nextArrow: '<button type="button" class="slick-next"><i class="fa fa-angle-right"></i></button>',
-            responsive: [
-                {
-                    breakpoint: 1024,
-                    settings: {
-                        slidesToShow: 3
-                    }
-                },
-                {
-                    breakpoint: 768,
-                    settings: {
-                        slidesToShow: 2
-                    }
-                },
-                {
-                    breakpoint: 480,
-                    settings: {
-                        slidesToShow: 1
-                    }
-                }
-            ]
-        });
+                $('.product-carousel').slick({
+                    slidesToShow: 4, // Hiển thị 4 sản phẩm
+                    infinite: true,
+                    arrows: true, // Hiển thị nút điều hướng
+                    prevArrow: '<button type="button" class="slick-prev"><i class="fa fa-angle-left"></i></button>',
+                    nextArrow: '<button type="button" class="slick-next"><i class="fa fa-angle-right"></i></button>',
+                    responsive: [
+                        {
+                            breakpoint: 1024,
+                            settings: {
+                                slidesToShow: 3
+                            }
+                        },
+                        {
+                            breakpoint: 768,
+                            settings: {
+                                slidesToShow: 2
+                            }
+                        },
+                        {
+                            breakpoint: 480,
+                            settings: {
+                                slidesToShow: 1
+                            }
+                        }
+                    ]
+                });
 
-        // blog carousel active-2 js
-	$('.top-seller-carousel').slick({
-		rows: 2,
-		arrows: false,
-		slidesToShow: 2,
-		responsive: [
-			{
-				breakpoint: 1600, // Màn hình lớn hơn 1600px
-				settings: {
-					slidesToShow: 2 // Hiển thị 5 sản phẩm trên màn hình lớn hơn 1600px
-				}
-			},
-			{
-				breakpoint: 1400, // Màn hình lớn hơn 1400px
-				settings: {
-					slidesToShow: 2 // Hiển thị 4 sản phẩm trên màn hình lớn hơn 1400px
-				}
-			},
-			{
-				breakpoint: 1200,
-				settings: {
-					slidesToShow: 1
-				}
-			},
-			{
-				breakpoint: 992,
-				settings: {
-					rows: 1,
-					slidesToShow: 1
-				}
-			}
-		]
-	});
+                //số lượng sp trong giỏ hàng
+                $.ajax({
+                    url: "http://localhost:8080/cart/quantity",
+                    data: { userId: id },
+                    type: "GET",
+                    success: function (response) {
+                        let numberOfProduct = response.result;
+                        console.log("Aa",response);
+                        $('#cart-quantity').text(numberOfProduct)
+                    }
+                })
+
+                // blog carousel active-2 js
+                $('.top-seller-carousel').slick({
+                    rows: 2,
+                    arrows: false,
+                    slidesToShow: 2,
+                    responsive: [
+                        {
+                            breakpoint: 1600, // Màn hình lớn hơn 1600px
+                            settings: {
+                                slidesToShow: 2 // Hiển thị 5 sản phẩm trên màn hình lớn hơn 1600px
+                            }
+                        },
+                        {
+                            breakpoint: 1400, // Màn hình lớn hơn 1400px
+                            settings: {
+                                slidesToShow: 2 // Hiển thị 4 sản phẩm trên màn hình lớn hơn 1400px
+                            }
+                        },
+                        {
+                            breakpoint: 1200,
+                            settings: {
+                                slidesToShow: 1
+                            }
+                        },
+                        {
+                            breakpoint: 992,
+                            settings: {
+                                rows: 1,
+                                slidesToShow: 1
+                            }
+                        }
+                    ]
+                });
     
                 // Add Quick View event listeners
                 document.querySelectorAll('[data-bs-target="#quick_view"]').forEach(button => {
@@ -668,98 +680,92 @@
                         await fetchQuickViewProduct(productId, token);
                     });
                 });
-    
-                
             } catch (error) {
                 console.error('Error fetching products or images:', error);
-            }
-      
-    
-
-            
+            } 
 
         });
 
-// Lấy chi tiết sản phẩm từ API và hiển thị vào modal
-async function fetchQuickViewProduct(productId, token) {
-    try {
-        const response = await fetch(`http://localhost:8080/product/${productId}`, {
-            method: 'GET',
-            headers: {
-                'Authorization': `Bearer ${token}`
+        // Lấy chi tiết sản phẩm từ API và hiển thị vào modal
+        async function fetchQuickViewProduct(productId, token) {
+            try {
+                const response = await fetch(`http://localhost:8080/product/${productId}`, {
+                    method: 'GET',
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
+
+                if (!response.ok) {
+                    throw new Error(`Failed to fetch product details: ${response.statusText}`);
+                }
+
+                const data = await response.json();
+                const product = data.result;
+
+                // Hiển thị thông tin sản phẩm vào modal
+                document.getElementById('productName').innerText = product.productName;
+                document.getElementById('currentPrice').innerText = `$${(product.price * (100 - product.discount) / 100).toFixed(2)}`;
+                document.getElementById('oldPrice').innerText = product.discount ? `$${product.price}` : '';
+                document.getElementById('description').innerText = product.description;
+                document.getElementById('availability').innerText = product.soldQuantity > 0 ? 'In Stock' : 'Out of Stock';
+                document.getElementById('availability').classList.toggle('text-success', product.soldQuantity > 0);
+                document.getElementById('availability').classList.toggle('text-danger', product.soldQuantity === 0);
+
+                // Cập nhật hình ảnh chính và hình ảnh thumbnail
+                const mainImage = product.images && product.images[0] ? `http://localhost:8080/images/product/${product.images[0]}` : 'http://localhost:8080/images/product/default-image.jpg';
+                document.getElementById('mainImage').src = mainImage;
+
+                const thumbnails = product.images || [];
+                document.getElementById('thumb1').src = thumbnails[0] ? `http://localhost:8080/images/product/${thumbnails[0]}` : 'http://localhost:8080/images/product/default-image.jpg';
+                document.getElementById('thumb2').src = thumbnails[1] ? `http://localhost:8080/images/product/${thumbnails[1]}` : 'http://localhost:8080/images/product/default-image.jpg';
+                document.getElementById('thumb3').src = thumbnails[2] ? `http://localhost:8080/images/product/${thumbnails[2]}` : 'http://localhost:8080/images/product/default-image.jpg';
+                document.getElementById('thumb4').src = thumbnails[3] ? `http://localhost:8080/images/product/${thumbnails[3]}` : 'http://localhost:8080/images/product/default-image.jpg';
+
+                // Hiển thị modal
+                const quickViewModal = new bootstrap.Modal(document.getElementById('quick_view'));
+                quickViewModal.show();
+            } catch (error) {
+                console.error('Error fetching product details:', error);
             }
+        }
+
+        // Thêm sự kiện cho các nút Quick View
+        document.querySelectorAll('[data-bs-target="#quick_view"]').forEach(button => {
+            button.addEventListener('click', (event) => {
+                const productId = event.currentTarget.getAttribute('data-product-id');
+                const token = localStorage.getItem('token'); // Token từ localStorage
+                if (token) {
+                    fetchQuickViewProduct(productId, token);
+                } else {
+                    alert('You need to log in to view this product!');
+                }
+            });
         });
 
-        if (!response.ok) {
-            throw new Error(`Failed to fetch product details: ${response.statusText}`);
-        }
+        // Phóng to ảnh chính khi di chuột
+        const mainImage = document.getElementById('mainImage');
+        const thumbnails = document.querySelectorAll('.thumbnail');
 
-        const data = await response.json();
-        const product = data.result;
+        // Thay đổi ảnh chính khi bấm vào thumbnail
+        thumbnails.forEach(thumbnail => {
+            thumbnail.addEventListener('click', (event) => {
+                const newImageSrc = event.target.src;
+                mainImage.src = newImageSrc;
+            });
+        });
 
-        // Hiển thị thông tin sản phẩm vào modal
-        document.getElementById('productName').innerText = product.productName;
-        document.getElementById('currentPrice').innerText = `$${(product.price * (100 - product.discount) / 100).toFixed(2)}`;
-        document.getElementById('oldPrice').innerText = product.discount ? `$${product.price}` : '';
-        document.getElementById('description').innerText = product.description;
-        document.getElementById('availability').innerText = product.soldQuantity > 0 ? 'In Stock' : 'Out of Stock';
-        document.getElementById('availability').classList.toggle('text-success', product.soldQuantity > 0);
-        document.getElementById('availability').classList.toggle('text-danger', product.soldQuantity === 0);
+        // Di chuột để phóng to vùng ảnh
+        mainImage.addEventListener('mousemove', (event) => {
+            const bounds = mainImage.getBoundingClientRect();
+            const xPercent = ((event.clientX - bounds.left) / bounds.width) * 100;
+            const yPercent = ((event.clientY - bounds.top) / bounds.height) * 100;
+            mainImage.style.transformOrigin = `${xPercent}% ${yPercent}%`;
+        });
 
-        // Cập nhật hình ảnh chính và hình ảnh thumbnail
-        const mainImage = product.images && product.images[0] ? `http://localhost:8080/images/product/${product.images[0]}` : 'http://localhost:8080/images/product/default-image.jpg';
-        document.getElementById('mainImage').src = mainImage;
-
-        const thumbnails = product.images || [];
-        document.getElementById('thumb1').src = thumbnails[0] ? `http://localhost:8080/images/product/${thumbnails[0]}` : 'http://localhost:8080/images/product/default-image.jpg';
-        document.getElementById('thumb2').src = thumbnails[1] ? `http://localhost:8080/images/product/${thumbnails[1]}` : 'http://localhost:8080/images/product/default-image.jpg';
-        document.getElementById('thumb3').src = thumbnails[2] ? `http://localhost:8080/images/product/${thumbnails[2]}` : 'http://localhost:8080/images/product/default-image.jpg';
-        document.getElementById('thumb4').src = thumbnails[3] ? `http://localhost:8080/images/product/${thumbnails[3]}` : 'http://localhost:8080/images/product/default-image.jpg';
-
-        // Hiển thị modal
-        const quickViewModal = new bootstrap.Modal(document.getElementById('quick_view'));
-        quickViewModal.show();
-    } catch (error) {
-        console.error('Error fetching product details:', error);
-    }
-}
-
-// Thêm sự kiện cho các nút Quick View
-document.querySelectorAll('[data-bs-target="#quick_view"]').forEach(button => {
-    button.addEventListener('click', (event) => {
-        const productId = event.currentTarget.getAttribute('data-product-id');
-        const token = localStorage.getItem('token'); // Token từ localStorage
-        if (token) {
-            fetchQuickViewProduct(productId, token);
-        } else {
-            alert('You need to log in to view this product!');
-        }
-    });
-});
-
-// Phóng to ảnh chính khi di chuột
-const mainImage = document.getElementById('mainImage');
-const thumbnails = document.querySelectorAll('.thumbnail');
-
-// Thay đổi ảnh chính khi bấm vào thumbnail
-thumbnails.forEach(thumbnail => {
-    thumbnail.addEventListener('click', (event) => {
-        const newImageSrc = event.target.src;
-        mainImage.src = newImageSrc;
-    });
-});
-
-// Di chuột để phóng to vùng ảnh
-mainImage.addEventListener('mousemove', (event) => {
-    const bounds = mainImage.getBoundingClientRect();
-    const xPercent = ((event.clientX - bounds.left) / bounds.width) * 100;
-    const yPercent = ((event.clientY - bounds.top) / bounds.height) * 100;
-    mainImage.style.transformOrigin = `${xPercent}% ${yPercent}%`;
-});
-
-mainImage.addEventListener('mouseleave', () => {
-    mainImage.style.transformOrigin = 'center center';
-});
+        mainImage.addEventListener('mouseleave', () => {
+            mainImage.style.transformOrigin = 'center center';
+        });
 
 
     </script>

@@ -54,9 +54,9 @@
                                     <!-- main menu navbar start -->
                                     <nav class="desktop-menu">
                                         <ul>
-                                            <li class="active"><a href="index-2.html">Home </a></li>
-                                            <li><a href="shop.html">shop</a></li>
-                                            <li><a href="contact-us.html">Contact us</a></li>
+                                            <li class="active"><a href="index-2.html">Trang chủ </a></li>
+                                            <li><a href="shop.html">Cửa hàng</a></li>
+                                            <li><a href="contact-us.html">Liên hệ</a></li>
                                         </ul>
                                     </nav>
                                     <!-- main menu navbar end -->
@@ -80,9 +80,9 @@
                                                 <i class="ion-ios-gear-outline"></i>
                                             </a>
                                             <ul class="dropdown-list">
-                                                <li><a href="login-register.html">login</a></li>
-                                                <li><a href="login-register.html">register</a></li>
-                                                <li><a href="my-account.html">my account</a></li>
+                                                <li><a href="login-register.html">Đăng nhập</a></li>
+                                                <li><a href="login-register.html">Đăng ký</a></li>
+                                                <li><a href="my-account.html">Tài khoản</a></li>
                                             </ul>
                                         </li>
                                         <li>
@@ -133,7 +133,7 @@
     <main>
 
         <!-- product details wrapper start -->
-        <div class="product-details-wrapper section-padding">
+        <div class="product-details-wrapper mt-5 mb-5">
             <div class="container custom-container">
                 <div class="row">
                     <div class="col-12">
@@ -143,37 +143,28 @@
                                 <div class="col-lg-5">
                                     <div class="product-large-slider mb-20">
                                         <div class="pro-large-img img-zoom">
-                                            <img src="assets/img/product/product-details-img1.jpg" alt="" />
+                                            <img id="mainImage" src="" alt="" />
                                         </div>
-                                        <div class="pro-large-img img-zoom">
-                                            <img src="assets/img/product/product-details-img2.jpg" alt=""/>
+                                        <!-- Các hình ảnh thumbnail sẽ được thêm vào động -->
+                                        <div id="thumbnails" class="pro-nav slick-row-5">
+                                            <img id="thumb1" src="" alt="Thumbnail 1" class="img-thumbnail me-2 thumbnail" style="cursor: pointer;">
+                                            <img id="thumb2" src="" alt="Thumbnail 2" class="img-thumbnail me-2 thumbnail" style="cursor: pointer;">
+                                            <img id="thumb3" src="" alt="Thumbnail 3" class="img-thumbnail me-2 thumbnail" style="cursor: pointer;">
+                                            <img id="thumb4" src="" alt="Thumbnail 4" class="img-thumbnail me-2 thumbnail" style="cursor: pointer;">
                                         </div>
-                                        <div class="pro-large-img img-zoom">
-                                            <img src="assets/img/product/product-details-img3.jpg" alt=""/>
-                                        </div>
-                                        <div class="pro-large-img img-zoom">
-                                            <img src="assets/img/product/product-details-img4.jpg" alt=""/>
-                                        </div>
-                                    </div>
-                                    <div class="pro-nav slick-row-5">
-                                        <div class="pro-nav-thumb"><img src="assets/img/product/product-details-img1.jpg" alt="" /></div>
-                                        <div class="pro-nav-thumb"><img src="assets/img/product/product-details-img2.jpg" alt="" /></div>
-                                        <div class="pro-nav-thumb"><img src="assets/img/product/product-details-img3.jpg" alt="" /></div>
-                                        <div class="pro-nav-thumb"><img src="assets/img/product/product-details-img4.jpg" alt="" /></div>
                                     </div>
                                 </div>
                                 <div class="col-lg-7">
                                     <div class="product-details-des">
-                                        <h3 class="pro-det-title">Primitive Mens Premium Shoes</h3>
+                                        <h3 id="productName" class="pro-det-title">Product Name</h3>
                                         <div class="pro-review">
-                                            <span><a href="#">1 Review(s)</a></span>
+                                            <span><a href="#" id="reviews">1 Review(s)</a></span>
                                         </div>
                                         <div class="price-box">
-                                            <span class="regular-price">$70.00</span>
-                                            <span class="old-price"><del>$80.00</del></span>
+                                            <span id="currentPrice" class="regular-price">$70.00</span>
+                                            <span id="oldPrice" class="old-price"><del>$80.00</del></span>
                                         </div>
-                                        <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.<br>
-                                        Phasellus id nisi quis justo tempus mollis sed et dui. In hac habitasse platea dictumst. Suspendisse ultrices mauris diam. Nullam sed aliquet elit. Mauris consequat nisi ut mauris efficitur lacinia.</p>
+                                        <p id="description">Lorem ipsum dolor sit amet...</p>
                                         <div class="quantity-cart-box d-flex align-items-center mb-20">
                                             <div class="quantity">
                                                 <div class="pro-qty"><input type="text" value="1"></div>
@@ -182,7 +173,7 @@
                                         </div>
                                         <div class="availability mb-20">
                                             <h5 class="cat-title">Availability:</h5>
-                                            <span>In Stock</span>
+                                            <span id="availability">In Stock</span>
                                         </div>
                                         <div class="share-icon">
                                             <h5 class="cat-title">Share:</h5>
@@ -195,10 +186,11 @@
                                 </div>
                             </div>
                         </div>
+                        
                         <!-- product details inner end -->
 
                         <!-- product details reviews start -->
-                        <div class="product-details-reviews section-padding">
+                        <div class="product-details-reviews mt-5 mb-5">
                             <div class="row">
                                 <div class="col-lg-12">
                                     <div class="product-review-info">
@@ -545,7 +537,7 @@
     <!-- Start Footer Area Wrapper -->
     <footer class="footer-wrapper">
         <!-- footer main area start -->
-        <div class="footer-widget-area section-padding">
+        <div class="footer-widget-area mt-5">
             <div class="container">
                 <div class="row mtn-40">
                     <!-- footer widget item start -->
@@ -688,3 +680,88 @@
 
 <!-- Mirrored from htmldemo.net/juan/juan/product-details.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 17 Oct 2024 04:44:52 GMT -->
 </html>
+
+<script>
+   // Hàm để fetch thông tin sản phẩm từ API và cập nhật DOM
+async function fetchProductDetails(productId) {
+    try {
+        const response = await fetch(`http://localhost:8080/product/${productId}`);
+        if (!response.ok) {
+            throw new Error('Error fetching product details');
+        }
+
+        const data = await response.json();
+        const product = data.result;
+
+        // Cập nhật thông tin sản phẩm vào DOM
+        document.getElementById('productName').innerText = product.productName;
+        document.getElementById('currentPrice').innerText = `$${(product.price * (100 - product.discount) / 100).toFixed(2)}`;
+        document.getElementById('oldPrice').innerText = product.discount ? `$${product.price}` : '';
+        document.getElementById('description').innerText = product.description;
+        document.getElementById('availability').innerText = product.availability ? 'In Stock' : 'Out of Stock';
+        document.getElementById('availability').classList.toggle('text-success', product.availability);
+        document.getElementById('availability').classList.toggle('text-danger', !product.availability);
+
+        // Cập nhật hình ảnh chính
+        const mainImage = `http://localhost:8080/images/product/${product.images[0]}`;
+                    document.getElementById('mainImage').src = mainImage;
+
+                    const thumbnails = product.images || [];
+        document.getElementById('thumb1').src = thumbnails[0] ? `http://localhost:8080/images/product/${thumbnails[0]}` : 'http://localhost:8080/images/product/default-image.jpg';
+        document.getElementById('thumb2').src = thumbnails[1] ? `http://localhost:8080/images/product/${thumbnails[1]}` : 'http://localhost:8080/images/product/default-image.jpg';
+        document.getElementById('thumb3').src = thumbnails[2] ? `http://localhost:8080/images/product/${thumbnails[2]}` : 'http://localhost:8080/images/product/default-image.jpg';
+        document.getElementById('thumb4').src = thumbnails[3] ? `http://localhost:8080/images/product/${thumbnails[3]}` : 'http://localhost:8080/images/product/default-image.jpg';
+
+    } catch (error) {
+        console.error(error);
+    }
+}
+
+// Phóng to ảnh chính khi di chuột
+const mainImage = document.getElementById('mainImage');
+const thumbnails = document.querySelectorAll('.thumbnail');
+
+// Thay đổi ảnh chính khi bấm vào thumbnail
+thumbnails.forEach(thumbnail => {
+    thumbnail.addEventListener('click', (event) => {
+        const newImageSrc = event.target.src;
+        mainImage.src = newImageSrc;
+    });
+});
+
+// Di chuột để phóng to vùng ảnh
+mainImage.addEventListener('mousemove', (event) => {
+    const bounds = mainImage.getBoundingClientRect();
+    const xPercent = ((event.clientX - bounds.left) / bounds.width) * 100;
+    const yPercent = ((event.clientY - bounds.top) / bounds.height) * 100;
+    mainImage.style.transformOrigin = `${xPercent}% ${yPercent}%`;
+});
+
+mainImage.addEventListener('mouseleave', () => {
+    mainImage.style.transformOrigin = 'center center';
+});
+
+
+// Hàm để lấy tham số từ URL
+function getUrlParameter(param) {
+    const urlParams = new URLSearchParams(window.location.search);
+    return urlParams.get(param); // Trả về giá trị của tham số
+}
+
+// Gọi API khi trang được tải
+window.addEventListener('DOMContentLoaded', () => {
+    // Lấy productId từ URL
+    const productId = getUrlParameter('id');
+    if (productId) {
+        // Gọi hàm để fetch chi tiết sản phẩm
+        fetchProductDetails(productId);
+    } else {
+        console.error('Product ID not found in URL');
+        // Bạn có thể chuyển hướng về trang danh sách hoặc hiển thị thông báo lỗi ở đây
+    }
+});
+
+
+
+
+</script>

@@ -121,6 +121,7 @@
 
 	$('.product-carousel-4').slick({
 		slidesToShow: 4,
+		slidesToScroll: 1,
 		prevArrow: '<button type="button" class="slick-prev"><i class="fa fa-angle-left"></i></button>',
 		nextArrow: '<button type="button" class="slick-next"><i class="fa fa-angle-right"></i></button>',
 		responsive: [
@@ -159,39 +160,7 @@
 	
 
 
-	// blog carousel active-2 js
-	$('.top-seller-carousel').slick({
-		rows: 2,
-		arrows: false,
-		slidesToShow: 2,
-		responsive: [
-			{
-				breakpoint: 1600, // Màn hình lớn hơn 1600px
-				settings: {
-					slidesToShow: 2 // Hiển thị 5 sản phẩm trên màn hình lớn hơn 1600px
-				}
-			},
-			{
-				breakpoint: 1400, // Màn hình lớn hơn 1400px
-				settings: {
-					slidesToShow: 2 // Hiển thị 4 sản phẩm trên màn hình lớn hơn 1400px
-				}
-			},
-			{
-				breakpoint: 1200,
-				settings: {
-					slidesToShow: 1
-				}
-			},
-			{
-				breakpoint: 992,
-				settings: {
-					rows: 1,
-					slidesToShow: 1
-				}
-			}
-		]
-	});
+	
 
 
 	// blog carousel active-2 js
