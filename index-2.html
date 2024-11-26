@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html class="no-js" lang="zxx">
 
-<!-- Mirrored from htmldemo.net/juan/juan/index-2.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 17 Oct 2024 04:44:28 GMT -->
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -19,10 +18,6 @@
     <!-- Modernizer JS -->
     <script src="assets/js/modernizr-2.8.3.min.js"></script>
 
-    <!--[if lt IE 9]>
-<script src="//oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-<script src="//oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-<![endif]-->
 </head>
 
 <body>
@@ -52,9 +47,9 @@
                                     <!-- main menu navbar start -->
                                     <nav class="desktop-menu">
                                         <ul>
-                                            <li class="active"><a href="index-2.html">Home </a></li>
-                                            <li><a href="shop.html">shop </a></li>
-                                            <li><a href="contact-us.html">Contact us</a></li>
+                                            <li class="active"><a href="index-2.html">Trang chủ </a></li>
+                                            <li><a href="shop.html">Cửa hàng </a></li>
+                                            <li><a href="contact-us.html">Liên hệ</a></li>
                                         </ul>
                                     </nav>
                                     <!-- main menu navbar end -->
@@ -78,15 +73,15 @@
                                                 <i class="ion-ios-gear-outline"></i>
                                             </a>
                                             <ul class="dropdown-list">
-                                                <li><a href="login-register.html">login</a></li>
-                                                <li><a href="login-register.html">register</a></li>
-                                                <li><a href="my-account.html">my account</a></li>
+                                                <li><a href="login.html">Đăng nhập</a></li>
+                                                <li><a href="register.html">Đăng ký</a></li>
+                                                <li><a href="my-account.html">Tài khoản</a></li>
                                             </ul>
                                         </li>
                                         <li>
                                             <a href="#" class="minicart-btn">
                                                 <i class="ion-bag"></i>
-                                                <div class="notification">2</div>
+                                                <div class="notification" id="cart-quantity">0</div>
                                             </a>
                                         </li>
                                     </ul>
@@ -197,19 +192,19 @@
                 <div class="row">
                     <div class="col-12">
                         <div class="section-title text-center">
-                            <h2 class="title">Our Product</h2>
+                            <h2 class="title">Sản phẩm</h2>
                             <p class="sub-title">Step into Style, Walk with Confidence!</p>
                         </div>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-12">
-                        <div class="product-carousel-4 mbn-50 slick-row-15 slick-arrow-style">
-                            <!-- Sản phẩm sẽ được hiển thị bằng JavaScript -->
+                        <div class="product-carousel mbn-50 slick-row-15 slick-arrow-style slick-slider" id="lastest-product-list">
+
+                            <!-- product single item start -->
                         </div>
                     </div>
                 </div>
-                
             </div>
         </section>
         <!-- our product area end -->
@@ -220,7 +215,7 @@
                 <div class="row">
                     <div class="col-12">
                         <div class="section-title text-center">
-                            <h2 class="title">top seller</h2>
+                            <h2 class="title">Sản phẩm bán chạy</h2>
                             <p class="sub-title">Step into Style, Walk with Confidence!</p>
                         </div>
                     </div>
@@ -233,20 +228,15 @@
                             </a>
                         </div>
                     </div>
-                    <div class="col-xl-8 col-lg-7 col-md-7
-                    ">
-                        <div class="top-seller-carousel slick-row-15 mtn-30">
-                            <!-- product item start -->
-                            
-                            <!-- product item start -->
+                    <div class="col-xl-8 col-lg-7 col-md-7">
+                        <div class="top-seller-carousel slick-row-15 mtn-30" id="top-seller-list">
+                            <!-- chỗ này để hiển thị các sản phẩm topseller -->
                         </div>
                     </div>
                 </div>
             </div>
         </section>
         <!-- top seller area end -->
-
-    
 
         <!-- service features start -->
         <section class="service-policy-area section-padding">
@@ -260,7 +250,7 @@
                             </div>
                             <div class="policy-content">
                                 <h5 class="policy-title">FREE SHIPPING</h5>
-                                <p class="policy-desc">Free shipping on all order</p>
+                                <p class="policy-desc">Miễn phí ship trên tất cả đơn hàng</p>
                             </div>
                         </div>
                     </div>
@@ -274,7 +264,7 @@
                             </div>
                             <div class="policy-content">
                                 <h5 class="policy-title">ONLINE SUPPORT</h5>
-                                <p class="policy-desc">Online support 24 hours a day</p>
+                                <p class="policy-desc">Hỗ trợ 24/24</p>
                             </div>
                         </div>
                     </div>
@@ -288,7 +278,7 @@
                             </div>
                             <div class="policy-content">
                                 <h5 class="policy-title">MONEY RETURN</h5>
-                                <p class="policy-desc">Back guarantee under 5 days</p>
+                                <p class="policy-desc">Hoàn tiền dưới 3 ngày</p>
                             </div>
                         </div>
                     </div>
@@ -300,77 +290,61 @@
     </main>
     <!-- main wrapper end -->
 
-    <!-- Quick view modal start -->
-    <div class="modal" id="quick_view">
-        <div class="modal-dialog modal-lg modal-dialog-centered">
+    <!-- modal quickview -->
+    <div class="modal fade" id="quick_view" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
-                    <button type="button" class="close" data-bs-dismiss="modal">&times;</button>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" style="margin-top: 5px;"></button>
                 </div>
                 <div class="modal-body">
-                    <!-- product details inner end -->
-                    <div class="product-details-inner">
-                        <div class="row">
-                            <div class="col-lg-5">
-                                <div class="product-large-slider mb-20">
-                                    <div class="pro-large-img img-zoom">
-                                        <img src="assets/img/product/product-details-img1.jpg" alt="product thumb" />
-                                    </div>
-                                    <div class="pro-large-img img-zoom">
-                                        <img src="assets/img/product/product-details-img2.jpg" alt="product thumb"/>
-                                    </div>
-                                    <div class="pro-large-img img-zoom">
-                                        <img src="assets/img/product/product-details-img3.jpg" alt="product thumb"/>
-                                    </div>
-                                    <div class="pro-large-img img-zoom">
-                                        <img src="assets/img/product/product-details-img4.jpg" alt="product thumb"/>
-                                    </div>
-                                </div>
-                                <div class="pro-nav slick-row-5">
-                                    <div class="pro-nav-thumb"><img src="assets/img/product/product-details-img1.jpg" alt="" /></div>
-                                    <div class="pro-nav-thumb"><img src="assets/img/product/product-details-img2.jpg" alt="" /></div>
-                                    <div class="pro-nav-thumb"><img src="assets/img/product/product-details-img3.jpg" alt="" /></div>
-                                    <div class="pro-nav-thumb"><img src="assets/img/product/product-details-img4.jpg" alt="" /></div>
-                                </div>
+                    <div class="row">
+                        <!-- Image Section -->
+                        <div class="col-md-6">
+                            <div class="product-large-slider" style="position: relative; overflow: hidden;">
+                                <img id="mainImage" src="" alt="Product Image" class="img-fluid zoomable">
                             </div>
-                            <div class="col-lg-7">
-                                <div class="product-details-des">
-                                    <h3 class="pro-det-title">Primitive Mens Premium Shoes</h3>
-                                    <div class="pro-review">
-                                        <span><a href="#">1 Review(s)</a></span>
-                                    </div>
-                                    <div class="price-box">
-                                        <span class="regular-price">$70.00</span>
-                                        <span class="old-price"><del>$80.00</del></span>
-                                    </div>
-                                    <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.</p>
-                                    <div class="quantity-cart-box d-flex align-items-center mb-20">
-                                        <div class="quantity">
-                                            <div class="pro-qty"><input type="text" value="1"></div>
-                                        </div>
-                                        <a href="cart.html" class="btn btn-default">Add To Cart</a>
-                                    </div>
-                                    <div class="availability mb-20">
-                                        <h5 class="cat-title">Availability:</h5>
-                                        <span>In Stock</span>
-                                    </div>
-                                    <div class="share-icon">
-                                        <h5 class="cat-title">Share:</h5>
-                                        <a href="#"><i class="fa fa-facebook"></i></a>
-                                        <a href="#"><i class="fa fa-twitter"></i></a>
-                                        <a href="#"><i class="fa fa-pinterest"></i></a>
-                                        <a href="#"><i class="fa fa-google-plus"></i></a>
-                                    </div>
+                            <div class="product-thumbnails mt-3 d-flex">
+                                <!-- Thumbnail Images -->
+                                <img id="thumb1" src="" alt="Thumbnail 1" class="img-thumbnail me-2 thumbnail" style="cursor: pointer;">
+                                <img id="thumb2" src="" alt="Thumbnail 2" class="img-thumbnail me-2 thumbnail" style="cursor: pointer;">
+                                <img id="thumb3" src="" alt="Thumbnail 3" class="img-thumbnail me-2 thumbnail" style="cursor: pointer;">
+                            </div>
+                        </div>
+                        <!-- Details Section -->
+                        <div class="col-md-6">
+                            <div class="product-details">
+                                <h5 style="margin-bottom: 10px;" class="modal-title" id="productName">Product Name</h5>
+                                <p style="margin-bottom: 10px;" id="reviews"><span>1 Review(s)</span></p>
+                                <div style="margin-bottom: 10px;" class="price-box">
+                                    <span id="currentPrice" class="price-regular">$70.00</span>
+                                    <span id="oldPrice" class="price-old text-muted"><del>$80.00</del></span>
+                                </div>
+                                <p style="margin-bottom: 10px;" id="description">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                                <div class="availability">
+                                    <strong>Availability:</strong> <span id="availability" class="text-success">In Stock</span>
+                                </div>
+                                <div style="margin-bottom: 10px;" class="quantity mt-3">
+                                    <label for="quantityInput">Quantity:</label>
+                                    <input id="quantityInput" type="number" value="1" min="1" class="form-control w-25 d-inline">
+                                    <button id="addToCart" class="btn btn-dark ms-2">Add to Cart</button>
+                                </div>
+                                <div style="margin-bottom: 10px;" class="social-share mt-3">
+                                    <strong>Share:</strong>
+                                    <a href="#" class="ms-2"><i class="ion-social-facebook"></i></a>
+                                    <a href="#" class="ms-2"><i class="ion-social-twitter"></i></a>
+                                    <a href="#" class="ms-2"><i class="ion-social-pinterest"></i></a>
+                                    <a href="#" class="ms-2"><i class="ion-social-googleplus"></i></a>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <!-- product details inner end -->
                 </div>
             </div>
         </div>
     </div>
-    <!-- Quick view modal end -->
+     <!-- end modal quickview-->
+    
 
     <!-- Start Footer Area Wrapper -->
     <footer class="footer-wrapper">
@@ -381,11 +355,11 @@
                     <!-- footer widget item start -->
                     <div class="col-xl-5 col-lg-3 col-md-6">
                         <div class="widget-item mt-40">
-                            <h5 class="widget-title">My Account</h5>
+                            <h5 class="widget-title">Thông tin liên hệ</h5>
                             <div class="widget-body">
                                 <ul class="location-wrap">
                                     <li><i class="ion-ios-location-outline"></i>Minh Khai Ward, Bac Tu Liem District, Hanoi City.</li>
-                                    <li><i class="ion-ios-email-outline"></i>Mail: <a href="mailto:yourmail@gmail.com">yourmail@gmail.com</a></li>
+                                    <li><i class="ion-ios-email-outline"></i>Mail: <a href="mailto:huongdao2322005@gmail.com">ananas@gmail.com</a></li>
                                     <li><i class="ion-ios-telephone-outline"></i>Phone: <a href="%2b0025425456554.html">+0123456789</a></li>
                                 </ul>
                             </div>
@@ -393,7 +367,7 @@
                     </div>
                     <!-- footer widget item end -->
 
-                    
+
                 </div>
             </div>
         </div>
@@ -512,116 +486,356 @@
     <script src="assets/js/plugins.js"></script>
     <!--=== Active Js ===-->
     <script src="assets/js/active.js"></script>
-</body>
 
 
-<!-- Mirrored from htmldemo.net/juan/juan/index-2.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 17 Oct 2024 04:44:44 GMT -->
-</html>
+    <!--=================================================================-->
 
-<script>
-    document.addEventListener('DOMContentLoaded', async () => {
-        const token = localStorage.getItem('token'); // Lấy token đăng nhập
-        const productContainer = document.querySelector('.product-carousel-4'); // Container chứa sản phẩm
-
-        const topProductContainer = document.querySelector('.top-seller-carousel'); // Container chứa sản phẩm
+    <script type="text/javascript">
+        document.addEventListener('DOMContentLoaded', async () => {
+            const token = localStorage.getItem('token'); // Lấy token đăng nhập
+            const productContainer = document.querySelector('.product-carousel'); // Container chứa sản phẩm
     
-        if (!token) {
-            console.error('User is not logged in. Token is missing.');
-            return;
-        }
-    
-        try {
-            // Gọi API lấy danh sách sản phẩm
-            const response = await fetch('http://localhost:8080/product', {
-                method: 'GET',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${token}`
-                }
-            });
-    
-            if (!response.ok) {
-                throw new Error(`Error fetching products: ${response.statusText}`);
+            const topProductContainer = document.querySelector('.top-seller-carousel'); // Container chứa sản phẩm
+        
+            if (!token) {
+                console.error('User is not logged in. Token is missing.');
+                return;
             }
+        
+            try {
+                // Gọi API lấy danh sách sản phẩm
+                const response = await fetch('http://localhost:8080/product', {
+                    method: 'GET',
+                    data: {
+                        page: 0,  // Có thể thêm phân trang, ví dụ ở đây là lấy trang 1
+                        size: 10  // Lấy 10 sản phẩm một trang
+                    },
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
+        
+                if (!response.ok) {
+                    throw new Error(`Error fetching products: ${response.statusText}`);
+                }
+        
+                const data = await response.json();
+                const products = data.result.result;
     
-            const data = await response.json();
-            const products = data.result.result;
-
-            console.log("product:", data);
-    
-            productContainer.innerHTML = '';
-    
-            for (const product of products) {
-                // Gọi API lấy danh sách ảnh của từng sản phẩm
+                console.log("product:", data);
+        
+                productContainer.innerHTML = '';
                 
-                const productHTML = `
-                    <div class="product-item mb-50">
-                        <div class="product-thumb">
-                            <a href="product-details.html?id=${product.productId}">
-                                <img src="${p}" alt="${product.productName}">
-                            </a>
-                        </div>
-                        <div class="product-content">
-                            <h5 class="product-name">
-                                <a href="product-details.html?id=${product.productId}">${product.productName}</a>
-                            </h5>
-                            <div class="price-box">
-                                <span class="price-regular">$${product.price}</span>
-                                ${product.discount ? `<span class="price-old"><del>$${product.discount}</del></span>` : ''}
-                            </div>
-                            <div class="product-action-link">
-                                <a href="#" data-bs-toggle="tooltip" title="Wishlist"><i class="ion-android-favorite-outline"></i></a>
-                                <a href="#" data-bs-toggle="tooltip" title="Add To Cart"><i class="ion-bag"></i></a>
-                                <a href="#" data-bs-toggle="modal" data-bs-target="#quick_view"> 
-                                    <span data-bs-toggle="tooltip" title="Quick View"><i class="ion-ios-eye-outline"></i></span>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                `;
-                    console.log("product",product)
-                const topProductHTML = `
-                    <div class="slide-item">
-                        <div class="pro-item-small mt-30">
-                            <div class="product-thumb">
-                                <a href="product-details.html?productId=${product.productId}">
-                                    <img src="${mainImageUrl}" alt="${product.productName}">
-                                </a>
-                            </div>
-                            <div class="pro-small-content">
-                                <h6 class="product-name">
-                                    <a href="product-details.html?productId=${product.productId}">${product.productName}</a>
-                                </h6>
-                                <div class="price-box">
-                                    <span class="price-regular">$${product.price.toFixed(2)}</span>
-                                    ${product.discount ? `<span class="price-old"><del>$${product.discount.toFixed(2)}</del></span>` : ''}
+        
+                for (const product of products) {
+                    // Gọi API lấy danh sách ảnh của từng sản phẩm
+    
+                    let productImage = product.images && product.images.length > 0 ? product.images[0] : 'assets/img/default-image.jpg';
+                    
+                    const productHTML = `
+                        <div class="product-item mb-50">
+                                    <div class="product-thumb">
+                                        <a href="product-details.html">
+                                            <img src="http://localhost:8080/images/product/${product.images[0]}" alt="">
+                                        </a>
+                                    </div>
+                                    <div class="product-content">
+                                        <h5 class="product-name">
+                                            <a href="product-details.html">${product.productName}</a>
+                                        </h5>
+                                        <div class="price-box">
+                                            <span class="price-regular">${product.price * (100 - product.discount) / 100} VND</span>
+                                            <span class="price-old"><del>${product.price}</del></span>
+                                        </div>
+                                        <div class="product-action-link">
+                                            <a href="#" data-bs-toggle="tooltip" title="Wishlist"><i
+                                                    class="ion-android-favorite-outline"></i></a>
+                                            <a href="#" data-bs-toggle="tooltip" title="Add To Cart"><i
+                                                    class="ion-bag"></i></a>
+                                            <a href="#" data-bs-toggle="modal" data-bs-target="#quick_view" data-product-id="${product.productId}"> <span
+                                                    data-bs-toggle="tooltip" title="Quick View"><i
+                                                        class="ion-ios-eye-outline"></i></span> </a>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="ratings">
-                                    ${'<span><i class="ion-android-star"></i></span>'.repeat(product.rating || 0)}
-                                    ${'<span><i class="ion-android-star-outline"></i></span>'.repeat(5 - (product.rating || 0))}
-                                </div>
-                                <div class="product-link-2">
-                                    <a href="#" data-bs-toggle="tooltip" title="Wishlist"><i class="ion-android-favorite-outline"></i></a>
-                                    <a href="#" data-bs-toggle="tooltip" title="Add To Cart"><i class="ion-bag"></i></a>
-                                    <a href="#" data-bs-toggle="modal" data-bs-target="#quick_view"> 
-                                        <span data-bs-toggle="tooltip" title="Quick View">
-                                            <i class="ion-ios-eye-outline"></i>
-                                        </span> 
+                    `;
+                        console.log("product",product)
+                    const topProductHTML = `
+                        <div class="slide-item">
+                            <div class="pro-item-small mt-30">
+                                <div class="product-thumb">
+                                    <a href="product-details.html">
+                                        <img src="http://localhost:8080/images/product/${product.images[0]}" alt="${product.productName}" style="height: 180px; width: 169px;">
+    
                                     </a>
                                 </div>
+                                <div class="pro-small-content">
+                                    <h6 class="product-name">
+                                        <a href="product-details.html?productId=${product.productId}">${product.productName}</a>
+                                    </h6>
+                                    <div class="price-box">
+                                        <span class="price-regular">$${product.price.toFixed(2)}</span>
+                                        ${product.discount ? `<span class="price-old"><del>$${product.discount.toFixed(2)}</del></span>` : ''}
+                                    </div>
+                                    <div class="ratings">
+                                        ${'<span><i class="ion-android-star"></i></span>'.repeat(product.rating || 0)}
+                                        ${'<span><i class="ion-android-star-outline"></i></span>'.repeat(5 - (product.rating || 0))}
+                                    </div>
+                                    <div class="product-link-2">
+                                        <a href="#" data-bs-toggle="tooltip" title="Wishlist"><i class="ion-android-favorite-outline"></i></a>
+                                        <a href="#" data-bs-toggle="tooltip" title="Add To Cart"><i class="ion-bag"></i></a>
+                                        <a href="#" data-bs-toggle="modal" data-bs-target="#quick_view" data-product-id="${product.productId}"> <span
+                                                    data-bs-toggle="tooltip" title="Quick View"><i
+                                                        class="ion-ios-eye-outline"></i></span> </a>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                `;
+                    `;
+    
+                    productContainer.insertAdjacentHTML('beforeend', productHTML);
+                    topProductContainer.insertAdjacentHTML('beforeend', topProductHTML);
+                }
 
-                productContainer.insertAdjacentHTML('beforeend', productHTML);
-                topProductContainer.insertAdjacentHTML('beforeend', topProductHTML);
+                // Khởi tạo slider sau khi thêm sản phẩm
+        $('.product-carousel').slick({
+            slidesToShow: 4, // Hiển thị 4 sản phẩm
+            infinite: true,
+            arrows: true, // Hiển thị nút điều hướng
+            prevArrow: '<button type="button" class="slick-prev"><i class="fa fa-angle-left"></i></button>',
+            nextArrow: '<button type="button" class="slick-next"><i class="fa fa-angle-right"></i></button>',
+            responsive: [
+                {
+                    breakpoint: 1024,
+                    settings: {
+                        slidesToShow: 3
+                    }
+                },
+                {
+                    breakpoint: 768,
+                    settings: {
+                        slidesToShow: 2
+                    }
+                },
+                {
+                    breakpoint: 480,
+                    settings: {
+                        slidesToShow: 1
+                    }
+                }
+            ]
+        });
+
+        // blog carousel active-2 js
+	$('.top-seller-carousel').slick({
+		rows: 2,
+		arrows: false,
+		slidesToShow: 2,
+		responsive: [
+			{
+				breakpoint: 1600, // Màn hình lớn hơn 1600px
+				settings: {
+					slidesToShow: 2 // Hiển thị 5 sản phẩm trên màn hình lớn hơn 1600px
+				}
+			},
+			{
+				breakpoint: 1400, // Màn hình lớn hơn 1400px
+				settings: {
+					slidesToShow: 2 // Hiển thị 4 sản phẩm trên màn hình lớn hơn 1400px
+				}
+			},
+			{
+				breakpoint: 1200,
+				settings: {
+					slidesToShow: 1
+				}
+			},
+			{
+				breakpoint: 992,
+				settings: {
+					rows: 1,
+					slidesToShow: 1
+				}
+			}
+		]
+	});
+    
+                // Add Quick View event listeners
+                document.querySelectorAll('[data-bs-target="#quick_view"]').forEach(button => {
+                    button.addEventListener('click', async (event) => {
+                        const productId = event.currentTarget.getAttribute('data-product-id');
+                        await fetchQuickViewProduct(productId, token);
+                    });
+                });
+    
+                
+            } catch (error) {
+                console.error('Error fetching products or images:', error);
             }
+      
+    
+
             
-        } catch (error) {
-            console.error('Error fetching products or images:', error);
+
+        });
+
+// Lấy chi tiết sản phẩm từ API và hiển thị vào modal
+async function fetchQuickViewProduct(productId, token) {
+    try {
+        const response = await fetch(`http://localhost:8080/product/${productId}`, {
+            method: 'GET',
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        });
+
+        if (!response.ok) {
+            throw new Error(`Failed to fetch product details: ${response.statusText}`);
+        }
+
+        const data = await response.json();
+        const product = data.result;
+
+        // Hiển thị thông tin sản phẩm vào modal
+        document.getElementById('productName').innerText = product.productName;
+        document.getElementById('currentPrice').innerText = `$${(product.price * (100 - product.discount) / 100).toFixed(2)}`;
+        document.getElementById('oldPrice').innerText = product.discount ? `$${product.price}` : '';
+        document.getElementById('description').innerText = product.description;
+        document.getElementById('availability').innerText = product.soldQuantity > 0 ? 'In Stock' : 'Out of Stock';
+        document.getElementById('availability').classList.toggle('text-success', product.soldQuantity > 0);
+        document.getElementById('availability').classList.toggle('text-danger', product.soldQuantity === 0);
+
+        // Cập nhật hình ảnh chính và hình ảnh thumbnail
+        const mainImage = product.images && product.images[0] ? `http://localhost:8080/images/product/${product.images[0]}` : 'http://localhost:8080/images/product/default-image.jpg';
+        document.getElementById('mainImage').src = mainImage;
+
+        const thumbnails = product.images || [];
+        document.getElementById('thumb1').src = thumbnails[0] ? `http://localhost:8080/images/product/${thumbnails[0]}` : 'http://localhost:8080/images/product/default-image.jpg';
+        document.getElementById('thumb2').src = thumbnails[1] ? `http://localhost:8080/images/product/${thumbnails[1]}` : 'http://localhost:8080/images/product/default-image.jpg';
+        document.getElementById('thumb3').src = thumbnails[2] ? `http://localhost:8080/images/product/${thumbnails[2]}` : 'http://localhost:8080/images/product/default-image.jpg';
+        document.getElementById('thumb4').src = thumbnails[3] ? `http://localhost:8080/images/product/${thumbnails[3]}` : 'http://localhost:8080/images/product/default-image.jpg';
+
+        // Hiển thị modal
+        const quickViewModal = new bootstrap.Modal(document.getElementById('quick_view'));
+        quickViewModal.show();
+    } catch (error) {
+        console.error('Error fetching product details:', error);
+    }
+}
+
+// Thêm sự kiện cho các nút Quick View
+document.querySelectorAll('[data-bs-target="#quick_view"]').forEach(button => {
+    button.addEventListener('click', (event) => {
+        const productId = event.currentTarget.getAttribute('data-product-id');
+        const token = localStorage.getItem('token'); // Token từ localStorage
+        if (token) {
+            fetchQuickViewProduct(productId, token);
+        } else {
+            alert('You need to log in to view this product!');
         }
     });
-    
-</script>
+});
 
+// Phóng to ảnh chính khi di chuột
+const mainImage = document.getElementById('mainImage');
+const thumbnails = document.querySelectorAll('.thumbnail');
+
+// Thay đổi ảnh chính khi bấm vào thumbnail
+thumbnails.forEach(thumbnail => {
+    thumbnail.addEventListener('click', (event) => {
+        const newImageSrc = event.target.src;
+        mainImage.src = newImageSrc;
+    });
+});
+
+// Di chuột để phóng to vùng ảnh
+mainImage.addEventListener('mousemove', (event) => {
+    const bounds = mainImage.getBoundingClientRect();
+    const xPercent = ((event.clientX - bounds.left) / bounds.width) * 100;
+    const yPercent = ((event.clientY - bounds.top) / bounds.height) * 100;
+    mainImage.style.transformOrigin = `${xPercent}% ${yPercent}%`;
+});
+
+mainImage.addEventListener('mouseleave', () => {
+    mainImage.style.transformOrigin = 'center center';
+});
+
+
+    </script>
+</body>
+
+</html>
+
+<style>
+    /* modal */
+    .img-thumbnail {
+        width: 60px;
+        height: 60px;
+    }
+    .price-box .price-regular {
+        font-size: 18px;
+        font-weight: bold;
+        color: #000;
+    }
+    .price-box .price-old {
+        font-size: 16px;
+        text-decoration: line-through;
+    }
+    .availability span {
+        font-weight: bold;
+    }
+
+    .product-item {
+        margin: 0 10px;
+        text-align: center;
+    }
+    .product-thumb img {
+        max-width: 100%;
+        height: auto;
+        border-radius: 5px;
+    }
+    .zoomable {
+        transition: transform 0.2s ease-in-out;
+        cursor: zoom-in;
+    }
+    
+    .product-large-slider:hover .zoomable {
+        transform: scale(2); /* Phóng to khi hover */
+        cursor: zoom-out;
+    }
+    
+    .thumbnail {
+        cursor: pointer;
+    }
+    
+    .product-large-slider {
+        position: relative;
+        overflow: hidden;
+    }
+    
+    
+
+    /* our product */
+    .slick-prev, .slick-next {
+        background: #000;
+        color: #fff;
+        border-radius: 50%;
+        margin: 10px;
+        width: 50px;
+        height: 50px;
+    }
+    .slick-next{
+        right: -50px;
+    }
+    .slick-prev{
+        left: -50px;
+    }
+    .slick-prev:hover, .slick-next:hover {
+        background: #ff5722;
+    }
+    
+
+    /* top seller */
+
+</style>
