@@ -471,6 +471,7 @@
             const apiEndpoint = "http://localhost:8080/product";
             let currentPage = 0; // Khởi đầu trang
             var condition = "";
+            var filter = "";
 
             const categoryApi = "http://localhost:8080/category";
             const productCountApi = "http://localhost:8080/product/category/";
@@ -492,7 +493,7 @@
                                 // Tạo item trong danh sách
                                 const categoryItem = `
                             <li>
-                                <a href="#">${category.categoryName} <span>(${productCount})</span></a>
+                                <a href="#" data-category="${category.categoryName}">${category.categoryName} <span>(${productCount})</span></a>
                             </li>`;
                                 categoryList.append(categoryItem); // Thêm vào danh sách
                             }
@@ -501,8 +502,17 @@
                 }
             });
 
-             //số lượng sp trong giỏ hàng
-             $.ajax({
+            $(document).on("click", ".color-list a", function (e) {
+                e.preventDefault(); // Ngăn hành động mặc định
+                const categoryName = $(this).data("category"); // Lấy tên danh mục
+                console.log(categoryName);
+                filter = "category.categoryName~'"+categoryName+"'";
+                loadProducts(0, "", filter); // Gọi hàm loadProducts với filter
+            });
+
+
+            //số lượng sp trong giỏ hàng
+            $.ajax({
                 url: "http://localhost:8080/cart/quantity",
                 data: { userId: 1 },
                 type: "GET",
@@ -514,11 +524,11 @@
 
 
             // Hàm gọi API và render dữ liệu
-            function loadProducts(page, condition) {
+            function loadProducts(page, condition, filter) {
                 $.ajax({
                     url: apiEndpoint,
                     method: "GET",
-                    data: { page: page, size: 9, sort: condition },
+                    data: { page: page, size: 9, sort: condition, filter: filter },
                     success: function (response) {
                         if (response.code === 200) {
                             const products = response.result.result;
@@ -621,14 +631,15 @@
                 } else {
                     currentPage = parseInt(text) - 1;
                 }
-                loadProducts(currentPage, "");
+                loadProducts(currentPage, condition,filter);
             });
 
 
+            //lọc sản phẩm theo tiêu chí thấp cao
             $(document).on("click", ".nice-select ul li", function () {
                 condition = $(this).data("value"); // Lấy giá trị từ thuộc tính data-value
                 console.log("Selected value:", condition); // Ghi log giá trị
-                loadProducts(currentPage, condition)
+                loadProducts(currentPage, condition,filter)
             });
 
 
@@ -638,8 +649,5 @@
     </script>
 
 </body>
-
-
-<!-- Mirrored from htmldemo.net/juan/juan/shop.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 17 Oct 2024 04:44:52 GMT -->
 
 </html>
