@@ -262,6 +262,7 @@
                                 <img id="thumb2" src="" alt="Thumbnail 2" class="img-thumbnail me-2 thumbnail" style="cursor: pointer;">
                                 <img id="thumb3" src="" alt="Thumbnail 3" class="img-thumbnail me-2 thumbnail" style="cursor: pointer;">
                                 <img id="thumb4" src="" alt="Thumbnail 4" class="img-thumbnail me-2 thumbnail" style="cursor: pointer;">
+                                <img id="thumb5" src="" alt="Thumbnail 5" class="img-thumbnail me-2 thumbnail" style="cursor: pointer;">
                             </div>
                         </div>
                         <!-- Details Section -->
@@ -277,6 +278,7 @@
                                 <div class="availability">
                                     <strong>Availability:</strong> <span id="availability" class="text-success">In Stock</span>
                                 </div>
+                                
                                 <div style="margin-bottom: 10px;" class="quantity mt-3">
                                     <label for="quantityInput">Quantity:</label>
                                     <input id="quantityInput" type="number" value="1" min="1" class="form-control w-25 d-inline">
@@ -623,7 +625,7 @@
                     const response = await fetch(`${apiEndpoint}/${productId}`,{
                         method: "GET",
                         headers: {
-                            'Authorization': `Bearer ${token}`
+                            // 'Authorization': `Bearer ${token}`
                         }
                     });
                     const data = await response.json();
@@ -644,6 +646,7 @@
                         document.getElementById('thumb2').src = thumbnails[1] ? `http://localhost:8080/images/product/${thumbnails[1]}` : 'http://localhost:8080/images/product/default-image.jpg';
                         document.getElementById('thumb3').src = thumbnails[2] ? `http://localhost:8080/images/product/${thumbnails[2]}` : 'http://localhost:8080/images/product/default-image.jpg';
                         document.getElementById('thumb4').src = thumbnails[3] ? `http://localhost:8080/images/product/${thumbnails[3]}` : 'http://localhost:8080/images/product/default-image.jpg';
+                        document.getElementById('thumb5').src = thumbnails[4] ? `http://localhost:8080/images/product/${thumbnails[4]}` : 'http://localhost:8080/images/product/default-image.jpg';
 
                         const quickViewModal = new bootstrap.Modal(document.getElementById('quick_view'));
                                     quickViewModal.show();
