@@ -43,5 +43,7 @@ public interface IProductService {
 
     int getNumberProductOfCategory(int id);
 
+    Double getMaxPrice() ;
 
+    Double getMinPrice();
 }

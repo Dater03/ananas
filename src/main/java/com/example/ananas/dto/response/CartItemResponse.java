@@ -19,6 +19,7 @@ public class CartItemResponse {
     @Data
     @FieldDefaults(level = AccessLevel.PRIVATE)
     public static class ProductVariantCart{
+        int variantId;
         String productName;
         String color;
         int size;

@@ -208,4 +208,15 @@ public class ProductService implements IProductService {
     public int getNumberProductOfCategory(int id) {
         return this.productRepository.getNumberProductOfCategory(id);
     }
+
+    @Override
+    public Double getMaxPrice() {
+        return this.productRepository.findMaxPrice();
+    }
+
+    @Override
+    public Double getMinPrice() {
+        return this.productRepository.findMinPrice();
+    }
+
 }
