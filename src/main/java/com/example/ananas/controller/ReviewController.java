@@ -39,6 +39,14 @@ public class ReviewController {
                 .build();
     }
 
+    @GetMapping("{productId}")
+    public ApiResponse<List<Review>> getReviewByProductId(@PathVariable int productId) {
+        return ApiResponse.<List<Review>>builder()
+                .result(reviewService.getAllReviewsByProductId(productId))
+                .code(200)
+                .build();
+    }
+
 
     @DeleteMapping
     public ApiResponse<Void> deleteReviewById(@RequestParam int reviewId) {

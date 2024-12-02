@@ -20,9 +20,14 @@ import java.util.List;
 public class MessageController {
     MessageService messageService;
 
-    @GetMapping
-    public List<MessageDTO> getAllMessages() {
-        return messageService.getAllMessages();
+    @GetMapping("/send/{senderId}")
+    public List<MessageDTO> getMessBySender(@PathVariable Integer senderId) {
+        return messageService.getMessBySender(senderId);
+    }
+
+    @GetMapping("/receive/{receiverId}")
+    public List<MessageDTO> getMessByReceiver(@PathVariable Integer receiverId) {
+        return messageService.getMessByReceiver(receiverId);
     }
 
     @PostMapping

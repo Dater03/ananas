@@ -7,8 +7,10 @@ import java.util.List;
 import java.util.Optional;
 
 public interface IMessageService {
-    List<MessageDTO> getAllMessages();
+    List<MessageDTO> getMessBySender(int id);
+    List<MessageDTO> getMessByReceiver(int id);
     MessageDTO sendMessage(MessageDTO MessageDTO);
     MessageDTO updateMessage(int id, MessageDTO MessageDTO);
     void deleteMessage(int id);
+
 }

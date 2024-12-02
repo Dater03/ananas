@@ -60,4 +60,12 @@ public class ReviewService implements IReviewService {
         }
         return reviewMapper.toReviewResponse(reviewRepository.save(optionalReview.get()));
     }
+
+    @Override
+    public List<Review> getAllReviewsByProductId(int product_id) {
+        if (productRepository.existsById(product_id)) {
+            return reviewRepository.findByProductId(product_id);
+        }
+        return null;
+    }
 }

@@ -14,4 +14,5 @@ public interface IReviewService {
     Optional<ReviewResponse> getReviewById(int id);
     void deleteReviewById(int id);
     ReviewResponse updateReviewById(int id, ReviewDTO review);
+    List<Review> getAllReviewsByProductId(int product_id);
 }

@@ -63,10 +63,15 @@ public class CartService implements ICartService {
 
 
                     int s = cart.getSumQuantity() +1;
+                    double price = cart.getSumPrice() + this.productRepository.findById(productId).get().getPrice() * quantity;
                     cart.setSumQuantity(s);
+                    cart.setSumPrice(price);
                     this.cartRepository.save(cart);
                 } else {
                     oldCartItem.setQuantity(oldCartItem.getQuantity() + quantity);
+                    double price = cart.getSumPrice() + this.productRepository.findById(productId).get().getPrice() * quantity;
+                    cart.setSumPrice(price);
+                    this.cartRepository.save(cart);
                     this.cartItemRepository.save(oldCartItem);
                 }
             }
@@ -99,5 +104,12 @@ public class CartService implements ICartService {
         User user = this.userRepository.findById(userId).get();
         Cart currentCart = this.cartRepository.findByUser(user);
         return currentCart.getSumQuantity();
+    }
+
+    @Override
+    public Double getSumPrice(int userId) {
+        User user = this.userRepository.findById(userId).get();
+        Cart currentCart = this.cartRepository.findByUser(user);
+        return currentCart.getSumPrice();
     }
 }

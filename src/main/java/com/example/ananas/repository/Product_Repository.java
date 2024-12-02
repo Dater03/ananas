@@ -12,4 +12,7 @@ public interface Product_Repository extends JpaRepository<Product, Integer>, Jpa
 
 
     List<Product> findTop4ByOrderBySoldQuantityDesc();
+
+    @Query("select count (p) from Product p where p.category.categoryId = :id")
+    int getNumberProductOfCategory(int id);
 }

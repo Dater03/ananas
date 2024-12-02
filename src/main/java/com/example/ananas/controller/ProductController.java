@@ -62,6 +62,13 @@ public class ProductController {
         return ResponseEntity.ok(productService.getTopSeller());
     }
 
+    //lay ra so luong san pham trong mot danh muc
+    @GetMapping("/product/category/{id}")
+    public ResponseEntity<Integer> getNumberProductOfCategory(@PathVariable int id)
+    {
+        return ResponseEntity.ok(this.productService.getNumberProductOfCategory(id)) ;
+    }
+
     //cap nhat san pham va cac bien the cua no
     @PutMapping("product/{id}") // can sua tinh nang sua cac bien the cua san pham
     public ResponseEntity<ProductResponse> updateProduct(@PathVariable int id, @RequestBody ProductCreateRequest productCreateRequest) throws IdException

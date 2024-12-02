@@ -27,8 +27,16 @@ public class MessageService implements IMessageService {
     IMessageMapper messageMapper;
 
     @Override
-    public List<MessageDTO> getAllMessages() {
-        List<Messages> messages = messageRepository.findAll();
+    public List<MessageDTO> getMessBySender(int id) {
+        List<Messages> messages = messageRepository.findBySenderId(id);
+        return messages.stream()
+                .map(messageMapper::toMessageDTO)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<MessageDTO> getMessByReceiver(int id) {
+        List<Messages> messages = messageRepository.findByReceiverId(id);
         return messages.stream()
                 .map(messageMapper::toMessageDTO)
                 .collect(Collectors.toList());

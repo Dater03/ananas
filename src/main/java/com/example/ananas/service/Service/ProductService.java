@@ -23,6 +23,7 @@ import lombok.experimental.FieldDefaults;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -201,5 +202,10 @@ public class ProductService implements IProductService {
     @Override
     public Boolean imagesExisById(int id) {
         return this.productImageRepository.existsById(id);
+    }
+
+    @Override
+    public int getNumberProductOfCategory(int id) {
+        return this.productRepository.getNumberProductOfCategory(id);
     }
 }
