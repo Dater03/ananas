@@ -42,4 +42,8 @@ public interface IProductService {
     Boolean imagesExisById(int id);
 
     int getNumberProductOfCategory(int id);
+
+    Double getMaxPrice() ;
+
+    Double getMinPrice();
 }

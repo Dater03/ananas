@@ -16,4 +16,10 @@ public interface Product_Repository extends JpaRepository<Product, Integer>, Jpa
 
     @Query("select count (p) from Product p where p.category.categoryId = :id")
     int getNumberProductOfCategory(int id);
+
+    @Query("SELECT MAX(p.price) FROM Product p")
+    Double findMaxPrice();
+
+    @Query("SELECT MIN(p.price) FROM Product p")
+    Double findMinPrice();
 }

@@ -21,7 +21,9 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
@@ -120,6 +122,18 @@ public class ProductController {
         return ResponseEntity.ok("xoa thành công");
     }
 
+    @GetMapping("product/price-range")
+    public ResponseEntity<Map<String, Double>> getPriceRange() {
+        Double maxPrice = productService.getMaxPrice();
+        Double minPrice = productService.getMinPrice();
+
+        Map<String, Double> response = new HashMap<>();
+        response.put("maxPrice", maxPrice);
+        response.put("minPrice", minPrice);
+
+        return ResponseEntity.ok(response);
+    }
+
 // các phương thức liên quan đến biến thể của sản phẩm
     //phương thức lấy ra tất cả các biến thể của sản phẩm
     @GetMapping("product/variants/{id}")
@@ -131,7 +145,5 @@ public class ProductController {
         }
         return ResponseEntity.ok(this.productService.getAllProductVariants(id));
     }
-
-
 
 }
