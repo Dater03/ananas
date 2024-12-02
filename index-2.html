@@ -131,7 +131,7 @@
                                     <div class="hero-slider-content slide-1">
                                         <h5 class="slide-subtitle">Top Selling!</h5>
                                         <h2 class="slide-title">New Collection</h2>
-                                        <a href="shop.html" class="btn btn-hero">SHOP NOW</a>
+                                        <a href="shop.html" class="btn btn-hero">Mua ngay</a>
                                     </div>
                                 </div>
                             </div>
@@ -143,7 +143,7 @@
                                     <div class="hero-slider-content slide-1">
                                         <h5 class="slide-subtitle">Best Selling!</h5>
                                         <h2 class="slide-title">Top Collection</h2>
-                                        <a href="shop.html" class="btn btn-hero">SHOP NOW</a>
+                                        <a href="shop.html" class="btn btn-hero">Mua ngay</a>
                                     </div>
                                 </div>
                             </div>
@@ -193,7 +193,7 @@
                     <div class="col-12">
                         <div class="section-title text-center">
                             <h2 class="title">Sản phẩm</h2>
-                            <p class="sub-title">Step into Style, Walk with Confidence!</p>
+                            <p class="sub-title">Bước vào thời đại, Đi cùng sự tự tin!</p>
                         </div>
                     </div>
                 </div>
@@ -216,7 +216,7 @@
                     <div class="col-12">
                         <div class="section-title text-center">
                             <h2 class="title">Sản phẩm bán chạy</h2>
-                            <p class="sub-title">Step into Style, Walk with Confidence!</p>
+                            <p class="sub-title">Bước vào thời đại, Đi cùng sự tự tin!</p>
                         </div>
                     </div>
                 </div>
@@ -351,10 +351,10 @@
         <!-- footer main area start -->
         <div class="footer-widget-area mt-5">
             <div class="container">
-                <div class="row mtn-40">
+                <div class="row mtn-4">
                     <!-- footer widget item start -->
                     <div class="col-xl-5 col-lg-3 col-md-6">
-                        <div class="widget-item mt-40">
+                        <div class="widget-item mt-4">
                             <h5 class="widget-title">Thông tin liên hệ</h5>
                             <div class="widget-body">
                                 <ul class="location-wrap">
@@ -495,25 +495,15 @@
             const token = localStorage.getItem('token'); // Lấy token đăng nhập
             const id = localStorage.getItem('userId');
             const productContainer = document.querySelector('.product-carousel'); // Container chứa sản phẩm
-    
             const topProductContainer = document.querySelector('.top-seller-carousel'); // Container chứa sản phẩm
         
-            if (!token) {
-                console.error('User is not logged in. Token is missing.');
-                return;
-            }
-        
+
             try {
                 // Gọi API lấy danh sách sản phẩm
-                const response = await fetch('http://localhost:8080/product', {
+                const response = await fetch('http://localhost:8080/product?page=0&size=10', {
                     method: 'GET',
-                    data: {
-                        page: 0,  // Có thể thêm phân trang, ví dụ ở đây là lấy trang 1
-                        size: 10  // Lấy 10 sản phẩm một trang
-                    },
                     headers: {
                         'Content-Type': 'application/json',
-                        // 'Authorization': `Bearer ${token}`
                     }
                 });
         
@@ -565,7 +555,7 @@
                         <div class="slide-item">
                             <div class="pro-item-small mt-30">
                                 <div class="product-thumb">
-                                    <a href="product-details.html">
+                                    <a href="product-details.html?id=${product.productId}">
                                         <img src="http://localhost:8080/images/product/${product.images[0]}" alt="${product.productName}" style="height: 180px; width: 169px;">
     
                                     </a>
@@ -627,18 +617,6 @@
                     ]
                 });
 
-                //số lượng sp trong giỏ hàng
-                $.ajax({
-                    url: "http://localhost:8080/cart/quantity",
-                    data: { userId: id },
-                    type: "GET",
-                    success: function (response) {
-                        let numberOfProduct = response.result;
-                        console.log("Aa",response);
-                        $('#cart-quantity').text(numberOfProduct)
-                    }
-                })
-
                 // blog carousel active-2 js
                 $('.top-seller-carousel').slick({
                     rows: 2,
@@ -672,6 +650,31 @@
                         }
                     ]
                 });
+
+                // Nếu có token, gọi API lấy số lượng sản phẩm trong giỏ hàng
+                if (token) {
+                    try {
+                        const quantityResponse = await fetch(`http://localhost:8080/cart/quantity?userId=${id}`, {
+                            method: 'GET',
+                            headers: {
+                                'Authorization': `Bearer ${token}`,
+                                'Content-Type': 'application/json',
+                            },
+                        });
+
+                        if (!quantityResponse.ok) {
+                            throw new Error(`Error fetching cart quantity: ${quantityResponse.statusText}`);
+                        }
+
+                        const quantityData = await quantityResponse.json();
+                        const numberOfProduct = quantityData.result;
+
+                        console.log("Cart Quantity:", numberOfProduct);
+                        document.getElementById('cart-quantity').innerText = numberOfProduct;
+                    } catch (error) {
+                        console.error('Error fetching cart quantity:', error);
+                    }
+                }
     
                 // Add Quick View event listeners
                 document.querySelectorAll('[data-bs-target="#quick_view"]').forEach(button => {
@@ -692,7 +695,7 @@
                 const response = await fetch(`http://localhost:8080/product/${productId}`, {
                     method: 'GET',
                     headers: {
-                        // 'Authorization': `Bearer ${token}`
+                        'Content-Type': 'application/json'
                     }
                 });
 

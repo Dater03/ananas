@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html class="no-js" lang="zxx">
 
-<!-- Mirrored from htmldemo.net/juan/juan/contact-us.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 17 Oct 2024 04:44:53 GMT -->
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -52,9 +51,9 @@
                                     <!-- main menu navbar start -->
                                     <nav class="desktop-menu">
                                         <ul>
-                                            <li class="active"><a href="index-2.html">Home</a></li>
-                                            <li><a href="shop.html">shop</a></li>
-                                            <li><a href="contact-us.html">Contact us</a></li>
+                                            <li><a href="index-2.html">Trang chủ</a></li>
+                                            <li><a href="shop.html">Cửa hàng</a></li>
+                                            <li class="active"><a href="contact-us.html">Liên hệ</a></li>
                                         </ul>
                                     </nav>
                                     <!-- main menu navbar end -->
@@ -78,15 +77,15 @@
                                                 <i class="ion-ios-gear-outline"></i>
                                             </a>
                                             <ul class="dropdown-list">
-                                                <li><a href="login-register.html">login</a></li>
-                                                <li><a href="login-register.html">register</a></li>
-                                                <li><a href="my-account.html">my account</a></li>
+                                                <li><a href="login.html">Đăng nhập</a></li>
+                                                <li><a href="register.html">Đăng ký</a></li>
+                                                <li><a href="my-account.html">Tài khoản</a></li>
                                             </ul>
                                         </li>
                                         <li>
                                             <a href="#" class="minicart-btn">
                                                 <i class="ion-bag"></i>
-                                                <div class="notification">2</div>
+                                                <div class="notification" id="cart-quantity">0</div>
                                             </a>
                                         </li>
                                     </ul>
@@ -128,41 +127,36 @@
     <!-- main wrapper start -->
     <main>
         <!-- contact wrapper area start -->
-        <div class="contact-area mt-5" style="padding-bottom: 80px;">
+        <div class="contact-area mt-5" style="padding-bottom: 20px;">
             <div class="container">
                 <div class="row">
                     <div class="col-lg-6">
-                        <div class="contact-message">
-                            <h2 class="contact-title">Send a Message</h2>
-                            <form id="contact-form" method="post" onsubmit="sendMessage(event)">
-                                <div class="row">
-                                    <div class="col-12">
-                                        <div class="contact2-textarea text-center">
-                                            <textarea placeholder="Message *" id="message" name="message" class="form-control2" required></textarea>
-                                        </div>
-                                        <div class="contact-btn">
-                                            <button class="btn" type="submit">Send Message</button>
-                                        </div>
-                                    </div>
-                                    <div class="col-12 d-flex justify-content-center">
-                                        <p class="form-message"></p>
-                                    </div>
-                                </div>
-                            </form>
+                        <div class="container" style="border: 1px solid black; border-radius: 25px; padding: 15px;">
+                            <h5 class="text-center">Phản hồi</h5>
+                            <div id="message-container" class="message-container mt-3">
+                                <!-- Messages will be dynamically added here -->
+                            </div>
+                            <div class="contact2-textarea text-center mt-3 mb-3">
+                                <input style="width: 500px;" type="text" placeholder="Message *" id="message" name="message" class="form-control2" required></input>
+                            </div>
+                            <div class="contact-btn" style="text-align: center;">
+                                <button id="send-message-btn" class="btn" type="button">Gửi</button>
+                            </div>
                         </div>
                     </div>
+                    
                     <div class="col-lg-6">
                         <div class="contact-info pt-0">
-                            <h2 class="contact-title">Contact Us</h2>
+                            <h2 class="contact-title">Liên hệ với chúng tôi</h2>
                             <p>We're here to help you find the perfect pair of shoes! If you have any questions, concerns, or need assistance with your order, feel free to reach out to us.</p>
                             <ul>
-                                <li><i class="fa fa-fax"></i> Address : Minh Khai Ward, Bac Tu Liem District, Hanoi City.</li>
-                                <li><i class="fa fa-phone"></i> info@yourdomain.com</li>
-                                <li><i class="fa fa-envelope-o"></i>+0123456789</li>
+                                <li><i class="fa fa-fax"></i> Địa chỉ : Minh Khai Ward, Bac Tu Liem District, Hanoi City.</li>
+                                <li><i class="fa fa-phone"></i> Email : info@yourdomain.com</li>
+                                <li><i class="fa fa-envelope-o"></i> Số điện thoại : +0123456789</li>
                             </ul>
                             <div class="working-time">
-                                <h3>Working Hours</h3>
-                                <p class="pb-0"><span>Monday – Saturday:</span>08AM – 22PM</p>
+                                <h3>Thời gian làm việc</h3>
+                                <p class="pb-0"><span>Thứ 2 – Thứ 7:</span>08AM – 22PM</p>
                             </div>
                         </div>
                     </div>
@@ -178,11 +172,11 @@
         <!-- footer main area start -->
         <div class="footer-widget-area mt-5">
             <div class="container">
-                <div class="row mtn-40">
+                <div class="row mtn-4">
                     <!-- footer widget item start -->
                     <div class="col-xl-5 col-lg-3 col-md-6">
-                        <div class="widget-item mt-40">
-                            <h5 class="widget-title">My Account</h5>
+                        <div class="widget-item mt-4">
+                            <h5 class="widget-title">Thông tin liên hệ</h5>
                             <div class="widget-body">
                                 <ul class="location-wrap">
                                     <li><i class="ion-ios-location-outline"></i>Minh Khai Ward, Bac Tu Liem District, Hanoi City.</li>
@@ -318,52 +312,165 @@
 </html>
 
 <script>
-    async function sendMessage(event) {
-        event.preventDefault();
+    document.addEventListener("DOMContentLoaded", async () => {
+        const senderId = localStorage.getItem("userId"); // ID người gửi
+        const receiverId = 1; // ID admin
+        const cartQuantityApi = "http://localhost:8080/cart/quantity";
+
     
-        const messageContent = document.getElementById("message").value.trim();
+        const messageContainer = document.getElementById("message-container");
+        const sendMessageButton = document.querySelector(".contact-btn button"); // Nút gửi tin nhắn
+        const messageInput = document.getElementById("message");
     
-        if (!messageContent) {
-            alert("Message cannot be empty.");
-            return;
-        }
+        const messages = []; // Mảng lưu trữ tin nhắn
     
-        // Lấy token từ localStorage
-        const token = localStorage.getItem("token");
-        const userId = localStorage.getItem("userId");
+        // Tải tin nhắn ban đầu
+        await loadMessages(senderId);
     
-        if (!token) {
-            alert("You need to log in to send messages.");
-            return;
-        }
+        // Gắn sự kiện click vào nút gửi
+        sendMessageButton.addEventListener("click", async (event) => {
+            await sendMessage(event);
+        });
     
-        // Tạo dữ liệu gửi
-        const messageData = {
-            senderId: userId, // Lấy thông tin userId nếu lưu trong payload của token
-            receiverId: 1, // ID admin
-            message: messageContent,
-        };
+        async function loadMessages(senderId) {
+            try {
+                const senderResponse = await fetch(`http://localhost:8080/message/send/${senderId}`);
+                const senderData = await senderResponse.json();
+                const senderMessages = senderData.result || [];
     
-        try {
-            const response = await fetch("http://localhost:8080/message", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                    "Authorization": `Bearer ${token}`, // Đính kèm token trong header
-                },
-                body: JSON.stringify(messageData),
-            });
+                const receiverResponse = await fetch(`http://localhost:8080/message/receive/${senderId}`);
+                const receiverData = await receiverResponse.json();
+                const receiverMessages = receiverData.result || [];
     
-            if (response.ok) {
-                alert("Message sent successfully!");
-                document.getElementById("message").value = "";
-            } else {
-                alert("Failed to send message. Please try again.");
+                messages.push(...senderMessages.map(msg => ({ ...msg, type: "sender" })));
+                messages.push(...receiverMessages.map(msg => ({ ...msg, type: "receiver" })));
+    
+                sortMessagesByOldest(); // Sắp xếp tin nhắn từ cũ đến mới
+                displayMessages();
+                scrollToBottom(); // Cuộn đến tin nhắn cuối
+            } catch (error) {
+                console.error("Error fetching messages:", error);
             }
-        } catch (error) {
-            console.error("Error sending message:", error);
-            alert("An error occurred. Please try again.");
         }
-    }
+    
+        function sortMessagesByOldest() {
+            messages.sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt)); // Sắp xếp tăng dần
+        }
+    
+        function displayMessages() {
+            messageContainer.innerHTML = ""; // Xóa nội dung cũ
+            messages.forEach((message) => {
+                const messageElement = createMessageElement(message, message.type);
+                messageContainer.appendChild(messageElement);
+            });
+        }
+    
+        function createMessageElement(message, type) {
+            const div = document.createElement("div");
+            div.className = `message ${type}`;
+            div.textContent = `${message.message} (${formatTimestamp(message.createdAt)})`;
+            return div;
+        }
+    
+        function formatTimestamp(timestamp) {
+            const date = new Date(timestamp);
+            return `${date.toLocaleDateString()} ${date.toLocaleTimeString()}`;
+        }
+    
+        function scrollToBottom() {
+            messageContainer.scrollTop = messageContainer.scrollHeight; // Cuộn đến cuối
+        }
+    
+        async function sendMessage(event) {
+            event.preventDefault();
+    
+            const messageContent = messageInput.value.trim();
+            if (!messageContent) {
+                alert("Message cannot be empty.");
+                return;
+            }
+    
+            const token = localStorage.getItem("token");
+            const userId = localStorage.getItem("userId");
+    
+            if (!token) {
+                alert("You need to log in to send messages.");
+                return;
+            }
+    
+            const messageData = {
+                senderId: userId,
+                receiverId: receiverId,
+                message: messageContent,
+            };
+    
+            try {
+                const response = await fetch("http://localhost:8080/message", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "Authorization": `Bearer ${token}`,
+                    },
+                    body: JSON.stringify(messageData),
+                });
+    
+                if (response.ok) {
+                    const newMessage = await response.json();
+                    const formattedMessage = { ...newMessage, type: "sender" };
+                    messages.push(formattedMessage); // Thêm tin nhắn mới vào cuối danh sách
+                    displayMessages();
+                    scrollToBottom(); // Cuộn đến tin nhắn mới
+                    messageInput.value = ""; // Xóa nội dung ô nhập
+                } else {
+                    alert("Failed to send message. Please try again.");
+                }
+            } catch (error) {
+                console.error("Error sending message:", error);
+                alert("An error occurred. Please try again.");
+            }
+        }
+
+        // Lấy số lượng sản phẩm trong giỏ hàng
+        fetch(`${cartQuantityApi}?userId=${senderId}`)
+        .then(response => response.json())
+        .then(data => {
+            if (data.code === 200) {
+                const cartQuantityElement = document.getElementById("cart-quantity");
+                cartQuantityElement.textContent = data.result;
+            }
+        });
+    });
     
 </script>
+
+<style>
+    .message-container {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+
+        height: 300px; /* Chiều cao cố định */
+        overflow-y: auto; /* Kích hoạt thanh cuộn dọc */
+        border: 1px solid #ccc; /* Đường viền */
+        padding: 10px; /* Khoảng cách bên trong */
+        border-radius: 10px; /* Bo góc */
+    }
+    
+    .message {
+        max-width: 60%;
+        padding: 10px;
+        border-radius: 8px;
+        font-size: 14px;
+        color: white;
+    }
+    
+    .sender {
+        align-self: flex-end;
+        background-color: #007bff;
+    }
+    
+    .receiver {
+        align-self: flex-start;
+        background-color: #6c757d;
+    }
+</style>
