@@ -7,10 +7,11 @@ import com.example.ananas.entity.voucher.Voucher;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
+import org.mapstruct.NullValuePropertyMappingStrategy;
 
 import java.lang.annotation.Target;
 
-@Mapper(componentModel = "spring")
+@Mapper(componentModel = "spring", nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
 public interface IVoucherMapper {
 
     VoucherResponse voucherToVoucherResponse(Voucher voucher);
