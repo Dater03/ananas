@@ -48,8 +48,8 @@
                                     <!-- main menu navbar start -->
                                     <nav class="desktop-menu">
                                         <ul>
-                                            <li class="active"><a href="index-2.html">Trang chủ</a></li>
-                                            <li><a href="shop.html">Cửa hàng</a></li>
+                                            <li><a href="index-2.html">Trang chủ</a></li>
+                                            <li class="active"><a href="shop.html">Cửa hàng</a></li>
                                             <li><a href="contact-us.html">Liên hệ</a></li>
                                         </ul>
                                     </nav>
@@ -74,8 +74,8 @@
                                                 <i class="ion-ios-gear-outline"></i>
                                             </a>
                                             <ul class="dropdown-list">
-                                                <li><a href="login-register.html">Đăng nhập</a></li>
-                                                <li><a href="login-register.html">Đăng ký</a></li>
+                                                <li><a href="login.html">Đăng nhập</a></li>
+                                                <li><a href="register.html">Đăng ký</a></li>
                                                 <li><a href="my-account.html">Tài khoản</a></li>
                                             </ul>
                                         </li>
@@ -143,7 +143,7 @@
                             <!-- single sidebar end -->
 
                             <!-- single sidebar start -->
-                            <div class="sidebar-single">
+                            <div class="sidebar-single" id="filter-price">
                                 <div class="sidebar-title">
                                     <h3>Lọc theo giá</h3>
                                 </div>
@@ -304,11 +304,11 @@
         <!-- footer main area start -->
         <div class="footer-widget-area mt-5">
             <div class="container">
-                <div class="row mtn-40">
+                <div class="row mtn-4">
                     <!-- footer widget item start -->
                     <div class="col-xl-5 col-lg-3 col-md-6">
-                        <div class="widget-item mt-40">
-                            <h5 class="widget-title">My Account</h5>
+                        <div class="widget-item mt-4">
+                            <h5 class="widget-title">Thông tin liên hệ</h5>
                             <div class="widget-body">
                                 <ul class="location-wrap">
                                     <li><i class="ion-ios-location-outline"></i>Minh Khai Ward, Bac Tu Liem District,
@@ -440,8 +440,10 @@
     <script src="assets/js/active.js"></script>
 
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js"></script>
     <script>
-        document.addEventListener("DOMContentLoaded", () => {
+        document.addEventListener('DOMContentLoaded', async () => {
             const apiEndpoint = "http://localhost:8080/product";
             const categoryApi = "http://localhost:8080/category";
             const productCountApi = "http://localhost:8080/product/category/";
@@ -451,147 +453,208 @@
     
             let currentPage = 0; // Trang hiện tại
             let condition = "";
-
             var filter = "";
-    
-            // Lấy danh sách category
-            fetch(categoryApi)
-                .then(response => response.json())
-                .then(data => {
-                    if (data.code === 200) {
-                        const categories = data.result;
-                        const categoryList = document.querySelector(".color-list");
-                        categoryList.innerHTML = ""; // Xóa danh sách hiện tại
-    
-                        categories.forEach(category => {
-                            fetch(productCountApi + category.categoryId)
-                                .then(response => response.json())
-                                .then(countData => {
-                                    if (countData.code === 200) {
-                                        const productCount = countData.result;
-    
-                                        // Tạo item trong danh sách
-                                        const categoryItem = document.createElement("li");
-                                        categoryItem.innerHTML = `
-                                            <a href="#" data-category="${category.categoryName}">${category.categoryName} <span>(${productCount})</span></a>
-                                        `;
-                                        categoryList.appendChild(categoryItem);
-                                    }
-                                });
-                        });
-                    }
-                });
 
-                $(document).on("click", ".color-list a", function (e) {
-                    e.preventDefault(); // Ngăn hành động mặc định
-                    const categoryName = $(this).data("category"); // Lấy tên danh mục
-                    console.log(categoryName);
-                    filter = "category.categoryName~'"+categoryName+"'";
-                    loadProducts(0, "", filter); // Gọi hàm loadProducts với filter
-                });
-    
-                // Lấy số lượng sản phẩm trong giỏ hàng
-                fetch(`${cartQuantityApi}?userId=${id}`)
-                    .then(response => response.json())
-                    .then(data => {
-                        if (data.code === 200) {
-                            const cartQuantityElement = document.getElementById("cart-quantity");
-                            cartQuantityElement.textContent = data.result;
+            // API lọc giá
+            (async function () {
+                try {
+                    // Gọi API để lấy khoảng giá
+                    const response = await fetch('http://localhost:8080/product/price-range', { method: 'GET' });
+                    if (!response.ok) {
+                        throw new Error('Không thể lấy dữ liệu từ API.');
+                    }
+                    const data = await response.json();
+            
+                    // Cập nhật giá trị min và max từ API
+                    const minPrice = data.result.minPrice;
+                    const maxPrice = data.result.maxPrice;
+                    console.log("Min Price:", minPrice, "Max Price:", maxPrice);
+                    console.log(data);
+            
+                    $('#filter-price').empty();
+                    const filterPrice = `
+                    <div class="sidebar-title">
+                        <h3>Lọc theo giá</h3>
+                    </div>
+                    <div class="sidebar-body">
+                        <div class="price-range-wrap">
+                            <div class="price-range" data-min="${minPrice}" data-max="${maxPrice}"></div>
+                            <div class="range-slider">
+                                <form action="#">
+                                    <div class="price-input">
+                                        <label for="amount">Giá: </label>
+                                        <input type="text" id="amount">
+                                    </div>
+                                    <button class="filter-btn">Lọc</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>`;
+                    $('#filter-price').append(filterPrice);
+            
+                    // Khởi tạo slider
+                    $('.price-range').slider({
+                        range: true,
+                        min: minPrice,
+                        max: maxPrice,
+                        values: [minPrice, maxPrice],
+                        slide: function (event, ui) {
+                            $('#amount').val(ui.values[0] + " - " + ui.values[1]);
                         }
                     });
+                    $('#amount').val(minPrice + " - " + maxPrice);
+                } catch (error) {
+                    console.error(error.message);
+                }
+            
+                // Xử lý sự kiện click nút "Lọc"
+                $(document).on('click', '.filter-btn', function (e) {
+                    e.preventDefault();
+                    const minPrice = $('.price-range').slider('values', 0);
+                    const maxPrice = $('.price-range').slider('values', 1);
+                    const filter = `price>:${minPrice} and price<:${maxPrice}`;
+                    loadProducts(0, "", filter);
+                });
+            })();
+            
     
-                // Hàm gọi API và render dữ liệu
-                async function loadProducts(page, condition = "", filter = "") {
-                    fetch(`${apiEndpoint}?page=${page}&size=9&sort=${condition}&filter=${filter}`)
-                        .then(response => response.json())
-                        .then(data => {
-                            if (data.code === 200) {
-                                const products = data.result.result;
-                                const meta = data.result.meta;
-                                $(".shop-product-wrap").empty();
-        
-                                // Render sản phẩm
-                                products.forEach(product => {
-                                    const productHTML = `
-                                        <div class="col-lg-4 col-sm-6">
-                                            <div class="product-item mb-53">
-                                                <div class="product-thumb">
-                                                    <a href="product-details.html?id=${product.productId}">
-                                                        <img src="http://localhost:8080/images/product/${product.images[0]}" alt="${product.productName}">
-                                                    </a>
-                                                </div>
-                                                <div class="product-content">
-                                                    <h5 class="product-name">
-                                                        <a href="product-details.html?productId=${product.productId}">${product.productName}</a>
-                                                    </h5>
-                                                    <div class="price-box">
-                                                        <span class="price-regular">$${product.price}</span>
-                                                        <span class="price-old"><del>$${product.discount}</del></span>
-                                                    </div>
-                                                    <div class="product-action-link">
-                                                        <a href="#" title="Wishlist"><i class="ion-android-favorite-outline"></i></a>
-                                                        <a href="#" title="Add To Cart"><i class="ion-bag"></i></a>
-                                                        <a href="#" data-bs-toggle="modal" data-bs-target="#quick_view" data-product-id="${product.productId}">
-                                                            <i class="ion-ios-eye-outline"></i>
-                                                        </a>
-                                                    </div>
-                                                </div>
+            // Lấy danh sách category
+            try {
+                const categoryResponse = await fetch(categoryApi);
+                const categoryData = await categoryResponse.json();
+                if (categoryData.code === 200) {
+                    const categories = categoryData.result;
+                    const categoryList = document.querySelector(".color-list");
+                    categoryList.innerHTML = ""; // Xóa danh sách hiện tại
+    
+                    for (const category of categories) {
+                        const countResponse = await fetch(productCountApi + category.categoryId);
+                        const countData = await countResponse.json();
+                        if (countData.code === 200) {
+                            const productCount = countData.result;
+    
+                            // Tạo item trong danh sách
+                            const categoryItem = document.createElement("li");
+                            categoryItem.innerHTML = `
+                                <a href="#" data-category="${category.categoryName}">${category.categoryName} <span>(${productCount})</span></a>
+                            `;
+                            categoryList.appendChild(categoryItem);
+                        }
+                    }
+                }
+            } catch (error) {
+                console.error("Error fetching categories:", error);
+            }
+    
+            $(document).on("click", ".color-list a", function (e) {
+                e.preventDefault(); // Ngăn hành động mặc định
+                const categoryName = $(this).data("category"); // Lấy tên danh mục
+                filter = "category.categoryName~'" + categoryName + "'";
+                loadProducts(0, "", filter); // Gọi hàm loadProducts với filter
+            });
+    
+            // Lấy số lượng sản phẩm trong giỏ hàng
+            try {
+                const cartResponse = await fetch(`${cartQuantityApi}?userId=${id}`);
+                const cartData = await cartResponse.json();
+                if (cartData.code === 200) {
+                    const cartQuantityElement = document.getElementById("cart-quantity");
+                    cartQuantityElement.textContent = cartData.result;
+                }
+            } catch (error) {
+                console.error("Error fetching cart quantity:", error);
+            }
+    
+            // Hàm gọi API và render dữ liệu
+            async function loadProducts(page, condition = "", filter = "") {
+                try {
+                    const response = await fetch(`${apiEndpoint}?page=${page}&size=9&sort=${condition}&filter=${filter}`);
+                    const data = await response.json();
+                    if (data.code === 200) {
+                        const products = data.result.result;
+                        const meta = data.result.meta;
+                        $(".shop-product-wrap").empty();
+    
+                        // Render sản phẩm
+                        products.forEach(product => {
+                            const productHTML = `
+                                <div class="col-lg-4 col-sm-6">
+                                    <div class="product-item mb-53">
+                                        <div class="product-thumb">
+                                            <a href="product-details.html?id=${product.productId}">
+                                                <img src="http://localhost:8080/images/product/${product.images[0]}" alt="${product.productName}">
+                                            </a>
+                                        </div>
+                                        <div class="product-content">
+                                            <h5 class="product-name">
+                                                <a href="product-details.html?id=${product.productId}">${product.productName}</a>
+                                            </h5>
+                                            <div class="price-box">
+                                                <span class="price-regular">$${product.price}</span>
+                                                <span class="price-old"><del>$${product.discount}</del></span>
                                             </div>
-
-                                            <div class="product-list-item mb-30">
-                                                <div class="product-thumb">
-                                                    <a href="product-details.html?productId=${product.productId}">
-                                                        <img src="http://localhost:8080/images/product/${product.images[0]}" alt="product thumb">
-                                                    </a>
-                                                </div>
-                                                <div class="product-content-list">
-                                                    <h5 class="product-name">
-                                                        <a href="product-details.html?productId=${product.productId}">${product.productName}</a>
-                                                    </h5>
-                                                    <div class="price-box">
-                                                        <span class="price-regular">$${product.price}</span>
-                                                        <span class="price-old"><del>$${product.discount}</del></span>
-                                                    </div>
-                                                    <p>${product.description}</p>
-                                                    <div class="product-link-2 position-static">
-                                                        <a href="#" data-bs-toggle="tooltip" title="Wishlist"><i class="ion-android-favorite-outline"></i></a>
-                                                        <a href="#" data-bs-toggle="tooltip" title="Add To Cart"><i class="ion-bag"></i></a>
-                                                        <a href="#" data-bs-toggle="modal" data-bs-target="#quick_view">
-                                                            <span data-bs-toggle="tooltip" title="Quick View">
-                                                                <i class="ion-ios-eye-outline"></i>
-                                                            </span>
-                                                        </a>
-                                                    </div>
-                                                </div>
+                                            <div class="product-action-link">
+                                                <a href="#" title="Wishlist"><i class="ion-android-favorite-outline"></i></a>
+                                                <a href="#" title="Add To Cart"><i class="ion-bag"></i></a>
+                                                <a href="#" data-bs-toggle="modal" data-bs-target="#quick_view" data-product-id="${product.productId}">
+                                                    <i class="ion-ios-eye-outline"></i>
+                                                </a>
                                             </div>
                                         </div>
-                                    `;
-                                    $(".shop-product-wrap").append(productHTML);
-                                   // productWrap.insertAdjacentHTML("beforeend", productHTML);
-                                });
-        
-                                // Gắn sự kiện "Quick View" sau khi render
-                                addQuickViewEventListeners();
-        
-                                // Render phân trang
-                                const paginationBox = document.querySelector(".pagination-box");
-                                paginationBox.innerHTML = "";
-        
-                                if (meta.pages > 1) {
-                                    paginationBox.innerHTML += `<li><a class="Previous" href="#"><i class="ion-ios-arrow-left"></i></a></li>`;
-                                    for (let i = 0; i < meta.pages; i++) {
-                                        paginationBox.innerHTML += `
-                                            <li class="${i === currentPage ? 'active' : ''}">
-                                                <a href="#">${i + 1}</a>
-                                            </li>
-                                        `;
-                                    }
-                                    paginationBox.innerHTML += `<li><a class="Next" href="#"><i class="ion-ios-arrow-right"></i></a></li>`;
-                                }
-                            }
+                                    </div>
+                                    <div class="product-list-item mb-30">
+                                        <div class="product-thumb">
+                                            <a href="product-details.html?id=${product.productId}">
+                                                <img src="http://localhost:8080/images/product/${product.images[0]}" alt="product thumb">
+                                            </a>
+                                        </div>
+                                        <div class="product-content-list">
+                                            <h5 class="product-name">
+                                                <a href="product-details.html?id=${product.productId}">${product.productName}</a>
+                                            </h5>
+                                            <div class="price-box">
+                                                <span class="price-regular">$${product.price}</span>
+                                                <span class="price-old"><del>$${product.discount}</del></span>
+                                            </div>
+                                            <p>${product.description}</p>
+                                            <div class="product-link-2 position-static">
+                                                <a href="#" title="Wishlist"><i class="ion-android-favorite-outline"></i></a>
+                                                <a href="#" title="Add To Cart"><i class="ion-bag"></i></a>
+                                                <a href="#" data-bs-toggle="modal" data-bs-target="#quick_view" data-product-id="${product.productId}">
+                                                    <i class="ion-ios-eye-outline"></i>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            `;
+                            $(".shop-product-wrap").append(productHTML);
                         });
-                    }
     
+                        // Gắn sự kiện "Quick View" sau khi render
+                        addQuickViewEventListeners();
+    
+                        // Render phân trang
+                        const paginationBox = document.querySelector(".pagination-box");
+                        paginationBox.innerHTML = "";
+    
+                        if (meta.pages > 1) {
+                            paginationBox.innerHTML += `<li><a class="Previous" href="#"><i class="ion-ios-arrow-left"></i></a></li>`;
+                            for (let i = 0; i < meta.pages; i++) {
+                                paginationBox.innerHTML += `
+                                    <li class="${i === currentPage ? 'active' : ''}">
+                                        <a href="#">${i + 1}</a>
+                                    </li>
+                                `;
+                            }
+                            paginationBox.innerHTML += `<li><a class="Next" href="#"><i class="ion-ios-arrow-right"></i></a></li>`;
+                        }
+                    }
+                } catch (error) {
+                    console.error("Error loading products:", error);
+                }
+            }
+
             // Sự kiện phân trang
             document.addEventListener("click", event => {
                 if (event.target.closest(".pagination-box a")) {
@@ -608,61 +671,84 @@
                     loadProducts(currentPage, condition, filter);
                 }
             });
-    
-            // Sự kiện chọn điều kiện sắp xếp
-            document.querySelector(".nice-select ul").addEventListener("click", event => {
+
+             // Sự kiện chọn điều kiện sắp xếp
+             document.querySelector(".nice-select ul").addEventListener("click", event => {
                 if (event.target.tagName === "LI") {
                     condition = event.target.getAttribute("data-value");
                     loadProducts(currentPage, condition, filter);
                 }
             });
+
+            // Nếu có token, gọi API lấy số lượng sản phẩm trong giỏ hàng
+            if (token) {
+                try {
+                    const quantityResponse = await fetch(`http://localhost:8080/cart/quantity?userId=${id}`, {
+                        method: 'GET',
+                        headers: {
+                            'Authorization': `Bearer ${token}`,
+                            'Content-Type': 'application/json',
+                        },
+                    });
+
+                    if (!quantityResponse.ok) {
+                        throw new Error(`Error fetching cart quantity: ${quantityResponse.statusText}`);
+                    }
+
+                    const quantityData = await quantityResponse.json();
+                    const numberOfProduct = quantityData.result;
+
+                    console.log("Cart Quantity:", numberOfProduct);
+                    document.getElementById('cart-quantity').innerText = numberOfProduct;
+                } catch (error) {
+                    console.error('Error fetching cart quantity:', error);
+                }
+            }
     
             // Lấy chi tiết sản phẩm từ API và hiển thị trong modal
             async function fetchQuickViewProduct(productId) {
                 try {
-                    const response = await fetch(`${apiEndpoint}/${productId}`,{
+                    const response = await fetch(`${apiEndpoint}/${productId}`, {
                         method: "GET",
                         headers: {
-                            'Authorization': `Bearer ${token}`
+                            'Content-Type': 'application/json'
                         }
                     });
                     const data = await response.json();
                     const product = data.result;
-
-                        document.getElementById("productName").textContent = product.productName;
-                        document.getElementById("currentPrice").textContent = `$${(product.price * (100 - product.discount) / 100).toFixed(2)}`;
-                        document.getElementById("oldPrice").textContent = product.discount ? `$${product.price}` : "";
-                        document.getElementById("description").textContent = product.description;
-                        document.getElementById("availability").textContent = product.soldQuantity > 0 ? "In Stock" : "Out of Stock";
     
-                        const mainImage = `http://localhost:8080/images/product/${product.images[0]}`;
-                        document.getElementById('mainImage').src = mainImage;
-
-
-                        const thumbnails = product.images || [];
-                        document.getElementById('thumb1').src = thumbnails[0] ? `http://localhost:8080/images/product/${thumbnails[0]}` : 'http://localhost:8080/images/product/default-image.jpg';
-                        document.getElementById('thumb2').src = thumbnails[1] ? `http://localhost:8080/images/product/${thumbnails[1]}` : 'http://localhost:8080/images/product/default-image.jpg';
-                        document.getElementById('thumb3').src = thumbnails[2] ? `http://localhost:8080/images/product/${thumbnails[2]}` : 'http://localhost:8080/images/product/default-image.jpg';
-                        document.getElementById('thumb4').src = thumbnails[3] ? `http://localhost:8080/images/product/${thumbnails[3]}` : 'http://localhost:8080/images/product/default-image.jpg';
-
-                        const quickViewModal = new bootstrap.Modal(document.getElementById('quick_view'));
-                                    quickViewModal.show();
-
-                                    
-                                } catch (error) {
-                                    console.error("Error fetching product details:", error);
-                                }
-                            }
+                    document.getElementById("productName").textContent = product.productName;
+                    document.getElementById("currentPrice").textContent = `$${(product.price * (100 - product.discount) / 100).toFixed(2)}`;
+                    document.getElementById("oldPrice").textContent = product.discount ? `$${product.price}` : "";
+                    document.getElementById("description").textContent = product.description;
+                    document.getElementById("availability").textContent = product.soldQuantity > 0 ? "In Stock" : "Out of Stock";
     
-                // Thêm sự kiện cho nút Quick View
-                function addQuickViewEventListeners() {
-                    document.querySelectorAll('[data-bs-target="#quick_view"]').forEach(button => {
-                        button.addEventListener('click', async (event) => {
-                            const productId = event.currentTarget.getAttribute('data-product-id');
-                            await fetchQuickViewProduct(productId);
-                        });
-                    });
+                    const mainImage = `http://localhost:8080/images/product/${product.images[0]}`;
+                    document.getElementById('mainImage').src = mainImage;
+    
+                    const thumbnails = product.images || [];
+                    document.getElementById('thumb1').src = thumbnails[0] ? `http://localhost:8080/images/product/${thumbnails[0]}` : 'http://localhost:8080/images/product/default-image.jpg';
+                    document.getElementById('thumb2').src = thumbnails[1] ? `http://localhost:8080/images/product/${thumbnails[1]}` : 'http://localhost:8080/images/product/default-image.jpg';
+                    document.getElementById('thumb3').src = thumbnails[2] ? `http://localhost:8080/images/product/${thumbnails[2]}` : 'http://localhost:8080/images/product/default-image.jpg';
+                    document.getElementById('thumb4').src = thumbnails[3] ? `http://localhost:8080/images/product/${thumbnails[3]}` : 'http://localhost:8080/images/product/default-image.jpg';
+    
+                    const quickViewModal = new bootstrap.Modal(document.getElementById('quick_view'));
+                    quickViewModal.show();
+                } catch (error) {
+                    console.error("Error fetching product details:", error);
                 }
+            }
+    
+            // Thêm sự kiện cho nút Quick View
+            function addQuickViewEventListeners() {
+                document.querySelectorAll('[data-bs-target="#quick_view"]').forEach(button => {
+                    button.addEventListener('click', async (event) => {
+                        const productId = event.currentTarget.getAttribute('data-product-id');
+                        await fetchQuickViewProduct(productId);
+                    });
+                });
+            }
+
             // Phóng to ảnh chính khi di chuột
             const mainImage = document.getElementById('mainImage');
             const thumbnails = document.querySelectorAll('.thumbnail');
@@ -691,6 +777,7 @@
             loadProducts(currentPage, condition, filter);
         });
     </script>
+    
 </body>
 
 
