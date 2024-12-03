@@ -113,6 +113,7 @@ public class CartService implements ICartService {
         return currentCart.getSumPrice();
     }
 
+    @Transactional
     @Override
     public void deleteByVariantId(int userId, int variantId) {
         User user = this.userRepository.findById(userId).get();

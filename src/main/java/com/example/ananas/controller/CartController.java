@@ -63,7 +63,7 @@ public class CartController {
     {
         return ResponseEntity.ok(this.cartService.getSumQuantity(userId) );
     }
-    @DeleteMapping("cart/variant/{id}")
+    @DeleteMapping("cart/variant/{variantId}")
     public ResponseEntity<String> deleteById(@RequestParam(name = "userId") int userId, @PathVariable int variantId)
     {
         try {
