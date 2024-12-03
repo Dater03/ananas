@@ -417,7 +417,8 @@
                 if (response.ok) {
                     const newMessage = await response.json();
                     const formattedMessage = { ...newMessage, type: "sender" };
-                    messages.push(formattedMessage); // Thêm tin nhắn mới vào cuối danh sách
+                    messages.push(formattedMessage);
+                    location.reload(); // Thêm tin nhắn mới vào cuối danh sách
                     displayMessages();
                     scrollToBottom(); // Cuộn đến tin nhắn mới
                     messageInput.value = ""; // Xóa nội dung ô nhập

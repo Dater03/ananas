@@ -503,23 +503,23 @@
 
                     $('#filter-price').empty();
                     const filterPrice = `
-            <div class="sidebar-title">
-                <h3>Lọc theo giá</h3>
-            </div>
-            <div class="sidebar-body">
-                <div class="price-range-wrap">
-                    <div class="price-range" data-min="${minPrice}" data-max="${maxPrice}"></div>
-                    <div class="range-slider">
-                        <form action="#">
-                            <div class="price-input">
-                                <label for="amount">Giá: </label>
-                                <input type="text" id="amount" >
-                            </div>
-                            <button class="filter-btn">Lọc</button>
-                        </form>
+                    <div class="sidebar-title">
+                        <h3>Lọc theo giá</h3>
                     </div>
-                </div>
-            </div>`;
+                    <div class="sidebar-body">
+                        <div class="price-range-wrap">
+                            <div class="price-range" data-min="${minPrice}" data-max="${maxPrice}"></div>
+                            <div class="range-slider">
+                                <form action="#">
+                                    <div class="price-input">
+                                        <label for="amount">Giá: </label>
+                                        <input type="text" id="amount" >
+                                    </div>
+                                    <button class="filter-btn">Lọc</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>`;
 
                     $('#filter-price').append(filterPrice);
 
