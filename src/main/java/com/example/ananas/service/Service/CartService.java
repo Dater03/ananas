@@ -112,4 +112,12 @@ public class CartService implements ICartService {
         Cart currentCart = this.cartRepository.findByUser(user);
         return currentCart.getSumPrice();
     }
+
+    @Override
+    public void deleteByVariantId(int userId, int variantId) {
+        User user = this.userRepository.findById(userId).get();
+        Cart currentCart = this.cartRepository.findByUser(user);
+        ProductVariant productVariant = this.productVariantRepository.findById(variantId).get();
+        this.cartItemRepository.deleteByCartAndProductVariant(currentCart,productVariant);
+    }
 }

@@ -16,4 +16,6 @@ public interface ICartService {
     Integer getSumQuantity(int userId);
 
     Double getSumPrice(int userId);
+
+    void deleteByVariantId(int userId, int variantId);
 }

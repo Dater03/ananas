@@ -63,6 +63,18 @@ public class CartController {
     {
         return ResponseEntity.ok(this.cartService.getSumQuantity(userId) );
     }
+    @DeleteMapping("cart/variant/{id}")
+    public ResponseEntity<String> deleteById(@RequestParam(name = "userId") int userId, @PathVariable int variantId)
+    {
+        try {
+            this.cartService.deleteByVariantId(userId,variantId);
+            return ResponseEntity.ok("success");
+        }
+        catch (Exception e)
+        {
+            return ResponseEntity.ok(e.getMessage());
+        }
+    }
     @GetMapping("/cart/sumprice")
     public ResponseEntity<Double> getSumPrice(@RequestParam int userId)
     {
