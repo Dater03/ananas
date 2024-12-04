@@ -12,5 +12,5 @@ public interface IMessageService {
     MessageDTO sendMessage(MessageDTO MessageDTO);
     MessageDTO updateMessage(int id, MessageDTO MessageDTO);
     void deleteMessage(int id);
-
+    List<MessageDTO> getMessList();
 }
