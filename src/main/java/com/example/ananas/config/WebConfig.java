@@ -9,9 +9,9 @@ public class WebConfig implements WebMvcConfigurer {
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        registry.addResourceHandler("/images/avatar/**").addResourceLocations("file:///C:/Users/dater/Documents/HK7/Ananas/ananas/upload/user/")
+        registry.addResourceHandler("/images/avatar/**").addResourceLocations("file:///D:/Learn_Spring/Dat/Ananas/upload/user/")
                 .setCachePeriod(3600);
-        registry.addResourceHandler("/images/product/**").addResourceLocations("file:///C:/Users/dater/Documents/HK7/Ananas/ananas/upload/product/")
+        registry.addResourceHandler("/images/product/**").addResourceLocations("file:///D:/Learn_Spring/Dat/Ananas/upload/product/")
                 .setCachePeriod(3600);
     }
 }

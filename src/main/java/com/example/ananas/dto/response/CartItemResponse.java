@@ -21,6 +21,7 @@ public class CartItemResponse {
     public static class ProductVariantCart{
         int variantId;
         String productName;
+        int productId;
         String color;
         int size;
         int stock;
