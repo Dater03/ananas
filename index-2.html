@@ -118,6 +118,7 @@
         </div>
     </aside>
     <!-- off-canvas menu end -->
+
     <main>
         <!-- hero slider section start -->
         <section class="hero-slider">
@@ -752,13 +753,13 @@
                 const cartItemHTML = `
             <li class="minicart-item">
                 <div class="minicart-thumb">
-                    <a href="/product-details.html?variantId=${tem}">
-                        <img src="file:///E:/Cntt_Class/JavaWeb/background" alt="${product.productName}">
+                    <a href="/product-details.html?id=${product.productId}">
+                        <img src="${product.images[0]}" alt="${product.productName}">
                     </a>
                 </div>
                 <div class="minicart-content">
                     <h3 class="product-name">
-                        <a href="/product-details.html?variantId=${tem}">${product.productName}</a>
+                        <a href="/product-details.html?id=${product.productId}">${product.productName}</a>
                     </h3>
                     <p>
                         <span class="cart-quantity">${quantity} <strong>&times;</strong></span>
