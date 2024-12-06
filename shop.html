@@ -982,6 +982,43 @@
                 }
             }
         });
+
+        document.addEventListener("DOMContentLoaded", async function () {
+            const userId = localStorage.getItem("userId"); // Lấy ID từ localStorage
+            const token = localStorage.getItem("token"); // Lấy token từ localStorage
+            // Kiểm tra nếu không có ID hoặc token
+            if (!userId || !token) {
+                alert("User ID or Token is missing!");
+            return;
+            }
+                
+            // API URLs
+            const UserUrl = `http://localhost:8080/user/${userId}`;
+            // Fetch user data
+            try {
+                const response = await fetch(UserUrl, {
+                    method: "GET",
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                        "Content-Type": "application/json",
+                    },
+                });
+                const data = await response.json();
+                const user = data.result.result;
+        
+                const avatarSmall = user.avatar
+                ? `http://localhost:8080/images/avatar/${user.avatar}`
+                : "assets/img/about/avatar.jpg";
+        
+                // Gán URL của avatar vào thẻ <img> trong .user-thumbnail
+                const userImage = document.querySelector(".user-thumbnail .user-image");
+                if (userImage) {
+                    userImage.src = avatarSmall;
+                }
+            } catch (error) {
+                console.error("Error fetching user data:", error);
+            };
+        });
     </script>
     <!--=======================Javascript============================-->
     <!--=== All Vendor Js ===-->
