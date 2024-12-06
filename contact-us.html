@@ -88,6 +88,12 @@
                                                 <div class="notification" id="cart-quantity">0</div>
                                             </a>
                                         </li>
+                                        <!-- Thêm ảnh user -->
+                                        <li class="user-thumbnail">
+                                            <a href="my-account.html">
+                                                <img src="assets/img/about/avatar.jpg" alt="User" class="user-image">
+                                            </a>
+                                        </li>
                                     </ul>
                                 </div>
                             </div>
@@ -552,5 +558,18 @@
     .receiver {
         align-self: flex-start;
         background-color: #6c757d;
+    }
+
+    .user-thumbnail .user-image {
+        width: 30px;
+        height: 30px;
+        border-radius: 30%;
+        object-fit: cover;
+        border: 1px solid #ddd;
+    }
+    
+    .user-thumbnail a {
+        display: inline-block;
+        text-decoration: none;
     }
 </style>
