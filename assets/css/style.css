@@ -1578,7 +1578,7 @@ fieldset legend {
           transform: translateX(calc(100% + 50px));
   -webkit-transition: 0.4s;
   transition: 0.4s;
-  padding: 50px 20px;
+  padding: 30px 20px 0px 20px;
 }
 
 .minicart-content-box {

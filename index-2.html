@@ -455,6 +455,7 @@
                 <div class="minicart-close">
                     <i class="ion-android-close"></i>
                 </div>
+                <h3 style="text-align: center; margin-bottom: 30px;">Giỏ hàng của bạn</h3>
                 <div class="minicart-content-box">
                     <div class="minicart-item-wrapper">
                         <ul>
@@ -835,8 +836,6 @@
             }
         }
 
-
-
         document.getElementById("addToCart").addEventListener("click", function () {
             const selectedColor = document.querySelector('.color-box.selected')?.getAttribute('data-color');
             const selectedSize = document.querySelector('.size-box.selected')?.getAttribute('data-size');
@@ -856,31 +855,28 @@
             addToCart(userId, qvId, quantity, selectedSize, selectedColor);
         });
 
+        // Bắt đầu xử lý mini card
         function renderMiniCart(cartItems, summary) {
             const cartWrapper = document.querySelector(".minicart-item-wrapper ul");
             const pricingBox = document.querySelector(".minicart-pricing-box ul");
-
             // Làm rỗng nội dung cũ
             cartWrapper.innerHTML = "";
             pricingBox.innerHTML = "";
-            var tem = 1;
+            // <img src="${product.images[0]}" alt="${product.productName}">
             // Render từng sản phẩm
             cartItems.forEach(item => {
                 const product = item.product;
                 const quantity = item.quantity;
-
-                console.log("pro",product)
-
                 const cartItemHTML = `
             <li class="minicart-item">
                 <div class="minicart-thumb">
-                    <a href="/product-details.html?id=${product.productId}">
-                        <img src="http://localhost:8080/images/product/${product.images[0]}" alt="${product.productName}">
+                    <a href="product-details.html?id=${product.productId}">
+                        <img src="${product.images[0]}" alt="${product.productName}">
                     </a>
                 </div>
                 <div class="minicart-content">
                     <h3 class="product-name">
-                        <a href="/product-details.html?id=${product.productId}">${product.productName}</a>
+                        <a href="product-details.html?id=${product.productId}">${product.productName}</a>
                     </h3>
                     <p>
                         <span class="cart-quantity">${quantity} <strong>&times;</strong></span>
@@ -895,9 +891,9 @@
 
             // Render tổng giá trị
             pricingBox.innerHTML += `
-        <li><span>sub-total</span><span><strong>$${summary.totalPrice.toFixed(2)}</strong></span></li>
-        <li><span>VAT (10%)</span><span><strong>$${(summary.totalPrice * 0.1).toFixed(2)}</strong></span></li>
-        <li class="total"><span>total</span><span><strong>$${(summary.totalPrice * 1.1).toFixed(2)}</strong></span></li>
+        <li><span>Tổng giá trước thuế</span><span><strong>${summary.totalPrice.toFixed(2)} VNĐ</strong></span></li>
+        <li><span>VAT (10%)</span><span><strong>${(summary.totalPrice * 0.1).toFixed(2)} VNĐ</strong></span></li>
+        <li class="total"><span>Tổng giá sau thuế</span><span><strong>${(summary.totalPrice * 1.1).toFixed(2)} VNĐ</strong></span></li>
     `;
         }
 
@@ -940,16 +936,16 @@
                         }
                     }).then(res => res.json())
                 ]);
+                // Truy cập đúng trường `result` trong API response
                 return {
-                    totalQuantity: quantityRes,
-                    totalPrice: priceRes
+                    totalQuantity: quantityRes.result,
+                    totalPrice: priceRes.result
                 };
             } catch (error) {
                 console.error("Error fetching cart summary:", error);
                 return { totalQuantity: 0, totalPrice: 0 };
             }
         }
-
 
         document.addEventListener("DOMContentLoaded", async () => {
 
@@ -980,7 +976,7 @@
                 }
             }
         });
-
+        // Kết thúc xử lý mini card
     </script>
 </body>
 
