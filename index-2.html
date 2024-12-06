@@ -787,6 +787,7 @@
 
         async function addToCart(userId, productId, quantity, size, color) {
             const apiUrl = `http://localhost:8080/cart?userId=${userId}&productId=${productId}&quantity=${quantity}&size=${size}&color=${color}`;
+            console.log("id",userId,"pro",productId,"qua",quantity,"sz",size,"cl",color)
 
             try {
                 const response = await fetch(apiUrl, {
