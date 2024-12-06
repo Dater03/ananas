@@ -1571,7 +1571,7 @@ fieldset legend {
   right: 0;
   height: 100vh;
   width: 100%;
-  max-width: 375px;
+  max-width: 400px;
   position: absolute;
   background-color: #fff;
   -webkit-transform: translateX(calc(100% + 50px));
@@ -1584,7 +1584,7 @@ fieldset legend {
 .minicart-content-box {
   overflow: auto;
   height: 100%;
-  padding-right: 30px;
+  padding-right: 25px;
   margin-right: -15px;
 }
 
@@ -1609,16 +1609,16 @@ fieldset legend {
       flex-wrap: wrap;
 }
 .minicart-thumb {
-  max-width: 85px;
-  -ms-flex-preferred-size: 85px;
-      flex-basis: 85px;
+  max-width: 90px;
+  -ms-flex-preferred-size: 90px;
+      flex-basis: 90px;
   border: 1px solid #dfdede;
 }
 .minicart-content {
   padding: 0 10px;
-  max-width: calc(100% - 115px);
-  -ms-flex-preferred-size: calc(100% - 115px);
-      flex-basis: calc(100% - 115px);
+  max-width: calc(100% - 120px);
+  -ms-flex-preferred-size: calc(100% - 120px);
+      flex-basis: calc(100% - 120px);
 }
 .minicart-content .product-name {
   font-size: 14px;

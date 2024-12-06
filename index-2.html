@@ -309,14 +309,14 @@
                             </div>
                             <div class="product-thumbnails mt-3 d-flex">
                                 <!-- Thumbnail Images -->
-                                <img style="width: 90px; height: 80px;" id="thumb1" src="" alt="Thumbnail 1" class="img-thumbnail me-2 thumbnail"
-                                    style="cursor: pointer;">
-                                <img style="width: 90px; height: 80px;" id="thumb2" src="" alt="Thumbnail 2" class="img-thumbnail me-2 thumbnail"
-                                    style="cursor: pointer;">
-                                <img style="width: 90px; height: 80px;" id="thumb3" src="" alt="Thumbnail 3" class="img-thumbnail me-2 thumbnail"
-                                    style="cursor: pointer;">
-                                <img style="width: 90px; height: 80px;" id="thumb4" src="" alt="Thumbnail 4" class="img-thumbnail me-2 thumbnail"
-                                    style="cursor: pointer;">
+                                <img style="width: 90px; height: 80px;" id="thumb1" src="" alt="Thumbnail 1"
+                                    class="img-thumbnail me-2 thumbnail" style="cursor: pointer;">
+                                <img style="width: 90px; height: 80px;" id="thumb2" src="" alt="Thumbnail 2"
+                                    class="img-thumbnail me-2 thumbnail" style="cursor: pointer;">
+                                <img style="width: 90px; height: 80px;" id="thumb3" src="" alt="Thumbnail 3"
+                                    class="img-thumbnail me-2 thumbnail" style="cursor: pointer;">
+                                <img style="width: 90px; height: 80px;" id="thumb4" src="" alt="Thumbnail 4"
+                                    class="img-thumbnail me-2 thumbnail" style="cursor: pointer;">
                             </div>
                         </div>
                         <!-- Details Section -->
@@ -740,8 +740,8 @@
         document.querySelectorAll('[data-bs-target="#quick_view"]').forEach(button => {
             button.addEventListener('click', (event) => {
                 const productId = event.currentTarget.getAttribute('data-product-id');
-                    fetchQuickViewProduct(productId,);
-            
+                fetchQuickViewProduct(productId,);
+
             });
         });
 
@@ -769,8 +769,8 @@
             mainImage.style.transformOrigin = 'center center';
         });
 
-         // logic thêm giỏ hàng
-         document.querySelectorAll('.color-box').forEach((box) => {
+        // logic thêm giỏ hàng
+        document.querySelectorAll('.color-box').forEach((box) => {
             box.addEventListener('click', function () {
                 document.querySelectorAll('.color-box').forEach((b) => b.classList.remove('selected'));
                 this.classList.add('selected');
@@ -788,7 +788,7 @@
 
         async function addToCart(userId, productId, quantity, size, color) {
             const apiUrl = `http://localhost:8080/cart?userId=${userId}&productId=${productId}&quantity=${quantity}&size=${size}&color=${color}`;
-            
+
             try {
                 const response = await fetch(apiUrl, {
                     method: "POST",
@@ -862,22 +862,28 @@
                 const product = item.product;
                 const quantity = item.quantity;
                 const cartItemHTML = `
-            <li class="minicart-item">
+            <li class="minicart-item" >
                 <div class="minicart-thumb">
                     <a href="product-details.html?id=${product.productId}">
                         <img src="${product.images[0]}" alt="${product.productName}">
                     </a>
                 </div>
                 <div class="minicart-content">
-                    <h3 class="product-name">
+                    <h3 class="product-name" style="padding: 0px;">
                         <a href="product-details.html?id=${product.productId}">${product.productName}</a>
                     </h3>
                     <p>
                         <span class="cart-quantity">${quantity} <strong>&times;</strong></span>
                         <span class="cart-price">$${(quantity * 100).toFixed(2)}</span>
                     </p>
+                    <p>
+                        <span class="product-name">Màu sắc: ${product.color}</span><br>
+                        <span class="product-name">Kích thước: ${product.size}</span>
+                    </p>
                 </div>
-                <button class="minicart-remove"><i class="ion-android-close"></i></button>
+                <button class="minicart-remove" data-variant-id="${product.variantId}">
+                    <i class="ion-android-close"></i>
+                </button>
             </li>
         `;
                 cartWrapper.innerHTML += cartItemHTML;
@@ -952,24 +958,32 @@
         });
 
         document.addEventListener("click", async (event) => {
+            // Kiểm tra nếu mục nhấn là nút xóa
             if (event.target.classList.contains("minicart-remove")) {
+                // Lấy phần tử chứa thông tin sản phẩm
                 const productElement = event.target.closest(".minicart-item");
-                const variantId = productElement.querySelector("a").href.split("variantId=")[1];
+
+                // Lấy idVariant từ thuộc tính data-variant-id của nút xóa
+                const variantId = event.target.getAttribute("data-variant-id");
 
                 try {
-                    await fetch(`http://localhost:8080/cart/remove?variantId=${variantId}`, {
+                    // Gửi yêu cầu xóa sản phẩm từ giỏ hàng với variantId và userId
+                    await fetch(`http://localhost:8080/cart/variant/${variantId}?userId=${userId}`, {
                         method: "DELETE",
                         headers: {
                             "Authorization": TOKEN,
                             "Content-Type": "application/json"
                         }
                     });
-                    productElement.remove(); // Xóa khỏi giao diện
+
+                    // Xóa sản phẩm khỏi giao diện
+                    productElement.remove();
                 } catch (error) {
                     console.error("Error removing cart item:", error);
                 }
             }
         });
+
         // Kết thúc xử lý mini card
     </script>
 </body>
