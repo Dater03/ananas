@@ -309,11 +309,13 @@
                             </div>
                             <div class="product-thumbnails mt-3 d-flex">
                                 <!-- Thumbnail Images -->
-                                <img id="thumb1" src="" alt="Thumbnail 1" class="img-thumbnail me-2 thumbnail"
+                                <img style="width: 90px; height: 80px;" id="thumb1" src="" alt="Thumbnail 1" class="img-thumbnail me-2 thumbnail"
                                     style="cursor: pointer;">
-                                <img id="thumb2" src="" alt="Thumbnail 2" class="img-thumbnail me-2 thumbnail"
+                                <img style="width: 90px; height: 80px;" id="thumb2" src="" alt="Thumbnail 2" class="img-thumbnail me-2 thumbnail"
                                     style="cursor: pointer;">
-                                <img id="thumb3" src="" alt="Thumbnail 3" class="img-thumbnail me-2 thumbnail"
+                                <img style="width: 90px; height: 80px;" id="thumb3" src="" alt="Thumbnail 3" class="img-thumbnail me-2 thumbnail"
+                                    style="cursor: pointer;">
+                                <img style="width: 90px; height: 80px;" id="thumb4" src="" alt="Thumbnail 4" class="img-thumbnail me-2 thumbnail"
                                     style="cursor: pointer;">
                             </div>
                         </div>
@@ -332,6 +334,38 @@
                                     <strong>Availability:</strong> <span id="availability" class="text-success">In
                                         Stock</span>
                                 </div>
+                                <div id="qvId" style="display: none;"></div>
+
+                                <!-- Chọn màu -->
+                                <div class="color-selection mt-3">
+                                    <label><strong>Color:</strong></label>
+                                    <div class="d-flex mt-2">
+                                        <div class="color-box me-2" style="background-color: white;" data-color="White">
+                                        </div>
+                                        <div class="color-box me-2" style="background-color: black;" data-color="Black">
+                                        </div>
+                                        <div class="color-box me-2" style="background-color: blue;" data-color="Blue">
+                                        </div>
+                                        <div class="color-box" style="background-color: red;" data-color="Red"></div>
+                                    </div>
+                                </div>
+
+                                <!-- Chọn size -->
+                                <div class="size-selection mt-3">
+                                    <label><strong>Size:</strong></label>
+                                    <div class="d-flex mt-2">
+                                        <div class="size-box me-2" data-size="37">37</div>
+                                        <div class="size-box me-2" data-size="38">38</div>
+                                        <div class="size-box me-2" data-size="39">39</div>
+                                        <div class="size-box me-2" data-size="40">40</div>
+                                        <div class="size-box me-2" data-size="41">41</div>
+                                        <div class="size-box me-2" data-size="42">42</div>
+                                        <div class="size-box me-2" data-size="43">43</div>
+                                        <div class="size-box" data-size="44">44</div>
+                                    </div>
+                                </div>
+
+                                <!-- Số lượng và nút thêm giỏ hàng -->
                                 <div style="margin-bottom: 10px;" class="quantity mt-3">
                                     <label for="quantityInput">Quantity:</label>
                                     <input id="quantityInput" type="number" value="1" min="1"
@@ -510,7 +544,7 @@
                                         <div class="product-action-link">
                                             <a href="#" data-bs-toggle="tooltip" title="Wishlist"><i
                                                     class="ion-android-favorite-outline"></i></a>
-                                            <a href="#" data-bs-toggle="tooltip" title="Add To Cart"><i
+                                            <a href="product-details.html?id=${product.productId}" data-bs-toggle="tooltip" title="Add To Cart"><i
                                                     class="ion-bag"></i></a>
                                             <a href="#" data-bs-toggle="modal" data-bs-target="#quick_view" data-product-id="${product.productId}"> <span
                                                     data-bs-toggle="tooltip" title="Quick View"><i
@@ -542,7 +576,7 @@
                                     </div>
                                     <div class="product-link-2">
                                         <a href="#" data-bs-toggle="tooltip" title="Wishlist"><i class="ion-android-favorite-outline"></i></a>
-                                        <a href="#" data-bs-toggle="tooltip" title="Add To Cart"><i class="ion-bag"></i></a>
+                                        <a href="product-details.html?id=${product.productId}" data-bs-toggle="tooltip" title="Add To Cart"><i class="ion-bag"></i></a>
                                         <a href="#" data-bs-toggle="modal" data-bs-target="#quick_view" data-product-id="${product.productId}"> <span
                                                     data-bs-toggle="tooltip" title="Quick View"><i
                                                         class="ion-ios-eye-outline"></i></span> </a>
@@ -648,7 +682,7 @@
                 document.querySelectorAll('[data-bs-target="#quick_view"]').forEach(button => {
                     button.addEventListener('click', async (event) => {
                         const productId = event.currentTarget.getAttribute('data-product-id');
-                        await fetchQuickViewProduct(productId, token);
+                        await fetchQuickViewProduct(productId);
                     });
                 });
             } catch (error) {
@@ -658,7 +692,7 @@
         });
 
         // Lấy chi tiết sản phẩm từ API và hiển thị vào modal
-        async function fetchQuickViewProduct(productId, token) {
+        async function fetchQuickViewProduct(productId) {
             try {
                 const response = await fetch(`http://localhost:8080/product/${productId}`, {
                     method: 'GET',
@@ -679,9 +713,9 @@
                 document.getElementById('currentPrice').innerText = `$${(product.price * (100 - product.discount) / 100).toFixed(2)}`;
                 document.getElementById('oldPrice').innerText = product.discount ? `$${product.price}` : '';
                 document.getElementById('description').innerText = product.description;
-                document.getElementById('availability').innerText = product.soldQuantity > 0 ? 'In Stock' : 'Out of Stock';
-                document.getElementById('availability').classList.toggle('text-success', product.soldQuantity > 0);
-                document.getElementById('availability').classList.toggle('text-danger', product.soldQuantity === 0);
+                document.getElementById("qvId").textContent = product.productId;
+                document.getElementById("availability").textContent = product.soldQuantity;
+                //document.getElementById('availability').classList.toggle('text-danger', product.soldQuantity === 0);
 
                 // Cập nhật hình ảnh chính và hình ảnh thumbnail
                 const mainImage = product.images && product.images[0] ? `http://localhost:8080/images/product/${product.images[0]}` : 'http://localhost:8080/images/product/default-image.jpg';
@@ -692,6 +726,7 @@
                 document.getElementById('thumb2').src = thumbnails[1] ? `http://localhost:8080/images/product/${thumbnails[1]}` : 'http://localhost:8080/images/product/default-image.jpg';
                 document.getElementById('thumb3').src = thumbnails[2] ? `http://localhost:8080/images/product/${thumbnails[2]}` : 'http://localhost:8080/images/product/default-image.jpg';
                 document.getElementById('thumb4').src = thumbnails[3] ? `http://localhost:8080/images/product/${thumbnails[3]}` : 'http://localhost:8080/images/product/default-image.jpg';
+                document.getElementById('thumb5').src = thumbnails[4] ? `http://localhost:8080/images/product/${thumbnails[4]}` : 'http://localhost:8080/images/product/default-image.jpg';
 
                 // Hiển thị modal
                 const quickViewModal = new bootstrap.Modal(document.getElementById('quick_view'));
@@ -705,12 +740,8 @@
         document.querySelectorAll('[data-bs-target="#quick_view"]').forEach(button => {
             button.addEventListener('click', (event) => {
                 const productId = event.currentTarget.getAttribute('data-product-id');
-                const token = localStorage.getItem('token'); // Token từ localStorage
-                if (token) {
-                    fetchQuickViewProduct(productId, token);
-                } else {
-                    alert('You need to log in to view this product!');
-                }
+                    fetchQuickViewProduct(productId,);
+            
             });
         });
 
@@ -736,6 +767,86 @@
 
         mainImage.addEventListener('mouseleave', () => {
             mainImage.style.transformOrigin = 'center center';
+        });
+
+         // logic thêm giỏ hàng
+         document.querySelectorAll('.color-box').forEach((box) => {
+            box.addEventListener('click', function () {
+                document.querySelectorAll('.color-box').forEach((b) => b.classList.remove('selected'));
+                this.classList.add('selected');
+                console.log("Selected Color:", this.getAttribute('data-color'));
+            });
+        });
+
+        document.querySelectorAll('.size-box').forEach((box) => {
+            box.addEventListener('click', function () {
+                document.querySelectorAll('.size-box').forEach((b) => b.classList.remove('selected'));
+                this.classList.add('selected');
+                console.log("Selected Size:", this.getAttribute('data-size'));
+            });
+        });
+
+        async function addToCart(userId, productId, quantity, size, color) {
+            const apiUrl = `http://localhost:8080/cart?userId=${userId}&productId=${productId}&quantity=${quantity}&size=${size}&color=${color}`;
+            
+            try {
+                const response = await fetch(apiUrl, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        // 'Authorization': `Bearer ${token}`, // Thêm nếu cần xác thực
+                    },
+                });
+
+                if (!response.ok) {
+                    throw new Error(`Failed to add to cart: ${response.status}`);
+                }
+
+                // Kiểm tra Content-Type để xử lý phản hồi phù hợp
+                const contentType = response.headers.get("Content-Type");
+                let data;
+
+                if (contentType && contentType.includes("application/json")) {
+                    data = await response.json(); // Xử lý nếu là JSON
+                } else {
+                    data = await response.text(); // Xử lý nếu là text
+                }
+
+                // Kiểm tra nội dung phản hồi
+                if (typeof data === "string") {
+                    console.log("Response message:", data);
+                    alert(data); // Hiển thị thông báo cho người dùng
+                    location.reload();
+                } else if (data.code === 200) {
+                    console.log("Product added to cart successfully:", data.message);
+                    alert(data.message || "Product added successfully!");
+                } else {
+                    console.error("Error adding to cart:", data.message);
+                    alert("Failed to add product to cart!");
+                }
+            } catch (error) {
+                console.error("Error during add-to-cart operation:", error);
+                alert("An error occurred while adding the product to the cart.");
+            }
+        }
+
+        document.getElementById("addToCart").addEventListener("click", function () {
+            const selectedColor = document.querySelector('.color-box.selected')?.getAttribute('data-color');
+            const selectedSize = document.querySelector('.size-box.selected')?.getAttribute('data-size');
+            const quantity = document.getElementById("quantityInput").value;
+            const qvId = document.getElementById("qvId").textContent.trim();
+            console.log("abc" + qvId);
+
+            if (!selectedColor || !selectedSize) {
+                alert("Please select both color and size.");
+                return;
+            }
+
+
+            console.log("Add to Cart:", { color: selectedColor, size: selectedSize, quantity });
+
+            // Logic thêm sản phẩm vào giỏ hàng
+            addToCart(userId, qvId, quantity, selectedSize, selectedColor);
         });
 
         // Bắt đầu xử lý mini card
@@ -916,6 +1027,36 @@
     .product-large-slider {
         position: relative;
         overflow: hidden;
+    }
+
+    .color-box {
+        width: 30px;
+        height: 30px;
+        border: 2px solid black;
+        cursor: pointer;
+        border-radius: 50%;
+        /* Làm ô màu thành hình tròn */
+    }
+
+    .color-box.selected {
+        border: 2px solid #3cfd6c;
+        /* Viền để phân biệt ô được chọn */
+    }
+
+    .size-box {
+        width: 40px;
+        height: 40px;
+        line-height: 40px;
+        text-align: center;
+        border: 2px solid #ddd;
+        cursor: pointer;
+        border-radius: 5px;
+        font-weight: bold;
+    }
+
+    .size-box.selected {
+        border: 2px solid #000;
+        background-color: #f0f0f0;
     }
 
 

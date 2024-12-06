@@ -225,61 +225,13 @@
                 <div class="minicart-content-box">
                     <div class="minicart-item-wrapper">
                         <ul>
-                            <li class="minicart-item">
-                                <div class="minicart-thumb">
-                                    <a href="product-details.html">
-                                        <img src="assets/img/cart/cart-1.jpg" alt="product">
-                                    </a>
-                                </div>
-                                <div class="minicart-content">
-                                    <h3 class="product-name">
-                                        <a href="product-details.html">Flowers bouquet pink for all flower lovers</a>
-                                    </h3>
-                                    <p>
-                                        <span class="cart-quantity">1 <strong>&times;</strong></span>
-                                        <span class="cart-price">$100.00</span>
-                                    </p>
-                                </div>
-                                <button class="minicart-remove"><i class="ion-android-close"></i></button>
-                            </li>
-                            <li class="minicart-item">
-                                <div class="minicart-thumb">
-                                    <a href="product-details.html">
-                                        <img src="assets/img/cart/cart-2.jpg" alt="product">
-                                    </a>
-                                </div>
-                                <div class="minicart-content">
-                                    <h3 class="product-name">
-                                        <a href="product-details.html">Jasmine flowers white for all flower lovers</a>
-                                    </h3>
-                                    <p>
-                                        <span class="cart-quantity">1 <strong>&times;</strong></span>
-                                        <span class="cart-price">$80.00</span>
-                                    </p>
-                                </div>
-                                <button class="minicart-remove"><i class="ion-android-close"></i></button>
-                            </li>
+
                         </ul>
                     </div>
 
                     <div class="minicart-pricing-box">
                         <ul>
-                            <li>
-                                <span>sub-total</span>
-                                <span><strong>$300.00</strong></span>
-                            </li>
-                            <li>
-                                <span>Eco Tax (-2.00)</span>
-                                <span><strong>$10.00</strong></span>
-                            </li>
-                            <li>
-                                <span>VAT (20%)</span>
-                                <span><strong>$60.00</strong></span>
-                            </li>
-                            <li class="total">
-                                <span>total</span>
-                                <span><strong>$370.00</strong></span>
-                            </li>
+
                         </ul>
                     </div>
 
@@ -308,10 +260,137 @@
 </body>
     
 
-<!-- Mirrored from htmldemo.net/juan/juan/contact-us.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 17 Oct 2024 04:44:53 GMT -->
 </html>
 
 <script>
+    const token = localStorage.getItem('token'); // Lấy token đăng nhập
+        const userId = localStorage.getItem('userId');
+        
+
+        function renderMiniCart(cartItems, summary) {
+            const cartWrapper = document.querySelector(".minicart-item-wrapper ul");
+            const pricingBox = document.querySelector(".minicart-pricing-box ul");
+    
+            // Làm rỗng nội dung cũ
+            cartWrapper.innerHTML = "";
+            pricingBox.innerHTML = "";
+            var tem = 1;
+            // Render từng sản phẩm
+            cartItems.forEach(item => {
+                const product = item.product;
+                const quantity = item.quantity;
+    
+                console.log("pro",product)
+    
+                const cartItemHTML = `
+            <li class="minicart-item">
+                <div class="minicart-thumb">
+                    <a href="/product-details.html?id=${product.productId}">
+                        <img src="http://localhost:8080/images/product/${product.images[0]}" alt="${product.productName}">
+                    </a>
+                </div>
+                <div class="minicart-content">
+                    <h3 class="product-name">
+                        <a href="/product-details.html?id=${product.productId}">${product.productName}</a>
+                    </h3>
+                    <p>
+                        <span class="cart-quantity">${quantity} <strong>&times;</strong></span>
+                        <span class="cart-price">$${(quantity * 100).toFixed(2)}</span>
+                    </p>
+                </div>
+                <button class="minicart-remove"><i class="ion-android-close"></i></button>
+            </li>
+        `;
+                cartWrapper.innerHTML += cartItemHTML;
+            });
+    
+            // Render tổng giá trị
+            pricingBox.innerHTML += `
+        <li><span>sub-total</span><span><strong>$${summary.totalPrice.toFixed(2)}</strong></span></li>
+        <li><span>VAT (10%)</span><span><strong>$${(summary.totalPrice * 0.1).toFixed(2)}</strong></span></li>
+        <li class="total"><span>total</span><span><strong>$${(summary.totalPrice * 1.1).toFixed(2)}</strong></span></li>
+    `;
+        }
+    
+        async function fetchCartItems(userId) {
+            try {
+                const response = await fetch(`http://localhost:8080/cart?userId=${userId}`, {
+                    method: "GET",
+                    headers: {
+                        "Authorization": token,
+                        "Content-Type": "application/json"
+                    }
+                });
+                const data = await response.json();
+                if (data.code === 200) {
+                    return data.result;
+                } else {
+                    throw new Error(data.message || "Failed to fetch cart items.");
+                }
+            } catch (error) {
+                console.error("Error fetching cart items:", error);
+                return [];
+            }
+        }
+    
+        async function fetchCartSummary(userId) {
+            try {
+                const [quantityRes, priceRes] = await Promise.all([
+                    fetch(`http://localhost:8080/cart/quantity?userId=${userId}`, {
+                        method: "GET",
+                        headers: {
+                            "Authorization": token,
+                            "Content-Type": "application/json"
+                        }
+                    }).then(res => res.json()),
+                    fetch(`http://localhost:8080/cart/sumprice?userId=${userId}`, {
+                        method: "GET",
+                        headers: {
+                            "Authorization": token,
+                            "Content-Type": "application/json"
+                        }
+                    }).then(res => res.json())
+                ]);
+                return {
+                    totalQuantity: quantityRes,
+                    totalPrice: priceRes
+                };
+            } catch (error) {
+                console.error("Error fetching cart summary:", error);
+                return { totalQuantity: 0, totalPrice: 0 };
+            }
+        }
+    
+    
+        document.addEventListener("DOMContentLoaded", async () => {
+    
+            // Gọi API lấy dữ liệu
+            const cartItems = await fetchCartItems(userId);
+            const cartSummary = await fetchCartSummary(userId);
+    
+            // Render dữ liệu ra giao diện
+            renderMiniCart(cartItems, cartSummary);
+        });
+    
+        document.addEventListener("click", async (event) => {
+            if (event.target.classList.contains("minicart-remove")) {
+                const productElement = event.target.closest(".minicart-item");
+                const variantId = productElement.querySelector("a").href.split("variantId=")[1];
+    
+                try {
+                    await fetch(`http://localhost:8080/cart/remove?variantId=${variantId}`, {
+                        method: "DELETE",
+                        headers: {
+                            "Authorization": token,
+                            "Content-Type": "application/json"
+                        }
+                    });
+                    productElement.remove(); // Xóa khỏi giao diện
+                } catch (error) {
+                    console.error("Error removing cart item:", error);
+                }
+            }
+        });
     document.addEventListener("DOMContentLoaded", async () => {
         const senderId = localStorage.getItem("userId"); // ID người gửi
         const receiverId = 1; // ID admin

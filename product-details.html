@@ -162,15 +162,41 @@
                                             <span class="old-price"><del id="oldPrice"></del></span>
                                         </div>
                                         <p id="description"></p>
-                                        <div class="quantity-cart-box d-flex align-items-center mb-20">
-                                            <div class="quantity">
-                                                <div class="pro-qty"><input type="text" value="1"></div>
+                                        
+                                        <!-- Chọn màu -->
+                                        <div class="color-selection mt-3">
+                                            <label><strong>Color:</strong></label>
+                                            <div class="d-flex mt-2">
+                                                <div class="color-box me-2" style="background-color: white;" data-color="White">
+                                                </div>
+                                                <div class="color-box me-2" style="background-color: black;" data-color="Black">
+                                                </div>
+                                                <div class="color-box me-2" style="background-color: blue;" data-color="Blue">
+                                                </div>
+                                                <div class="color-box" style="background-color: red;" data-color="Red"></div>
                                             </div>
-                                            <a href="cart.html" class="btn btn-default">Add To Cart</a>
                                         </div>
-                                        <div class="availability mb-20">
-                                            <h5 class="cat-title">Availability:</h5>
-                                            <span id="availability">In Stock</span>
+
+                                        <!-- Chọn size -->
+                                        <div class="size-selection mt-3">
+                                            <label><strong>Size:</strong></label>
+                                            <div class="d-flex mt-2">
+                                                <div class="size-box me-2" data-size="37">37</div>
+                                                <div class="size-box me-2" data-size="38">38</div>
+                                                <div class="size-box me-2" data-size="39">39</div>
+                                                <div class="size-box me-2" data-size="40">40</div>
+                                                <div class="size-box me-2" data-size="41">41</div>
+                                                <div class="size-box me-2" data-size="42">42</div>
+                                                <div class="size-box me-2" data-size="43">43</div>
+                                                <div class="size-box" data-size="44">44</div>
+                                            </div>
+                                        </div>
+                                        <!-- Số lượng và nút thêm giỏ hàng -->
+                                        <div style="margin-bottom: 10px;" class="quantity mt-3">
+                                            <label for="quantityInput">Quantity:</label>
+                                            <input id="quantityInput" type="number" value="1" min="1"
+                                                class="form-control w-25 d-inline">
+                                            <button id="addToCart2" class="btn btn-dark ms-2">Add to Cart</button>
                                         </div>
                                         <div class="share-icon">
                                             <h5 class="cat-title">Share:</h5>
@@ -344,9 +370,10 @@
                             </div>
                             <div class="product-thumbnails mt-3 d-flex">
                                 <!-- Thumbnail Images -->
-                                <img id="thumb1-1" src="" alt="Thumbnail 1" class="img-thumbnail me-2 thumbnail-1" style="cursor: pointer;">
-                                <img id="thumb2-1" src="" alt="Thumbnail 2" class="img-thumbnail me-2 thumbnail-1" style="cursor: pointer;">
-                                <img id="thumb3-1" src="" alt="Thumbnail 3" class="img-thumbnail me-2 thumbnail-1" style="cursor: pointer;">
+                                <img style="width: 90px; height: 80px;" id="thumb1-1" src="" alt="Thumbnail 1" class="img-thumbnail me-2 thumbnail-1" style="cursor: pointer;">
+                                <img style="width: 90px; height: 80px;" id="thumb2-1" src="" alt="Thumbnail 2" class="img-thumbnail me-2 thumbnail-1" style="cursor: pointer;">
+                                <img style="width: 90px; height: 80px;" id="thumb3-1" src="" alt="Thumbnail 3" class="img-thumbnail me-2 thumbnail-1" style="cursor: pointer;">
+                                <img style="width: 90px; height: 80px;" id="thumb4-1" src="" alt="Thumbnail 4" class="img-thumbnail me-2 thumbnail-1" style="cursor: pointer;">
                             </div>
                         </div>
                         <!-- Details Section -->
@@ -362,11 +389,45 @@
                                 <div class="availability">
                                     <strong>Availability:</strong> <span id="availability" class="text-success">In Stock</span>
                                 </div>
+                                <div id="qvId" style="display: none;"></div>
+
+                                <!-- Chọn màu -->
+                                <div class="color-selection mt-3">
+                                    <label><strong>Color:</strong></label>
+                                    <div class="d-flex mt-2">
+                                        <div class="color-box me-2" style="background-color: white;" data-color="White">
+                                        </div>
+                                        <div class="color-box me-2" style="background-color: black;" data-color="Black">
+                                        </div>
+                                        <div class="color-box me-2" style="background-color: blue;" data-color="Blue">
+                                        </div>
+                                        <div class="color-box" style="background-color: red;" data-color="Red"></div>
+                                    </div>
+                                </div>
+
+                                <!-- Chọn size -->
+                                <div class="size-selection mt-3">
+                                    <label><strong>Size:</strong></label>
+                                    <div class="d-flex mt-2">
+                                        <div class="size-box me-2" data-size="37">37</div>
+                                        <div class="size-box me-2" data-size="38">38</div>
+                                        <div class="size-box me-2" data-size="39">39</div>
+                                        <div class="size-box me-2" data-size="40">40</div>
+                                        <div class="size-box me-2" data-size="41">41</div>
+                                        <div class="size-box me-2" data-size="42">42</div>
+                                        <div class="size-box me-2" data-size="43">43</div>
+                                        <div class="size-box" data-size="44">44</div>
+                                    </div>
+                                </div>
+
+                                <!-- Số lượng và nút thêm giỏ hàng -->
                                 <div style="margin-bottom: 10px;" class="quantity mt-3">
                                     <label for="quantityInput">Quantity:</label>
-                                    <input id="quantityInput" type="number" value="1" min="1" class="form-control w-25 d-inline">
+                                    <input id="quantityInput" type="number" value="1" min="1"
+                                        class="form-control w-25 d-inline">
                                     <button id="addToCart" class="btn btn-dark ms-2">Add to Cart</button>
                                 </div>
+                                
                                 <div style="margin-bottom: 10px;" class="social-share mt-3">
                                     <strong>Share:</strong>
                                     <a href="#" class="ms-2"><i class="ion-social-facebook"></i></a>
@@ -441,67 +502,18 @@
                 <div class="minicart-content-box">
                     <div class="minicart-item-wrapper">
                         <ul>
-                            <li class="minicart-item">
-                                <div class="minicart-thumb">
-                                    <a href="product-details.html">
-                                        <img src="assets/img/cart/cart-1.jpg" alt="product">
-                                    </a>
-                                </div>
-                                <div class="minicart-content">
-                                    <h3 class="product-name">
-                                        <a href="product-details.html">Flowers bouquet pink for all flower lovers</a>
-                                    </h3>
-                                    <p>
-                                        <span class="cart-quantity">1 <strong>&times;</strong></span>
-                                        <span class="cart-price">$100.00</span>
-                                    </p>
-                                </div>
-                                <button class="minicart-remove"><i class="ion-android-close"></i></button>
-                            </li>
-                            <li class="minicart-item">
-                                <div class="minicart-thumb">
-                                    <a href="product-details.html">
-                                        <img src="assets/img/cart/cart-2.jpg" alt="product">
-                                    </a>
-                                </div>
-                                <div class="minicart-content">
-                                    <h3 class="product-name">
-                                        <a href="product-details.html">Jasmine flowers white for all flower lovers</a>
-                                    </h3>
-                                    <p>
-                                        <span class="cart-quantity">1 <strong>&times;</strong></span>
-                                        <span class="cart-price">$80.00</span>
-                                    </p>
-                                </div>
-                                <button class="minicart-remove"><i class="ion-android-close"></i></button>
-                            </li>
+
                         </ul>
                     </div>
 
                     <div class="minicart-pricing-box">
                         <ul>
-                            <li>
-                                <span>sub-total</span>
-                                <span><strong>$300.00</strong></span>
-                            </li>
-                            <li>
-                                <span>Eco Tax (-2.00)</span>
-                                <span><strong>$10.00</strong></span>
-                            </li>
-                            <li>
-                                <span>VAT (20%)</span>
-                                <span><strong>$60.00</strong></span>
-                            </li>
-                            <li class="total">
-                                <span>total</span>
-                                <span><strong>$370.00</strong></span>
-                            </li>
+
                         </ul>
                     </div>
 
                     <div class="minicart-button">
                         <a href="cart.html"><i class="fa fa-shopping-cart"></i> view cart</a>
-                        <a href="cart.html"><i class="fa fa-share"></i> checkout</a>
                     </div>
                 </div>
             </div>
@@ -529,6 +541,135 @@
 
 
 <script type="text/javascript">
+    const token = localStorage.getItem('token'); // Lấy token đăng nhập
+        const userId = localStorage.getItem('userId');
+        
+
+        function renderMiniCart(cartItems, summary) {
+            const cartWrapper = document.querySelector(".minicart-item-wrapper ul");
+            const pricingBox = document.querySelector(".minicart-pricing-box ul");
+    
+            // Làm rỗng nội dung cũ
+            cartWrapper.innerHTML = "";
+            pricingBox.innerHTML = "";
+            var tem = 1;
+            // Render từng sản phẩm
+            cartItems.forEach(item => {
+                const product = item.product;
+                const quantity = item.quantity;
+    
+                console.log("pro",product)
+    
+                const cartItemHTML = `
+            <li class="minicart-item">
+                <div class="minicart-thumb">
+                    <a href="/product-details.html?id=${product.productId}">
+                        <img src="http://localhost:8080/images/product/${product.images[0]}" alt="${product.productName}">
+                    </a>
+                </div>
+                <div class="minicart-content">
+                    <h3 class="product-name">
+                        <a href="/product-details.html?id=${product.productId}">${product.productName}</a>
+                    </h3>
+                    <p>
+                        <span class="cart-quantity">${quantity} <strong>&times;</strong></span>
+                        <span class="cart-price">$${(quantity * 100).toFixed(2)}</span>
+                    </p>
+                </div>
+                <button class="minicart-remove"><i class="ion-android-close"></i></button>
+            </li>
+        `;
+                cartWrapper.innerHTML += cartItemHTML;
+            });
+    
+            // Render tổng giá trị
+            pricingBox.innerHTML += `
+        <li><span>sub-total</span><span><strong>$${summary.totalPrice.toFixed(2)}</strong></span></li>
+        <li><span>VAT (10%)</span><span><strong>$${(summary.totalPrice * 0.1).toFixed(2)}</strong></span></li>
+        <li class="total"><span>total</span><span><strong>$${(summary.totalPrice * 1.1).toFixed(2)}</strong></span></li>
+    `;
+        }
+    
+        async function fetchCartItems(userId) {
+            try {
+                const response = await fetch(`http://localhost:8080/cart?userId=${userId}`, {
+                    method: "GET",
+                    headers: {
+                        "Authorization": token,
+                        "Content-Type": "application/json"
+                    }
+                });
+                const data = await response.json();
+                if (data.code === 200) {
+                    return data.result;
+                } else {
+                    throw new Error(data.message || "Failed to fetch cart items.");
+                }
+            } catch (error) {
+                console.error("Error fetching cart items:", error);
+                return [];
+            }
+        }
+    
+        async function fetchCartSummary(userId) {
+            try {
+                const [quantityRes, priceRes] = await Promise.all([
+                    fetch(`http://localhost:8080/cart/quantity?userId=${userId}`, {
+                        method: "GET",
+                        headers: {
+                            "Authorization": token,
+                            "Content-Type": "application/json"
+                        }
+                    }).then(res => res.json()),
+                    fetch(`http://localhost:8080/cart/sumprice?userId=${userId}`, {
+                        method: "GET",
+                        headers: {
+                            "Authorization": token,
+                            "Content-Type": "application/json"
+                        }
+                    }).then(res => res.json())
+                ]);
+                return {
+                    totalQuantity: quantityRes,
+                    totalPrice: priceRes
+                };
+            } catch (error) {
+                console.error("Error fetching cart summary:", error);
+                return { totalQuantity: 0, totalPrice: 0 };
+            }
+        }
+    
+    
+        document.addEventListener("DOMContentLoaded", async () => {
+    
+            // Gọi API lấy dữ liệu
+            const cartItems = await fetchCartItems(userId);
+            const cartSummary = await fetchCartSummary(userId);
+    
+            // Render dữ liệu ra giao diện
+            renderMiniCart(cartItems, cartSummary);
+        });
+    
+        document.addEventListener("click", async (event) => {
+            if (event.target.classList.contains("minicart-remove")) {
+                const productElement = event.target.closest(".minicart-item");
+                const variantId = productElement.querySelector("a").href.split("variantId=")[1];
+    
+                try {
+                    await fetch(`http://localhost:8080/cart/remove?variantId=${variantId}`, {
+                        method: "DELETE",
+                        headers: {
+                            "Authorization": token,
+                            "Content-Type": "application/json"
+                        }
+                    });
+                    productElement.remove(); // Xóa khỏi giao diện
+                } catch (error) {
+                    console.error("Error removing cart item:", error);
+                }
+            }
+        });
+
     document.addEventListener('DOMContentLoaded', async () => {
         const token = localStorage.getItem('token'); // Lấy token đăng nhập
         const id = localStorage.getItem('userId');
@@ -585,7 +726,7 @@
                                     <div class="product-action-link">
                                         <a href="#" data-bs-toggle="tooltip" title="Wishlist"><i
                                                 class="ion-android-favorite-outline"></i></a>
-                                        <a href="#" data-bs-toggle="tooltip" title="Add To Cart"><i
+                                        <a href="product-details.html?id=${product.productId}" data-bs-toggle="tooltip" title="Add To Cart"><i
                                                 class="ion-bag"></i></a>
                                         <a href="#" data-bs-toggle="modal" data-bs-target="#quick_view" data-product-id="${product.productId}"> <span
                                                 data-bs-toggle="tooltip" title="Quick View"><i
@@ -632,7 +773,7 @@
             document.querySelectorAll('[data-bs-target="#quick_view"]').forEach(button => {
                 button.addEventListener('click', async (event) => {
                     const productId = event.currentTarget.getAttribute('data-product-id');
-                    await fetchQuickViewProduct(productId, token);
+                    await fetchQuickViewProduct(productId);
                 });
             });
         } catch (error) {
@@ -642,12 +783,12 @@
     });
 
     // Lấy chi tiết sản phẩm từ API và hiển thị vào modal
-    async function fetchQuickViewProduct(productId, token) {
+    async function fetchQuickViewProduct(productId) {
         try {
             const response = await fetch(`http://localhost:8080/product/${productId}`, {
                 method: 'GET',
                 headers: {
-                    'Authorization': `Bearer ${token}`
+                    'Content-Type': 'application/json'
                 }
             });
 
@@ -663,9 +804,8 @@
             document.getElementById('currentPrice-1').innerText = `$${(product.price * (100 - product.discount) / 100).toFixed(2)}`;
             document.getElementById('oldPrice-1').innerText = product.discount ? `$${product.price}` : '';
             document.getElementById('description-1').innerText = product.description;
-            document.getElementById('availability').innerText = product.soldQuantity > 0 ? 'In Stock' : 'Out of Stock';
-            document.getElementById('availability').classList.toggle('text-success', product.soldQuantity > 0);
-            document.getElementById('availability').classList.toggle('text-danger', product.soldQuantity === 0);
+            document.getElementById("qvId").textContent = product.productId;
+            document.getElementById("availability").textContent = product.soldQuantity;
 
             // Cập nhật hình ảnh chính và hình ảnh thumbnail
             const mainImage = product.images && product.images[0] ? `http://localhost:8080/images/product/${product.images[0]}` : 'http://localhost:8080/images/product/default-image.jpg';
@@ -676,6 +816,7 @@
             document.getElementById('thumb2-1').src = thumbnails[1] ? `http://localhost:8080/images/product/${thumbnails[1]}` : 'http://localhost:8080/images/product/default-image.jpg';
             document.getElementById('thumb3-1').src = thumbnails[2] ? `http://localhost:8080/images/product/${thumbnails[2]}` : 'http://localhost:8080/images/product/default-image.jpg';
             document.getElementById('thumb4-1').src = thumbnails[3] ? `http://localhost:8080/images/product/${thumbnails[3]}` : 'http://localhost:8080/images/product/default-image.jpg';
+            document.getElementById('thumb5-1').src = thumbnails[3] ? `http://localhost:8080/images/product/${thumbnails[3]}` : 'http://localhost:8080/images/product/default-image.jpg';
 
             // Hiển thị modal
             const quickViewModal = new bootstrap.Modal(document.getElementById('quick_view'));
@@ -807,12 +948,95 @@
         mainImage_1.style.transformOrigin = 'center center';
     });
 
+    // logic thêm giỏ hàng
+    document.querySelectorAll('.color-box').forEach((box) => {
+        box.addEventListener('click', function () {
+            document.querySelectorAll('.color-box').forEach((b) => b.classList.remove('selected'));
+            this.classList.add('selected');
+            console.log("Selected Color:", this.getAttribute('data-color'));
+        });
+    });
+
+    document.querySelectorAll('.size-box').forEach((box) => {
+        box.addEventListener('click', function () {
+            document.querySelectorAll('.size-box').forEach((b) => b.classList.remove('selected'));
+            this.classList.add('selected');
+            console.log("Selected Size:", this.getAttribute('data-size'));
+        });
+    });
+
+    async function addToCart(id, productId, quantity, size, color) {
+        const apiUrl = `http://localhost:8080/cart?userId=${id}&productId=${productId}&quantity=${quantity}&size=${size}&color=${color}`;
+        try {
+            const response = await fetch(apiUrl, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    // 'Authorization': `Bearer ${token}`, // Thêm nếu cần xác thực
+                },
+            });
+
+            if (!response.ok) {
+                throw new Error(`Failed to add to cart: ${response.status}`);
+            }
+
+            // Kiểm tra Content-Type để xử lý phản hồi phù hợp
+            const contentType = response.headers.get("Content-Type");
+            let data;
+
+            if (contentType && contentType.includes("application/json")) {
+                data = await response.json(); // Xử lý nếu là JSON
+            } else {
+                data = await response.text(); // Xử lý nếu là text
+            }
+
+            // Kiểm tra nội dung phản hồi
+            if (typeof data === "string") {
+                console.log("Response message:", data);
+                alert(data); // Hiển thị thông báo cho người dùng
+                location.reload();
+            } else if (data.code === 200) {
+                console.log("Product added to cart successfully:", data.message);
+                alert(data.message || "Product added successfully!");
+            } else {
+                console.error("Error adding to cart:", data.message);
+                alert("Failed to add product to cart!");
+            }
+        } catch (error) {
+            console.error("Error during add-to-cart operation:", error);
+            alert("An error occurred while adding the product to the cart.");
+        }
+    }
+
+
+
+    document.getElementById("addToCart").addEventListener("click", function () {
+        const selectedColor = document.querySelector('.color-box.selected')?.getAttribute('data-color');
+        const selectedSize = document.querySelector('.size-box.selected')?.getAttribute('data-size');
+        const quantity = document.getElementById("quantityInput").value;
+        const qvId = document.getElementById("qvId").textContent.trim();
+        console.log("abc" + qvId);
+
+        if (!selectedColor || !selectedSize) {
+            alert("Please select both color and size.");
+            return;
+        }
+
+
+        console.log("Add to Cart:", { color: selectedColor, size: selectedSize, quantity });
+
+        // Logic thêm sản phẩm vào giỏ hàng
+        addToCart(id, qvId, quantity, selectedSize, selectedColor);
+    });
+    
+
 
     // Hàm để lấy tham số từ URL
     function getUrlParameter(param) {
         const urlParams = new URLSearchParams(window.location.search);
         return urlParams.get(param); // Trả về giá trị của tham số
     }
+    
 
     // Gọi API khi trang được tải
     window.addEventListener('DOMContentLoaded', () => {
@@ -822,6 +1046,25 @@
             // Gọi hàm để fetch chi tiết sản phẩm
             fetchProductDetails(productId);
             fetchAndDisplayProductVariants(productId);
+
+            document.getElementById("addToCart2").addEventListener("click", function () {
+                const selectedColor = document.querySelector('.color-box.selected')?.getAttribute('data-color');
+                const selectedSize = document.querySelector('.size-box.selected')?.getAttribute('data-size');
+                const quantity = document.getElementById("quantityInput").value;
+                const qvId = document.getElementById("qvId").textContent.trim();
+                console.log("abc" + qvId);
+        
+                if (!selectedColor || !selectedSize) {
+                    alert("Please select both color and size.");
+                    return;
+                }
+        
+        
+                console.log("Add to Cart:", { color: selectedColor, size: selectedSize, quantity });
+        
+                // Logic thêm sản phẩm vào giỏ hàng
+                addToCart(id, productId, quantity, selectedSize, selectedColor);
+            });
         } else {
             console.error('Product ID not found in URL');
             // Bạn có thể chuyển hướng về trang danh sách hoặc hiển thị thông báo lỗi ở đây
@@ -887,5 +1130,35 @@
     .product-large-slider {
         position: relative;
         overflow: hidden;
+    }
+
+    .color-box {
+        width: 30px;
+        height: 30px;
+        border: 2px solid black;
+        cursor: pointer;
+        border-radius: 50%;
+        /* Làm ô màu thành hình tròn */
+    }
+
+    .color-box.selected {
+        border: 2px solid #3cfd6c;
+        /* Viền để phân biệt ô được chọn */
+    }
+
+    .size-box {
+        width: 40px;
+        height: 40px;
+        line-height: 40px;
+        text-align: center;
+        border: 2px solid #ddd;
+        cursor: pointer;
+        border-radius: 5px;
+        font-weight: bold;
+    }
+
+    .size-box.selected {
+        border: 2px solid #000;
+        background-color: #f0f0f0;
     }
 </style>
