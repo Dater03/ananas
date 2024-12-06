@@ -120,5 +120,8 @@ public class CartService implements ICartService {
         Cart currentCart = this.cartRepository.findByUser(user);
         ProductVariant productVariant = this.productVariantRepository.findById(variantId).get();
         this.cartItemRepository.deleteByCartAndProductVariant(currentCart,productVariant);
+        List<Cart_Item> cartItemList = this.cartItemRepository.findCart_ItemsByCart(currentCart);
+        if(cartItemList.size() == 0)
+            deleteCart(userId);
     }
 }
