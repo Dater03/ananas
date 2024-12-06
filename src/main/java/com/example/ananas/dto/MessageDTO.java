@@ -1,5 +1,6 @@
 package com.example.ananas.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
@@ -17,4 +18,6 @@ public class MessageDTO {
     int receiverId;
     String message;
     Instant createdAt;
+    String senderName; // Thêm trường này
+
 }

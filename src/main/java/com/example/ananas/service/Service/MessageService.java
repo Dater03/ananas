@@ -12,6 +12,9 @@ import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.stereotype.Service;
 
+import java.math.BigInteger;
+import java.sql.Timestamp;
+import java.time.Instant;
 import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.Date;
@@ -66,7 +69,17 @@ public class MessageService implements IMessageService {
     }
 
     @Override
-    public List<MessageDTO> getMessList() {
-        return Collections.singletonList(messageMapper.toMessageDTO((Messages) messageRepository.findLatestMessagesBySender()));
+    public List<MessageDTO> getMessList(int receiverId) {
+        List<Object[]> rawResults = messageRepository.findLatestMessagesBySender(receiverId);
+        return rawResults.stream()
+                .map(row -> new MessageDTO(
+                        Integer.parseInt(row[0].toString()), // messageId
+                        Integer.parseInt(row[1].toString()), // senderId
+                        Integer.parseInt(row[2].toString()), // receiverId
+                        row[3].toString(),               // message
+                        ((Timestamp) row[4]).toInstant(), // Chuyển đổi Timestamp sang Instant
+                        row[5].toString()// createdAt
+                ))
+                .collect(Collectors.toList());
     }
 }
