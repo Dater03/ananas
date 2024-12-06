@@ -681,7 +681,7 @@
                 document.querySelectorAll('[data-bs-target="#quick_view"]').forEach(button => {
                     button.addEventListener('click', async (event) => {
                         const productId = event.currentTarget.getAttribute('data-product-id');
-                        await fetchQuickViewProduct(productId, token);
+                        await fetchQuickViewProduct(productId);
                     });
                 });
             } catch (error) {
@@ -787,8 +787,7 @@
 
         async function addToCart(userId, productId, quantity, size, color) {
             const apiUrl = `http://localhost:8080/cart?userId=${userId}&productId=${productId}&quantity=${quantity}&size=${size}&color=${color}`;
-            console.log("id",userId,"pro",productId,"qua",quantity,"sz",size,"cl",color)
-
+            
             try {
                 const response = await fetch(apiUrl, {
                     method: "POST",
