@@ -45,4 +45,9 @@ public class MessageController {
         messageService.deleteMessage(id);
         return ResponseEntity.noContent().build();
     }
+
+    @GetMapping("/latest")
+    public ResponseEntity<List<MessageDTO>> getLatestMessages() {
+        return ResponseEntity.ok(messageService.getMessList());
+    }
 }

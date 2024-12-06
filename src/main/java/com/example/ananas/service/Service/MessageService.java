@@ -13,6 +13,7 @@ import lombok.experimental.FieldDefaults;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -62,5 +63,10 @@ public class MessageService implements IMessageService {
     @Override
     public void deleteMessage(int id) {
         messageRepository.deleteById(id);
+    }
+
+    @Override
+    public List<MessageDTO> getMessList() {
+        return Collections.singletonList(messageMapper.toMessageDTO((Messages) messageRepository.findLatestMessagesBySender()));
     }
 }
