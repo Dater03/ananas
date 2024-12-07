@@ -31,7 +31,6 @@ public class VoucherController {
         return ResponseEntity.ok(voucherService.getVouchersForUser(code));
     }
 
-
     @GetMapping("/admin/list")
     public ResponseEntity<ResultPaginationDTO> getAllVouchersForAdmin(@Filter Specification<Voucher> specification, Pageable pageable) {
         return ResponseEntity.ok(voucherService.getAllVouchersForAdmin(specification, pageable));

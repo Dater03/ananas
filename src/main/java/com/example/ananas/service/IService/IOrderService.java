@@ -34,4 +34,7 @@ public interface IOrderService {
 
     ResultPaginationDTO getOrderByPaymentStatus(String payMentStatus, Pageable pageable);
 
+    ResultPaginationDTO getOrderByUserId(Integer userId, Pageable pageable);
+
+    OrderResponse getOrderByOrderId(Integer orderId);
 }

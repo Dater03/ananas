@@ -7,6 +7,7 @@ import com.example.ananas.dto.response.ResultPaginationDTO;
 import com.example.ananas.service.Service.OrderService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -24,10 +25,19 @@ public class OrderController {
         return ResponseEntity.ok(orderService.getOrdersForAdmin(pageable));
     }
 
+    @GetMapping("/orderDetail/{orderId}")
+    public ResponseEntity<OrderResponse> getOrder(@PathVariable("orderId") Integer orderId) {
+        return ResponseEntity.ok(orderService.getOrderByOrderId(orderId));
+    }
     // Xem tất cả các đơn hàng theo username
-    @GetMapping("/{username}")
-    public ResponseEntity<ResultPaginationDTO> getOrderByUsername(@PathVariable String username, Pageable pageable) {
-        return ResponseEntity.ok(orderService.getOrderByUsername(username, pageable));
+    @GetMapping("/{userId}")
+    public ResponseEntity<ResultPaginationDTO> getOrderByUserId(@PathVariable("userId") Integer userId,
+                                                                @RequestParam(defaultValue = "0") int page,
+                                                                @RequestParam(defaultValue = "5") int size
+                                                                )
+    {
+        Pageable pageable = PageRequest.of(page, size);
+        return ResponseEntity.ok(orderService.getOrderByUserId(userId, pageable));
     }
 
     // Tạo đơn hàng
