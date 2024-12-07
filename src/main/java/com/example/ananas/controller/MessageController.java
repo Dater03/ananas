@@ -47,7 +47,7 @@ public class MessageController {
     }
 
     @GetMapping("/latest")
-    public ResponseEntity<List<MessageDTO>> getLatestMessages() {
-        return ResponseEntity.ok(messageService.getMessList());
+    public ResponseEntity<List<MessageDTO>> getLatestMessages(@RequestParam("receiverId") Integer receiverId) {
+        return ResponseEntity.ok(messageService.getMessList(receiverId));
     }
 }

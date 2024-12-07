@@ -174,8 +174,8 @@ public class UserService implements IUserService {
     }
 
     // Đổi mật khẩu
-    public boolean changePassword(ChangePasswordRequest request) {
-        User user = userRepository.findByUsername(request.getUsername())
+    public boolean changePassword(int userId, ChangePasswordRequest request) {
+        User user = userRepository.findById(userId)
                 .orElseThrow(() -> new RuntimeException("User not found"));
         if (user != null && passwordEncoder.matches(request.getOldPassword(), user.getPassword())) {
             user.setPassword(passwordEncoder.encode(request.getNewPassword()));

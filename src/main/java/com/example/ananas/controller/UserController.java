@@ -95,9 +95,9 @@ public class UserController {
         return ResponseEntity.ok("Verification code sent to your email.");
     }
 
-    @PostMapping("/change-password")
-    public ResponseEntity<String> resetPassword(@RequestBody ChangePasswordRequest changePasswordRequest) {
-        boolean isReset = userService.changePassword(changePasswordRequest);
+    @PostMapping("/change-password/{userId}")
+    public ResponseEntity<String> resetPassword(@PathVariable(name = "userId") Integer userId,@RequestBody ChangePasswordRequest changePasswordRequest) {
+        boolean isReset = userService.changePassword(userId,changePasswordRequest);
         if (isReset) {
             return ResponseEntity.ok("Password has been reset successfully.");
         } else {
