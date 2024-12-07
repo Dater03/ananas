@@ -23,6 +23,7 @@ public class CartItemResponse {
         String productName;
         int productId;
         String color;
+        double price;
         int size;
         int stock;
         List<String> images;
