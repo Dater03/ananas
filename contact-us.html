@@ -225,36 +225,36 @@
         </div>
     </div>
     <!-- offcanvas search form end -->
-        <!-- offcanvas mini cart start -->
-        <div class="offcanvas-minicart-wrapper">
-            <div class="minicart-inner">
-                <div class="offcanvas-overlay"></div>
-                <div class="minicart-inner-content">
-                    <div class="minicart-close">
-                        <i class="ion-android-close"></i>
+    <!-- offcanvas mini cart start -->
+    <div class="offcanvas-minicart-wrapper">
+        <div class="minicart-inner">
+            <div class="offcanvas-overlay"></div>
+            <div class="minicart-inner-content">
+                <div class="minicart-close">
+                    <i class="ion-android-close"></i>
+                </div>
+                <h3 style="text-align: center; margin-bottom: 30px;">Giỏ hàng của bạn</h3>
+                <div class="minicart-content-box">
+                    <div class="minicart-item-wrapper">
+                        <ul>
+
+                        </ul>
                     </div>
-                    <h3 style="text-align: center; margin-bottom: 30px;">Giỏ hàng của bạn</h3>
-                    <div class="minicart-content-box">
-                        <div class="minicart-item-wrapper">
-                            <ul>
-    
-                            </ul>
-                        </div>
-    
-                        <div class="minicart-pricing-box">
-                            <ul>
-    
-                            </ul>
-                        </div>
-    
-                        <div class="minicart-button">
-                            <a href="cart.html"><i class="fa fa-shopping-cart"></i> view cart</a>
-                        </div>
+
+                    <div class="minicart-pricing-box">
+                        <ul>
+
+                        </ul>
+                    </div>
+
+                    <div class="minicart-button">
+                        <a href="cart.html"><i class="fa fa-shopping-cart"></i> view cart</a>
                     </div>
                 </div>
             </div>
         </div>
-        <!-- offcanvas mini cart end -->
+    </div>
+    <!-- offcanvas mini cart end -->
     <!-- Scroll to top start -->
     <div class="scroll-top not-visible">
         <i class="fa fa-angle-up"></i>
@@ -278,21 +278,21 @@
     const token = localStorage.getItem('token'); // Lấy token đăng nhập
     const userId = localStorage.getItem('userId');
 
-            // Bắt đầu xử lý mini card
-            function renderMiniCart(cartItems, summary) {
-            const cartWrapper = document.querySelector(".minicart-item-wrapper ul");
-            const pricingBox = document.querySelector(".minicart-pricing-box ul");
+    // Bắt đầu xử lý mini card
+    function renderMiniCart(cartItems, summary) {
+        const cartWrapper = document.querySelector(".minicart-item-wrapper ul");
+        const pricingBox = document.querySelector(".minicart-pricing-box ul");
 
-            // Làm rỗng nội dung cũ
-            pricingBox.innerHTML = "";
-            cartWrapper.innerHTML = "";
+        // Làm rỗng nội dung cũ
+        pricingBox.innerHTML = "";
+        cartWrapper.innerHTML = "";
 
 
-            // Render từng sản phẩm
-            cartItems.forEach(item => {
-                const product = item.product;
-                const quantity = item.quantity;
-                const cartItemHTML = `
+        // Render từng sản phẩm
+        cartItems.forEach(item => {
+            const product = item.product;
+            const quantity = item.quantity;
+            const cartItemHTML = `
             <li class="minicart-item">
                 <div class="minicart-thumb">
                     <a href="product-details.html?id=${product.productId}">
@@ -305,7 +305,7 @@
                     </h3>
                     <p>
                         <span class="cart-quantity">${quantity} <strong>&times;</strong></span>
-                        <span class="cart-price">$${(quantity * 100).toFixed(2)}</span>
+                        <span class="cart-price">${(product.price).toFixed(2)} VNĐ</span>
                     </p>
                     <p>
                         <span class="product-name">Màu sắc: ${product.color}</span><br>
@@ -317,133 +317,133 @@
                 </button>
             </li>
         `;
-                cartWrapper.innerHTML += cartItemHTML;
-            });
-            document.getElementById('cart-quantity').innerText = summary.totalQuantity;
-            // Render tổng giá trị
-            pricingBox.innerHTML += `
+            cartWrapper.innerHTML += cartItemHTML;
+        });
+        document.getElementById('cart-quantity').innerText = summary.totalQuantity;
+        // Render tổng giá trị
+        pricingBox.innerHTML += `
         <li><span>Tổng giá trước thuế</span><span><strong>${summary.totalPrice.toFixed(2)} VNĐ</strong></span></li>
         <li><span>VAT (10%)</span><span><strong>${(summary.totalPrice * 0.1).toFixed(2)} VNĐ</strong></span></li>
         <li class="total"><span>Tổng giá sau thuế</span><span><strong>${(summary.totalPrice * 1.1).toFixed(2)} VNĐ</strong></span></li>
     `;
-        }
+    }
 
-        // Hàm lấy dữ liệu sản phẩm trong giỏ hàng
-        async function fetchCartItems(userId) {
-            try {
-                const response = await fetch(`http://localhost:8080/cart?userId=${id}`, {
+    // Hàm lấy dữ liệu sản phẩm trong giỏ hàng
+    async function fetchCartItems(userId) {
+        try {
+            const response = await fetch(`http://localhost:8080/cart?userId=${userId}`, {
+                method: "GET",
+                headers: {
+                    "Authorization": token,
+                    "Content-Type": "application/json"
+                }
+            });
+            const data = await response.json();
+            if (data.code === 200) {
+                return data.result;
+            } else {
+                throw new Error(data.message || "Failed to fetch cart items.");
+            }
+        } catch (error) {
+            console.error("Error fetching cart items:", error);
+            return [];
+        }
+    }
+
+    // Hàm lấy dữ liệu tổng hợp giỏ hàng (số lượng và giá trị)
+    async function fetchCartSummary(userId) {
+        try {
+            const [quantityRes, priceRes] = await Promise.all([
+                fetch(`http://localhost:8080/cart/quantity?userId=${userId}`, {
                     method: "GET",
                     headers: {
                         "Authorization": token,
                         "Content-Type": "application/json"
                     }
-                });
-                const data = await response.json();
-                if (data.code === 200) {
-                    return data.result;
-                } else {
-                    throw new Error(data.message || "Failed to fetch cart items.");
-                }
-            } catch (error) {
-                console.error("Error fetching cart items:", error);
-                return [];
-            }
-        }
-
-        // Hàm lấy dữ liệu tổng hợp giỏ hàng (số lượng và giá trị)
-        async function fetchCartSummary(userId) {
-            try {
-                const [quantityRes, priceRes] = await Promise.all([
-                    fetch(`http://localhost:8080/cart/quantity?userId=${id}`, {
-                        method: "GET",
-                        headers: {
-                            "Authorization": token,
-                            "Content-Type": "application/json"
-                        }
-                    }).then(res => res.json()),
-                    fetch(`http://localhost:8080/cart/sumprice?userId=${id}`, {
-                        method: "GET",
-                        headers: {
-                            "Authorization": token,
-                            "Content-Type": "application/json"
-                        }
-                    }).then(res => res.json())
-                ]);
-                return {
-                    totalQuantity: quantityRes.result,
-                    totalPrice: priceRes.result
-                };
-            } catch (error) {
-                console.error("Error fetching cart summary:", error);
-                return { totalQuantity: 0, totalPrice: 0 };
-            }
-        }
-
-        // Khi nhấn vào nút giỏ hàng, gọi API và hiển thị giỏ hàng mini (nếu chưa gọi trước đó)
-        document.querySelector(".minicart-btn").addEventListener("click", async (event) => {
-            event.preventDefault();  // Ngừng hành động mặc định của liên kết
-            const minicartWrapper = document.querySelector(".offcanvas-minicart-wrapper");  // Giỏ hàng mini
-            const cartItems = await fetchCartItems(userId);
-                if (cartItems.length === 0) {
-                    const pricingBox = document.querySelector(".minicart-pricing-box ul");
-                    pricingBox.innerHTML = '<div style="text-align: center; margin: 20px 0;"> <i class="ion-bag" style="font-size: 50px; color: #ccc;"></i> <p style="font-size: 16px; color: #666; margin-top: 10px;"> Giỏ hàng của bạn đang trống </p> </div>';
-
-                } else {
-                    const cartSummary = await fetchCartSummary(userId);
-                    renderMiniCart(cartItems, cartSummary);
-                }
-        });
-
-        // Xử lý khi nhấn nút xóa sản phẩm khỏi giỏ hàng
-        document.addEventListener("click", async (event) => {
-            if (event.target.classList.contains("minicart-remove")) {
-                const productElement = event.target.closest(".minicart-item");
-                const variantId = event.target.getAttribute("data-variant-id");
-
-                // Hiển thị hộp thoại xác nhận trước khi xóa
-                const isConfirmed = confirm("Bạn có chắc chắn muốn xóa sản phẩm này khỏi giỏ hàng?");
-                if (isConfirmed) {
-                    try {
-                        // Gửi yêu cầu xóa sản phẩm
-                        const response = await fetch(`http://localhost:8080/cart/variant/${variantId}?userId=${userId}`, {
-                            method: "DELETE",
-                            headers: {
-                                "Authorization": token,
-                                "Content-Type": "application/json"
-                            }
-                        });
-
-                        if (response.ok) {
-                            // Xóa sản phẩm khỏi giao diện
-                            productElement.remove();
-                            reloadMiniCart(userId);
-                        } else {
-                            throw new Error("Failed to remove item");
-                        }
-                    } catch (error) {
-                        console.error("Error removing cart item:", error);
+                }).then(res => res.json()),
+                fetch(`http://localhost:8080/cart/sumprice?userId=${userId}`, {
+                    method: "GET",
+                    headers: {
+                        "Authorization": token,
+                        "Content-Type": "application/json"
                     }
-                }
-            }
-        });
+                }).then(res => res.json())
+            ]);
+            return {
+                totalQuantity: quantityRes.result,
+                totalPrice: priceRes.result
+            };
+        } catch (error) {
+            console.error("Error fetching cart summary:", error);
+            return { totalQuantity: 0, totalPrice: 0 };
+        }
+    }
 
-        // Hàm reload lại giỏ hàng mini sau khi xóa sản phẩm
-        async function reloadMiniCart(userId) {
-            try {
-                const cartItems = await fetchCartItems(userId);
-                if (cartItems.length === 0) {
-                    const pricingBox = document.querySelector(".minicart-pricing-box ul");
-                    pricingBox.innerHTML = '<div style="text-align: center; margin: 20px 0;"> <i class="ion-bag" style="font-size: 50px; color: #ccc;"></i> <p style="font-size: 16px; color: #666; margin-top: 10px;"> Giỏ hàng của bạn đang trống </p> </div>';
+    // Khi nhấn vào nút giỏ hàng, gọi API và hiển thị giỏ hàng mini (nếu chưa gọi trước đó)
+    document.querySelector(".minicart-btn").addEventListener("click", async (event) => {
+        event.preventDefault();  // Ngừng hành động mặc định của liên kết
+        const minicartWrapper = document.querySelector(".offcanvas-minicart-wrapper");  // Giỏ hàng mini
+        const cartItems = await fetchCartItems(userId);
+        if (cartItems.length === 0) {
+            const pricingBox = document.querySelector(".minicart-pricing-box ul");
+            pricingBox.innerHTML = '<div style="text-align: center; margin: 20px 0;"> <i class="ion-bag" style="font-size: 50px; color: #ccc;"></i> <p style="font-size: 16px; color: #666; margin-top: 10px;"> Giỏ hàng của bạn đang trống </p> </div>';
 
-                } else {
-                    const cartSummary = await fetchCartSummary(userId);
-                    renderMiniCart(cartItems, cartSummary);
+        } else {
+            const cartSummary = await fetchCartSummary(userId);
+            renderMiniCart(cartItems, cartSummary);
+        }
+    });
+
+    // Xử lý khi nhấn nút xóa sản phẩm khỏi giỏ hàng
+    document.addEventListener("click", async (event) => {
+        if (event.target.classList.contains("minicart-remove")) {
+            const productElement = event.target.closest(".minicart-item");
+            const variantId = event.target.getAttribute("data-variant-id");
+
+            // Hiển thị hộp thoại xác nhận trước khi xóa
+            const isConfirmed = confirm("Bạn có chắc chắn muốn xóa sản phẩm này khỏi giỏ hàng?");
+            if (isConfirmed) {
+                try {
+                    // Gửi yêu cầu xóa sản phẩm
+                    const response = await fetch(`http://localhost:8080/cart/variant/${variantId}?userId=${userId}`, {
+                        method: "DELETE",
+                        headers: {
+                            "Authorization": token,
+                            "Content-Type": "application/json"
+                        }
+                    });
+
+                    if (response.ok) {
+                        // Xóa sản phẩm khỏi giao diện
+                        productElement.remove();
+                        reloadMiniCart(userId);
+                    } else {
+                        throw new Error("Failed to remove item");
+                    }
+                } catch (error) {
+                    console.error("Error removing cart item:", error);
                 }
-            } catch (error) {
-                console.error("Error reloading mini cart:", error);
             }
         }
-        // Kết thúc xử lý mini card
+    });
+
+    // Hàm reload lại giỏ hàng mini sau khi xóa sản phẩm
+    async function reloadMiniCart(userId) {
+        try {
+            const cartItems = await fetchCartItems(userId);
+            if (cartItems.length === 0) {
+                const pricingBox = document.querySelector(".minicart-pricing-box ul");
+                pricingBox.innerHTML = '<div style="text-align: center; margin: 20px 0;"> <i class="ion-bag" style="font-size: 50px; color: #ccc;"></i> <p style="font-size: 16px; color: #666; margin-top: 10px;"> Giỏ hàng của bạn đang trống </p> </div>';
+
+            } else {
+                const cartSummary = await fetchCartSummary(userId);
+                renderMiniCart(cartItems, cartSummary);
+            }
+        } catch (error) {
+            console.error("Error reloading mini cart:", error);
+        }
+    }
+    // Kết thúc xử lý mini card
 
     document.addEventListener("DOMContentLoaded", async () => {
         const senderId = localStorage.getItem("userId"); // ID người gửi
@@ -522,9 +522,9 @@
                 alert("Message cannot be empty.");
                 return;
             }
-    
-            
-    
+
+
+
             if (!token) {
                 alert("You need to log in to send messages.");
                 return;
@@ -565,13 +565,13 @@
 
         // Lấy số lượng sản phẩm trong giỏ hàng
         fetch(`${cartQuantityApi}?userId=${id}`)
-        .then(response => response.json())
-        .then(data => {
-            if (data.code === 200) {
-                const cartQuantityElement = document.getElementById("cart-quantity");
-                cartQuantityElement.textContent = data.result;
-            }
-        });
+            .then(response => response.json())
+            .then(data => {
+                if (data.code === 200) {
+                    const cartQuantityElement = document.getElementById("cart-quantity");
+                    cartQuantityElement.textContent = data.result;
+                }
+            });
     });
 
     document.addEventListener("DOMContentLoaded", async function () {
@@ -580,9 +580,9 @@
         // Kiểm tra nếu không có ID hoặc token
         if (!userId || !token) {
             alert("User ID or Token is missing!");
-        return;
+            return;
         }
-            
+
         // API URLs
         const UserUrl = `http://localhost:8080/user/${userId}`;
         // Fetch user data
@@ -596,11 +596,11 @@
             });
             const data = await response.json();
             const user = data.result.result;
-    
+
             const avatarSmall = user.avatar
-            ? `http://localhost:8080/images/avatar/${user.avatar}`
-            : "assets/img/about/avatar.jpg";
-    
+                ? `http://localhost:8080/images/avatar/${user.avatar}`
+                : "assets/img/about/avatar.jpg";
+
             // Gán URL của avatar vào thẻ <img> trong .user-thumbnail
             const userImage = document.querySelector(".user-thumbnail .user-image");
             if (userImage) {
@@ -609,8 +609,29 @@
         } catch (error) {
             console.error("Error fetching user data:", error);
         };
+        try {
+            const response = await fetch(`http://localhost:8080/cart/quantity?userId=${userId}`, {
+                method: 'GET',
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                    'Content-Type': 'application/json',
+                },
+            });
+
+            if (!response.ok) {
+                throw new Error(`Error fetching cart quantity: ${response.statusText}`);
+            }
+
+            const data = await response.json();
+            const numberOfProduct = data.result;
+
+            // Hiển thị số lượng sản phẩm trong giao diện
+            document.getElementById('cart-quantity').innerText = numberOfProduct;
+        } catch (error) {
+            console.error('Error fetching cart quantity:', error);
+        }
     });
-    
+
 </script>
 
 <style>
