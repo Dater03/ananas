@@ -119,7 +119,11 @@ public class CartService implements ICartService {
         User user = this.userRepository.findById(userId).get();
         Cart currentCart = this.cartRepository.findByUser(user);
         ProductVariant productVariant = this.productVariantRepository.findById(variantId).get();
+        Product product = productVariant.getProduct();
         this.cartItemRepository.deleteByCartAndProductVariant(currentCart,productVariant);
+        currentCart.setSumPrice(currentCart.getSumPrice()-product.getPrice());
+        currentCart.setSumQuantity(currentCart.getSumQuantity()-1);
+
         List<Cart_Item> cartItemList = this.cartItemRepository.findCart_ItemsByCart(currentCart);
         if(cartItemList.size() == 0)
             deleteCart(userId);
