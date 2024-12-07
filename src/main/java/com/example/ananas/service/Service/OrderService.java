@@ -68,8 +68,6 @@ public class OrderService implements IOrderService {
 
     @Override
     public ResultPaginationDTO getOrderByUsername(String username, Pageable pageable) {
-        // Page<Order> orders = orderRepository.findByUser_Username(username, pageable);
-        // Page<Order> orders = orderRepository.findByUser_Username(username, pageable);
         OrderSpecification specification =  new OrderSpecification(username, null, null);
         Page<Order> orders = orderRepository.findAll(specification, pageable);
         ResultPaginationDTO res = new ResultPaginationDTO();
@@ -81,6 +79,28 @@ public class OrderService implements IOrderService {
         res.setMeta(mt);
         res.setResult(orderMapper.listOrderToOrderResponse(orders.getContent()));
         return res;
+    }
+    @Override
+    public ResultPaginationDTO getOrderByUserId(Integer userId, Pageable pageable) {
+        Page<Order> orders = orderRepository.findByUserId(userId, pageable);
+        ResultPaginationDTO res = new ResultPaginationDTO();
+        ResultPaginationDTO.Meta mt = new ResultPaginationDTO.Meta();
+        mt.setPage(pageable.getPageNumber()+1);
+        mt.setPageSize(pageable.getPageSize());
+        mt.setTotal(orders.getTotalElements());
+        mt.setPages(orders.getTotalPages());
+        res.setMeta(mt);
+        res.setResult(orderMapper.listOrderToOrderResponse(orders.getContent()));
+        return res;
+    }
+
+    @Override
+    public OrderResponse getOrderByOrderId(Integer orderId) {
+        Order order = orderRepository.findByOrderId(orderId);
+        if(order == null) {
+            throw new AppException(ErrException.ORDER_NOT_EXISTED);
+        }
+        return orderMapper.orderToOrderResponse(order);
     }
 
     @Override

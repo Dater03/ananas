@@ -18,6 +18,11 @@ import java.util.List;
 @Repository
 public interface Order_Repository extends JpaRepository<Order, Integer>, JpaSpecificationExecutor<Order> {
 
+    @Query("select o from Order o where o.user.userId = :userId")
+    Page<Order> findByUserId(@Param("userId") Integer userId, Pageable pageable);
+
+    @Query("select o from Order o where o.id = :id")
+    Order findByOrderId(@Param("id") Integer orderId);
     /*
         Page<Order> findByUser_Username(String username, Pageable pageable);
 
