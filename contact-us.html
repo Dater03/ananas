@@ -143,20 +143,23 @@
                                 <!-- Messages will be dynamically added here -->
                             </div>
                             <div class="contact2-textarea text-center mt-3 mb-3">
-                                <input style="width: 500px;" type="text" placeholder="Message *" id="message" name="message" class="form-control2" required></input>
+                                <input style="width: 500px;" type="text" placeholder="Message *" id="message"
+                                    name="message" class="form-control2" required></input>
                             </div>
                             <div class="contact-btn" style="text-align: center;">
                                 <button id="send-message-btn" class="btn" type="button">Gửi</button>
                             </div>
                         </div>
                     </div>
-                    
+
                     <div class="col-lg-6">
                         <div class="contact-info pt-0">
                             <h2 class="contact-title">Liên hệ với chúng tôi</h2>
-                            <p>We're here to help you find the perfect pair of shoes! If you have any questions, concerns, or need assistance with your order, feel free to reach out to us.</p>
+                            <p>We're here to help you find the perfect pair of shoes! If you have any questions,
+                                concerns, or need assistance with your order, feel free to reach out to us.</p>
                             <ul>
-                                <li><i class="fa fa-fax"></i> Địa chỉ : Minh Khai Ward, Bac Tu Liem District, Hanoi City.</li>
+                                <li><i class="fa fa-fax"></i> Địa chỉ : Minh Khai Ward, Bac Tu Liem District, Hanoi
+                                    City.</li>
                                 <li><i class="fa fa-phone"></i> Email : info@yourdomain.com</li>
                                 <li><i class="fa fa-envelope-o"></i> Số điện thoại : +0123456789</li>
                             </ul>
@@ -185,16 +188,19 @@
                             <h5 class="widget-title">Thông tin liên hệ</h5>
                             <div class="widget-body">
                                 <ul class="location-wrap">
-                                    <li><i class="ion-ios-location-outline"></i>Minh Khai Ward, Bac Tu Liem District, Hanoi City.</li>
-                                    <li><i class="ion-ios-email-outline"></i>Mail: <a href="mailto:yourmail@gmail.com">yourmail@gmail.com</a></li>
-                                    <li><i class="ion-ios-telephone-outline"></i>Phone: <a href="%2b0025425456554.html">+0123456789</a></li>
+                                    <li><i class="ion-ios-location-outline"></i>Minh Khai Ward, Bac Tu Liem District,
+                                        Hanoi City.</li>
+                                    <li><i class="ion-ios-email-outline"></i>Mail: <a
+                                            href="mailto:yourmail@gmail.com">yourmail@gmail.com</a></li>
+                                    <li><i class="ion-ios-telephone-outline"></i>Phone: <a
+                                            href="%2b0025425456554.html">+0123456789</a></li>
                                 </ul>
                             </div>
                         </div>
                     </div>
                     <!-- footer widget item end -->
 
-                    
+
                 </div>
             </div>
         </div>
@@ -219,38 +225,36 @@
         </div>
     </div>
     <!-- offcanvas search form end -->
-
-    <!-- offcanvas mini cart start -->
-    <div class="offcanvas-minicart-wrapper">
-        <div class="minicart-inner">
-            <div class="offcanvas-overlay"></div>
-            <div class="minicart-inner-content">
-                <div class="minicart-close">
-                    <i class="ion-android-close"></i>
-                </div>
-                <h3 style="text-align: center; margin-bottom: 30px;">Giỏ hàng của bạn</h3>
-                <div class="minicart-content-box">
-                    <div class="minicart-item-wrapper">
-                        <ul>
-
-                        </ul>
+        <!-- offcanvas mini cart start -->
+        <div class="offcanvas-minicart-wrapper">
+            <div class="minicart-inner">
+                <div class="offcanvas-overlay"></div>
+                <div class="minicart-inner-content">
+                    <div class="minicart-close">
+                        <i class="ion-android-close"></i>
                     </div>
-
-                    <div class="minicart-pricing-box">
-                        <ul>
-
-                        </ul>
-                    </div>
-
-                    <div class="minicart-button">
-                        <a href="cart.html"><i class="fa fa-shopping-cart"></i> view cart</a>
+                    <h3 style="text-align: center; margin-bottom: 30px;">Giỏ hàng của bạn</h3>
+                    <div class="minicart-content-box">
+                        <div class="minicart-item-wrapper">
+                            <ul>
+    
+                            </ul>
+                        </div>
+    
+                        <div class="minicart-pricing-box">
+                            <ul>
+    
+                            </ul>
+                        </div>
+    
+                        <div class="minicart-button">
+                            <a href="cart.html"><i class="fa fa-shopping-cart"></i> view cart</a>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-    <!-- offcanvas mini cart end -->
-
+        <!-- offcanvas mini cart end -->
     <!-- Scroll to top start -->
     <div class="scroll-top not-visible">
         <i class="fa fa-angle-up"></i>
@@ -258,17 +262,32 @@
     <!-- Scroll to Top End -->
 
     <!--=======================Javascript============================-->
-    <script>
-        const TOKEN = localStorage.getItem("token"); // Token lấy từ đâu đó (localStorage, session, v.v.)
-        const userId = localStorage.getItem("userId");
-        // Bắt đầu xử lý mini card
-        function renderMiniCart(cartItems, summary) {
+    </script>
+    <!--=== All Vendor Js ===-->
+    <script src="assets/js/vendor.js"></script>
+    <!--=== All Plugins Js ===-->
+    <script src="assets/js/plugins.js"></script>
+    <!--=== Active Js ===-->
+    <script src="assets/js/active.js"></script>
+</body>
+
+
+</html>
+
+<script>
+    const token = localStorage.getItem('token'); // Lấy token đăng nhập
+    const userId = localStorage.getItem('userId');
+
+            // Bắt đầu xử lý mini card
+            function renderMiniCart(cartItems, summary) {
             const cartWrapper = document.querySelector(".minicart-item-wrapper ul");
             const pricingBox = document.querySelector(".minicart-pricing-box ul");
+
             // Làm rỗng nội dung cũ
-            cartWrapper.innerHTML = "";
             pricingBox.innerHTML = "";
-            // <img src="${product.images[0]}" alt="${product.productName}">
+            cartWrapper.innerHTML = "";
+
+
             // Render từng sản phẩm
             cartItems.forEach(item => {
                 const product = item.product;
@@ -293,12 +312,14 @@
                         <span class="product-name">Kích thước: ${product.size}</span>
                     </p>
                 </div>
-                <button class="minicart-remove"><i class="ion-android-close"></i></button>
+                <button class="minicart-remove" data-variant-id="${product.variantId}">
+                    <i class="ion-android-close"></i>
+                </button>
             </li>
         `;
                 cartWrapper.innerHTML += cartItemHTML;
             });
-
+            document.getElementById('cart-quantity').innerText = summary.totalQuantity;
             // Render tổng giá trị
             pricingBox.innerHTML += `
         <li><span>Tổng giá trước thuế</span><span><strong>${summary.totalPrice.toFixed(2)} VNĐ</strong></span></li>
@@ -307,148 +328,7 @@
     `;
         }
 
-        async function fetchCartItems(userId) {
-            try {
-                const response = await fetch(`http://localhost:8080/cart?userId=${userId}`, {
-                    method: "GET",
-                    headers: {
-                        "Authorization": TOKEN,
-                        "Content-Type": "application/json"
-                    }
-                });
-                const data = await response.json();
-                if (data.code === 200) {
-                    return data.result;
-                } else {
-                    throw new Error(data.message || "Failed to fetch cart items.");
-                }
-            } catch (error) {
-                console.error("Error fetching cart items:", error);
-                return [];
-            }
-        }
-
-        async function fetchCartSummary(userId) {
-            try {
-                const [quantityRes, priceRes] = await Promise.all([
-                    fetch(`http://localhost:8080/cart/quantity?userId=${userId}`, {
-                        method: "GET",
-                        headers: {
-                            "Authorization": TOKEN,
-                            "Content-Type": "application/json"
-                        }
-                    }).then(res => res.json()),
-                    fetch(`http://localhost:8080/cart/sumprice?userId=${userId}`, {
-                        method: "GET",
-                        headers: {
-                            "Authorization": TOKEN,
-                            "Content-Type": "application/json"
-                        }
-                    }).then(res => res.json())
-                ]);
-                // Truy cập đúng trường `result` trong API response
-                return {
-                    totalQuantity: quantityRes.result,
-                    totalPrice: priceRes.result
-                };
-            } catch (error) {
-                console.error("Error fetching cart summary:", error);
-                return { totalQuantity: 0, totalPrice: 0 };
-            }
-        }
-
-        document.addEventListener("DOMContentLoaded", async () => {
-
-            // Gọi API lấy dữ liệu
-            const cartItems = await fetchCartItems(userId);
-            const cartSummary = await fetchCartSummary(userId);
-
-            // Render dữ liệu ra giao diện
-            renderMiniCart(cartItems, cartSummary);
-        });
-
-        document.addEventListener("click", async (event) => {
-            if (event.target.classList.contains("minicart-remove")) {
-                const productElement = event.target.closest(".minicart-item");
-                const variantId = productElement.querySelector("a").href.split("variantId=")[1];
-
-                try {
-                    await fetch(`http://localhost:8080/cart/remove?variantId=${variantId}`, {
-                        method: "DELETE",
-                        headers: {
-                            "Authorization": TOKEN,
-                            "Content-Type": "application/json"
-                        }
-                    });
-                    productElement.remove(); // Xóa khỏi giao diện
-                } catch (error) {
-                    console.error("Error removing cart item:", error);
-                }
-            }
-        });
-        // Kết thúc xử lý mini card
-    </script>
-    <!--=== All Vendor Js ===-->
-    <script src="assets/js/vendor.js"></script>
-    <!--=== All Plugins Js ===-->
-    <script src="assets/js/plugins.js"></script>
-    <!--=== Active Js ===-->
-    <script src="assets/js/active.js"></script>
-</body>
-    
-
-</html>
-
-<script>
-    const token = localStorage.getItem('token'); // Lấy token đăng nhập
-        const userId = localStorage.getItem('userId');
-        
-
-        function renderMiniCart(cartItems, summary) {
-            const cartWrapper = document.querySelector(".minicart-item-wrapper ul");
-            const pricingBox = document.querySelector(".minicart-pricing-box ul");
-    
-            // Làm rỗng nội dung cũ
-            cartWrapper.innerHTML = "";
-            pricingBox.innerHTML = "";
-            var tem = 1;
-            // Render từng sản phẩm
-            cartItems.forEach(item => {
-                const product = item.product;
-                const quantity = item.quantity;
-    
-                console.log("pro",product)
-    
-                const cartItemHTML = `
-            <li class="minicart-item">
-                <div class="minicart-thumb">
-                    <a href="/product-details.html?id=${product.productId}">
-                        <img src="http://localhost:8080/images/product/${product.images[0]}" alt="${product.productName}">
-                    </a>
-                </div>
-                <div class="minicart-content">
-                    <h3 class="product-name">
-                        <a href="/product-details.html?id=${product.productId}">${product.productName}</a>
-                    </h3>
-                    <p>
-                        <span class="cart-quantity">${quantity} <strong>&times;</strong></span>
-                        <span class="cart-price">$${(quantity * 100).toFixed(2)}</span>
-                    </p>
-                </div>
-                <button class="minicart-remove"><i class="ion-android-close"></i></button>
-            </li>
-        `;
-                cartWrapper.innerHTML += cartItemHTML;
-            });
-    
-            // Render tổng giá trị
-            pricingBox.innerHTML += `
-        <li><span>sub-total</span><span><strong>$${summary.totalPrice.toFixed(2)}</strong></span></li>
-        <li><span>VAT (10%)</span><span><strong>$${(summary.totalPrice * 0.1).toFixed(2)}</strong></span></li>
-        <li class="total"><span>total</span><span><strong>$${(summary.totalPrice * 1.1).toFixed(2)}</strong></span></li>
-    `;
-        }
-    
+        // Hàm lấy dữ liệu sản phẩm trong giỏ hàng
         async function fetchCartItems(userId) {
             try {
                 const response = await fetch(`http://localhost:8080/cart?userId=${userId}`, {
@@ -469,7 +349,8 @@
                 return [];
             }
         }
-    
+
+        // Hàm lấy dữ liệu tổng hợp giỏ hàng (số lượng và giá trị)
         async function fetchCartSummary(userId) {
             try {
                 const [quantityRes, priceRes] = await Promise.all([
@@ -489,78 +370,114 @@
                     }).then(res => res.json())
                 ]);
                 return {
-                    totalQuantity: quantityRes,
-                    totalPrice: priceRes
+                    totalQuantity: quantityRes.result,
+                    totalPrice: priceRes.result
                 };
             } catch (error) {
                 console.error("Error fetching cart summary:", error);
                 return { totalQuantity: 0, totalPrice: 0 };
             }
         }
-    
-    
-        document.addEventListener("DOMContentLoaded", async () => {
-    
-            // Gọi API lấy dữ liệu
+
+        // Khi nhấn vào nút giỏ hàng, gọi API và hiển thị giỏ hàng mini (nếu chưa gọi trước đó)
+        document.querySelector(".minicart-btn").addEventListener("click", async (event) => {
+            event.preventDefault();  // Ngừng hành động mặc định của liên kết
+            const minicartWrapper = document.querySelector(".offcanvas-minicart-wrapper");  // Giỏ hàng mini
             const cartItems = await fetchCartItems(userId);
-            const cartSummary = await fetchCartSummary(userId);
-    
-            // Render dữ liệu ra giao diện
-            renderMiniCart(cartItems, cartSummary);
+                if (cartItems.length === 0) {
+                    const pricingBox = document.querySelector(".minicart-pricing-box ul");
+                    pricingBox.innerHTML = '<div style="text-align: center; margin: 20px 0;"> <i class="ion-bag" style="font-size: 50px; color: #ccc;"></i> <p style="font-size: 16px; color: #666; margin-top: 10px;"> Giỏ hàng của bạn đang trống </p> </div>';
+
+                } else {
+                    const cartSummary = await fetchCartSummary(userId);
+                    renderMiniCart(cartItems, cartSummary);
+                }
         });
-    
+
+        // Xử lý khi nhấn nút xóa sản phẩm khỏi giỏ hàng
         document.addEventListener("click", async (event) => {
             if (event.target.classList.contains("minicart-remove")) {
                 const productElement = event.target.closest(".minicart-item");
-                const variantId = productElement.querySelector("a").href.split("variantId=")[1];
-    
-                try {
-                    await fetch(`http://localhost:8080/cart/remove?variantId=${variantId}`, {
-                        method: "DELETE",
-                        headers: {
-                            "Authorization": token,
-                            "Content-Type": "application/json"
+                const variantId = event.target.getAttribute("data-variant-id");
+
+                // Hiển thị hộp thoại xác nhận trước khi xóa
+                const isConfirmed = confirm("Bạn có chắc chắn muốn xóa sản phẩm này khỏi giỏ hàng?");
+                if (isConfirmed) {
+                    try {
+                        // Gửi yêu cầu xóa sản phẩm
+                        const response = await fetch(`http://localhost:8080/cart/variant/${variantId}?userId=${userId}`, {
+                            method: "DELETE",
+                            headers: {
+                                "Authorization": token,
+                                "Content-Type": "application/json"
+                            }
+                        });
+
+                        if (response.ok) {
+                            // Xóa sản phẩm khỏi giao diện
+                            productElement.remove();
+                            reloadMiniCart(userId);
+                        } else {
+                            throw new Error("Failed to remove item");
                         }
-                    });
-                    productElement.remove(); // Xóa khỏi giao diện
-                } catch (error) {
-                    console.error("Error removing cart item:", error);
+                    } catch (error) {
+                        console.error("Error removing cart item:", error);
+                    }
                 }
             }
         });
+
+        // Hàm reload lại giỏ hàng mini sau khi xóa sản phẩm
+        async function reloadMiniCart(userId) {
+            try {
+                const cartItems = await fetchCartItems(userId);
+                if (cartItems.length === 0) {
+                    const pricingBox = document.querySelector(".minicart-pricing-box ul");
+                    pricingBox.innerHTML = '<div style="text-align: center; margin: 20px 0;"> <i class="ion-bag" style="font-size: 50px; color: #ccc;"></i> <p style="font-size: 16px; color: #666; margin-top: 10px;"> Giỏ hàng của bạn đang trống </p> </div>';
+
+                } else {
+                    const cartSummary = await fetchCartSummary(userId);
+                    renderMiniCart(cartItems, cartSummary);
+                }
+            } catch (error) {
+                console.error("Error reloading mini cart:", error);
+            }
+        }
+        // Kết thúc xử lý mini card
+
     document.addEventListener("DOMContentLoaded", async () => {
         const senderId = localStorage.getItem("userId"); // ID người gửi
         const receiverId = 1; // ID admin
         const cartQuantityApi = "http://localhost:8080/cart/quantity";
 
-    
+
         const messageContainer = document.getElementById("message-container");
         const sendMessageButton = document.querySelector(".contact-btn button"); // Nút gửi tin nhắn
         const messageInput = document.getElementById("message");
-    
+
         const messages = []; // Mảng lưu trữ tin nhắn
-    
+
         // Tải tin nhắn ban đầu
         await loadMessages(senderId);
-    
+
         // Gắn sự kiện click vào nút gửi
         sendMessageButton.addEventListener("click", async (event) => {
             await sendMessage(event);
         });
-    
+
         async function loadMessages(senderId) {
             try {
                 const senderResponse = await fetch(`http://localhost:8080/message/send/${senderId}`);
                 const senderData = await senderResponse.json();
                 const senderMessages = senderData.result || [];
-    
+
                 const receiverResponse = await fetch(`http://localhost:8080/message/receive/${senderId}`);
                 const receiverData = await receiverResponse.json();
                 const receiverMessages = receiverData.result || [];
-    
+
                 messages.push(...senderMessages.map(msg => ({ ...msg, type: "sender" })));
                 messages.push(...receiverMessages.map(msg => ({ ...msg, type: "receiver" })));
-    
+
                 sortMessagesByOldest(); // Sắp xếp tin nhắn từ cũ đến mới
                 displayMessages();
                 scrollToBottom(); // Cuộn đến tin nhắn cuối
@@ -568,11 +485,11 @@
                 console.error("Error fetching messages:", error);
             }
         }
-    
+
         function sortMessagesByOldest() {
             messages.sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt)); // Sắp xếp tăng dần
         }
-    
+
         function displayMessages() {
             messageContainer.innerHTML = ""; // Xóa nội dung cũ
             messages.forEach((message) => {
@@ -580,46 +497,46 @@
                 messageContainer.appendChild(messageElement);
             });
         }
-    
+
         function createMessageElement(message, type) {
             const div = document.createElement("div");
             div.className = `message ${type}`;
             div.textContent = `${message.message} (${formatTimestamp(message.createdAt)})`;
             return div;
         }
-    
+
         function formatTimestamp(timestamp) {
             const date = new Date(timestamp);
             return `${date.toLocaleDateString()} ${date.toLocaleTimeString()}`;
         }
-    
+
         function scrollToBottom() {
             messageContainer.scrollTop = messageContainer.scrollHeight; // Cuộn đến cuối
         }
-    
+
         async function sendMessage(event) {
             event.preventDefault();
-    
+
             const messageContent = messageInput.value.trim();
             if (!messageContent) {
                 alert("Message cannot be empty.");
                 return;
             }
-    
+
             const token = localStorage.getItem("token");
             const userId = localStorage.getItem("userId");
-    
+
             if (!token) {
                 alert("You need to log in to send messages.");
                 return;
             }
-    
+
             const messageData = {
                 senderId: userId,
                 receiverId: receiverId,
                 message: messageContent,
             };
-    
+
             try {
                 const response = await fetch("http://localhost:8080/message", {
                     method: "POST",
@@ -629,7 +546,7 @@
                     },
                     body: JSON.stringify(messageData),
                 });
-    
+
                 if (response.ok) {
                     const newMessage = await response.json();
                     const formattedMessage = { ...newMessage, type: "sender" };
@@ -649,15 +566,15 @@
 
         // Lấy số lượng sản phẩm trong giỏ hàng
         fetch(`${cartQuantityApi}?userId=${senderId}`)
-        .then(response => response.json())
-        .then(data => {
-            if (data.code === 200) {
-                const cartQuantityElement = document.getElementById("cart-quantity");
-                cartQuantityElement.textContent = data.result;
-            }
-        });
+            .then(response => response.json())
+            .then(data => {
+                if (data.code === 200) {
+                    const cartQuantityElement = document.getElementById("cart-quantity");
+                    cartQuantityElement.textContent = data.result;
+                }
+            });
     });
-    
+
 </script>
 
 <style>
@@ -666,13 +583,18 @@
         flex-direction: column;
         gap: 10px;
 
-        height: 300px; /* Chiều cao cố định */
-        overflow-y: auto; /* Kích hoạt thanh cuộn dọc */
-        border: 1px solid #ccc; /* Đường viền */
-        padding: 10px; /* Khoảng cách bên trong */
-        border-radius: 10px; /* Bo góc */
+        height: 300px;
+        /* Chiều cao cố định */
+        overflow-y: auto;
+        /* Kích hoạt thanh cuộn dọc */
+        border: 1px solid #ccc;
+        /* Đường viền */
+        padding: 10px;
+        /* Khoảng cách bên trong */
+        border-radius: 10px;
+        /* Bo góc */
     }
-    
+
     .message {
         max-width: 60%;
         padding: 10px;
@@ -680,12 +602,12 @@
         font-size: 14px;
         color: white;
     }
-    
+
     .sender {
         align-self: flex-end;
         background-color: #007bff;
     }
-    
+
     .receiver {
         align-self: flex-start;
         background-color: #6c757d;
@@ -698,7 +620,7 @@
         object-fit: cover;
         border: 1px solid #ddd;
     }
-    
+
     .user-thumbnail a {
         display: inline-block;
         text-decoration: none;

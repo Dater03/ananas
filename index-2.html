@@ -859,16 +859,18 @@
         function renderMiniCart(cartItems, summary) {
             const cartWrapper = document.querySelector(".minicart-item-wrapper ul");
             const pricingBox = document.querySelector(".minicart-pricing-box ul");
+
             // Làm rỗng nội dung cũ
-            cartWrapper.innerHTML = "";
             pricingBox.innerHTML = "";
-            // <img src="${product.images[0]}" alt="${product.productName}">
+            cartWrapper.innerHTML = "";
+
+
             // Render từng sản phẩm
             cartItems.forEach(item => {
                 const product = item.product;
                 const quantity = item.quantity;
                 const cartItemHTML = `
-            <li class="minicart-item" >
+            <li class="minicart-item">
                 <div class="minicart-thumb">
                     <a href="product-details.html?id=${product.productId}">
                         <img src="${product.images[0]}" alt="${product.productName}">
@@ -894,7 +896,7 @@
         `;
                 cartWrapper.innerHTML += cartItemHTML;
             });
-
+            document.getElementById('cart-quantity').innerText = summary.totalQuantity;
             // Render tổng giá trị
             pricingBox.innerHTML += `
         <li><span>Tổng giá trước thuế</span><span><strong>${summary.totalPrice.toFixed(2)} VNĐ</strong></span></li>
@@ -903,6 +905,7 @@
     `;
         }
 
+        // Hàm lấy dữ liệu sản phẩm trong giỏ hàng
         async function fetchCartItems(userId) {
             try {
                 const response = await fetch(`http://localhost:8080/cart?userId=${userId}`, {
@@ -924,6 +927,7 @@
             }
         }
 
+        // Hàm lấy dữ liệu tổng hợp giỏ hàng (số lượng và giá trị)
         async function fetchCartSummary(userId) {
             try {
                 const [quantityRes, priceRes] = await Promise.all([
@@ -942,7 +946,6 @@
                         }
                     }).then(res => res.json())
                 ]);
-                // Truy cập đúng trường `result` trong API response
                 return {
                     totalQuantity: quantityRes.result,
                     totalPrice: priceRes.result
@@ -953,43 +956,70 @@
             }
         }
 
-        document.addEventListener("DOMContentLoaded", async () => {
-
-            // Gọi API lấy dữ liệu
+        // Khi nhấn vào nút giỏ hàng, gọi API và hiển thị giỏ hàng mini (nếu chưa gọi trước đó)
+        document.querySelector(".minicart-btn").addEventListener("click", async (event) => {
+            event.preventDefault();  // Ngừng hành động mặc định của liên kết
+            const minicartWrapper = document.querySelector(".offcanvas-minicart-wrapper");  // Giỏ hàng mini
             const cartItems = await fetchCartItems(userId);
-            const cartSummary = await fetchCartSummary(userId);
+                if (cartItems.length === 0) {
+                    const pricingBox = document.querySelector(".minicart-pricing-box ul");
+                    pricingBox.innerHTML = '<div style="text-align: center; margin: 20px 0;"> <i class="ion-bag" style="font-size: 50px; color: #ccc;"></i> <p style="font-size: 16px; color: #666; margin-top: 10px;"> Giỏ hàng của bạn đang trống </p> </div>';
 
-            // Render dữ liệu ra giao diện
-            renderMiniCart(cartItems, cartSummary);
+                } else {
+                    const cartSummary = await fetchCartSummary(userId);
+                    renderMiniCart(cartItems, cartSummary);
+                }
         });
 
+        // Xử lý khi nhấn nút xóa sản phẩm khỏi giỏ hàng
         document.addEventListener("click", async (event) => {
-            // Kiểm tra nếu mục nhấn là nút xóa
             if (event.target.classList.contains("minicart-remove")) {
-                // Lấy phần tử chứa thông tin sản phẩm
                 const productElement = event.target.closest(".minicart-item");
-
-                // Lấy idVariant từ thuộc tính data-variant-id của nút xóa
                 const variantId = event.target.getAttribute("data-variant-id");
 
-                try {
-                    // Gửi yêu cầu xóa sản phẩm từ giỏ hàng với variantId và userId
-                    await fetch(`http://localhost:8080/cart/variant/${variantId}?userId=${userId}`, {
-                        method: "DELETE",
-                        headers: {
-                            "Authorization": TOKEN,
-                            "Content-Type": "application/json"
-                        }
-                    });
+                // Hiển thị hộp thoại xác nhận trước khi xóa
+                const isConfirmed = confirm("Bạn có chắc chắn muốn xóa sản phẩm này khỏi giỏ hàng?");
+                if (isConfirmed) {
+                    try {
+                        // Gửi yêu cầu xóa sản phẩm
+                        const response = await fetch(`http://localhost:8080/cart/variant/${variantId}?userId=${userId}`, {
+                            method: "DELETE",
+                            headers: {
+                                "Authorization": TOKEN,
+                                "Content-Type": "application/json"
+                            }
+                        });
 
-                    // Xóa sản phẩm khỏi giao diện
-                    productElement.remove();
-                } catch (error) {
-                    console.error("Error removing cart item:", error);
+                        if (response.ok) {
+                            // Xóa sản phẩm khỏi giao diện
+                            productElement.remove();
+                            reloadMiniCart(userId);
+                        } else {
+                            throw new Error("Failed to remove item");
+                        }
+                    } catch (error) {
+                        console.error("Error removing cart item:", error);
+                    }
                 }
             }
         });
 
+        // Hàm reload lại giỏ hàng mini sau khi xóa sản phẩm
+        async function reloadMiniCart(userId) {
+            try {
+                const cartItems = await fetchCartItems(userId);
+                if (cartItems.length === 0) {
+                    const pricingBox = document.querySelector(".minicart-pricing-box ul");
+                    pricingBox.innerHTML = '<div style="text-align: center; margin: 20px 0;"> <i class="ion-bag" style="font-size: 50px; color: #ccc;"></i> <p style="font-size: 16px; color: #666; margin-top: 10px;"> Giỏ hàng của bạn đang trống </p> </div>';
+
+                } else {
+                    const cartSummary = await fetchCartSummary(userId);
+                    renderMiniCart(cartItems, cartSummary);
+                }
+            } catch (error) {
+                console.error("Error reloading mini cart:", error);
+            }
+        }
         // Kết thúc xử lý mini card
     </script>
 </body>
@@ -1088,7 +1118,7 @@
         object-fit: cover;
         border: 1px solid #ddd;
     }
-    
+
     .user-thumbnail a {
         display: inline-block;
         text-decoration: none;
