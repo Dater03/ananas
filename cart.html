@@ -163,64 +163,18 @@
                                 <table class="table table-bordered">
                                     <thead>
                                         <tr>
-                                            <th class="pro-thumbnail">Thumbnail</th>
-                                            <th class="pro-title">Product</th>
-                                            <th class="pro-price">Price</th>
-                                            <th class="pro-quantity">Quantity</th>
-                                            <th class="pro-subtotal">Total</th>
-                                            <th class="pro-remove">Remove</th>
+                                            <th class="pro-thumbnail">Ảnh sản phẩm</th>
+                                            <th class="pro-title">Sản phẩm</th>
+                                            <th class="pro-price">Giá</th>
+                                            <th class="pro-quantity">Số lượng</th>
+                                            <th class="pro-subtotal">Tổng giá</th>
+                                            <th class="pro-remove">Xóa</th>
                                         </tr>
                                     </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td class="pro-thumbnail"><a href="#"><img class="img-fluid"
-                                                        src="assets/img/product/product-1.jpg" alt="Product" /></a></td>
-                                            <td class="pro-title"><a href="#">Leather Mens Slipper</a></td>
-                                            <td class="pro-price"><span>$295.00</span></td>
-                                            <td class="pro-quantity">
-                                                <div class="pro-qty"><input type="text" value="1"></div>
-                                            </td>
-                                            <td class="pro-subtotal"><span>$295.00</span></td>
-                                            <td class="pro-remove"><a href="#"><i class="fa fa-trash-o"></i></a></td>
-                                        </tr>
-                                        <tr>
-                                            <td class="pro-thumbnail"><a href="#"><img class="img-fluid"
-                                                        src="assets/img/product/product-2.jpg" alt="Product" /></a></td>
-                                            <td class="pro-title"><a href="#">Quickiin Mens Shoes</a></td>
-                                            <td class="pro-price"><span>$275.00</span></td>
-                                            <td class="pro-quantity">
-                                                <div class="pro-qty"><input type="text" value="2"></div>
-                                            </td>
-                                            <td class="pro-subtotal"><span>$550.00</span></td>
-                                            <td class="pro-remove"><a href="#"><i class="fa fa-trash-o"></i></a></td>
-                                        </tr>
-                                        <tr>
-                                            <td class="pro-thumbnail"><a href="#"><img class="img-fluid"
-                                                        src="assets/img/product/product-3.jpg" alt="Product" /></a></td>
-                                            <td class="pro-title"><a href="#">Rexpo Womens Shoes</a></td>
-                                            <td class="pro-price"><span>$295.00</span></td>
-                                            <td class="pro-quantity">
-                                                <div class="pro-qty">
-                                                    <input type="text" value="1" />
-                                                </div>
-                                            </td>
-                                            <td class="pro-subtotal"><span>$295.00</span></td>
-                                            <td class="pro-remove"><a href="#"><i class="fa fa-trash-o"></i></a></td>
-                                        </tr>
-                                        <tr>
-                                            <td class="pro-thumbnail"><a href="#"><img class="img-fluid"
-                                                        src="assets/img/product/product-4.jpg" alt="Product" /></a></td>
-                                            <td class="pro-title"><a href="#">Primitive Mens Shoes</a></td>
-                                            <td class="pro-price"><span>$110.00</span></td>
-                                            <td class="pro-quantity">
-                                                <div class="pro-qty">
-                                                    <input type="text" value="3" />
-                                                </div>
-                                            </td>
-                                            <td class="pro-subtotal"><span>$110.00</span></td>
-                                            <td class="pro-remove"><a href="#"><i class="fa fa-trash-o"></i></a></td>
-                                        </tr>
+                                    <tbody id="cart-items">
+                                        <!-- Nội dung sẽ được thêm động -->
                                     </tbody>
+
                                 </table>
                             </div>
                             <!-- Cart Update Option -->
@@ -228,12 +182,10 @@
                                 <div class="apply-coupon-wrapper">
                                     <form action="#" method="post" class=" d-block d-md-flex">
                                         <input type="text" placeholder="Enter Your Coupon Code" required />
-                                        <button class="btn">Apply Coupon</button>
+                                        <button class="btn">Mã Giảm Giá</button>
                                     </form>
                                 </div>
-                                <div class="cart-update">
-                                    <a href="#" class="btn">Update Cart</a>
-                                </div>
+                                
                             </div>
                         </div>
                     </div>
@@ -242,25 +194,25 @@
                             <!-- Cart Calculation Area -->
                             <div class="cart-calculator-wrapper">
                                 <div class="cart-calculate-items">
-                                    <h3>Cart Totals</h3>
+                                    <h3>Hóa đơn</h3>
                                     <div class="table-responsive">
                                         <table class="table">
                                             <tr>
-                                                <td>Sub Total</td>
-                                                <td>$230</td>
+                                                <td>Giá tạm tính:</td>
+                                                <td></td>
                                             </tr>
                                             <tr>
-                                                <td>Shipping</td>
-                                                <td>$70</td>
+                                                <td>Tổng giá đã giảm:</td>
+                                                <td></td>
                                             </tr>
                                             <tr class="total">
-                                                <td>Total</td>
-                                                <td class="total-amount">$300</td>
+                                                <td>Tổng giá:</td>
+                                                <td class="total-amount"></td>
                                             </tr>
                                         </table>
                                     </div>
                                 </div>
-                                <a href="checkout.html" class="btn d-block">Proceed Checkout</a>
+                                <a href="checkout.html" class="btn d-block">ĐẶT HÀNG</a>
                             </div>
                         </div>
                     </div>
@@ -361,9 +313,153 @@
     </div>
     <!-- Scroll to Top End -->
 
+    <!-- CDN jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+
     <script>
         const TOKEN = localStorage.getItem("token"); // Token lấy từ đâu đó (localStorage, session, v.v.)
         const userId = localStorage.getItem("userId");
+
+        $(document).ready(function () {
+            // URL API
+            const apiUrl = `http://localhost:8080/cart?userId=${userId}`;
+
+            // Hàm định dạng giá
+            function formatPrice(price) {
+                return `$${price.toFixed(2)}`;
+            }
+
+            // Hàm load cart items
+            function loadCartItems() {
+                $.ajax({
+                    url: apiUrl,
+                    type: 'GET',
+                    headers: {
+                        'Authorization': TOKEN // Thêm token vào header
+                    },
+                    success: function (response) {
+                        if (response.code === 200) {
+                            const items = response.result; // Lấy danh sách items từ API
+                            const $cartItems = $('#cart-items'); // Vị trí để render
+
+                            // Xóa nội dung cũ (nếu có)
+                            $cartItems.empty();
+
+                            // Duyệt qua từng item và tạo HTML
+                            items.forEach((item) => {
+                                const product = item.product;
+                                const quantity = item.quantity;
+                                const price = product.price || 0; // Sử dụng giá mặc định nếu không có `product.price`
+                                const variantId = product.variantId; // Lấy variantId để dùng khi xóa
+
+                                // Tạo dòng mới
+                                const row = `
+                        <tr>
+                            <td class="pro-thumbnail">
+                                <a href="#"><img class="img-fluid" src="http://localhost:8080/images/product/${product.images[0]}" alt="${product.productName}" /></a>
+                            </td>
+                            <td class="pro-title">
+                                <a href="#">${product.productName}</a>
+                            </td>
+                            <td class="pro-price">
+                                <span>${formatPrice(price)}</span>
+                            </td>
+                            <td class="pro-quantity">
+                                <div class="pro-qty"><input type="text" value="${quantity}"></div>
+                            </td>
+                            <td class="pro-subtotal">
+                                <span>${formatPrice(price * quantity)}</span>
+                            </td>
+                            <td class="pro-remove">
+                                <a href="#" class="remove-item" data-variant-id="${variantId}">
+                                    <i class="fa fa-trash-o"></i>
+                                </a>
+                            </td>
+                        </tr>
+                    `;
+
+                                // Thêm vào bảng
+                                $cartItems.append(row);
+                            });
+                        } else {
+                            console.error('Error fetching cart items:', response.message);
+                        }
+                    },
+                    error: function (error) {
+                        console.error('API call failed:', error);
+                    }
+                });
+            }
+
+            // Hàm xóa item
+            function removeCartItem(variantId) {
+                const deleteUrl = `http://localhost:8080/cart/variant/${variantId}?userId=${userId}`;
+                $.ajax({
+                    url: deleteUrl,
+                    type: 'DELETE',
+                    headers: {
+                        'Authorization': TOKEN // Thêm token vào header
+                    },
+                    success: function (response) {
+                        if (response === "success") {
+                            alert('Xóa sản phẩm thành công!');
+                            loadCartItems(); // Reload danh sách cart sau khi xóa
+                        } else {
+                            console.error('Error deleting cart item:', response.message);
+                        }
+                    },
+                    error: function (error) {
+                        console.error('API call failed:', error);
+                    }
+                });
+            }
+
+            // Lắng nghe sự kiện click vào nút xóa
+            $('#cart-items').on('click', '.remove-item', function (e) {
+                e.preventDefault();
+                const variantId = $(this).data('variant-id'); // Lấy variantId từ data attribute
+                if (confirm('Bạn có chắc chắn muốn xóa sản phẩm này không?')) {
+                    removeCartItem(variantId); // Gọi hàm xóa
+                }
+            });
+
+            // Load danh sách cart items khi trang tải
+            loadCartItems();
+        });
+
+
+
+        document.addEventListener("DOMContentLoaded", async () => {
+
+            // Nếu có token, gọi API lấy số lượng sản phẩm trong giỏ hàng
+            if (TOKEN !== null && TOKEN !== undefined) {
+                console.log("abc")
+                try {
+                    console.log("test")
+                    const quantityResponse = await fetch(`http://localhost:8080/cart/quantity?userId=${userId}`, {
+                        method: 'GET',
+                        headers: {
+                            'Authorization': `Bearer ${TOKEN}`,
+                            'Content-Type': 'application/json',
+                        },
+                    });
+
+                    if (!quantityResponse.ok) {
+                        throw new Error(`Error fetching cart quantity: ${quantityResponse.statusText}`);
+                    }
+
+                    const quantityData = await quantityResponse.json();
+                    const numberOfProduct = quantityData.result;
+
+                    console.log("Cart Quantity:", numberOfProduct);
+                    document.getElementById('cart-quantity').innerText = numberOfProduct;
+                } catch (error) {
+                    console.error('Error fetching cart quantity:', error);
+                }
+            }
+
+        });
         // Bắt đầu xử lý mini card
         function renderMiniCart(cartItems, summary) {
             const cartWrapper = document.querySelector(".minicart-item-wrapper ul");
@@ -376,11 +472,12 @@
             cartItems.forEach(item => {
                 const product = item.product;
                 const quantity = item.quantity;
+                console.log(product.price);
                 const cartItemHTML = `
             <li class="minicart-item">
                 <div class="minicart-thumb">
                     <a href="product-details.html?id=${product.productId}">
-                        <img src="${product.images[0]}" alt="${product.productName}">
+                        <img src="http://localhost:8080/images/product/${product.images[0]}" alt="${product.productName}">
                     </a>
                 </div>
                 <div class="minicart-content">
@@ -389,7 +486,7 @@
                     </h3>
                     <p>
                         <span class="cart-quantity">${quantity} <strong>&times;</strong></span>
-                        <span class="cart-price">$${(quantity * 100).toFixed(2)}</span>
+                        <span class="cart-price">$${(product.price * 100).toFixed(2)}</span>
                     </p>
                     <p>
                         <span class="product-name">Màu sắc: ${product.color}</span><br>
@@ -489,6 +586,7 @@
                 }
             }
         });
+
         // Kết thúc xử lý mini card
     </script>
     <!--=======================Javascript============================-->
