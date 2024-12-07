@@ -28,11 +28,12 @@ public class PaymentController {
     public String createPayment(@RequestParam String orderInfo, @RequestParam long amount, @RequestParam int orderId)   {
         try {
             // lưu thông tin order vào bảng tạm để đối chiếu xử lý sau khi thanh toán
+            String result = vnpayService.createPaymentURL(orderInfo, amount);
             TempOrder tempOrder = new TempOrder();
             tempOrder.setOrderId(orderId);
             tempOrder.setTxnRef(vnpayService.code);
             this.tempOrderService.save(tempOrder);
-            return vnpayService.createPaymentURL(orderInfo, amount);
+            return result ;
 
         }
         catch (Exception e){
@@ -79,7 +80,7 @@ public class PaymentController {
                 // thao tác lưu hóa đơn <<thêm sau :v
                 //dùng một bảng phụ để lưu các thông tin liên quan đến đơn hàng gửi đi trước khi thanh toán.
                 TempOrder tempOrder = this.tempOrderService.findByTxnRef(vnp_TxnRef);
-                this.orderService.changeOrderStatus(tempOrder.getOrderId(),"success");
+                this.orderService.changePaymentStatus(tempOrder.getOrderId(),"paid");
 
                 return "Giao dịch thành công";
             } else {
