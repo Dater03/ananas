@@ -1,5 +1,8 @@
 package com.example.ananas.controller;
 
+import com.example.ananas.entity.TempOrder;
+import com.example.ananas.service.Service.OrderService;
+import com.example.ananas.service.Service.TempOrderService;
 import com.example.ananas.service.Service.VnpayService;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,12 +21,18 @@ import java.util.Map;
 public class PaymentController {
 
     VnpayService vnpayService;
+    TempOrderService tempOrderService;
+    OrderService orderService;
 
     @GetMapping("/createPayment")
-    public String createPayment(@RequestParam String orderInfo, @RequestParam long amount)   {
+    public String createPayment(@RequestParam String orderInfo, @RequestParam long amount, @RequestParam int orderId)   {
         try {
-            return vnpayService.createPaymentURL(orderInfo, amount);
             // lưu thông tin order vào bảng tạm để đối chiếu xử lý sau khi thanh toán
+            TempOrder tempOrder = new TempOrder();
+            tempOrder.setOrderId(orderId);
+            tempOrder.setTxnRef(vnpayService.code);
+            this.tempOrderService.save(tempOrder);
+            return vnpayService.createPaymentURL(orderInfo, amount);
 
         }
         catch (Exception e){
@@ -65,10 +74,12 @@ public class PaymentController {
 
         if (computedHash.equals(vnp_SecureHash)) {
             String vnp_ResponseCode = params.get("vnp_ResponseCode");
+            String vnp_TxnRef = params.get("vnp_TxnRef");
             if ("00".equals(vnp_ResponseCode)) {
                 // thao tác lưu hóa đơn <<thêm sau :v
                 //dùng một bảng phụ để lưu các thông tin liên quan đến đơn hàng gửi đi trước khi thanh toán.
-
+                TempOrder tempOrder = this.tempOrderService.findByTxnRef(vnp_TxnRef);
+                this.orderService.changeOrderStatus(tempOrder.getOrderId(),"success");
 
                 return "Giao dịch thành công";
             } else {

@@ -29,25 +29,7 @@ public class TempOrder {
 
     String txnRef;
 
-    int userId;
-
-    String code;
-
-    BigDecimal totalAmount;
-
-    BigDecimal totalPrice;
-
-    OrderStatus status;
-
-    PaymentMethod paymentMethod;
-
-    PaymentStatus paymentStatus;
-
-    String recipientName;
-
-    String recipientPhone;
-
-    String recipientAddress;
+    int orderId;
 
 //    List<Order_Item_Response> orderItems;
     private Instant createdAt;
