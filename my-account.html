@@ -26,7 +26,7 @@
     <header class="header-area">
         <!-- main header start -->
         <div class="main-header d-none d-lg-block">
-        
+
 
             <!-- header middle area start -->
             <div class="header-main-area sticky">
@@ -145,35 +145,44 @@
                             <div class="row">
                                 <div class="col-lg-3 col-md-4">
                                     <div class="myaccount-tab-menu nav" role="tablist">
-                                        <button class="active" id="account-info_btn" type="button" data-bs-target="#account-info" data-bs-toggle="tab" role="tab" aria-controls="account-info" aria-selected="false">
-                                            <i class="fa fa-user"></i> 
+                                        <button class="active" id="account-info_btn" type="button"
+                                            data-bs-target="#account-info" data-bs-toggle="tab" role="tab"
+                                            aria-controls="account-info" aria-selected="false">
+                                            <i class="fa fa-user"></i>
                                             Thông tin tài khoản
                                         </button>
-                                        <button id="orders_btn" type="button" data-bs-target="#orders" data-bs-toggle="tab" role="tab" aria-controls="orders" aria-selected="false">
-                                            <i class="fa fa-cart-arrow-down"></i> 
+                                        <button id="orders_btn" type="button" data-bs-target="#orders"
+                                            data-bs-toggle="tab" role="tab" aria-controls="orders"
+                                            aria-selected="false">
+                                            <i class="fa fa-cart-arrow-down"></i>
                                             Lịch sử mua hàng
                                         </button>
-                                        <button id="payment-method_btn" type="button" data-bs-target="#payment-method" data-bs-toggle="tab" role="tab" aria-controls="payment-method" aria-selected="false">
-                                            <i class="fa fa-credit-card"></i> 
+                                        <button id="payment-method_btn" type="button" data-bs-target="#payment-method"
+                                            data-bs-toggle="tab" role="tab" aria-controls="payment-method"
+                                            aria-selected="false">
+                                            <i class="fa fa-credit-card"></i>
                                             Phương thức thanh toán
                                         </button>
-                                        <button id="address-edit_btn" type="button" data-bs-target="#address-edit" data-bs-toggle="tab" role="tab" aria-controls="address-edit" aria-selected="false">
-                                            <i class="fa fa-map-marker"></i> 
+                                        <button id="address-edit_btn" type="button" data-bs-target="#address-edit"
+                                            data-bs-toggle="tab" role="tab" aria-controls="address-edit"
+                                            aria-selected="false">
+                                            <i class="fa fa-map-marker"></i>
                                             Địa chỉ
                                         </button>
                                         <a href="login.html"><i class="fa fa-sign-out"></i>Đăng xuất</a>
                                     </div>
                                 </div>
                                 <!-- My Account Tab Menu End -->
-        
+
                                 <!-- My Account Tab Content Start -->
                                 <div class="col-lg-9 col-md-8">
                                     <div class="tab-content" id="myaccountContent">
                                         <!-- Single Tab Content Start -->
-                                        <div class="tab-pane fade show active" id="account-info" role="tabpanel" aria-labelledby="account-info_btn">
+                                        <div class="tab-pane fade show active" id="account-info" role="tabpanel"
+                                            aria-labelledby="account-info_btn">
                                             <div class="myaccount-content">
                                                 <h3>Account Details</h3>
-                                        
+
                                                 <!-- Avatar Section -->
                                                 <div class="avatar-container">
                                                     <img src="" alt="User Avatar" class="user-avatar">
@@ -186,24 +195,31 @@
                                                         <div class="row">
                                                             <div class="col-lg-6">
                                                                 <div class="single-input-item">
-                                                                    <label for="first-name" class="required">First Name</label>
-                                                                    <input type="text" id="first-name" placeholder="First Name" />
+                                                                    <label for="first-name" class="required">First
+                                                                        Name</label>
+                                                                    <input type="text" id="first-name"
+                                                                        placeholder="First Name" />
                                                                 </div>
                                                             </div>
                                                             <div class="col-lg-6">
                                                                 <div class="single-input-item">
-                                                                    <label for="last-name" class="required">Last Name</label>
-                                                                    <input type="text" id="last-name" placeholder="Last Name" />
+                                                                    <label for="last-name" class="required">Last
+                                                                        Name</label>
+                                                                    <input type="text" id="last-name"
+                                                                        placeholder="Last Name" />
                                                                 </div>
                                                             </div>
                                                         </div>
                                                         <div class="single-input-item">
-                                                            <label for="display-name" class="required">Display Name</label>
-                                                            <input type="text" id="display-name" placeholder="Display Name" readonly />
+                                                            <label for="display-name" class="required">Display
+                                                                Name</label>
+                                                            <input type="text" id="display-name"
+                                                                placeholder="Display Name" readonly />
                                                         </div>
                                                         <div class="single-input-item">
                                                             <label for="email" class="required">Email Address</label>
-                                                            <input type="email" id="email" placeholder="Email Address" />
+                                                            <input type="email" id="email"
+                                                                placeholder="Email Address" />
                                                         </div>
                                                         <div class="single-input-item">
                                                             <label for="phone" class="required">Phone</label>
@@ -214,31 +230,38 @@
                                                             <input type="text" id="address" placeholder="Address" />
                                                         </div>
                                                         <div class="single-input-item">
-                                                            <button class="btn" type="submit">Save Account Details</button>
+                                                            <button class="btn" type="submit">Save Account
+                                                                Details</button>
                                                         </div>
                                                     </form>
                                                 </div>
                                                 <!-- Account Details Form End -->
-                                        
+
                                                 <!-- Password Change Form Start -->
                                                 <fieldset>
                                                     <legend>Password Change</legend>
                                                     <form id="password-change-form">
                                                         <div class="single-input-item">
-                                                            <label for="current-pwd" class="required">Current Password</label>
-                                                            <input type="password" id="current-pwd" placeholder="Current Password" required />
+                                                            <label for="current-pwd" class="required">Current
+                                                                Password</label>
+                                                            <input type="password" id="current-pwd"
+                                                                placeholder="Current Password" required />
                                                         </div>
                                                         <div class="row">
                                                             <div class="col-lg-6">
                                                                 <div class="single-input-item">
-                                                                    <label for="new-pwd" class="required">New Password</label>
-                                                                    <input type="password" id="new-pwd" placeholder="New Password" required />
+                                                                    <label for="new-pwd" class="required">New
+                                                                        Password</label>
+                                                                    <input type="password" id="new-pwd"
+                                                                        placeholder="New Password" required />
                                                                 </div>
                                                             </div>
                                                             <div class="col-lg-6">
                                                                 <div class="single-input-item">
-                                                                    <label for="confirm-pwd" class="required">Confirm Password</label>
-                                                                    <input type="password" id="confirm-pwd" placeholder="Confirm Password" required />
+                                                                    <label for="confirm-pwd" class="required">Confirm
+                                                                        Password</label>
+                                                                    <input type="password" id="confirm-pwd"
+                                                                        placeholder="Confirm Password" required />
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -250,64 +273,69 @@
                                                 <!-- Password Change Form End -->
                                             </div>
                                         </div>
-                                        
-                                         <!-- Single Tab Content End -->
-        
+
+                                        <!-- Single Tab Content End -->
                                         <!-- Single Tab Content Start -->
-                                        <div class="tab-pane fade" id="orders" role="tabpanel" aria-labelledby="orders_btn">
+                                        <div class="tab-pane fade" id="orders" role="tabpanel"
+                                            aria-labelledby="orders_btn">
                                             <div class="myaccount-content">
                                                 <h3>Orders</h3>
+                                                <!-- Thêm phân trang và dữ liệu từ API vào bảng -->
                                                 <div class="myaccount-table table-responsive text-center">
                                                     <table class="table table-bordered">
                                                         <thead class="thead-light">
                                                             <tr>
-                                                                <th>Order</th>
-                                                                <th>Date</th>
-                                                                <th>Status</th>
-                                                                <th>Total</th>
-                                                                <th>Action</th>
+                                                                <th>Đơn hàng</th>
+                                                                <th>Sản phẩm</th>
+                                                                <th>Ngày</th>
+                                                                <th>Trạng thái</th>
+                                                                <th>Tổng số</th>
+                                                                <th>Hành động</th>
                                                             </tr>
                                                         </thead>
-                                                        <tbody>
-                                                            <tr>
-                                                                <td>1</td>
-                                                                <td>Aug 22, 2018</td>
-                                                                <td>Pending</td>
-                                                                <td>$3000</td>
-                                                                <td><a href="order_detail.html" class="btn ">View</a></td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td>2</td>
-                                                                <td>July 22, 2018</td>
-                                                                <td>Approved</td>
-                                                                <td>$200</td>
-                                                                <td><a href="order_detail.html" class="btn ">View</a></td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td>3</td>
-                                                                <td>June 12, 2017</td>
-                                                                <td>On Hold</td>
-                                                                <td>$990</td>
-                                                                <td><a href="order_detail.html" class="btn ">View</a></td>
-                                                            </tr>
+                                                        <tbody id="order-table-body">
+                                                            <!-- Dữ liệu sẽ được thêm vào đây từ API -->
                                                         </tbody>
                                                     </table>
                                                 </div>
+
+                                                <!-- Phân trang -->
+                                                <div id="pagination" class="d-flex justify-content-end">
+                                                    <ul class="pagination">
+                                                        <li class="page-item" id="prev-page">
+                                                            <button class="page-link btn btn-success"
+                                                                type="button">Trước</button>
+                                                        </li>
+                                                        <li class="page-item" id="page-number">
+                                                            <span class="page-link"
+                                                                style="width: 50px; text-align: center;">1</span>
+                                                            <!-- Số trang hiện tại -->
+                                                        </li>
+                                                        <li class="page-item" id="next-page">
+                                                            <button class="page-link btn btn-success"
+                                                                type="button">Tiếp</button>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+
                                             </div>
                                         </div>
                                         <!-- Single Tab Content End -->
-        
+
+
                                         <!-- Single Tab Content Start -->
-                                        <div class="tab-pane fade" id="payment-method" role="tabpanel" aria-labelledby="payment-method_btn">
+                                        <div class="tab-pane fade" id="payment-method" role="tabpanel"
+                                            aria-labelledby="payment-method_btn">
                                             <div class="myaccount-content">
                                                 <h3>Payment Method</h3>
                                                 <p class="saved-message">You Can't Saved Your Payment Method yet.</p>
                                             </div>
                                         </div>
                                         <!-- Single Tab Content End -->
-        
+
                                         <!-- Single Tab Content Start -->
-                                        <div class="tab-pane fade" id="address-edit" role="tabpanel" aria-labelledby="address-edit_btn">
+                                        <div class="tab-pane fade" id="address-edit" role="tabpanel"
+                                            aria-labelledby="address-edit_btn">
                                             <div class="myaccount-content">
                                                 <h3>Billing Address</h3>
                                                 <address>
@@ -315,7 +343,8 @@
                                                     <p>Tran Binh Ward, Nam Tu Liem District, Hanoi City.</p>
                                                     <p>Mobile: +0123456789</p>
                                                 </address>
-                                                <a href="#" class="check-btn sqr-btn "><i class="fa fa-edit"></i> Edit Address</a>
+                                                <a href="#" class="check-btn sqr-btn "><i class="fa fa-edit"></i> Edit
+                                                    Address</a>
                                             </div>
                                         </div>
                                         <!-- Single Tab Content End -->
@@ -343,9 +372,12 @@
                             <h5 class="widget-title">Thông tin liên hệ</h5>
                             <div class="widget-body">
                                 <ul class="location-wrap">
-                                    <li><i class="ion-ios-location-outline"></i>Minh Khai Ward, Bac Tu Liem District, Hanoi City.</li>
-                                    <li><i class="ion-ios-email-outline"></i>Mail: <a href="mailto:yourmail@gmail.com">yourmail@gmail.com</a></li>
-                                    <li><i class="ion-ios-telephone-outline"></i>Phone: <a href="%2b0025425456554.html">+0123456789</a></li>
+                                    <li><i class="ion-ios-location-outline"></i>Minh Khai Ward, Bac Tu Liem District,
+                                        Hanoi City.</li>
+                                    <li><i class="ion-ios-email-outline"></i>Mail: <a
+                                            href="mailto:yourmail@gmail.com">yourmail@gmail.com</a></li>
+                                    <li><i class="ion-ios-telephone-outline"></i>Phone: <a
+                                            href="%2b0025425456554.html">+0123456789</a></li>
                                 </ul>
                             </div>
                         </div>
@@ -356,7 +388,7 @@
         </div>
         <!-- footer main area end -->
 
-        
+
     </footer>
     <!-- End Footer Area Wrapper -->
 
@@ -423,28 +455,170 @@
     <!--=== Active Js ===-->
     <script src="assets/js/active.js"></script>
 </body>
-    
+
 
 </html>
 
 <script>
     const token = localStorage.getItem('token'); // Lấy token đăng nhập
     const userId = localStorage.getItem('userId');
-            // Bắt đầu xử lý mini card
-            function renderMiniCart(cartItems, summary) {
-            const cartWrapper = document.querySelector(".minicart-item-wrapper ul");
-            const pricingBox = document.querySelector(".minicart-pricing-box ul");
 
-            // Làm rỗng nội dung cũ
-            pricingBox.innerHTML = "";
-            cartWrapper.innerHTML = "";
+    // Biến lưu trạng thái của trang hiện tại
+    let currentPage = 0;
+    let totalPages = 1; // Tổng số trang (mặc định là 1)
+
+    // Hàm gọi API
+    function fetchData(page) {
+        // Gọi API với trang hiện tại
+        fetch(`http://localhost:8080/order/${userId}?page=${page}&size=1`, {
+            method: 'GET',
+            headers: {
+                'Authorization': token
+            }
+        })
+            .then(response => response.json())
+            .then(data => {
+                renderTable(data.result.result); // Hiển thị dữ liệu lên bảng
+                totalPages = data.result.meta.pages; // Cập nhật tổng số trang
+                updatePagination(); // Cập nhật phân trang
+            })
+            .catch(error => console.error('Error fetching data:', error));
+    }
+
+    // Hàm hiển thị dữ liệu lên bảng
+    // function renderTable(orders) {
+    //     const tableBody = document.getElementById("order-table-body");
+    //     tableBody.innerHTML = ''; // Xóa dữ liệu cũ trong bảng
+
+    //     orders.forEach(order => {
+    //         const row = document.createElement('tr');
+    //         row.innerHTML = `
+    //         <td>${order.id}</td>
+    //         <td>TODO</td>
+    //         <td>${new Date(order.createdAt).toLocaleDateString()}</td>
+    //         <td>${order.status}</td>
+    //         <td>${order.totalAmount}</td>
+    //         <td><button class="btn btn-success">View Details</button></td>
+    //     `;
+    //         tableBody.appendChild(row);
+    //     });
+    // }
 
 
-            // Render từng sản phẩm
-            cartItems.forEach(item => {
-                const product = item.product;
-                const quantity = item.quantity;
-                const cartItemHTML = `
+    // Hàm cập nhật phân trang
+    function renderTable(orders) {
+        const tableBody = document.getElementById("order-table-body");
+        tableBody.innerHTML = ''; // Xóa dữ liệu cũ trong bảng
+
+        orders.forEach(order => {
+            const row = document.createElement('tr');
+
+            // Tạo HTML cho cột sản phẩm, hiển thị danh sách sản phẩm trong mỗi đơn hàng
+            const productColumn = order.orderItems.map(item => {
+                return `
+            <div style="max-height: 200px; overflow-y: auto; padding: 5px; border: 1px solid #ddd; border-radius: 8px;">
+                <ul style="list-style: none; margin: 0; padding: 0;">
+                    <li style="display: flex; margin-bottom: 10px;">
+                        <div style="flex: 0 0 60px; margin-right: 10px;">
+                            <img src="http://localhost:8080/images/product/${item.image}" 
+                                 alt="${item.productName}" 
+                                 style="width: 60px; height: 60px; object-fit: cover; border-radius: 8px;">
+                        </div>
+                        <div style="flex: 1;">
+                            <h3 style="margin: 0; font-size: 14px; font-weight: bold; color: #333;">
+                                ${item.productName}
+                            </h3>
+                            <p style="margin: 5px 0; font-size: 13px; color: #555;">
+                                <span>${item.quantity} × ${(item.price).toLocaleString()} VNĐ</span>
+                            </p>
+                            <p style="margin: 0; font-size: 12px; color: #666;">
+                                Màu sắc: ${item.color} | Size: ${item.size}
+                            </p>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            `;
+            }).join("");  // Nối tất cả các sản phẩm lại với nhau trong cột sản phẩm
+
+            // Tạo HTML cho các cột khác trong bảng
+            row.innerHTML = `
+            <td>${order.id}</td>
+            <td>${productColumn}</td> <!-- Cột sản phẩm -->
+            <td>${new Date(order.createdAt).toLocaleDateString()}</td>
+            <td>${order.status}</td>
+            <td>${order.totalAmount.toLocaleString()} VNĐ</td>
+            <td><button class="btn btn-success" onclick="viewOrderDetails(${order.id})">View Details</button></td>
+        `;
+
+            tableBody.appendChild(row);
+        });
+    }
+    function viewOrderDetails(orderId) {
+        // Chuyển hướng đến trang order_detail.html kèm theo ID đơn hàng
+        window.location.href = `order_detail.html?orderId=${orderId}`;
+    }
+
+    function updatePagination() {
+        const pageNumberElement = document.getElementById('page-number');
+        const prevButton = document.getElementById('prev-page').querySelector('button');
+        const nextButton = document.getElementById('next-page').querySelector('button');
+
+        // Cập nhật số trang hiện tại
+        pageNumberElement.querySelector('span').innerText = `${currentPage + 1}`;
+
+        // Kiểm tra trạng thái của nút Previous
+        if (currentPage <= 0) {
+            prevButton.disabled = true;
+        } else {
+            prevButton.disabled = false;
+        }
+
+        // Kiểm tra trạng thái của nút Next
+        if (currentPage >= totalPages - 1) {
+            nextButton.disabled = true;
+        } else {
+            nextButton.disabled = false;
+        }
+    }
+
+    // Event listener cho nút Previous
+    document.getElementById('prev-page').querySelector('button').addEventListener('click', () => {
+        if (currentPage > 0) {
+            currentPage--;
+            fetchData(currentPage);
+        }
+    });
+
+    // Event listener cho nút Next
+    document.getElementById('next-page').querySelector('button').addEventListener('click', () => {
+        if (currentPage < totalPages - 1) {
+            currentPage++;
+            fetchData(currentPage);
+        }
+    });
+
+    // Lần đầu tiên gọi API với page=0 khi trang tải
+    document.addEventListener('DOMContentLoaded', () => {
+        fetchData(currentPage);
+    });
+
+
+    // Bắt đầu xử lý mini card
+    function renderMiniCart(cartItems, summary) {
+        const cartWrapper = document.querySelector(".minicart-item-wrapper ul");
+        const pricingBox = document.querySelector(".minicart-pricing-box ul");
+
+        // Làm rỗng nội dung cũ
+        pricingBox.innerHTML = "";
+        cartWrapper.innerHTML = "";
+
+
+        // Render từng sản phẩm
+        cartItems.forEach(item => {
+            const product = item.product;
+            const quantity = item.quantity;
+            const cartItemHTML = `
             <li class="minicart-item">
                 <div class="minicart-thumb">
                     <a href="product-details.html?id=${product.productId}">
@@ -457,7 +631,7 @@
                     </h3>
                     <p>
                         <span class="cart-quantity">${quantity} <strong>&times;</strong></span>
-                        <span class="cart-price">${(product.price).toFixed(2)} VNĐ</span>
+                        <span class="cart-price">${(product.price).toLocaleString()} VNĐ</span>
                     </p>
                     <p>
                         <span class="product-name">Màu sắc: ${product.color}</span><br>
@@ -469,303 +643,323 @@
                 </button>
             </li>
         `;
-                cartWrapper.innerHTML += cartItemHTML;
-            });
-            document.getElementById('cart-quantity').innerText = summary.totalQuantity;
-            // Render tổng giá trị
-            pricingBox.innerHTML += `
-        <li><span>Tổng giá trước thuế</span><span><strong>${summary.totalPrice.toFixed(2)} VNĐ</strong></span></li>
-        <li><span>VAT (10%)</span><span><strong>${(summary.totalPrice * 0.1).toFixed(2)} VNĐ</strong></span></li>
-        <li class="total"><span>Tổng giá sau thuế</span><span><strong>${(summary.totalPrice * 1.1).toFixed(2)} VNĐ</strong></span></li>
+            cartWrapper.innerHTML += cartItemHTML;
+        });
+        document.getElementById('cart-quantity').innerText = summary.totalQuantity;
+        // Render tổng giá trị
+        pricingBox.innerHTML += `
+        <li><span>Tổng giá trước thuế</span><span><strong>${summary.totalPrice.toLocaleString()} VNĐ</strong></span></li>
+        <li><span>VAT (10%)</span><span><strong>${(summary.totalPrice * 0.1).toLocaleString()} VNĐ</strong></span></li>
+        <li class="total"><span>Tổng giá sau thuế</span><span><strong>${(summary.totalPrice * 1.1).toLocaleString()} VNĐ</strong></span></li>
     `;
-        }
+    }
 
-        // Hàm lấy dữ liệu sản phẩm trong giỏ hàng
-        async function fetchCartItems(userId) {
-            try {
-                const response = await fetch(`http://localhost:8080/cart?userId=${userId}`, {
+    // Hàm lấy dữ liệu sản phẩm trong giỏ hàng
+    async function fetchCartItems(userId) {
+        try {
+            const response = await fetch(`http://localhost:8080/cart?userId=${userId}`, {
+                method: "GET",
+                headers: {
+                    "Authorization": token,
+                    "Content-Type": "application/json"
+                }
+            });
+            const data = await response.json();
+            if (data.code === 200) {
+                return data.result;
+            } else {
+                throw new Error(data.message || "Failed to fetch cart items.");
+            }
+        } catch (error) {
+            console.error("Error fetching cart items:", error);
+            return [];
+        }
+    }
+
+    // Hàm lấy dữ liệu tổng hợp giỏ hàng (số lượng và giá trị)
+    async function fetchCartSummary(userId) {
+        try {
+            const [quantityRes, priceRes] = await Promise.all([
+                fetch(`http://localhost:8080/cart/quantity?userId=${userId}`, {
                     method: "GET",
                     headers: {
                         "Authorization": token,
                         "Content-Type": "application/json"
                     }
-                });
-                const data = await response.json();
-                if (data.code === 200) {
-                    return data.result;
-                } else {
-                    throw new Error(data.message || "Failed to fetch cart items.");
-                }
-            } catch (error) {
-                console.error("Error fetching cart items:", error);
-                return [];
-            }
-        }
-
-        // Hàm lấy dữ liệu tổng hợp giỏ hàng (số lượng và giá trị)
-        async function fetchCartSummary(userId) {
-            try {
-                const [quantityRes, priceRes] = await Promise.all([
-                    fetch(`http://localhost:8080/cart/quantity?userId=${userId}`, {
-                        method: "GET",
-                        headers: {
-                            "Authorization": token,
-                            "Content-Type": "application/json"
-                        }
-                    }).then(res => res.json()),
-                    fetch(`http://localhost:8080/cart/sumprice?userId=${userId}`, {
-                        method: "GET",
-                        headers: {
-                            "Authorization": token,
-                            "Content-Type": "application/json"
-                        }
-                    }).then(res => res.json())
-                ]);
-                return {
-                    totalQuantity: quantityRes.result,
-                    totalPrice: priceRes.result
-                };
-            } catch (error) {
-                console.error("Error fetching cart summary:", error);
-                return { totalQuantity: 0, totalPrice: 0 };
-            }
-        }
-
-        // Khi nhấn vào nút giỏ hàng, gọi API và hiển thị giỏ hàng mini (nếu chưa gọi trước đó)
-        document.querySelector(".minicart-btn").addEventListener("click", async (event) => {
-            event.preventDefault();  // Ngừng hành động mặc định của liên kết
-            const minicartWrapper = document.querySelector(".offcanvas-minicart-wrapper");  // Giỏ hàng mini
-            const cartItems = await fetchCartItems(userId);
-                if (cartItems.length === 0) {
-                    const pricingBox = document.querySelector(".minicart-pricing-box ul");
-                    pricingBox.innerHTML = '<div style="text-align: center; margin: 20px 0;"> <i class="ion-bag" style="font-size: 50px; color: #ccc;"></i> <p style="font-size: 16px; color: #666; margin-top: 10px;"> Giỏ hàng của bạn đang trống </p> </div>';
-
-                } else {
-                    const cartSummary = await fetchCartSummary(userId);
-                    renderMiniCart(cartItems, cartSummary);
-                }
-        });
-
-        // Xử lý khi nhấn nút xóa sản phẩm khỏi giỏ hàng
-        document.addEventListener("click", async (event) => {
-            if (event.target.classList.contains("minicart-remove")) {
-                const productElement = event.target.closest(".minicart-item");
-                const variantId = event.target.getAttribute("data-variant-id");
-
-                // Hiển thị hộp thoại xác nhận trước khi xóa
-                const isConfirmed = confirm("Bạn có chắc chắn muốn xóa sản phẩm này khỏi giỏ hàng?");
-                if (isConfirmed) {
-                    try {
-                        // Gửi yêu cầu xóa sản phẩm
-                        const response = await fetch(`http://localhost:8080/cart/variant/${variantId}?userId=${userId}`, {
-                            method: "DELETE",
-                            headers: {
-                                "Authorization": token,
-                                "Content-Type": "application/json"
-                            }
-                        });
-
-                        if (response.ok) {
-                            // Xóa sản phẩm khỏi giao diện
-                            productElement.remove();
-                            reloadMiniCart(userId);
-                        } else {
-                            throw new Error("Failed to remove item");
-                        }
-                    } catch (error) {
-                        console.error("Error removing cart item:", error);
-                    }
-                }
-            }
-        });
-
-        // Hàm reload lại giỏ hàng mini sau khi xóa sản phẩm
-        async function reloadMiniCart(userId) {
-            try {
-                const cartItems = await fetchCartItems(userId);
-                if (cartItems.length === 0) {
-                    const pricingBox = document.querySelector(".minicart-pricing-box ul");
-                    pricingBox.innerHTML = '<div style="text-align: center; margin: 20px 0;"> <i class="ion-bag" style="font-size: 50px; color: #ccc;"></i> <p style="font-size: 16px; color: #666; margin-top: 10px;"> Giỏ hàng của bạn đang trống </p> </div>';
-
-                } else {
-                    const cartSummary = await fetchCartSummary(userId);
-                    renderMiniCart(cartItems, cartSummary);
-                }
-            } catch (error) {
-                console.error("Error reloading mini cart:", error);
-            }
-        }
-        // Kết thúc xử lý mini card
-        
-
-        document.addEventListener("DOMContentLoaded", async function () {
-            const userId = localStorage.getItem("userId"); // Lấy ID từ localStorage
-            const token = localStorage.getItem("token"); // Lấy token từ localStorage
-        
-            // Kiểm tra nếu không có ID hoặc token
-            if (!userId || !token) {
-                alert("User ID or Token is missing!");
-                return;
-            }
-        
-            // API URLs
-            const UserUrl = `http://localhost:8080/user/${userId}`;
-            const updateUserUrl = `http://localhost:8080/user/update/${userId}`;
-            const updateUserPhotoUrl = `http://localhost:8080/user/photo/${userId}`;
-            const updatePasswordUrl = `http://localhost:8080/user/change-password/${userId}`;
-        
-            // Fetch user data
-            try {
-                const response = await fetch(UserUrl, {
+                }).then(res => res.json()),
+                fetch(`http://localhost:8080/cart/sumprice?userId=${userId}`, {
                     method: "GET",
                     headers: {
-                        Authorization: `Bearer ${token}`,
-                        "Content-Type": "application/json",
-                    },
-                });
-                const data = await response.json();
-                const user = data.result.result;
-
-                const avatarSmall = user.avatar
-                    ? `http://localhost:8080/images/avatar/${user.avatar}`
-                    : "assets/img/about/avatar.jpg";
-
-                // Gán URL của avatar vào thẻ <img> trong .user-thumbnail
-                const userImage = document.querySelector(".user-thumbnail .user-image");
-                if (userImage) {
-                    userImage.src = avatarSmall;
-                }
-        
-                // Điền dữ liệu lên giao diện
-                document.getElementById("first-name").value = user.firstname || "";
-                document.getElementById("last-name").value = user.lastname || "";
-                document.getElementById("email").value = user.email || "";
-                document.getElementById("phone").value = user.phone || "";
-                document.getElementById("address").value = user.address || "";
-                document.getElementById("display-name").value = user.username || ""; // Display name không chỉnh sửa
-                const avatarUrl = user.avatar
-                    ? `http://localhost:8080/images/avatar/${user.avatar}`
-                    : "assets/img/default-avatar.jpg";
-                document.querySelector(".user-avatar").src = avatarUrl;
-            } catch (error) {
-                console.error("Error fetching user data:", error);
-            }
-        
-            // Handle avatar update
-            const avatarInput = document.getElementById("avatar-input");
-            avatarInput.addEventListener("change", async function () {
-                const file = avatarInput.files[0];
-                if (file) {
-                    const formData = new FormData();
-                    formData.append("avatar", file);
-        
-                    try {
-                        const response = await fetch(updateUserPhotoUrl, {
-                            method: "PUT",
-                            headers: {
-                                Authorization: `Bearer ${token}`,
-                            },
-                            body: formData,
-                        });
-                        const data = await response.json();
-        
-                        if (data.code === 200) {
-                            alert("Avatar updated successfully!");
-                            document.querySelector(".user-avatar").src = data.result.avatar;
-                        } else {
-                            alert("Failed to update avatar.");
-                        }
-                    } catch (error) {
-                        console.error("Error updating avatar:", error);
+                        "Authorization": token,
+                        "Content-Type": "application/json"
                     }
+                }).then(res => res.json())
+            ]);
+            return {
+                totalQuantity: quantityRes.result,
+                totalPrice: priceRes.result
+            };
+        } catch (error) {
+            console.error("Error fetching cart summary:", error);
+            return { totalQuantity: 0, totalPrice: 0 };
+        }
+    }
+
+    // Khi nhấn vào nút giỏ hàng, gọi API và hiển thị giỏ hàng mini (nếu chưa gọi trước đó)
+    document.querySelector(".minicart-btn").addEventListener("click", async (event) => {
+        event.preventDefault();  // Ngừng hành động mặc định của liên kết
+        const minicartWrapper = document.querySelector(".offcanvas-minicart-wrapper");  // Giỏ hàng mini
+        const cartItems = await fetchCartItems(userId);
+        if (cartItems.length === 0) {
+            const pricingBox = document.querySelector(".minicart-pricing-box ul");
+            pricingBox.innerHTML = '<div style="text-align: center; margin: 20px 0;"> <i class="ion-bag" style="font-size: 50px; color: #ccc;"></i> <p style="font-size: 16px; color: #666; margin-top: 10px;"> Giỏ hàng của bạn đang trống </p> </div>';
+
+        } else {
+            const cartSummary = await fetchCartSummary(userId);
+            renderMiniCart(cartItems, cartSummary);
+        }
+    });
+
+    // Xử lý khi nhấn nút xóa sản phẩm khỏi giỏ hàng
+    document.addEventListener("click", async (event) => {
+        if (event.target.classList.contains("minicart-remove")) {
+            const productElement = event.target.closest(".minicart-item");
+            const variantId = event.target.getAttribute("data-variant-id");
+
+            // Hiển thị hộp thoại xác nhận trước khi xóa
+            const isConfirmed = confirm("Bạn có chắc chắn muốn xóa sản phẩm này khỏi giỏ hàng?");
+            if (isConfirmed) {
+                try {
+                    // Gửi yêu cầu xóa sản phẩm
+                    const response = await fetch(`http://localhost:8080/cart/variant/${variantId}?userId=${userId}`, {
+                        method: "DELETE",
+                        headers: {
+                            "Authorization": token,
+                            "Content-Type": "application/json"
+                        }
+                    });
+
+                    if (response.ok) {
+                        // Xóa sản phẩm khỏi giao diện
+                        productElement.remove();
+                        reloadMiniCart(userId);
+                    } else {
+                        throw new Error("Failed to remove item");
+                    }
+                } catch (error) {
+                    console.error("Error removing cart item:", error);
+                }
+            }
+        }
+    });
+
+    // Hàm reload lại giỏ hàng mini sau khi xóa sản phẩm
+    async function reloadMiniCart(userId) {
+        try {
+            const cartItems = await fetchCartItems(userId);
+            if (cartItems.length === 0) {
+                const pricingBox = document.querySelector(".minicart-pricing-box ul");
+                pricingBox.innerHTML = '<div style="text-align: center; margin: 20px 0;"> <i class="ion-bag" style="font-size: 50px; color: #ccc;"></i> <p style="font-size: 16px; color: #666; margin-top: 10px;"> Giỏ hàng của bạn đang trống </p> </div>';
+
+            } else {
+                const cartSummary = await fetchCartSummary(userId);
+                renderMiniCart(cartItems, cartSummary);
+            }
+        } catch (error) {
+            console.error("Error reloading mini cart:", error);
+        }
+    }
+    // Kết thúc xử lý mini card
+
+
+    document.addEventListener("DOMContentLoaded", async function () {
+        const userId = localStorage.getItem("userId"); // Lấy ID từ localStorage
+        const token = localStorage.getItem("token"); // Lấy token từ localStorage
+
+        // Kiểm tra nếu không có ID hoặc token
+        if (!userId || !token) {
+            alert("User ID or Token is missing!");
+            return;
+        }
+        try {
+            const response = await fetch(`http://localhost:8080/cart/quantity?userId=${userId}`, {
+                method: 'GET',
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                    'Content-Type': 'application/json',
+                },
+            });
+
+            if (!response.ok) {
+                throw new Error(`Error fetching cart quantity: ${response.statusText}`);
+            }
+
+            const data = await response.json();
+            const numberOfProduct = data.result;
+
+            // Hiển thị số lượng sản phẩm trong giao diện
+            document.getElementById('cart-quantity').innerText = numberOfProduct;
+        } catch (error) {
+            console.error('Error fetching cart quantity:', error);
+        }
+        // API URLs
+        const UserUrl = `http://localhost:8080/user/${userId}`;
+        const updateUserUrl = `http://localhost:8080/user/update/${userId}`;
+        const updateUserPhotoUrl = `http://localhost:8080/user/photo/${userId}`;
+        const updatePasswordUrl = `http://localhost:8080/user/change-password/${userId}`;
+
+        // Fetch user data
+        try {
+            const response = await fetch(UserUrl, {
+                method: "GET",
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                    "Content-Type": "application/json",
+                },
+            });
+            const data = await response.json();
+            const user = data.result.result;
+
+            const avatarSmall = user.avatar
+                ? `http://localhost:8080/images/avatar/${user.avatar}`
+                : "assets/img/about/avatar.jpg";
+
+            // Gán URL của avatar vào thẻ <img> trong .user-thumbnail
+            const userImage = document.querySelector(".user-thumbnail .user-image");
+            if (userImage) {
+                userImage.src = avatarSmall;
+            }
+
+            // Điền dữ liệu lên giao diện
+            document.getElementById("first-name").value = user.firstname || "";
+            document.getElementById("last-name").value = user.lastname || "";
+            document.getElementById("email").value = user.email || "";
+            document.getElementById("phone").value = user.phone || "";
+            document.getElementById("address").value = user.address || "";
+            document.getElementById("display-name").value = user.username || ""; // Display name không chỉnh sửa
+            const avatarUrl = user.avatar
+                ? `http://localhost:8080/images/avatar/${user.avatar}`
+                : "assets/img/default-avatar.jpg";
+            document.querySelector(".user-avatar").src = avatarUrl;
+        } catch (error) {
+            console.error("Error fetching user data:", error);
+        }
+
+        // Handle avatar update
+        const avatarInput = document.getElementById("avatar-input");
+        avatarInput.addEventListener("change", async function () {
+            const file = avatarInput.files[0];
+            if (file) {
+                const formData = new FormData();
+                formData.append("avatar", file);
+
+                try {
+                    const response = await fetch(updateUserPhotoUrl, {
+                        method: "PUT",
+                        headers: {
+                            Authorization: `Bearer ${token}`,
+                        },
+                        body: formData,
+                    });
+                    const data = await response.json();
+
+                    if (data.code === 200) {
+                        alert("Avatar updated successfully!");
+                        document.querySelector(".user-avatar").src = data.result.avatar;
+                    } else {
+                        alert("Failed to update avatar.");
+                    }
+                } catch (error) {
+                    console.error("Error updating avatar:", error);
+                }
+            }
+        });
+
+        // Handle account details update
+        document
+            .getElementById("account-details-form")
+            .addEventListener("submit", async function (event) {
+                event.preventDefault(); // Ngăn chặn reload trang mặc định
+
+                const updatedUser = {
+                    firstname: document.getElementById("first-name").value.trim(),
+                    lastname: document.getElementById("last-name").value.trim(),
+                    email: document.getElementById("email").value.trim(),
+                    phone: document.getElementById("phone").value.trim(),
+                    address: document.getElementById("address").value.trim(),
+                };
+
+                try {
+                    const response = await fetch(updateUserUrl, {
+                        method: "PUT",
+                        headers: {
+                            Authorization: `Bearer ${token}`,
+                            "Content-Type": "application/json",
+                        },
+                        body: JSON.stringify(updatedUser),
+                    });
+                    const data = await response.json();
+
+                    if (data.code === 200) {
+                        alert("Account details updated successfully!");
+                    } else {
+                        alert("Failed to update account details.");
+                    }
+                } catch (error) {
+                    console.error("Error updating account details:", error);
                 }
             });
-        
-            // Handle account details update
-            document
-                .getElementById("account-details-form")
-                .addEventListener("submit", async function (event) {
-                    event.preventDefault(); // Ngăn chặn reload trang mặc định
-        
-                    const updatedUser = {
-                        firstname: document.getElementById("first-name").value.trim(),
-                        lastname: document.getElementById("last-name").value.trim(),
-                        email: document.getElementById("email").value.trim(),
-                        phone: document.getElementById("phone").value.trim(),
-                        address: document.getElementById("address").value.trim(),
-                    };
-        
-                    try {
-                        const response = await fetch(updateUserUrl, {
-                            method: "PUT",
-                            headers: {
-                                Authorization: `Bearer ${token}`,
-                                "Content-Type": "application/json",
-                            },
-                            body: JSON.stringify(updatedUser),
-                        });
-                        const data = await response.json();
-        
-                        if (data.code === 200) {
-                            alert("Account details updated successfully!");
-                        } else {
-                            alert("Failed to update account details.");
-                        }
-                    } catch (error) {
-                        console.error("Error updating account details:", error);
-                    }
-                });
-        
-            // Handle password update
-            document
-                .getElementById("password-change-form")
-                .addEventListener("submit", async function (event) {
-                    event.preventDefault(); // Ngăn chặn reload trang mặc định
-        
-                    const currentPwd = document.getElementById("current-pwd").value.trim();
-                    const newPwd = document.getElementById("new-pwd").value.trim();
-                    const confirmPwd = document.getElementById("confirm-pwd").value.trim();
-        
-                    if (!currentPwd || !newPwd || !confirmPwd) {
-                        alert("All password fields are required.");
-                        return;
-                    }
-        
-                    if (newPwd !== confirmPwd) {
-                        alert("New Password and Confirm Password do not match.");
-                        return;
-                    }
-        
-                    const passwordData = {
-                        oldPassword: currentPwd,
-                        newPassword: newPwd,
-                    };
-        
-                    try {
-                        const response = await fetch(updatePasswordUrl, {
-                            method: "PUT",
-                            headers: {
-                                Authorization: `Bearer ${token}`,
-                                "Content-Type": "application/json",
-                            },
-                            body: JSON.stringify(passwordData),
-                        });
-        
-                        console.log("e",response)
 
-                        if (response.ok) {
-                            alert("Password has been reset.");
-                        } else {
-                            alert("Failed to reset.");
-                        }
-                    } catch (error) {
-                        console.error("Error updating password:", error);
+        // Handle password update
+        document
+            .getElementById("password-change-form")
+            .addEventListener("submit", async function (event) {
+                event.preventDefault(); // Ngăn chặn reload trang mặc định
+
+                const currentPwd = document.getElementById("current-pwd").value.trim();
+                const newPwd = document.getElementById("new-pwd").value.trim();
+                const confirmPwd = document.getElementById("confirm-pwd").value.trim();
+
+                if (!currentPwd || !newPwd || !confirmPwd) {
+                    alert("All password fields are required.");
+                    return;
+                }
+
+                if (newPwd !== confirmPwd) {
+                    alert("New Password and Confirm Password do not match.");
+                    return;
+                }
+
+                const passwordData = {
+                    oldPassword: currentPwd,
+                    newPassword: newPwd,
+                };
+
+                try {
+                    const response = await fetch(updatePasswordUrl, {
+                        method: "PUT",
+                        headers: {
+                            Authorization: `Bearer ${token}`,
+                            "Content-Type": "application/json",
+                        },
+                        body: JSON.stringify(passwordData),
+                    });
+
+                    console.log("e", response)
+
+                    if (response.ok) {
+                        alert("Password has been reset.");
+                    } else {
+                        alert("Failed to reset.");
                     }
-                });
-        });
-        
-        
-        
+                } catch (error) {
+                    console.error("Error updating password:", error);
+                }
+            });
+    });
+
+
+
 </script>
 
 <style>
@@ -776,7 +970,7 @@
         object-fit: cover;
         border: 1px solid #ddd;
     }
-    
+
     .user-thumbnail a {
         display: inline-block;
         text-decoration: none;
@@ -786,7 +980,7 @@
         text-align: center;
         margin-bottom: 20px;
     }
-    
+
     .user-avatar {
         width: 100px;
         height: 100px;
@@ -795,11 +989,10 @@
         object-fit: cover;
         margin-bottom: 10px;
     }
-    
+
     #avatar-input {
         display: block;
         margin: 0 auto;
         margin-top: 10px;
     }
-    
 </style>

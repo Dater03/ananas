@@ -1926,11 +1926,11 @@ fieldset legend {
 /*------ hero slider area css end ------*/
 /*------- Buttons Style here -------*/
 .btn {
-  border-radius: 0;
-  font-size: 16px;
-  font-weight: 400;
+  border-radius: 1px;
+  font-size: 12px;
+  font-weight: 500;
   line-height: 1;
-  color: #e3a51e;
+  color: #ffffff;
   outline: none;
   -webkit-box-shadow: none;
           box-shadow: none;
@@ -1938,7 +1938,7 @@ fieldset legend {
   transition: 0.4s;
   display: inline-block;
   padding: 14px 25px;
-  background-color: #333333;
+  background-color: #539463;
   text-transform: uppercase;
 }
 .btn:focus {

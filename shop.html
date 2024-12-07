@@ -883,7 +883,7 @@
                     </h3>
                     <p>
                         <span class="cart-quantity">${quantity} <strong>&times;</strong></span>
-                        <span class="cart-price">${(product.price).toFixed(2)} VNĐ</span>
+                        <span class="cart-price">${(product.price).toLocaleString()} VNĐ</span>
                     </p>
                     <p>
                         <span class="product-name">Màu sắc: ${product.color}</span><br>
@@ -902,9 +902,9 @@
             // Render tổng giá trị
             pricingBox.innerHTML = ""; // Làm rỗng container trước
             pricingBox.innerHTML += `
-        <li><span>Tổng giá trước thuế</span><span><strong>${summary.totalPrice.toFixed(2)} VNĐ</strong></span></li>
-        <li><span>VAT (10%)</span><span><strong>${(summary.totalPrice * 0.1).toFixed(2)} VNĐ</strong></span></li>
-        <li class="total"><span>Tổng giá sau thuế</span><span><strong>${(summary.totalPrice * 1.1).toFixed(2)} VNĐ</strong></span></li>
+        <li><span>Tổng giá trước thuế</span><span><strong>${summary.totalPrice.toLocaleString()} VNĐ</strong></span></li>
+        <li><span>VAT (10%)</span><span><strong>${(summary.totalPrice * 0.1).toLocaleString()} VNĐ</strong></span></li>
+        <li class="total"><span>Tổng giá sau thuế</span><span><strong>${(summary.totalPrice * 1.1).toLocaleString()} VNĐ</strong></span></li>
     `;
         }
 
