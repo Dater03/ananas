@@ -423,7 +423,7 @@
                     </div>
 
                     <div class="minicart-pricing-box">
-                        <ul>
+                        <ul id="cart_summary">
 
                         </ul>
                     </div>
@@ -610,8 +610,8 @@
                                                         <a href="product-details.html?productId=${product.productId}">${product.productName}</a>
                                                     </h5>
                                                     <div class="price-box">
-                                                        <span class="price-regular">$${product.price}</span>
-                                                        <span class="price-old"><del>$${product.discount}</del></span>
+                                                        <span class="price-regular">$${(product.price * (100 - product.discount) / 100).toFixed(2)}</span>
+                                                        <span class="price-old"><del>$${product.price} </del></span>
                                                     </div>
                                                     <div class="product-action-link">
                                                         <a href="#" title="Wishlist"><i class="ion-android-favorite-outline"></i></a>
@@ -634,8 +634,8 @@
                                                         <a href="product-details.html?productId=${product.productId}">${product.productName}</a>
                                                     </h5>
                                                     <div class="price-box">
-                                                        <span class="price-regular">$${product.price}</span>
-                                                        <span class="price-old"><del>$${product.discount}</del></span>
+                                                        <span class="price-regular">$${(product.price * (100 - product.discount) / 100).toFixed(2)}</span>
+                                                        <span class="price-old"><del>$${product.price} </del></span>
                                                     </div>
                                                     <p>${product.description}</p>
                                                     <div class="product-link-2 position-static">
@@ -862,13 +862,10 @@
         // Bắt đầu xử lý mini card
         function renderMiniCart(cartItems, summary) {
             const cartWrapper = document.querySelector(".minicart-item-wrapper ul");
-            const pricingBox = document.querySelector(".minicart-pricing-box ul");
-
+            const pricingBox = document.querySelector("#cart_summary");
             // Làm rỗng nội dung cũ
             pricingBox.innerHTML = "";
             cartWrapper.innerHTML = "";
-
-
             // Render từng sản phẩm
             cartItems.forEach(item => {
                 const product = item.product;
@@ -899,9 +896,11 @@
             </li>
         `;
                 cartWrapper.innerHTML += cartItemHTML;
+
             });
             document.getElementById('cart-quantity').innerText = summary.totalQuantity;
             // Render tổng giá trị
+            pricingBox.innerHTML = ""; // Làm rỗng container trước
             pricingBox.innerHTML += `
         <li><span>Tổng giá trước thuế</span><span><strong>${summary.totalPrice.toFixed(2)} VNĐ</strong></span></li>
         <li><span>VAT (10%)</span><span><strong>${(summary.totalPrice * 0.1).toFixed(2)} VNĐ</strong></span></li>
@@ -1032,9 +1031,9 @@
             // Kiểm tra nếu không có ID hoặc token
             if (!userId || !token) {
                 alert("User ID or Token is missing!");
-            return;
+                return;
             }
-                
+
             // API URLs
             const UserUrl = `http://localhost:8080/user/${userId}`;
             // Fetch user data
@@ -1048,11 +1047,11 @@
                 });
                 const data = await response.json();
                 const user = data.result.result;
-        
+
                 const avatarSmall = user.avatar
-                ? `http://localhost:8080/images/avatar/${user.avatar}`
-                : "assets/img/about/avatar.jpg";
-        
+                    ? `http://localhost:8080/images/avatar/${user.avatar}`
+                    : "assets/img/about/avatar.jpg";
+
                 // Gán URL của avatar vào thẻ <img> trong .user-thumbnail
                 const userImage = document.querySelector(".user-thumbnail .user-image");
                 if (userImage) {
