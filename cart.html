@@ -90,6 +90,12 @@
                                                 <div class="notification" id="cart-quantity">0</div>
                                             </a>
                                         </li>
+                                        <!-- Thêm ảnh user -->
+                                        <li class="user-thumbnail">
+                                            <a href="my-account.html">
+                                                <img src="" alt="User" class="user-image">
+                                            </a>
+                                        </li>
                                     </ul>
                                 </div>
                             </div>
@@ -153,8 +159,8 @@
         <!-- breadcrumb area end -->
 
         <!-- cart main wrapper start -->
-        <div class="cart-main-wrapper mb-5">
-            <div class="container">
+        <div class="cart-main-wrapper">
+            <div class="container mb-5">
                 <div class="section-bg-color">
                     <div class="row">
                         <div class="col-lg-12">
@@ -627,6 +633,64 @@
             }
         }
         // Kết thúc xử lý mini card
+
+        document.addEventListener("DOMContentLoaded", async function () {
+            const userId = localStorage.getItem("userId"); // Lấy ID từ localStorage
+            const token = localStorage.getItem("token"); // Lấy token từ localStorage
+            // Kiểm tra nếu không có ID hoặc token
+            if (!userId || !token) {
+                alert("User ID or Token is missing!");
+                return;
+            }
+    
+            // API URLs
+            const UserUrl = `http://localhost:8080/user/${userId}`;
+            // Fetch user data
+            try {
+                const response = await fetch(UserUrl, {
+                    method: "GET",
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                        "Content-Type": "application/json",
+                    },
+                });
+                const data = await response.json();
+                const user = data.result.result;
+    
+                const avatarSmall = user.avatar
+                    ? `http://localhost:8080/images/avatar/${user.avatar}`
+                    : "assets/img/about/avatar.jpg";
+    
+                // Gán URL của avatar vào thẻ <img> trong .user-thumbnail
+                const userImage = document.querySelector(".user-thumbnail .user-image");
+                if (userImage) {
+                    userImage.src = avatarSmall;
+                }
+            } catch (error) {
+                console.error("Error fetching user data:", error);
+            };
+            try {
+                const response = await fetch(`http://localhost:8080/cart/quantity?userId=${userId}`, {
+                    method: 'GET',
+                    headers: {
+                        'Authorization': `Bearer ${token}`,
+                        'Content-Type': 'application/json',
+                    },
+                });
+    
+                if (!response.ok) {
+                    throw new Error(`Error fetching cart quantity: ${response.statusText}`);
+                }
+    
+                const data = await response.json();
+                const numberOfProduct = data.result;
+    
+                // Hiển thị số lượng sản phẩm trong giao diện
+                document.getElementById('cart-quantity').innerText = numberOfProduct;
+            } catch (error) {
+                console.error('Error fetching cart quantity:', error);
+            }
+        });
     </script>
     <!--=======================Javascript============================-->
     <!--=== All Vendor Js ===-->
@@ -639,6 +703,25 @@
 </body>
 
 
-<!-- Mirrored from htmldemo.net/juan/juan/cart.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 17 Oct 2024 04:44:52 GMT -->
 
 </html>
+
+<style>
+    .user-thumbnail .user-image {
+        width: 30px;
+        height: 30px;
+        border-radius: 30%;
+        object-fit: cover;
+        border: 1px solid #ddd;
+    }
+
+    .user-thumbnail a {
+        display: inline-block;
+        text-decoration: none;
+    }
+
+    .avatar-container {
+        text-align: center;
+        margin-bottom: 20px;
+    }
+</style>
