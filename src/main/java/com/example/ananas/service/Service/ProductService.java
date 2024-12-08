@@ -144,8 +144,10 @@ public class ProductService implements IProductService {
     }
 
     @Override
+    @Transactional
     public void uploadImages(int id, MultipartFile[] files) throws IOException {
         Product product = this.productRepository.findById(id).orElseThrow(() -> new RuntimeException("Product not found"));
+        this.productImageRepository.deleteProduct_ImagesByProduct(product);
 
         // Kiểm tra và tạo thư mục lưu trữ nếu chưa có
         Path uploadPath = Paths.get(UPLOAD_DIR);
