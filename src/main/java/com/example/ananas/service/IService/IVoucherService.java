@@ -1,5 +1,6 @@
 package com.example.ananas.service.IService;
 
+import com.example.ananas.dto.request.VoucherArchive;
 import com.example.ananas.dto.request.VoucherResquest;
 import com.example.ananas.dto.response.ResultPaginationDTO;
 import com.example.ananas.dto.response.VoucherResponse;
@@ -22,8 +23,11 @@ public interface IVoucherService {
 
      boolean deleteVoucher(String code);
 
-     boolean checkVoucher(String code);
+     boolean checkVoucher(String code, BigDecimal priceBefore);
 
      BigDecimal applyVoucher(Voucher voucher, BigDecimal priceBefore);
 
+     VoucherArchive archiveVoucherByUser(VoucherArchive voucherArchive);
+
+     List<VoucherResponse> getVoucherOfUser(Integer userId);
 }

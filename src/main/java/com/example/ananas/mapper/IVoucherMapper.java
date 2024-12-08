@@ -21,5 +21,4 @@ public interface IVoucherMapper {
     @Mapping(source = "createdAt", target = "createdAt")
     @Mapping(target = "discountType", ignore = true)
     Voucher voucherRequestToVoucher(VoucherResquest voucherResquest);
-
 }

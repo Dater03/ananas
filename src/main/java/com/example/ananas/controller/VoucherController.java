@@ -1,4 +1,5 @@
 package com.example.ananas.controller;
+import com.example.ananas.dto.request.VoucherArchive;
 import com.example.ananas.dto.request.VoucherResquest;
 import com.example.ananas.dto.response.ResultPaginationDTO;
 import com.example.ananas.dto.response.VoucherResponse;
@@ -55,4 +56,15 @@ public class VoucherController {
     public ResponseEntity<String> deleteVoucher(@PathVariable String code) {
         return ResponseEntity.ok(voucherService.deleteVoucher(code)?"Deleted voucher!" : "Deleted voucher failed");
     }
+
+    @PostMapping("/archiveVoucher")
+    public ResponseEntity<VoucherArchive> archiveVoucher(@RequestBody VoucherArchive voucher) {
+        return ResponseEntity.ok(voucherService.archiveVoucherByUser(voucher));
+    }
+
+    @GetMapping("/listVoucherArchive/{userId}")
+    public ResponseEntity<List<VoucherResponse>> getVoucherArchives(@PathVariable Integer userId) {
+        return ResponseEntity.ok(voucherService.getVoucherOfUser(userId));
+    }
+
 }

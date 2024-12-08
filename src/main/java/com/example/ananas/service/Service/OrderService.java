@@ -29,7 +29,6 @@ import org.springframework.transaction.annotation.Transactional;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -112,7 +111,6 @@ public class OrderService implements IOrderService {
             if(user.isEmpty()) order.setUser(null);
             else order.setUser(user.get());
         }else order.setUser(null);
-
         if(orderCreate.getCode() != null)
         {
             Voucher voucher = voucherRepository.findVoucherByCode(orderCreate.getCode());
@@ -121,7 +119,6 @@ public class OrderService implements IOrderService {
 
         } else order.setVoucher(null);
 
-        // tổng giá trị của đơn hàng trước khi áp dụng voucher
         List<Order_Items_Create> items = orderCreate.getOrderItems();
         BigDecimal sum_before = BigDecimal.valueOf(0);// tổng giá sản phẩm (đã giảm giá sản sp) chưa có voucher cho toàn bộ đơn hàng
 
@@ -158,8 +155,24 @@ public class OrderService implements IOrderService {
 
         // tổng tổng giá trị của đơn hàng sau khi áp dụng voucher
         BigDecimal sum_after;
-        if(order.getVoucher() != null && voucherService.checkVoucher(order.getVoucher().getCode())) sum_after = voucherService.applyVoucher(order.getVoucher(), sum_before);
-        else sum_after = sum_before;
+        if(order.getVoucher() != null && voucherService.checkVoucher(order.getVoucher().getCode(), sum_before))
+        {
+            BigDecimal discount_vourcher =  voucherService.applyVoucher(order.getVoucher(), sum_before);
+            order.setDiscount_voucher(discount_vourcher);
+            sum_after = sum_before.subtract(discount_vourcher);
+            order.getVoucher().setUsageLimit(order.getVoucher().getUsageLimit()-1);
+            voucherRepository.save(order.getVoucher());
+        }
+        else
+        {
+            StringBuilder description = new StringBuilder();
+            description.append("Đơn hàng của bạn không đủ kiều kiện áp dụng voucher hoặc voucher đã hết hạn!");
+            description.append("\n");
+            description.append(orderCreate.getDescription());
+            order.setDescription(description.toString());
+            order.setVoucher(null);
+            sum_after = sum_before;
+        }
         order.setTotalPrice(sum_after);
         order.setStatus(OrderStatus.PENDING);
         order.setPaymentStatus(PaymentStatus.UNPAID);
@@ -167,7 +180,6 @@ public class OrderService implements IOrderService {
         order.setRecipientName(orderCreate.getRecipientName());
         order.setRecipientPhone(orderCreate.getRecipientPhone());
         order.setRecipientAddress(orderCreate.getRecipientAddress());
-        order.setDescription(orderCreate.getDescription());
         order.setCreatedAt(new Timestamp(System.currentTimeMillis()));
         order.setUpdatedAt(new Timestamp(System.currentTimeMillis()));
         order.setOrderItems(orderItems);
@@ -237,6 +249,11 @@ public class OrderService implements IOrderService {
             productVariant.setStock(stock - item.getQuantity());
             productVariantRepository.save(productVariant);
         }
+        if(order.getVoucher() != null)
+        {
+            order.getVoucher().setUsageLimit(order.getVoucher().getUsageLimit()+1);
+            voucherRepository.save(order.getVoucher());
+        }
         order.setTotalAmount(sum_before);
         if(orderUpdateUser.getCode() != null)
         {
@@ -244,8 +261,24 @@ public class OrderService implements IOrderService {
             if(voucher == null) throw new AppException(ErrException.VOUCHER_NOT_EXISTED);
             order.setVoucher(voucher);
         }else order.setVoucher(null);
-        if(order.getVoucher() != null) sum_after = voucherService.applyVoucher(order.getVoucher(), sum_before);
-        else sum_after = sum_before;
+        if(order.getVoucher() != null && voucherService.checkVoucher(order.getVoucher().getCode(), sum_before))
+        {
+            BigDecimal dis_vour = voucherService.applyVoucher(order.getVoucher(), sum_before);
+            order.setDiscount_voucher(dis_vour);
+            sum_after = sum_before.subtract(dis_vour);
+            order.getVoucher().setUsageLimit(order.getVoucher().getUsageLimit()-1);
+            voucherRepository.save(order.getVoucher());
+        }
+        else
+        {
+            StringBuilder description = new StringBuilder();
+            description.append("Đơn hàng của bạn không đủ kiều kiện áp dụng voucher hoặc voucher đã hết hạn!");
+            description.append("\n");
+            description.append(orderUpdateUser.getDescription());
+            order.setDescription(description.toString());
+            order.setVoucher(null);
+            sum_after = sum_before;
+        }
         order.setTotalPrice(sum_after);
         order.setDescription(orderUpdateUser.getDescription());
         order.setUpdatedAt(new Timestamp(System.currentTimeMillis()));

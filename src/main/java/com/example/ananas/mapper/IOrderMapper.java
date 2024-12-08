@@ -24,6 +24,7 @@ public interface IOrderMapper {
     @Mapping(source = "voucher.code", target = "code")
     @Mapping(source = "id", target = "id")
     @Mapping(source = "description", target = "description")
+    @Mapping(source = "discount_voucher", target = "discount_voucher")
     OrderResponse orderToOrderResponse(Order order);
     // Map Order_Item to Order_Item_Response
     List<Order_Item_Response> orderItemsToOrderItemResponses(List<Order_Item> orderItems);

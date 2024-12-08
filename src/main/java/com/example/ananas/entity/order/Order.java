@@ -37,6 +37,9 @@ public class Order {
     @Column(name = "total_amount", nullable = false)
     BigDecimal totalAmount; // tổng giá trị của đơn hàng trước khi áp dụng voucher
 
+    @Column(name = "discount_voucher")
+    BigDecimal discount_voucher;
+
     @Column(name = "total_price")
     BigDecimal totalPrice; // tổng tổng giá trị của đơn hàng sau khi áp dụng voucher
 
