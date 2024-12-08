@@ -134,9 +134,11 @@ public class OrderService implements IOrderService {
             orderItem.setProductVariant(productVariant);
             orderItem.setOrder(order);
             orderItem.setQuantity(item.getQuantity());
-            orderItem.setPrice(BigDecimal.valueOf(productVariant.getProduct().getPrice())
-                    .multiply(BigDecimal.valueOf(productVariant.getProduct().getDiscount())
-                            .divide(BigDecimal.valueOf(100))));
+            orderItem.setPrice(BigDecimal.valueOf(productVariant.getProduct().getPrice()).subtract(
+                    BigDecimal.valueOf(productVariant.getProduct().getPrice())
+                            .multiply(BigDecimal.valueOf(productVariant.getProduct().getDiscount())
+                                    .divide(BigDecimal.valueOf(100))))
+                    );
             orderItems.add(orderItem);
 
             // Cap nhat so luong da ban trong san pham
