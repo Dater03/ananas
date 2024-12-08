@@ -546,3 +546,90 @@
 </body>
 
 </html>
+
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    // API Endpoint với tham số receiverId
+    const receiverId = 1;  // Thay đổi giá trị này tùy theo id của người nhận
+    const apiEndpoint = `http://localhost:8080/message/latest?receiverId=${receiverId}`;
+  
+    // Hàm fetch dữ liệu từ API
+    async function fetchMessages() {
+      try {
+        const response = await fetch(apiEndpoint);
+        const data = await response.json(); // Parse JSON response
+        const messages = data.result;
+        console.log("m", messages)
+  
+        // Xóa danh sách tin nhắn cũ
+        const messageList = document.querySelector(".dropdown-menu.messages");
+        messageList.innerHTML = `
+          <li class="dropdown-header">
+            Bạn có ${messages.length} tin nhắn mới
+            <a href="#"><span class="badge rounded-pill bg-primary p-2 ms-2">Xem tất cả</span></a>
+          </li>
+          <li><hr class="dropdown-divider"></li>
+        `;
+  
+        // Thêm từng tin nhắn vào danh sách
+        messages.forEach((message) => {
+          const messageItem = `
+            <li class="message-item">
+              <a href="#">
+                <img src="assets/img/messages-${message.messageId % 3 + 1}.jpg" alt class="rounded-circle">
+                <div>
+                  <h4>${message.senderName}</h4>
+                  <p>${message.message}</p>
+                  <p>${formatTimeAgo(message.createdAt)}</p>
+                </div>
+              </a>
+            </li>
+            <li><hr class="dropdown-divider"></li>
+          `;
+          messageList.insertAdjacentHTML("beforeend", messageItem);
+        });
+  
+        // Thêm footer
+        messageList.insertAdjacentHTML(
+          "beforeend",
+          `
+          <li class="dropdown-footer">
+            <a href="#">Hiển thị tất cả tin nhắn</a>
+          </li>
+          `
+        );
+      } catch (error) {
+        console.error("Lỗi khi lấy danh sách tin nhắn:", error);
+      }
+    }
+  
+    function formatTimeAgo(dateString) {
+      const date = new Date(dateString); // JavaScript hiểu tốt định dạng ISO 8601
+      date.setHours(date.getHours() + 7); // Cộng thêm 7 giờ để điều chỉnh sang UTC+7
+      const now = new Date();
+      const diff = Math.floor((now - date) / 1000); // Hiệu số thời gian tính bằng giây
+    
+      if (diff < 60) {
+        return `${diff} giây trước`;
+      }
+      
+      if (diff < 3600) {
+        const minutes = Math.round(diff / 60); // Làm tròn phút
+        return `${minutes} phút trước`;
+      }
+      
+      if (diff < 86400) {
+        const hours = Math.round(diff / 3600); // Làm tròn giờ
+        return `${hours} giờ trước`;
+      }
+    
+      return `${Math.floor(diff / 86400)} ngày trước`; // Nếu lớn hơn 1 ngày
+    }
+    
+  
+    // Gọi hàm fetchMessages khi load trang
+    fetchMessages();
+  });
+  
+</script>
