@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html class="no-js" lang="zxx">
 
-<!-- Mirrored from htmldemo.net/juan/juan/checkout.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 17 Oct 2024 04:44:52 GMT -->
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -19,10 +18,7 @@
     <!-- Modernizer JS -->
     <script src="assets/js/modernizr-2.8.3.min.js"></script>
 
-    <!--[if lt IE 9]>
-<script src="//oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-<script src="//oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-<![endif]-->
+
 </head>
 
 <body>
@@ -91,6 +87,12 @@
                                                 <div class="notification" id="cart-quantity">0</div>
                                             </a>
                                         </li>
+                                        <!-- Thêm ảnh user -->
+                                        <li class="user-thumbnail">
+                                            <a href="my-account.html">
+                                                <img src="" alt="User" class="user-image">
+                                            </a>
+                                        </li>
                                     </ul>
                                 </div>
                             </div>
@@ -138,7 +140,7 @@
                     <div class="col-12">
                         <div class="breadcrumb-wrap text-center">
                             <nav aria-label="breadcrumb">
-                                <h1 class="breadcrumb-title">Checkout</h1>
+                                <h1 class="breadcrumb-title">Thanh Toán</h1>
                             </nav>
                         </div>
                     </div>
@@ -201,8 +203,6 @@
                                     </div>
                                 </div>
                             </div>
-
-                            
                         </div>
                         <!-- Checkout Login Coupon Accordion End -->
                     </div>
@@ -211,74 +211,57 @@
                     <!-- Checkout Billing Details -->
                     <div class="col-lg-6">
                         <div class="checkout-billing-details-wrap">
-                            <h4 class="checkout-title">Billing Details</h4>
+                            <h4 class="checkout-title">Thông tin giao hàng</h4>
                             <div class="billing-form-wrap">
                                 <form action="#">
                                     <div class="row">
                                         <div class="col-md-6">
                                             <div class="single-input-item">
-                                                <label for="f_name" class="required">First Name</label>
+                                                <label for="f_name" class="required">Họ </label>
                                                 <input type="text" id="f_name" placeholder="First Name" required />
                                             </div>
                                         </div>
 
                                         <div class="col-md-6">
                                             <div class="single-input-item">
-                                                <label for="l_name" class="required">Last Name</label>
+                                                <label for="l_name" class="required">Tên</label>
                                                 <input type="text" id="l_name" placeholder="Last Name" required />
                                             </div>
                                         </div>
                                     </div>
 
                                     <div class="single-input-item">
-                                        <label for="email" class="required">Email Address</label>
+                                        <label for="email" class="required">Email</label>
                                         <input type="email" id="email" placeholder="Email Address" required />
                                     </div>
 
                                     <div class="single-input-item">
-                                        <label for="com-name">Company Name</label>
-                                        <input type="text" id="com-name" placeholder="Company Name" />
-                                    </div>
-
-                                    <div class="single-input-item">
-                                        <label for="country" class="required">Country</label>
-                                        <select name="country nice-select" id="country">
+                                        <label for="city" class="required">Thành phố</label>
+                                        <select name="city nice-select" id="city">
                                             <option value="Afghanistan">Afghanistan</option>
                                             <option value="Albania">Albania</option>
-                                            <option value="Algeria">Algeria</option>
-                                            <option value="Armenia">Armenia</option>
-                                            <option value="Bangladesh">Bangladesh</option>
-                                            <option value="India">India</option>
-                                            <option value="Pakistan">Pakistan</option>
-                                            <option value="England">England</option>
-                                            <option value="London">London</option>
-                                            <option value="London">London</option>
-                                            <option value="Chaina">China</option>
                                         </select>
                                     </div>
 
                                     <div class="single-input-item">
-                                        <label for="street-address" class="required mt-20">Street address</label>
+                                        <label for="district" class="required">Huyện</label>
+                                        <select name="district nice-select" id="district">
+                                            <option value="Afghanistan">Afghanistan</option>
+                                            <option value="Albania">Albania</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="single-input-item">
+                                        <label for="commune" class="required">Xã</label>
+                                        <select name="commune nice-select" id="commune">
+                                            <option value="Afghanistan">Afghanistan</option>
+                                            <option value="Albania">Albania</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="single-input-item">
+                                        <label for="street-address" class="required mt-20">Địa chỉ chi tiết</label>
                                         <input type="text" id="street-address" placeholder="Street address Line 1" required />
-                                    </div>
-
-                                    <div class="single-input-item">
-                                        <input type="text" placeholder="Street address Line 2 (Optional)" />
-                                    </div>
-
-                                    <div class="single-input-item">
-                                        <label for="town" class="required">Town / City</label>
-                                        <input type="text" id="town" placeholder="Town / City" required />
-                                    </div>
-
-                                    <div class="single-input-item">
-                                        <label for="state">State / Divition</label>
-                                        <input type="text" id="state" placeholder="State / Divition" />
-                                    </div>
-
-                                    <div class="single-input-item">
-                                        <label for="postcode" class="required">Postcode / ZIP</label>
-                                        <input type="text" id="postcode" placeholder="Postcode / ZIP" required />
                                     </div>
 
                                     <div class="single-input-item">
@@ -286,7 +269,7 @@
                                         <input type="text" id="phone" placeholder="Phone" />
                                     </div>
 
-                                    <div class="checkout-box-wrap">
+                                    <!-- <div class="checkout-box-wrap">
                                         <div class="single-input-item">
                                             <div class="form-check custom-checkbox">
                                                 <input type="checkbox" class="form-check-input" id="create_pwd">
@@ -302,9 +285,9 @@
                                                 <input type="password" id="pwd" placeholder="Account Password" required />
                                             </div>
                                         </div>
-                                    </div>
+                                    </div> -->
 
-                                    <div class="checkout-box-wrap">
+                                    <!-- <div class="checkout-box-wrap">
                                         <div class="single-input-item">
                                             <div class="form-check custom-checkbox">
                                                 <input type="checkbox" class="form-check-input" id="ship_to_different">
@@ -376,10 +359,10 @@
                                                 <input type="text" id="postcode_2" placeholder="Postcode / ZIP" required />
                                             </div>
                                         </div>
-                                    </div>
+                                    </div> -->
 
                                     <div class="single-input-item">
-                                        <label for="ordernote">Order Note</label>
+                                        <label for="ordernote">Ghi chú</label>
                                         <textarea name="ordernote" id="ordernote" cols="30" rows="3" placeholder="Notes about your order, e.g. special notes for delivery."></textarea>
                                     </div>
                                 </form>
@@ -390,7 +373,7 @@
                     <!-- Order Summary Details -->
                     <div class="col-lg-6">
                         <div class="order-summary-details">
-                            <h4 class="checkout-title">Your Order Summary</h4>
+                            <h4 class="checkout-title">Tóm tắt đơn hàng</h4>
                             <div class="order-summary-content">
                                 <!-- Order Summary Table -->
                                 <div class="order-summary-table table-responsive text-center">
@@ -613,7 +596,7 @@
         const TOKEN = localStorage.getItem("token"); // Token lấy từ đâu đó (localStorage, session, v.v.)
         const userId = localStorage.getItem("userId");
                 // Bắt đầu xử lý mini card
-                function renderMiniCart(cartItems, summary) {
+        function renderMiniCart(cartItems, summary) {
             const cartWrapper = document.querySelector(".minicart-item-wrapper ul");
             const pricingBox = document.querySelector(".minicart-pricing-box ul");
 
@@ -778,6 +761,65 @@
             }
         }
         // Kết thúc xử lý mini card
+
+        document.addEventListener("DOMContentLoaded", async function () {
+            const userId = localStorage.getItem("userId"); // Lấy ID từ localStorage
+            const token = localStorage.getItem("token"); // Lấy token từ localStorage
+            // Kiểm tra nếu không có ID hoặc token
+            if (!userId || !token) {
+                alert("User ID or Token is missing!");
+                return;
+            }
+    
+            // API URLs
+            const UserUrl = `http://localhost:8080/user/${userId}`;
+            // Fetch user data
+            try {
+                const response = await fetch(UserUrl, {
+                    method: "GET",
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                        "Content-Type": "application/json",
+                    },
+                });
+                const data = await response.json();
+                const user = data.result.result;
+    
+                const avatarSmall = user.avatar
+                    ? `http://localhost:8080/images/avatar/${user.avatar}`
+                    : "assets/img/about/avatar.jpg";
+    
+                // Gán URL của avatar vào thẻ <img> trong .user-thumbnail
+                const userImage = document.querySelector(".user-thumbnail .user-image");
+                if (userImage) {
+                    userImage.src = avatarSmall;
+                }
+            } catch (error) {
+                console.error("Error fetching user data:", error);
+            };
+            try {
+                const response = await fetch(`http://localhost:8080/cart/quantity?userId=${userId}`, {
+                    method: 'GET',
+                    headers: {
+                        'Authorization': `Bearer ${token}`,
+                        'Content-Type': 'application/json',
+                    },
+                });
+    
+                if (!response.ok) {
+                    throw new Error(`Error fetching cart quantity: ${response.statusText}`);
+                }
+    
+                const data = await response.json();
+                const numberOfProduct = data.result;
+    
+                // Hiển thị số lượng sản phẩm trong giao diện
+                document.getElementById('cart-quantity').innerText = numberOfProduct;
+            } catch (error) {
+                console.error('Error fetching cart quantity:', error);
+            }
+        });
+
     </script>
     <!--=== All Vendor Js ===-->
     <script src="assets/js/vendor.js"></script>
@@ -785,8 +827,28 @@
     <script src="assets/js/plugins.js"></script>
     <!--=== Active Js ===-->
     <script src="assets/js/active.js"></script>
+    
 </body>
     
 
-<!-- Mirrored from htmldemo.net/juan/juan/checkout.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 17 Oct 2024 04:44:53 GMT -->
 </html>
+
+<style>
+    .user-thumbnail .user-image {
+        width: 30px;
+        height: 30px;
+        border-radius: 30%;
+        object-fit: cover;
+        border: 1px solid #ddd;
+    }
+
+    .user-thumbnail a {
+        display: inline-block;
+        text-decoration: none;
+    }
+
+    .avatar-container {
+        text-align: center;
+        margin-bottom: 20px;
+    }
+</style>
