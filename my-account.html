@@ -279,7 +279,7 @@
                                         <div class="tab-pane fade" id="orders" role="tabpanel"
                                             aria-labelledby="orders_btn">
                                             <div class="myaccount-content">
-                                                <h3>Orders</h3>
+                                                <h3>Đơn hàng của bạn</h3>
                                                 <!-- Thêm phân trang và dữ liệu từ API vào bảng -->
                                                 <div class="myaccount-table table-responsive text-center">
                                                     <table class="table table-bordered">
@@ -433,7 +433,7 @@
                     </div>
 
                     <div class="minicart-button">
-                        <a href="cart.html"><i class="fa fa-shopping-cart"></i> view cart</a>
+                        <a href="cart.html"><i class="fa fa-shopping-cart"></i>Giỏ hàng</a>
                     </div>
                 </div>
             </div>
@@ -548,7 +548,7 @@
             <td>${new Date(order.createdAt).toLocaleDateString()}</td>
             <td>${order.status}</td>
             <td>${order.totalAmount.toLocaleString()} VNĐ</td>
-            <td><button class="btn btn-success" onclick="viewOrderDetails(${order.id})">View Details</button></td>
+            <td><button class="btn btn-success" onclick="viewOrderDetails(${order.id})">Xem chi tiết</button></td>
         `;
 
             tableBody.appendChild(row);
@@ -793,7 +793,6 @@
             if (!response.ok) {
                 throw new Error(`Error fetching cart quantity: ${response.statusText}`);
             }
-
             const data = await response.json();
             const numberOfProduct = data.result;
 

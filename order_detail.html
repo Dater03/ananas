@@ -18,6 +18,8 @@
     <!-- Modernizer JS -->
     <script src="assets/js/modernizr-2.8.3.min.js"></script>
 
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+
     <!--[if lt IE 9]>
 <script src="//oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
 <script src="//oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
@@ -160,33 +162,33 @@
                             <div class="row mb-4">
                                 <!-- Cột đầu tiên: Tên người nhận -->
                                 <div class="col-lg-6 mb-3">
-                                    <label for="recipient-name" class="form-label">Recipient Name</label>
+                                    <label for="recipient-name" class="form-label">Người nhận</label>
                                     <input type="text" class="form-control" id="recipient-name"
-                                        placeholder="Enter recipient's name" required>
+                                        placeholder="Nhập tên người nhận" required>
                                 </div>
                                 <!-- Cột thứ hai: Số điện thoại -->
                                 <div class="col-lg-6 mb-3">
-                                    <label for="phone-number" class="form-label">Phone Number</label>
+                                    <label for="phone-number" class="form-label">Số điện thoại</label>
                                     <input type="text" class="form-control" id="phone-number"
-                                        placeholder="Enter phone number" required>
+                                        placeholder="Nhập số điện thoại" required>
                                 </div>
                             </div>
                             <div class="row mb-4">
                                 <!-- Cột đầu tiên: Địa chỉ -->
                                 <div class="col-lg-6 mb-3">
-                                    <label for="address" class="form-label">Address</label>
-                                    <input type="text" class="form-control" id="address"
-                                        placeholder="Enter your address" required>
+                                    <label for="address" class="form-label">Địa chỉ</label>
+                                    <input type="text" class="form-control" id="address" placeholder="Nhập địa chỉ"
+                                        required>
                                 </div>
                                 <!-- Cột thứ hai: Phương thức thanh toán -->
                                 <div class="col-lg-6 mb-3">
-                                    <label for="payment-method" class="form-label">Payment Method</label>
+                                    <label for="payment-method" class="form-label">Phương thức thanh toán</label>
                                     <div class="form-group">
-                                        <select id="payment-method" class="form-control py-2">
-                                            <option value="credit-card">Credit Card</option>
-                                            <option value="paypal">PayPal</option>
-                                            <option value="bank-transfer">Bank Transfer</option>
-                                            <option value="cash-on-delivery">Cash on Delivery</option>
+                                        <select id="payment-method" class="form-control py-2" data-selected-method="">
+                                            <option value="CASH_ON_DELIVERY">Cash on Delivery</option>
+                                            <option value="PAYPAL">PayPal</option>
+                                            <option value="CREDIT_CARD">Credit Card</option>
+                                            <option value="BANK_TRANSFER">Bank Transfer</option>
                                         </select>
                                     </div>
                                 </div>
@@ -202,101 +204,76 @@
                                 <table class="table table-bordered">
                                     <thead>
                                         <tr>
-                                            <th class="pro-thumbnail">Thumbnail</th>
-                                            <th class="pro-title">Product</th>
-                                            <th class="pro-price">Price</th>
-                                            <th class="pro-quantity">Quantity</th>
-                                            <th class="pro-subtotal">Total</th>
-                                            <th class="pro-remove">Remove</th>
+                                            <th class="pro-thumbnail">Ảnh</th>
+                                            <th class="pro-title">Sản phẩm </th>
+                                            <th class="pro-price">Giá</th>
+                                            <th class="pro-quantity">Số lượng</th>
+                                            <th class="pro-subtotal">Tổng số</th>
+                                            <th class="pro-title">Trạng thái</th>
+                                            <th class="pro-remove">Xóa</th>
                                         </tr>
                                     </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td class="pro-thumbnail"><a href="#"><img class="img-fluid"
-                                                        src="assets/img/product/product-1.jpg" alt="Product" /></a></td>
-                                            <td class="pro-title"><a href="#">Leather Mens Slipper</a></td>
-                                            <td class="pro-price"><span>$295.00</span></td>
-                                            <td class="pro-quantity">
-                                                <div class="pro-qty"><input type="text" value="1"></div>
-                                            </td>
-                                            <td class="pro-subtotal"><span>$295.00</span></td>
-                                            <td class="pro-remove"><a href="#"><i class="fa fa-trash-o"></i></a></td>
-                                        </tr>
-                                        <tr>
-                                            <td class="pro-thumbnail"><a href="#"><img class="img-fluid"
-                                                        src="assets/img/product/product-2.jpg" alt="Product" /></a></td>
-                                            <td class="pro-title"><a href="#">Quickiin Mens Shoes</a></td>
-                                            <td class="pro-price"><span>$275.00</span></td>
-                                            <td class="pro-quantity">
-                                                <div class="pro-qty"><input type="text" value="2"></div>
-                                            </td>
-                                            <td class="pro-subtotal"><span>$550.00</span></td>
-                                            <td class="pro-remove"><a href="#"><i class="fa fa-trash-o"></i></a></td>
-                                        </tr>
-                                        <tr>
-                                            <td class="pro-thumbnail"><a href="#"><img class="img-fluid"
-                                                        src="assets/img/product/product-3.jpg" alt="Product" /></a></td>
-                                            <td class="pro-title"><a href="#">Rexpo Womens Shoes</a></td>
-                                            <td class="pro-price"><span>$295.00</span></td>
-                                            <td class="pro-quantity">
-                                                <div class="pro-qty">
-                                                    <input type="text" value="1" />
-                                                </div>
-                                            </td>
-                                            <td class="pro-subtotal"><span>$295.00</span></td>
-                                            <td class="pro-remove"><a href="#"><i class="fa fa-trash-o"></i></a></td>
-                                        </tr>
-                                        <tr>
-                                            <td class="pro-thumbnail"><a href="#"><img class="img-fluid"
-                                                        src="assets/img/product/product-4.jpg" alt="Product" /></a></td>
-                                            <td class="pro-title"><a href="#">Primitive Mens Shoes</a></td>
-                                            <td class="pro-price"><span>$110.00</span></td>
-                                            <td class="pro-quantity">
-                                                <div class="pro-qty">
-                                                    <input type="text" value="3" />
-                                                </div>
-                                            </td>
-                                            <td class="pro-subtotal"><span>$110.00</span></td>
-                                            <td class="pro-remove"><a href="#"><i class="fa fa-trash-o"></i></a></td>
-                                        </tr>
+                                    <tbody id="cart-table-body">
+                                        <!--Render data-->
                                     </tbody>
                                 </table>
                             </div>
                             <!-- Cart Update Option -->
                             <div class="cart-update-option d-block d-md-flex justify-content-between">
-                                <div class="apply-coupon-wrapper">
-                                    <form action="#" method="post" class=" d-block d-md-flex">
-                                        <input type="text" placeholder="Enter Your Coupon Code" required />
-                                        <button class="btn">Apply Coupon</button>
-                                    </form>
-                                </div>
                                 <div class="cart-update">
-                                    <a href="#" class="btn">Update Order</a>
+                                    <a href="#" class="btn">Cập nhật đơn hàng</a>
+                                </div>
+
+                                <div class="cart-dropdown1">
+                                    <div style="align-content: center; padding-right: 10px;">
+                                        <h6>Mã giảm giá của bạn</h6>
+                                    </div>
+                                    <div class="cart-dropdown" style="width: 15%; text-align: center;">
+
+                                    </div>
                                 </div>
                             </div>
+
                         </div>
                     </div>
                     <div class="row">
+                        <div class="col-lg-5 mt-20">
+                            <div class="mb-3">
+                                <label for="exampleFormControlTextarea1" class="form-label">
+                                    <h6>Mô tả đơn hàng</h6>
+                                </label>
+                                <textarea class="form-control" id="description" rows="3"></textarea>
+                            </div>
+                        </div>
                         <div class="col-lg-5 ms-auto">
                             <!-- Cart Calculation Area -->
                             <div class="cart-calculator-wrapper">
                                 <div class="cart-calculate-items">
-                                    <h3>Cart Totals</h3>
+                                    <h3>Tổng đơn hàng</h3>
                                     <div class="table-responsive">
                                         <table class="table">
                                             <tr>
-                                                <td>Sub Total</td>
-                                                <td>$230</td>
+                                                <td>Tổng đơn hàng trước thuế</td>
+                                                <td id="cart-sub-total-berfor">--</td>
                                             </tr>
                                             <tr>
-                                                <td>Shipping</td>
-                                                <td>$70</td>
+                                                <td>Áp dụng mã giảm giá</td>
+                                                <td id="cart-voucher">--</td>
+                                            </tr>
+                                            <tr>
+                                                <td>VAT(10%)</td>
+                                                <td id="cart-vat">--</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Phí vận chuyển</td>
+                                                <td id="cart-shipping">--</td>
                                             </tr>
                                             <tr class="total">
-                                                <td>Total</td>
-                                                <td class="total-amount">$300</td>
+                                                <td>Tổng</td>
+                                                <td id="cart-total-amount" class="total-amount">--</td>
                                             </tr>
                                         </table>
+
                                     </div>
                                 </div>
                             </div>
@@ -383,7 +360,7 @@
                     </div>
 
                     <div class="minicart-button">
-                        <a href="cart.html"><i class="fa fa-shopping-cart"></i> view cart</a>
+                        <a href="cart.html"><i class="fa fa-shopping-cart"></i>Giỏ hàng</a>
                     </div>
                 </div>
             </div>
@@ -402,8 +379,220 @@
     <script src="assets/js/plugins.js"></script>
     <script src="assets/js/active.js"></script>
     <script>
-        const TOKEN = localStorage.getItem("token"); // Token lấy từ đâu đó (localStorage, session, v.v.)
+        const TOKEN = localStorage.getItem("token");
         const userId = localStorage.getItem("userId");
+        //status-dropdown
+        function loadVoucherCodes(userId, defVoucher) {
+            const apiUrl = `http://localhost:8080/voucher/listVoucherArchive/${userId}`;
+
+            fetch(apiUrl)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    // Kiểm tra nếu API trả về dữ liệu hợp lệ
+                    if (data.code === 200 && Array.isArray(data.result)) {
+                        const dropdownContainer = document.querySelector(".cart-dropdown");
+
+                        // Xóa nội dung cũ trong container (nếu có)
+                        dropdownContainer.innerHTML = '';
+
+                        // Tạo phần tử <select>
+                        const select = document.createElement("select");
+                        select.id = "status-dropdown";
+                        select.className = "form-control";
+
+                        // Thêm một option mặc định
+                        if (defVoucher != null) {
+                            const defaultOption = document.createElement("option");
+                            defaultOption.value = defVoucher;
+                            defaultOption.textContent = defVoucher;
+                            select.appendChild(defaultOption);
+                        }
+                        else {
+                            const defaultOption = document.createElement("option");
+                            defaultOption.value = "";
+                            defaultOption.textContent = "Chọn mã giảm giá";
+                            select.appendChild(defaultOption);
+                        }
+
+                        // Thêm các mã voucher từ dữ liệu API
+                        data.result.forEach(voucher => {
+                            if (voucher.code != defVoucher) {
+                                const option = document.createElement("option");
+                                option.value = voucher.code;
+                                option.textContent = `${voucher.code}`;
+                                select.appendChild(option);
+                            }
+                        });
+
+                        // Gắn <select> vào container
+                        dropdownContainer.appendChild(select);
+                    } else {
+                        console.error("Dữ liệu trả về không hợp lệ hoặc không có mã voucher.");
+                    }
+                })
+                .catch(error => {
+                    console.error("Lỗi khi lấy dữ liệu từ API:", error);
+                });
+        }
+
+
+        document.addEventListener('DOMContentLoaded', async () => {
+            const userId_2 = localStorage.getItem("userId");
+            const token_2 = localStorage.getItem("token");
+
+            // Kiểm tra nếu không có ID hoặc token
+            if (!userId_2 || !token_2) {
+                alert("User ID or Token is missing!");
+                return;
+            }
+            try {
+                const response = await fetch(`http://localhost:8080/cart/quantity?userId=${userId_2}`, {
+                    method: 'GET',
+                    headers: {
+                        'Authorization': `Bearer ${token_2}`,
+                        'Content-Type': 'application/json',
+                    },
+                });
+
+                if (!response.ok) {
+                    throw new Error(`Error fetching cart quantity: ${response.statusText}`);
+                }
+                const data = await response.json();
+                const numberOfProduct = data.result;
+
+                // Hiển thị số lượng sản phẩm trong giao diện
+                document.getElementById('cart-quantity').innerText = numberOfProduct;
+            } catch (error) {
+                console.error('Error fetching cart quantity:', error);
+            }
+            fetchOrderDetails();
+        });
+
+
+        // Lấy ID từ URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const orderId = urlParams.get('orderId'); // URL dạng: http://localhost/orderDetail.html?id=1
+        const apiUrl = `http://localhost:8080/order/orderDetail/${orderId}`;
+        async function fetchOrderDetails() {
+            try {
+                const response = await fetch(apiUrl);
+                if (!response.ok) {
+                    throw new Error('Không thể lấy dữ liệu từ API');
+                }
+                const data = await response.json();
+                renderOrderDetails(data);
+            } catch (error) {
+                console.error('Error:', error.message);
+            }
+        }
+
+        function renderOrderDetails(data) {
+            const order = data.result;
+
+            // Thông tin người nhận
+            document.getElementById('recipient-name').value = order.recipientName || '';
+            document.getElementById('phone-number').value = order.recipientPhone || '';
+            document.getElementById('address').value = order.recipientAddress || '';
+
+            // Cập nhật phương thức thanh toán
+            const paymentMethodSelect = document.getElementById('payment-method');
+            paymentMethodSelect.value = order.paymentMethod || 'CASH_ON_DELIVERY';
+
+            // Render bảng sản phẩm và tổng tiền
+            loadVoucherCodes(userId, order.code);
+            renderCartTable(order);
+            renderCartSummary(order);
+        }
+
+        function renderCartTable(order) {
+            const tableBody = document.getElementById('cart-table-body');
+            tableBody.innerHTML = ''; // Xóa nội dung cũ
+
+            order.orderItems.forEach((item) => {
+                const row = document.createElement('tr');
+
+                // Tạo phần HTML cho mỗi hàng
+                row.innerHTML = `
+            <td class="pro-thumbnail">
+                <img class="img-fluid" src="http://localhost:8080/images/product/${item.image}" alt="${item.productName}">
+            </td>
+            <td class="pro-title">
+                ${item.productName} <br> 
+                <small>Size: ${item.size}, Color: ${item.color}</small>
+            </td>
+            <td class="pro-price">${item.price.toLocaleString()} VNĐ</td>
+            <td class="pro-quantity" style="padding-left:5px">
+                <div class="input-group input-group-sm">
+                    <span class="input-group-text up-arrow" role="button" onclick="changeQuantity('${item.productVariantId}', -1)">
+                        <i class="bi bi-chevron-up"></i>
+                    </span>
+                    <input type="number" class="form-control text-center" id="quantity-${item.productVariantId}" style="padding:1px; padding-left:12px" value="${item.quantity}" readonly>
+                    <span class="input-group-text down-arrow" role="button" onclick="changeQuantity('${item.productVariantId}', 1)">
+                        <i class="bi bi-chevron-down"></i>
+                    </span>
+                </div>
+            </td>
+            <td class="pro-subtotal">${(item.price * item.quantity).toLocaleString()} VNĐ</td>
+            <td class="pro-title">${order.status}</td>
+            <td class="pro-remove">
+                <button class="btn btn-danger btn-sm">Xóa</button>
+            </td>
+        `;
+                tableBody.appendChild(row);
+            });
+        }
+        // Hàm thay đổi số lượng
+        function changeQuantity(variantId, change) {
+            const quantityElement = document.getElementById(`quantity-${variantId}`);
+            let currentQuantity = parseInt(quantityElement.value);
+
+            // Kiểm tra nếu số lượng hợp lệ trước khi thay đổi (không giảm xuống dưới 1)
+            if (currentQuantity + change >= 1) {
+                currentQuantity += change;
+                quantityElement.value = currentQuantity;
+
+                // Cập nhật lại tổng tiền subtotal nếu cần
+                const row = quantityElement.closest('tr');
+                const price = parseFloat(row.querySelector('.pro-price').textContent.replace(' VNĐ', '').replace(',', ''));
+                row.querySelector('.pro-subtotal').textContent = (price * currentQuantity).toLocaleString() + " VNĐ";
+
+                // Gửi thông tin cập nhật đến server nếu cần
+                updateQuantityInCart(variantId, currentQuantity);
+            }
+        }
+
+
+
+        function renderCartSummary(orderData) {
+            const subTotal = orderData.totalPrice;
+            var voucherDiscount = orderData.discount_voucher;
+            const vatRate = 0.1;
+            const shippingFee = 25000;
+
+            // Tính toán
+            const vat = subTotal * vatRate;
+            const description = orderData.description;
+            if (description != null) {
+                document.getElementById("description").value = description;
+            }
+
+            // Hiển thị dữ liệu
+            document.getElementById('cart-sub-total-berfor').textContent = `${subTotal.toLocaleString()} VNĐ`;
+            if (voucherDiscount == null) {
+                voucherDiscount = 0.0;
+            }
+            const total = subTotal - voucherDiscount + vat + shippingFee;
+            document.getElementById('cart-voucher').textContent = `-${voucherDiscount.toLocaleString()} VNĐ`;
+            document.getElementById('cart-vat').textContent = `${vat.toLocaleString()} VNĐ`;
+            document.getElementById('cart-shipping').textContent = `${shippingFee.toLocaleString()} VNĐ`;
+            document.getElementById('cart-total-amount').textContent = `${total.toLocaleString()} VNĐ`;
+        }
+
         // Bắt đầu xử lý mini card
         function renderMiniCart(cartItems, summary) {
             const cartWrapper = document.querySelector(".minicart-item-wrapper ul");
@@ -572,5 +761,25 @@
         // Kết thúc xử lý mini card
     </script>
 </body>
+<style>
+    .cart-update-option {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .cart-dropdown1 {
+        display: flex;
+        justify-content: flex-end;
+        flex-grow: 1;
+        /* Để dropdown nằm ở góc bên phải */
+        margin-left: 20px;
+    }
+
+    #status-dropdown1 {
+        width: 200px;
+        /* Đặt chiều rộng của dropdown */
+    }
+</style>
 
 </html>
