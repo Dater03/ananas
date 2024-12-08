@@ -88,6 +88,13 @@
             <version>3.3.2</version>
         </dependency>
 
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>2.15.2</version>
+        </dependency>
+
+
         <!-- token -->
         <dependency>
             <groupId>org.springframework.security</groupId>

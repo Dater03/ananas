@@ -57,8 +57,8 @@ public class UserController {
                 .build();
     }
 
-    @PutMapping
-    public ApiResponse<UserResponse> updateUser(@RequestParam int id, @RequestBody UserUpdateRequest userUpdateRequest) {
+    @PutMapping("/update/{id}")
+    public ApiResponse<UserResponse> updateUser(@PathVariable("id") int id, @RequestBody UserUpdateRequest userUpdateRequest) {
         return ApiResponse.<UserResponse>builder()
                 .result(userService.updateUser(id, userUpdateRequest))
                 .code(200)
@@ -95,7 +95,7 @@ public class UserController {
         return ResponseEntity.ok("Verification code sent to your email.");
     }
 
-    @PostMapping("/change-password/{userId}")
+    @PutMapping("/change-password/{userId}")
     public ResponseEntity<String> resetPassword(@PathVariable(name = "userId") Integer userId,@RequestBody ChangePasswordRequest changePasswordRequest) {
         boolean isReset = userService.changePassword(userId,changePasswordRequest);
         if (isReset) {
