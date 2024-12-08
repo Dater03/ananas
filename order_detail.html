@@ -185,13 +185,12 @@
                                     <label for="payment-method" class="form-label">Phương thức thanh toán</label>
                                     <div class="form-group">
                                         <select id="payment-method" class="form-control py-2" data-selected-method="">
-                                            <option value="CASH_ON_DELIVERY">Cash on Delivery</option>
-                                            <option value="PAYPAL">PayPal</option>
-                                            <option value="CREDIT_CARD">Credit Card</option>
-                                            <option value="BANK_TRANSFER">Bank Transfer</option>
+                                            <option value="CASH_ON_DELIVERY">CASH_ON_DELIVERY</option>
+                                            <option value="CREDIT_CARD">CREDIT_CARD</option>
                                         </select>
                                     </div>
                                 </div>
+
                             </div>
                         </div>
                     </div>
@@ -221,7 +220,7 @@
                             <!-- Cart Update Option -->
                             <div class="cart-update-option d-block d-md-flex justify-content-between">
                                 <div class="cart-update">
-                                    <a href="#" class="btn">Cập nhật đơn hàng</a>
+                                    <a href="#" class="btn disabled" id="update-order-btn">Cập nhật đơn hàng</a>
                                 </div>
 
                                 <div class="cart-dropdown1">
@@ -381,6 +380,88 @@
     <script>
         const TOKEN = localStorage.getItem("token");
         const userId = localStorage.getItem("userId");
+        // Lấy ID từ URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const orderId = urlParams.get('orderId'); // URL dạng: http://localhost/orderDetail.html?id=1
+        const apiUrl = `http://localhost:8080/order/orderDetail/${orderId}`;
+
+        async function updateOrder(orderId) {
+            // Lấy thông tin từ giao diện
+            const recipientName = document.getElementById('recipient-name').value;
+            const recipientPhone = document.getElementById('phone-number').value;
+            const recipientAddress = document.getElementById('address').value;
+            var paymentMethod = document.getElementById('payment-method').value;
+            const description = document.getElementById('description').value;
+
+            // Lấy danh sách các sản phẩm từ bảng
+            const orderItems = [];
+            const quantityElements = document.querySelectorAll('.form-control.text-center');
+            quantityElements.forEach((element) => {
+                const variantId = element.id.split('-')[1]; // Lấy variantId từ ID của input
+                const quantity = parseInt(element.value, 10); // Chuyển đổi số lượng sang số nguyên
+                if (variantId && quantity > 0) {
+                    orderItems.push({
+                        productVariantId: parseInt(variantId, 10),
+                        quantity: quantity,
+                    });
+                }
+            });
+
+            // Tạo payload để gửi tới API
+            const payload = {
+                code: document.getElementById('status-dropdown')?.value || null, // Lấy mã giảm giá nếu có
+                paymentMethod: paymentMethod,
+                recipientName: recipientName,
+                recipientPhone: recipientPhone,
+                recipientAddress: recipientAddress,
+                description: description,
+                orderItems: orderItems,
+            };
+
+            try {
+                // Gửi dữ liệu tới API
+                const response = await fetch(`http://localhost:8080/order/updateOrder/${orderId}`, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${TOKEN}`, // Thêm token nếu cần
+                    },
+                    body: JSON.stringify(payload),
+                });
+
+                // Xử lý kết quả trả về từ API
+                if (response.ok) {
+                    const result = await response.json();
+                    if (result.result.description.includes("\n")) {
+                        const alertMessage = result.result.description.split("\n")[0];
+                        document.getElementById('description').innerHTML = result.result.description.split("\n")[1];
+                        alert(alertMessage);
+                        window.location.reload();
+                    }
+                    else {
+                        alert('Cập nhật đơn hàng thành công!');
+                        window.location.href = 'my-account.html';
+                    }
+
+                } else {
+                    const error = await response.json();
+                    alert(`Lỗi khi cập nhật đơn hàng: ${error.message}`);
+                }
+            } catch (err) {
+                console.error('Lỗi khi gửi yêu cầu cập nhật đơn hàng:', err);
+                alert('Đã xảy ra lỗi khi cập nhật đơn hàng.');
+            }
+        }
+
+        document.getElementById('update-order-btn').addEventListener('click', () => {
+            if (orderId) {
+                updateOrder(orderId);
+            } else {
+                alert('Không tìm thấy ID đơn hàng!');
+            }
+        });
+
+
         //status-dropdown
         function loadVoucherCodes(userId, defVoucher) {
             const apiUrl = `http://localhost:8080/voucher/listVoucherArchive/${userId}`;
@@ -440,11 +521,10 @@
                 });
         }
 
-
         document.addEventListener('DOMContentLoaded', async () => {
             const userId_2 = localStorage.getItem("userId");
             const token_2 = localStorage.getItem("token");
-
+            monitorChangesAndToggleUpdateButton();
             // Kiểm tra nếu không có ID hoặc token
             if (!userId_2 || !token_2) {
                 alert("User ID or Token is missing!");
@@ -473,11 +553,6 @@
             fetchOrderDetails();
         });
 
-
-        // Lấy ID từ URL
-        const urlParams = new URLSearchParams(window.location.search);
-        const orderId = urlParams.get('orderId'); // URL dạng: http://localhost/orderDetail.html?id=1
-        const apiUrl = `http://localhost:8080/order/orderDetail/${orderId}`;
         async function fetchOrderDetails() {
             try {
                 const response = await fetch(apiUrl);
@@ -499,15 +574,68 @@
             document.getElementById('phone-number').value = order.recipientPhone || '';
             document.getElementById('address').value = order.recipientAddress || '';
 
-            // Cập nhật phương thức thanh toán
-            const paymentMethodSelect = document.getElementById('payment-method');
-            paymentMethodSelect.value = order.paymentMethod || 'CASH_ON_DELIVERY';
-
             // Render bảng sản phẩm và tổng tiền
             loadVoucherCodes(userId, order.code);
             renderCartTable(order);
             renderCartSummary(order);
+            document.getElementById('payment-method').value = order.paymentMethod;
+            alert("Oe: " + order.paymentMethod);
         }
+
+        function monitorChangesAndToggleUpdateButton() {
+            // Lấy các trường input, dropdown và nút cập nhật
+            const recipientName = document.getElementById('recipient-name');
+            const phoneNumber = document.getElementById('phone-number');
+            const address = document.getElementById('address');
+            const description = document.getElementById('description');
+            const discountCode = document.getElementById('status-dropdown'); // Mã giảm giá (dropdown)
+            const updateButton = document.getElementById('update-order-btn');
+
+            // Thêm trường số lượng
+            const quantityFields = document.querySelectorAll('.form-control.text-center'); // Lấy tất cả các trường số lượng
+
+            // Lưu giá trị ban đầu
+            let originalData = {
+                recipientName: recipientName.value,
+                phoneNumber: phoneNumber.value,
+                address: address.value,
+                description: description.value,
+                discountCode: discountCode ? discountCode.value : "", // Nếu có dropdown mã giảm giá
+                quantities: Array.from(quantityFields).map(input => input.value) // Lưu số lượng ban đầu
+            };
+
+            // Hàm kiểm tra sự thay đổi
+            function checkChanges() {
+                const hasChanges = recipientName.value !== originalData.recipientName ||
+                    phoneNumber.value !== originalData.phoneNumber ||
+                    address.value !== originalData.address ||
+                    description.value !== originalData.description ||
+                    (discountCode && discountCode.value !== originalData.discountCode) || // Kiểm tra sự thay đổi ở mã giảm giá nếu có
+                    Array.from(quantityFields).some((input, index) => input.value !== originalData.quantities[index]); // Kiểm tra sự thay đổi trong số lượng
+
+                // Nếu có thay đổi, bật nút cập nhật
+                if (hasChanges) {
+                    updateButton.classList.remove('disabled');
+                } else {
+                    updateButton.classList.add('disabled');
+                }
+            }
+
+            // Lắng nghe sự thay đổi trong các trường nhập liệu và dropdown
+            recipientName.addEventListener('input', checkChanges);
+            phoneNumber.addEventListener('input', checkChanges);
+            address.addEventListener('input', checkChanges);
+            description.addEventListener('input', checkChanges);
+            if (discountCode) {
+                discountCode.addEventListener('change', checkChanges); // Sự kiện cho dropdown discountCode
+            }
+
+            // Lắng nghe sự thay đổi trong các trường số lượng
+            quantityFields.forEach((input) => {
+                input.addEventListener('input', checkChanges);
+            });
+        }
+
 
         function renderCartTable(order) {
             const tableBody = document.getElementById('cart-table-body');
@@ -529,18 +657,18 @@
             <td class="pro-quantity" style="padding-left:5px">
                 <div class="input-group input-group-sm">
                     <span class="input-group-text up-arrow" role="button" onclick="changeQuantity('${item.productVariantId}', -1)">
-                        <i class="bi bi-chevron-up"></i>
+                        <i class="bi bi-chevron-down"></i>
                     </span>
                     <input type="number" class="form-control text-center" id="quantity-${item.productVariantId}" style="padding:1px; padding-left:12px" value="${item.quantity}" readonly>
                     <span class="input-group-text down-arrow" role="button" onclick="changeQuantity('${item.productVariantId}', 1)">
-                        <i class="bi bi-chevron-down"></i>
+                        <i class="bi bi-chevron-up"></i>
                     </span>
                 </div>
             </td>
             <td class="pro-subtotal">${(item.price * item.quantity).toLocaleString()} VNĐ</td>
             <td class="pro-title">${order.status}</td>
             <td class="pro-remove">
-                <button class="btn btn-danger btn-sm">Xóa</button>
+                <button class="btn btn-danger btn-sm" onclick="removeItem('${item.productVariantId}')">Xóa</button>
             </td>
         `;
                 tableBody.appendChild(row);
@@ -550,7 +678,7 @@
         function changeQuantity(variantId, change) {
             const quantityElement = document.getElementById(`quantity-${variantId}`);
             let currentQuantity = parseInt(quantityElement.value);
-
+            const updateButton = document.getElementById('update-order-btn');
             // Kiểm tra nếu số lượng hợp lệ trước khi thay đổi (không giảm xuống dưới 1)
             if (currentQuantity + change >= 1) {
                 currentQuantity += change;
@@ -560,13 +688,9 @@
                 const row = quantityElement.closest('tr');
                 const price = parseFloat(row.querySelector('.pro-price').textContent.replace(' VNĐ', '').replace(',', ''));
                 row.querySelector('.pro-subtotal').textContent = (price * currentQuantity).toLocaleString() + " VNĐ";
-
-                // Gửi thông tin cập nhật đến server nếu cần
-                updateQuantityInCart(variantId, currentQuantity);
             }
+            updateButton.classList.remove('disabled');
         }
-
-
 
         function renderCartSummary(orderData) {
             const subTotal = orderData.totalPrice;
@@ -576,7 +700,14 @@
 
             // Tính toán
             const vat = subTotal * vatRate;
-            const description = orderData.description;
+            var description;
+            if (orderData.description.includes("\n")) {
+                description = orderData.description.split("\n")[1];
+            }
+            else {
+                description = orderData.description;
+            }
+
             if (description != null) {
                 document.getElementById("description").value = description;
             }
@@ -593,6 +724,25 @@
             document.getElementById('cart-total-amount').textContent = `${total.toLocaleString()} VNĐ`;
         }
 
+        function removeItem(productVariantId) {
+            const row = document.querySelector(`#cart-table-body tr`);
+            const rowIndex = Array.from(row.parentNode.children).indexOf(row);
+            const updateButton = document.getElementById('update-order-btn');
+
+            // Kiểm tra xem sản phẩm đã bị xóa còn lại hay không
+            const remainingRows = document.querySelectorAll('#cart-table-body tr');
+            if (remainingRows.length === 1) {
+                // Hiển thị thông báo nếu không còn sản phẩm trong giỏ hàng
+                const confirmation = confirm("Bạn muốn xóa đơn hàng?");
+                if (!confirmation) {
+                    return;
+                } else {
+                    // TODO
+                }
+            }
+            row.remove();
+            updateButton.classList.remove('disabled');
+        }
         // Bắt đầu xử lý mini card
         function renderMiniCart(cartItems, summary) {
             const cartWrapper = document.querySelector(".minicart-item-wrapper ul");
