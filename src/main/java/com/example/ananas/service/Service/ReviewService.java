@@ -2,7 +2,9 @@ package com.example.ananas.service.Service;
 
 import com.example.ananas.dto.ReviewDTO;
 import com.example.ananas.dto.response.ReviewResponse;
+import com.example.ananas.entity.Product;
 import com.example.ananas.entity.Review;
+import com.example.ananas.entity.User;
 import com.example.ananas.mapper.IReviewMapper;
 import com.example.ananas.repository.Product_Repository;
 import com.example.ananas.repository.Review_Repository;
@@ -28,16 +30,23 @@ public class ReviewService implements IReviewService {
 
     public ReviewResponse addReviewToProduct(int user_id, int product_id, ReviewDTO review) {
         Review currentReview = new Review();
-        if (userRepository.existsById(user_id)) {
-            if (productRepository.existsById(product_id)) {
-                currentReview.setRating(review.getRating());
-                currentReview.setComment(review.getComment());
-                currentReview.setProduct(productRepository.findById(product_id).get());
-                currentReview.setUser(userRepository.findById(user_id).get());
-            }
-        }
+
+        // Kiểm tra user_id
+        User user = userRepository.findById(user_id).orElseThrow(()->new RuntimeException("User Not Found"));
+
+        // Kiểm tra product_id
+        Product product = productRepository.findById(product_id).orElseThrow(()->new RuntimeException("Product ID " + product_id + " does not exist."));
+
+        // Lấy thông tin product và user
+        currentReview.setRating(review.getRating());
+        currentReview.setComment(review.getComment());
+        currentReview.setProductId(product.getProductId());
+        currentReview.setUserId(user.getUserId());
+
+        // Lưu review và trả về response
         return reviewMapper.toReviewResponse(reviewRepository.save(currentReview));
     }
+
 
     public List<Review> getAllReviews() {
         return reviewRepository.findAll().stream().toList();
@@ -67,5 +76,15 @@ public class ReviewService implements IReviewService {
             return reviewRepository.findByProductId(product_id);
         }
         return null;
+    }
+
+    @Override
+    public int getReviewsCountByProductId(int product_id) {
+        List<Review> reviews = getAllReviewsByProductId(product_id);
+        int count = 0;
+        for (int i = 0; i < reviews.size(); i++) {
+            count++;
+        }
+        return count;
     }
 }

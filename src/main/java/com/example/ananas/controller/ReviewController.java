@@ -31,16 +31,16 @@ public class ReviewController {
     }
 
 
-    @GetMapping
-    public ApiResponse<List<Review>> getAllReview() {
-        return ApiResponse.<List<Review>>builder()
-                .result(reviewService.getAllReviews())
+    @GetMapping("/count")
+    public ApiResponse<Integer> getCount(@RequestParam int productId) {
+        return ApiResponse.<Integer>builder()
+                .result(reviewService.getReviewsCountByProductId(productId))
                 .code(200)
                 .build();
     }
 
-    @GetMapping("{productId}")
-    public ApiResponse<List<Review>> getReviewByProductId(@PathVariable int productId) {
+    @GetMapping
+    public ApiResponse<List<Review>> getReviewByProductId(@RequestParam int productId) {
         return ApiResponse.<List<Review>>builder()
                 .result(reviewService.getAllReviewsByProductId(productId))
                 .code(200)
