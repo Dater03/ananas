@@ -313,16 +313,14 @@
                         <div class="col-md-6">
                             <div class="product-details">
                                 <h5 style="margin-bottom: 10px;" class="modal-title" id="productName">Product Name</h5>
-                                <p style="margin-bottom: 10px;" id="reviews"><span>1 Review(s)</span></p>
+                                <p>Số lượt đánh giá: <span style="margin-bottom: 10px;" id="reviews"></span></p>
                                 <div style="margin-bottom: 10px;" class="price-box">
                                     <span id="currentPrice" class="price-regular">$70.00</span>
                                     <span id="oldPrice" class="price-old text-muted"><del>$80.00</del></span>
                                 </div>
-                                <p style="margin-bottom: 10px;" id="description">Lorem ipsum dolor sit amet, consectetur
-                                    adipiscing elit.</p>
+                                <p style="margin-bottom: 10px;" id="description"></p>
                                 <div class="availability">
-                                    <strong>Availability:</strong> <span id="availability" class="text-success">In
-                                        Stock</span>
+                                    <strong>Availability:</strong> <span id="availability" class="text-success"></span>
                                 </div>
                                 <div id="qvId" style="display: none;"></div>
 
@@ -402,7 +400,15 @@
                         </div>
                     </div>
                     <!-- footer widget item end -->
-
+                    <div class="col-xl-3 col-lg-3 col-md-4"></div>
+                    <!-- footer widget item end -->
+                    <div class="col-xl-3 col-lg-3 col-md-4">
+                        <iframe
+                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3723.4737884515107!2d105.73253187608918!3d21.053730980601838!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31345457e292d5bf%3A0x20ac91c94d74439a!2zVHLGsOG7nW5nIMSQ4bqhaSBo4buNYyBDw7RuZyBuZ2hp4buHcCBIw6AgTuG7mWk!5e0!3m2!1svi!2s!4v1733187950170!5m2!1svi!2s"
+                            width="400" height="200" style="border:0;" allowfullscreen="" loading="lazy"
+                            referrerpolicy="no-referrer-when-downgrade"></iframe>
+                    </div>
+                    <!-- footer widget item end -->
 
                 </div>
             </div>
@@ -803,6 +809,10 @@
         // Lấy chi tiết sản phẩm từ API và hiển thị vào modal
         async function fetchQuickViewProduct(productId) {
             try {
+                const rv = await fetch(`http://localhost:8080/review/count?productId=${productId}`);
+                const datarv = await rv.json();
+                const rvs = datarv.result.result;
+                console.log("rv",rvs)
                 const response = await fetch(`http://localhost:8080/product/${productId}`, {
                     method: 'GET',
                     headers: {
@@ -824,6 +834,7 @@
                 document.getElementById('description').innerText = product.description;
                 document.getElementById("qvId").textContent = product.productId;
                 document.getElementById("availability").textContent = product.soldQuantity;
+                document.getElementById("reviews").textContent = rvs;
                 //document.getElementById('availability').classList.toggle('text-danger', product.soldQuantity === 0);
 
                 // Cập nhật hình ảnh chính và hình ảnh thumbnail
