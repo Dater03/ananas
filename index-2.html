@@ -393,16 +393,14 @@
                         <div class="col-md-6">
                             <div class="product-details">
                                 <h5 style="margin-bottom: 10px;" class="modal-title" id="productName">Product Name</h5>
-                                <p style="margin-bottom: 10px;" id="reviews"><span>1 Review(s)</span></p>
+                                <p>Số lượt đánh giá: <span style="margin-bottom: 10px;" id="reviews"></span></p>
                                 <div style="margin-bottom: 10px;" class="price-box">
                                     <span id="currentPrice" class="price-regular">$70.00</span>
                                     <span id="oldPrice" class="price-old text-muted"><del>$80.00</del></span>
                                 </div>
-                                <p style="margin-bottom: 10px;" id="description">Lorem ipsum dolor sit amet, consectetur
-                                    adipiscing elit.</p>
+                                <p style="margin-bottom: 10px;" id="description"></p>
                                 <div class="availability">
-                                    <strong>Availability:</strong> <span id="availability" class="text-success">In
-                                        Stock</span>
+                                    <strong>Availability:</strong> <span id="availability" class="text-success"></span>
                                 </div>
                                 <div id="qvId" style="display: none;"></div>
 
@@ -772,6 +770,10 @@
         // Lấy chi tiết sản phẩm từ API và hiển thị vào modal
         async function fetchQuickViewProduct(productId) {
             try {
+                const rv = await fetch(`http://localhost:8080/review/count?productId=${productId}`);
+                const datarv = await rv.json();
+                const rvs = datarv.result.result;
+                console.log("rv",rvs)
                 const response = await fetch(`http://localhost:8080/product/${productId}`, {
                     method: 'GET',
                     headers: {
@@ -793,6 +795,7 @@
                 document.getElementById('description').innerText = product.description;
                 document.getElementById("qvId").textContent = product.productId;
                 document.getElementById("availability").textContent = product.soldQuantity;
+                document.getElementById("reviews").textContent = rvs;
                 //document.getElementById('availability').classList.toggle('text-danger', product.soldQuantity === 0);
 
                 // Cập nhật hình ảnh chính và hình ảnh thumbnail
