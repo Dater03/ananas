@@ -591,19 +591,19 @@
                     // Gọi API
                     const response = await fetch(`${apiEndpoint}?page=${page}&size=9&sort=${condition}&filter=${filter}`);
                     const data = await response.json();
-            
+
                     // Kiểm tra phản hồi từ API
                     if (data.code === 200) {
                         const products = data.result.result;
                         const meta = data.result.meta;
-            
+
                         // Xóa sản phẩm cũ
                         $(".shop-product-wrap").empty();
-            
+
                         // Render sản phẩm mới
                         for (const product of products) {
                             let rating = 0;
-            
+
                             try {
                                 // Gọi API để lấy rating
                                 const responseRate = await fetch(`http://localhost:8080/review/average?productId=${product.productId}`);
@@ -614,7 +614,7 @@
                             } catch (error) {
                                 console.error(`Error fetching rating for product ${product.productId}:`, error);
                             }
-            
+
                             const productHTML = `
                                 <div class="col-lg-4 col-sm-6">
                                     <div class="product-item mb-53">
@@ -648,14 +648,14 @@
                             `;
                             $(".shop-product-wrap").append(productHTML);
                         }
-            
+
                         // Gắn sự kiện "Quick View" sau khi render
                         addQuickViewEventListeners();
-            
+
                         // Render phân trang
                         const paginationBox = document.querySelector(".pagination-box");
                         paginationBox.innerHTML = "";
-            
+
                         if (meta.pages > 1) {
                             paginationBox.innerHTML += `<li><a class="Previous" href="#"><i class="ion-ios-arrow-left"></i></a></li>`;
                             for (let i = 0; i < meta.pages; i++) {
@@ -672,7 +672,7 @@
                     console.error('Error loading products:', error);
                 }
             }
-            
+
 
 
             // Sự kiện phân trang
@@ -703,9 +703,15 @@
             // Lấy chi tiết sản phẩm từ API và hiển thị trong modal
             async function fetchQuickViewProduct(productId) {
                 try {
-                    const rv = await fetch(`http://localhost:8080/review/count?productId=${productId}`);
-                    const datarv = await rv.json();
-                    const rvs = datarv.result.result;
+                    let rvs = "No reviews available"; // Giá trị mặc định
+                    try {
+                        const rv = await fetch(`http://localhost:8080/review/count?productId=${productId}`);
+                        const datarv = await rv.json();
+                        rvs = datarv.result.result; // Nếu fetch và json thành công
+                    } catch (error) {
+                        console.error("Error fetching review count:", error); // Ghi log lỗi
+                    }
+
                     const response = await fetch(`${apiEndpoint}/${productId}`, {
                         method: "GET",
                         headers: {
