@@ -144,10 +144,11 @@ public class VoucherService implements IVoucherService {
     @Override
     public VoucherArchive archiveVoucherByUser(VoucherArchive voucherArchive) {
         if(voucherArchive == null) throw new AppException(ErrException.VOUCHER_ERROR_ARCHIVE);
-
         Voucher voucher = voucherRepository.findVoucherByVoucherId(voucherArchive.getVoucherId());
         if(voucher == null) throw new AppException(ErrException.VOUCHER_NOT_EXISTED);
 
+        Voucher_User voucherUser1=  voucherUserRepository.findVoucherByUserAndVoucher(voucherArchive.getUserId(), voucherArchive.getVoucherId());
+        if(voucherUser1 != null) throw new AppException(ErrException.VOUCHER_ARCHIVE_EXISTED);
         Optional<User> user = userRepository.findById(voucherArchive.getUserId());
         if(!user.isPresent()) throw new AppException(ErrException.USER_NOT_EXISTED);
 
@@ -165,6 +166,23 @@ public class VoucherService implements IVoucherService {
         List<VoucherResponse> voucherResponses = new ArrayList<>();
         for (Voucher_User voucherUser : voucherUsers) {
             voucherResponses.add(mapper.voucherToVoucherResponse(voucherUser.getVoucher()));
+        }
+        return voucherResponses;
+    }
+
+    @Override
+    public List<Voucher> getVoucherOk() {
+        List<Voucher> vouchers = voucherRepository.findAll();
+        List<Voucher> voucherResponses = new ArrayList<>();
+        for (Voucher voucher : vouchers) {
+            Date now = new Date(System.currentTimeMillis());
+            if (now.after(voucher.getStartDate()) && now.before(voucher.getEndDate()))
+            {
+                if (voucher.getUsageLimit() > 0)
+                {
+                    voucherResponses.add(voucher);
+                }
+            }
         }
         return voucherResponses;
     }

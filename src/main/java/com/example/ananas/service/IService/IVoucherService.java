@@ -30,4 +30,6 @@ public interface IVoucherService {
      VoucherArchive archiveVoucherByUser(VoucherArchive voucherArchive);
 
      List<VoucherResponse> getVoucherOfUser(Integer userId);
+
+     List<Voucher> getVoucherOk();
 }

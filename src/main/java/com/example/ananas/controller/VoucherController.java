@@ -67,4 +67,9 @@ public class VoucherController {
         return ResponseEntity.ok(voucherService.getVoucherOfUser(userId));
     }
 
+    @GetMapping("/voucherOk")
+    public ResponseEntity<List<Voucher>> getVoucherOk() {
+        return ResponseEntity.ok(voucherService.getVoucherOk());
+    }
+
 }
