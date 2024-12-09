@@ -19,7 +19,7 @@
     <script src="assets/js/modernizr-2.8.3.min.js"></script>
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
-    
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 
 
@@ -256,93 +256,13 @@
             <div class="container">
                 <div class="voucher-container bg-light p-4">
                     <div id="voucherCarousel" class="carousel slide" data-bs-ride="carousel">
-                        <!-- Các indicator cho carousel -->
-                        <div class="carousel-indicators">
-                            <button type="button" data-bs-target="#voucherCarousel" data-bs-slide-to="0" class="active"
-                                aria-current="true" aria-label="Slide 1"></button>
-                            <button type="button" data-bs-target="#voucherCarousel" data-bs-slide-to="1"
-                                aria-label="Slide 2"></button>
-                            <button type="button" data-bs-target="#voucherCarousel" data-bs-slide-to="2"
-                                aria-label="Slide 3"></button>
-                        </div>
+                        <!-- Indicators -->
+                        <div class="carousel-indicators"></div>
 
-                        <!-- Các item chứa voucher -->
-                        <div class="carousel-inner">
-                            <div class="carousel-item active">
-                                <div class="row">
-                                    <!-- Voucher 1 -->
-                                    <div class="col-lg-4">
-                                        <div class="voucher-item card">
-                                            <div class="card-body">
-                                                <h5 class="voucher-title">Mã giảm giá: TET25</h5>
-                                                <p class="voucher-desc">Giảm 25.000 VND cho đơn hàng từ 150.000 VND</p>
-                                                <p class="voucher-expiry">Ngày hết hạn: 30/01/2025</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <!-- Voucher 2 -->
-                                    <div class="col-lg-4">
-                                        <div class="voucher-item card">
-                                            <div class="card-body">
-                                                <h5 class="voucher-title">Mã giảm giá: XMAS10</h5>
-                                                <p class="voucher-desc">Giảm 10% cho đơn hàng từ 100.000 VND</p>
-                                                <p class="voucher-expiry">Ngày hết hạn: 31/12/2024</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <!-- Voucher 3 -->
-                                    <div class="col-lg-4">
-                                        <div class="voucher-item card">
-                                            <div class="card-body">
-                                                <h5 class="voucher-title">Mã giảm giá: SUMMER15</h5>
-                                                <p class="voucher-desc">Giảm 15% cho đơn hàng từ 200.000 VND</p>
-                                                <p class="voucher-expiry">Ngày hết hạn: 31/01/2025</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                        <!-- Carousel Inner -->
+                        <div class="carousel-inner"></div>
 
-                            <!-- Slide tiếp theo nếu có thêm voucher -->
-                            <div class="carousel-item">
-                                <div class="row">
-                                    <!-- Voucher 4 -->
-                                    <div class="col-lg-4">
-                                        <div class="voucher-item card">
-                                            <div class="card-body">
-                                                <h5 class="voucher-title">Mã giảm giá: WINTER5</h5>
-                                                <p class="voucher-desc">Giảm 5% cho đơn hàng từ 50.000 VND</p>
-                                                <p class="voucher-expiry">Ngày hết hạn: 31/12/2024</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <!-- Voucher 5 -->
-                                    <div class="col-lg-4">
-                                        <div class="voucher-item card">
-                                            <div class="card-body">
-                                                <h5 class="voucher-title">Mã giảm giá: HOLIDAY20</h5>
-                                                <p class="voucher-desc">Giảm 20% cho đơn hàng từ 200.000 VND</p>
-                                                <p class="voucher-expiry">Ngày hết hạn: 01/02/2025</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <!-- Voucher 6 -->
-                                    <div class="col-lg-4">
-                                        <div class="voucher-item card">
-                                            <div class="card-body">
-                                                <h5 class="voucher-title">Mã giảm giá: NEWYEAR50</h5>
-                                                <p class="voucher-desc">Giảm 50.000 VND cho đơn hàng từ 500.000 VND</p>
-                                                <p class="voucher-expiry">Ngày hết hạn: 10/02/2025</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- Thêm các slide khác nếu có thêm voucher -->
-                        </div>
-
-                        <!-- Các nút điều hướng carousel -->
+                        <!-- Navigation Buttons -->
                         <button class="carousel-control-prev" type="button" data-bs-target="#voucherCarousel"
                             data-bs-slide="prev">
                             <span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -562,6 +482,125 @@
     <script type="text/javascript">
         const TOKEN = localStorage.getItem("token"); // Token lấy từ đâu đó (localStorage, session, v.v.)
         const userId = localStorage.getItem("userId");
+        document.addEventListener("DOMContentLoaded", () => {
+            const API_URL = "http://localhost:8080/voucher/voucherOk";
+            const icons = ["policy-1.png", "policy-2.png", "policy-3.png"];
+            const colors = ["bg-1", "bg-2", "bg-3"];
+            const carouselIndicators = document.querySelector(".carousel-indicators");
+            const carouselInner = document.querySelector(".carousel-inner");
+
+            fetch(API_URL)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.code === 200 && data.result) {
+                        const vouchers = data.result;
+                        let slides = Math.ceil(vouchers.length / 3); // Tính số slide
+                        for (let i = 0; i < slides; i++) {
+                            // Chia voucher thành các nhóm 3
+                            let voucherGroup = vouchers.slice(i * 3, i * 3 + 3);
+
+                            // Tạo indicator
+                            const indicator = document.createElement("button");
+                            indicator.type = "button";
+                            indicator.dataset.bsTarget = "#voucherCarousel";
+                            indicator.dataset.bsSlideTo = i;
+                            indicator.className = i === 0 ? "active" : "";
+                            indicator.setAttribute("aria-label", `Slide ${i + 1}`);
+                            carouselIndicators.appendChild(indicator);
+
+                            // Tạo slide
+                            const slide = document.createElement("div");
+                            slide.className = `carousel-item ${i === 0 ? "active" : ""}`;
+                            const row = document.createElement("div");
+                            row.className = "row";
+
+                            voucherGroup.forEach((voucher, index) => {
+                                // Tạo mỗi voucher
+                                const col = document.createElement("div");
+                                col.className = "col-lg-4";
+
+                                const card = `
+                            <div class="voucher-item card">
+                                <div class="card-body ${colors[index % colors.length]}">
+                                    <div class="policy-icon">
+                                        <img src="assets/img/icon/${icons[index % icons.length]}" alt="policy icon">
+                                    </div>
+                                    <div class="policy-content">
+                                        <h5 class="policy-title">MÃ GIẢM GIÁ: ${voucher.code}</h5>
+                                        <p class="policy-desc">${voucher.description}</p>
+                                        <p class="voucher-expiry">Ngày hết hạn: ${voucher.endDate}</p>
+                                    </div>
+                                    <button class="receive-button" data-voucher-id="${voucher.voucherId}" onclick="handleReceiveClick(event)">Nhận</button>
+                                </div>
+                            </div>`;
+                                col.innerHTML = card;
+                                row.appendChild(col);
+                            });
+
+                            slide.appendChild(row);
+                            carouselInner.appendChild(slide);
+                        }
+                    } else {
+                        console.error("API không trả dữ liệu hợp lệ.");
+                    }
+                })
+                .catch(error => console.error("Lỗi khi gọi API:", error));
+        });
+
+        function handleReceiveClick(event) {
+            const button = event.target;  // Lấy đối tượng button mà sự kiện được kích hoạt
+            const voucherId = button.getAttribute('data-voucher-id');  // Lấy voucherId từ data-voucher-id
+            const userId = localStorage.getItem('userId');  // Lấy userId từ localStorage
+
+            if (!userId) {
+                alert("Bạn cần đăng nhập để nhận voucher.");
+                return;
+            }
+
+            // Gọi hàm archiveVoucher để thực hiện nhận voucher
+            archiveVoucher(userId, voucherId)
+                .then(message => {
+                    alert(message); 
+                })
+                .catch(error => {
+                    
+                });
+        }
+
+        // Hàm gọi API để nhận voucher
+        function archiveVoucher(userId, voucherId) {
+            const ARCHIVE_VOUCHER_URL = "http://localhost:8080/voucher/archiveVoucher";
+
+            if (!userId || !voucherId) {
+                return Promise.reject("Thông tin không hợp lệ.");
+            }
+
+            const requestBody = {
+                userId: userId,
+                voucherId: voucherId
+            };
+
+            return fetch(ARCHIVE_VOUCHER_URL, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(requestBody)
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.code === 200) {
+                        return "Nhận voucher thành công!";
+                    } else {
+                        return data.message;
+                    }
+                })
+                .catch(error => {
+                    console.error("Lỗi khi gọi API nhận voucher:", error);
+                    throw new Error("Lỗi hệ thống, vui lòng thử lại sau.");
+                });
+        }
+
 
         document.addEventListener('DOMContentLoaded', async () => {
             const token = localStorage.getItem('token'); // Lấy token đăng nhập
@@ -1088,7 +1127,6 @@
             const token = localStorage.getItem("token"); // Lấy token từ localStorage
             // Kiểm tra nếu không có ID hoặc token
             if (!userId || !token) {
-                alert("User ID or Token is missing!");
                 return;
             }
 
@@ -1246,6 +1284,41 @@
     .slick-next:hover {
         background: #ff5722;
     }
+
+    .voucher-expiry {
+        color: #c9302c;
+        font-weight: 600;
+    }
+
+    .voucher-item {
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .voucher-item:hover {
+        transform: scale(1.05);
+        box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+    }
+
+    .receive-button {
+        position: absolute;
+        bottom: 25px;
+        right: 25px;
+        background-color: #d9534f;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        padding: 6px 12px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+
+    .receive-button:hover {
+        background-color: #c9302c;
+    }
+
 
 
     /* top seller */

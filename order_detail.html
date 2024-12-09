@@ -184,7 +184,7 @@
                                 <div class="col-lg-6 mb-3">
                                     <label for="payment-method" class="form-label">Phương thức thanh toán</label>
                                     <div class="form-group">
-                                        <select id="payment-method" class="form-control py-2" data-selected-method="">
+                                        <select id="payment-method" class="form-control py-2" data-selected-method="CREDIT_CARD">
                                             <option value="CASH_ON_DELIVERY">CASH_ON_DELIVERY</option>
                                             <option value="CREDIT_CARD">CREDIT_CARD</option>
                                         </select>
@@ -579,7 +579,7 @@
             renderCartTable(order);
             renderCartSummary(order);
             document.getElementById('payment-method').value = order.paymentMethod;
-            alert("Oe: " + order.paymentMethod);
+            paymentMethodSelect.setAttribute('data-selected-method', paymentMethodSelect.value);
         }
 
         function monitorChangesAndToggleUpdateButton() {
