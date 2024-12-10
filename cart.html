@@ -17,6 +17,12 @@
     <link href="assets/css/style.css" rel="stylesheet">
     <!-- Modernizer JS -->
     <script src="assets/js/modernizr-2.8.3.min.js"></script>
+    <style>
+        #status-dropdown{
+            width: 300px;
+            margin-top: 10px;
+        }
+    </style>
 
     <!--[if lt IE 9]>
 <script src="//oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
@@ -185,13 +191,13 @@
                             </div>
                             <!-- Cart Update Option -->
                             <div class="cart-update-option d-block d-md-flex justify-content-between">
-                                <div class="apply-coupon-wrapper">
-                                    <form action="#" method="post" class=" d-block d-md-flex">
-                                        <input type="text" placeholder="Enter Your Coupon Code" required />
-                                        <button class="btn">Mã Giảm Giá</button>
-                                    </form>
+                                <div class="cart-dropdown1">
+                                    <div style="align-content: center; padding-right: 10px;">
+                                        <h6>Mã giảm giá của bạn</h6>
+                                    </div>
+                                    <div class="cart-dropdown" style="width: 15%; text-align: center;">
+                                    </div>
                                 </div>
-                                
                             </div>
                         </div>
                     </div>
@@ -334,6 +340,53 @@
     <script>
         const TOKEN = localStorage.getItem("token"); // Token lấy từ đâu đó (localStorage, session, v.v.)
         const userId = localStorage.getItem("userId");
+        function loadVoucherCodes(userId) {
+            const apiUrl = `http://localhost:8080/voucher/listVoucherArchive/${userId}`;
+            fetch(apiUrl)
+                .then(response => {
+                    if (!response.ok) {
+                        console.log( "restponse"+response)
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    // Kiểm tra nếu API trả về dữ liệu hợp lệ
+                    if (data.code === 200 && Array.isArray(data.result)) {
+                        const dropdownContainer = document.querySelector(".cart-dropdown");
+
+                        // Xóa nội dung cũ trong container (nếu có)
+                        dropdownContainer.innerHTML = '';
+
+                        // Tạo phần tử <select>
+                        const select = document.createElement("select");
+                        select.id = "status-dropdown";
+                        select.className = "form-control";
+
+                        // Thêm một option mặc định
+                            const defaultOption = document.createElement("option");
+                            defaultOption.value = "";
+                            defaultOption.textContent = "Chọn mã giảm giá";
+                            select.appendChild(defaultOption);
+
+                        // Thêm các mã voucher từ dữ liệu API
+                        data.result.forEach(voucher => {
+                                const option = document.createElement("option");
+                                option.value = voucher.code;
+                                option.textContent = `${voucher.code}`;
+                                select.appendChild(option);
+                        });
+
+                        // Gắn <select> vào container
+                        dropdownContainer.appendChild(select);
+                    } else {
+                        console.error("Dữ liệu trả về không hợp lệ hoặc không có mã voucher.");
+                    }
+                })
+                .catch(error => {
+                    console.error("Lỗi khi lấy dữ liệu từ API:", error);
+                });
+        }
 
         $(document).ready(function () {
             // URL API
@@ -346,6 +399,7 @@
 
             // Hàm load cart items
             function loadCartItems() {
+                loadVoucherCodes(userId);
                 $.ajax({
                     url: apiUrl,
                     type: 'GET',
@@ -445,7 +499,7 @@
 
 
         document.addEventListener("DOMContentLoaded", async () => {
-
+           
             // Nếu có token, gọi API lấy số lượng sản phẩm trong giỏ hàng
             if (TOKEN !== null && TOKEN !== undefined) {
                 console.log("abc")
@@ -474,8 +528,8 @@
             }
 
         });
-                // Bắt đầu xử lý mini card
-                function renderMiniCart(cartItems, summary) {
+        // Bắt đầu xử lý mini card
+        function renderMiniCart(cartItems, summary) {
             const cartWrapper = document.querySelector(".minicart-item-wrapper ul");
             const pricingBox = document.querySelector(".minicart-pricing-box ul");
 
@@ -581,14 +635,14 @@
             event.preventDefault();  // Ngừng hành động mặc định của liên kết
             const minicartWrapper = document.querySelector(".offcanvas-minicart-wrapper");  // Giỏ hàng mini
             const cartItems = await fetchCartItems(userId);
-                if (cartItems.length === 0) {
-                    const pricingBox = document.querySelector(".minicart-pricing-box ul");
-                    pricingBox.innerHTML = '<div style="text-align: center; margin: 20px 0;"> <i class="ion-bag" style="font-size: 50px; color: #ccc;"></i> <p style="font-size: 16px; color: #666; margin-top: 10px;"> Giỏ hàng của bạn đang trống </p> </div>';
+            if (cartItems.length === 0) {
+                const pricingBox = document.querySelector(".minicart-pricing-box ul");
+                pricingBox.innerHTML = '<div style="text-align: center; margin: 20px 0;"> <i class="ion-bag" style="font-size: 50px; color: #ccc;"></i> <p style="font-size: 16px; color: #666; margin-top: 10px;"> Giỏ hàng của bạn đang trống </p> </div>';
 
-                } else {
-                    const cartSummary = await fetchCartSummary(userId);
-                    renderMiniCart(cartItems, cartSummary);
-                }
+            } else {
+                const cartSummary = await fetchCartSummary(userId);
+                renderMiniCart(cartItems, cartSummary);
+            }
         });
 
         // Xử lý khi nhấn nút xóa sản phẩm khỏi giỏ hàng
@@ -650,7 +704,7 @@
                 alert("User ID or Token is missing!");
                 return;
             }
-    
+
             // API URLs
             const UserUrl = `http://localhost:8080/user/${userId}`;
             // Fetch user data
@@ -664,11 +718,11 @@
                 });
                 const data = await response.json();
                 const user = data.result.result;
-    
+
                 const avatarSmall = user.avatar
                     ? `http://localhost:8080/images/avatar/${user.avatar}`
                     : "assets/img/about/avatar.jpg";
-    
+
                 // Gán URL của avatar vào thẻ <img> trong .user-thumbnail
                 const userImage = document.querySelector(".user-thumbnail .user-image");
                 if (userImage) {
@@ -685,14 +739,14 @@
                         'Content-Type': 'application/json',
                     },
                 });
-    
+
                 if (!response.ok) {
                     throw new Error(`Error fetching cart quantity: ${response.statusText}`);
                 }
-    
+
                 const data = await response.json();
                 const numberOfProduct = data.result;
-    
+
                 // Hiển thị số lượng sản phẩm trong giao diện
                 document.getElementById('cart-quantity').innerText = numberOfProduct;
             } catch (error) {
@@ -732,4 +786,4 @@
         text-align: center;
         margin-bottom: 20px;
     }
-</style>
+</styl>
