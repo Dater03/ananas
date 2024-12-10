@@ -16,4 +16,5 @@ public interface IReviewService {
     ReviewResponse updateReviewById(int id, ReviewDTO review);
     List<Review> getAllReviewsByProductId(int product_id);
     int getReviewsCountByProductId(int product_id);
+    double getAverageRatingByProductId(int product_id);
 }

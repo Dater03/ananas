@@ -50,4 +50,14 @@ public class MessageController {
     public ResponseEntity<List<MessageDTO>> getLatestMessages(@RequestParam("receiverId") Integer receiverId) {
         return ResponseEntity.ok(messageService.getMessList(receiverId));
     }
+
+    @GetMapping("/both")
+    public ResponseEntity<List<MessageDTO>> getBothMess(@RequestParam("senderId") Integer senderId, @RequestParam("receiverId") Integer receiverId) {
+        return ResponseEntity.ok(messageService.getMessBySenderAndReceiver(senderId,receiverId));
+    }
+
+    @GetMapping("/both2")
+    public ResponseEntity<List<MessageDTO>> getBoth2Mess( @RequestParam("receiverId") Integer receiverId,@RequestParam("senderId") Integer senderId) {
+        return ResponseEntity.ok(messageService.getMessByReceiverAndSender(receiverId,senderId));
+    }
 }

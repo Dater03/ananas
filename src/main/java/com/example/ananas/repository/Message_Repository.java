@@ -14,6 +14,8 @@ public interface Message_Repository extends JpaRepository<Messages, Integer> {
     List<Messages> findBySenderId(Integer senderId);
     List<Messages> findByReceiverId(Integer receiverId);
     List<Messages> findBySenderIdAndReceiverId(Integer senderId, Integer receiverId);
+    List<Messages> findByReceiverIdAndSenderId(Integer receiverId, Integer senderId);
+
 
     @Query(value = """
         SELECT m.message_id, m.sender_id, m.receiver_id, m.message, m.created_at, u.username AS sender_name

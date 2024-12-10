@@ -39,6 +39,14 @@ public class ReviewController {
                 .build();
     }
 
+    @GetMapping("/average")
+    public ApiResponse<Double> getAverage(@RequestParam int productId) {
+        return ApiResponse.<Double>builder()
+                .result(reviewService.getAverageRatingByProductId(productId))
+                .code(200)
+                .build();
+    }
+
     @GetMapping
     public ApiResponse<List<Review>> getReviewByProductId(@RequestParam int productId) {
         return ApiResponse.<List<Review>>builder()

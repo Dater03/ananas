@@ -13,4 +13,6 @@ public interface IMessageService {
     MessageDTO updateMessage(int id, MessageDTO MessageDTO);
     void deleteMessage(int id);
     List<MessageDTO> getMessList(int receiverId);
+    List<MessageDTO> getMessBySenderAndReceiver(int senderId, int receiverId);
+    List<MessageDTO> getMessByReceiverAndSender(int receiverId, int senderId);
 }

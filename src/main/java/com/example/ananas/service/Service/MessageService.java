@@ -82,4 +82,20 @@ public class MessageService implements IMessageService {
                 ))
                 .collect(Collectors.toList());
     }
+
+    @Override
+    public List<MessageDTO> getMessBySenderAndReceiver(int senderId, int receiverId) {
+        List<Messages> messages = messageRepository.findBySenderIdAndReceiverId(senderId, receiverId);
+        return  messages.stream()
+                .map(messageMapper::toMessageDTO)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<MessageDTO> getMessByReceiverAndSender(int receiverId, int senderId) {
+        List<Messages> messages = messageRepository.findByReceiverIdAndSenderId(receiverId, senderId);
+        return  messages.stream()
+                .map(messageMapper::toMessageDTO)
+                .collect(Collectors.toList());
+    }
 }
