@@ -133,39 +133,7 @@
           </a><!-- End Messages Icon -->
 
           <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow messages">
-            <li class="dropdown-header">
-              Bạn có 2 tin nhắn mới
-              <a href="#"><span class="badge rounded-pill bg-primary p-2 ms-2">Xem tất cả</span></a>
-            </li>
-            <li><hr class="dropdown-divider"></li>
-
-            <li class="message-item">
-              <a href="#">
-                <img src="assets/img/messages-3.jpg" alt class="rounded-circle">
-                <div>
-                  <h4>Đỗ Thành Đạt</h4>
-                  <p>Sản phẩm này có kích cỡ 42 không?</p>
-                  <p>2 giờ trước</p>
-                </div>
-              </a>
-            </li>
-            <li><hr class="dropdown-divider"></li>
-
-            <li class="message-item">
-              <a href="#">
-                <img src="assets/img/messages-1.jpg" alt class="rounded-circle">
-                <div>
-                  <h4>Đỗ Thị Ling Ling</h4>
-                  <p>Tôi muốn đổi sản phẩm, quy trình như thế nào?</p>
-                  <p>4 giờ trước</p>
-                </div>
-              </a>
-            </li>
-            <li><hr class="dropdown-divider"></li>
-
-            <li class="dropdown-footer">
-              <a href="#">Hiển thị tất cả tin nhắn</a>
-            </li>
+            
           </ul><!-- End Messages Dropdown Items -->
 
         </li><!-- End Messages Nav -->
@@ -414,11 +382,10 @@
          <td>${user.firstname || 'N/A'}</td>
          <td>${user.lastname || 'N/A'}</td>
          <td>
-           ${user.avatar ? `<img src="${user.avatar}" alt="Avatar" width="50" height="50">` : 'N/A'}
+           ${user.avatar ? `<img src="http://localhost:8080/images/avatar/${user.avatar}" alt="Avatar" width="50" height="50">` : 'N/A'}
          </td>
          <td>${user.phone || 'N/A'}</td>
          <td>
-           <button onclick="editUser(${user.userId})">Sửa</button>
            <button onclick="deleteUser(${user.userId})">Xóa</button>
          </td>
        `;
@@ -429,15 +396,6 @@
    } catch (error) {
      console.error('Lỗi khi tải dữ liệu người dùng:', error);
    }
- }
- 
- 
- 
- 
- // Hàm chỉnh sửa người dùng
- function editUser(userId) {
-   alert(`Chỉnh sửa người dùng với ID: ${userId}`);
-   // Thực hiện logic chỉnh sửa tại đây
  }
  
  // Hàm xóa người dùng
@@ -486,6 +444,91 @@ async function deleteUser(userId) {
  // Gọi hàm fetchUsers khi tải trang
  document.addEventListener('DOMContentLoaded', fetchUsers);
  
+ 
  </script>
  
- 
+ <script>
+  document.addEventListener("DOMContentLoaded", function () {
+    // API Endpoint với tham số receiverId
+    const receiverId = 1;  // Thay đổi giá trị này tùy theo id của người nhận
+    const apiEndpoint = `http://localhost:8080/message/latest?receiverId=${receiverId}`;
+  
+    // Hàm fetch dữ liệu từ API
+    async function fetchMessages() {
+      try {
+        const response = await fetch(apiEndpoint);
+        const data = await response.json(); // Parse JSON response
+        const messages = data.result;
+        console.log("m", messages)
+  
+        // Xóa danh sách tin nhắn cũ
+        const messageList = document.querySelector(".dropdown-menu.messages");
+        messageList.innerHTML = `
+          <li class="dropdown-header">
+            Bạn có ${messages.length} tin nhắn mới
+            <a href="#"><span class="badge rounded-pill bg-primary p-2 ms-2">Xem tất cả</span></a>
+          </li>
+          <li><hr class="dropdown-divider"></li>
+        `;
+  
+        // Thêm từng tin nhắn vào danh sách
+        messages.forEach((message) => {
+          const messageItem = `
+            <li class="message-item">
+              <a href="#">
+                <img src="assets/img/messages-${message.messageId % 3 + 1}.jpg" alt class="rounded-circle">
+                <div>
+                  <h4>${message.senderName}</h4>
+                  <p>${message.message}</p>
+                  <p>${formatTimeAgo(message.createdAt)}</p>
+                </div>
+              </a>
+            </li>
+            <li><hr class="dropdown-divider"></li>
+          `;
+          messageList.insertAdjacentHTML("beforeend", messageItem);
+        });
+  
+        // Thêm footer
+        messageList.insertAdjacentHTML(
+          "beforeend",
+          `
+          <li class="dropdown-footer">
+            <a href="#">Hiển thị tất cả tin nhắn</a>
+          </li>
+          `
+        );
+      } catch (error) {
+        console.error("Lỗi khi lấy danh sách tin nhắn:", error);
+      }
+    }
+  
+    function formatTimeAgo(dateString) {
+      const date = new Date(dateString); // JavaScript hiểu tốt định dạng ISO 8601
+      date.setHours(date.getHours() + 7); // Cộng thêm 7 giờ để điều chỉnh sang UTC+7
+      const now = new Date();
+      const diff = Math.floor((now - date) / 1000); // Hiệu số thời gian tính bằng giây
+    
+      if (diff < 60) {
+        return `${diff} giây trước`;
+      }
+      
+      if (diff < 3600) {
+        const minutes = Math.round(diff / 60); // Làm tròn phút
+        return `${minutes} phút trước`;
+      }
+      
+      if (diff < 86400) {
+        const hours = Math.round(diff / 3600); // Làm tròn giờ
+        return `${hours} giờ trước`;
+      }
+    
+      return `${Math.floor(diff / 86400)} ngày trước`; // Nếu lớn hơn 1 ngày
+    }
+    
+  
+    // Gọi hàm fetchMessages khi load trang
+    fetchMessages();
+  });
+  
+</script>
