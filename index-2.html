@@ -17,11 +17,11 @@
     <link href="assets/css/style.css" rel="stylesheet">
     <!-- Modernizer JS -->
     <script src="assets/js/modernizr-2.8.3.min.js"></script>
-
+    <!--
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
-
+-->
 
 </head>
 
@@ -313,7 +313,8 @@
                         <div class="col-md-6">
                             <div class="product-details">
                                 <h5 style="margin-bottom: 10px;" class="modal-title" id="productName">Product Name</h5>
-                                <p>Số lượt đánh giá: <span style="margin-bottom: 10px;" id="reviews"></span></p>
+                                <p style="margin-bottom: 10px;">Số lượt đánh giá: <span style="margin-bottom: 10px;"
+                                        id="reviews"></span></p>
                                 <div style="margin-bottom: 10px;" class="price-box">
                                     <span id="currentPrice" class="price-regular">$70.00</span>
                                     <span id="oldPrice" class="price-old text-muted"><del>$80.00</del></span>
@@ -566,10 +567,10 @@
             // Gọi hàm archiveVoucher để thực hiện nhận voucher
             archiveVoucher(userId, voucherId)
                 .then(message => {
-                    alert(message); 
+                    alert(message);
                 })
                 .catch(error => {
-                    
+
                 });
         }
 
@@ -638,6 +639,12 @@
 
                 for (const product of products) {
                     // Gọi API lấy danh sách ảnh của từng sản phẩm
+                    let rating = 0;
+                    const responseRate = await fetch(`http://localhost:8080/review/average?productId=${product.productId}`);
+                    const dataRate = await responseRate.json();
+                    if (dataRate.code === 200) {
+                        rating = Math.round(dataRate.result.result); // Làm tròn số sao
+                    }
 
                     let productImage = product.images && product.images.length > 0 ? product.images[0] : 'assets/img/default-image.jpg';
 
@@ -652,6 +659,10 @@
                                         <h5 class="product-name">
                                             <a href="product-details.html">${product.productName}</a>
                                         </h5>
+                                        <div class="ratings mb-2">
+                                            ${'<span><i class="ion-android-star"></i></span>'.repeat(rating)}
+                                            ${'<span><i class="ion-android-star-outline"></i></span>'.repeat(5 - rating)}
+                                        </div>
                                         <div class="price-box">
                                             <span class="price-regular">${product.price * (100 - product.discount) / 100} VND</span>
                                             <span class="price-old"><del>${product.price}</del></span>
@@ -668,6 +679,7 @@
                                     </div>
                                 </div>
                     `;
+
                     const topProductHTML = `
                         <div class="slide-item">
                             <div class="pro-item-small mt-30">
@@ -686,8 +698,8 @@
                                             <span class="price-old"><del>${product.price}</del></span>
                                         </div>
                                     <div class="ratings">
-                                        ${'<span><i class="ion-android-star"></i></span>'.repeat(product.rating || 0)}
-                                        ${'<span><i class="ion-android-star-outline"></i></span>'.repeat(5 - (product.rating || 0))}
+                                        ${'<span><i class="ion-android-star"></i></span>'.repeat(rating)}
+                                        ${'<span><i class="ion-android-star-outline"></i></span>'.repeat(5 - rating)}
                                     </div>
                                     <div class="product-link-2">
                                         <a href="#" data-bs-toggle="tooltip" title="Wishlist"><i class="ion-android-favorite-outline"></i></a>
@@ -809,10 +821,16 @@
         // Lấy chi tiết sản phẩm từ API và hiển thị vào modal
         async function fetchQuickViewProduct(productId) {
             try {
-                const rv = await fetch(`http://localhost:8080/review/count?productId=${productId}`);
-                const datarv = await rv.json();
-                const rvs = datarv.result.result;
-                console.log("rv",rvs)
+                let rvs = "No reviews available"; // Giá trị mặc định
+                try {
+                    const rv = await fetch(`http://localhost:8080/review/count?productId=${productId}`);
+                    const datarv = await rv.json();
+                    rvs = datarv.result.result; // Nếu fetch và json thành công
+                } catch (error) {
+                    console.error("Error fetching review count:", error); // Ghi log lỗi
+                }
+
+
                 const response = await fetch(`http://localhost:8080/product/${productId}`, {
                     method: 'GET',
                     headers: {

@@ -394,7 +394,7 @@
 
             // Hàm định dạng giá
             function formatPrice(price) {
-                return `$${price.toFixed(2)}`;
+                return `${price.toFixed(2)} VND`;
             }
 
             // Hàm load cart items
@@ -434,7 +434,7 @@
                                 <span>${formatPrice(price)}</span>
                             </td>
                             <td class="pro-quantity">
-                                <div class="pro-qty"><input type="text" value="${quantity}"></div>
+                                <div class="pro-qty"><p>${quantity}</p></div>
                             </td>
                             <td class="pro-subtotal">
                                 <span>${formatPrice(price * quantity)}</span>

@@ -165,7 +165,8 @@
                                     <div class="product-details-des">
                                         <h3 id="productName" class="pro-det-title"></h3>
                                         <div class="pro-review">
-                                            <p>Số lượt đánh giá: <span style="margin-bottom: 10px;" id="reviews"></span></p>
+                                            <p>Số lượt đánh giá: <span style="margin-bottom: 10px;" id="reviews"></span>
+                                            </p>
                                         </div>
                                         <div class="price-box">
                                             <span id="currentPrice" class="regular-price"></span>
@@ -278,7 +279,8 @@
                                                     </tbody>
                                                 </table>
                                             </div>
-                                            <div class="tab-pane fade" id="tab_three" role="tabpanel" aria-labelledby="tab_three_btn">
+                                            <div class="tab-pane fade" id="tab_three" role="tabpanel"
+                                                aria-labelledby="tab_three_btn">
                                                 <form action="#" class="review-form" id="reviewForm">
                                                     <h5 id="review-count"></h5>
                                                     <div id="review-list">
@@ -286,13 +288,17 @@
                                                     </div>
                                                     <div class="form-group row mb-3">
                                                         <div class="col">
-                                                            <label class="col-form-label"><span class="text-danger">*</span>Bình luận</label>
-                                                            <textarea class="form-control" id="reviewContent" required></textarea>
+                                                            <label class="col-form-label"><span
+                                                                    class="text-danger">*</span>Bình luận</label>
+                                                            <textarea class="form-control" id="reviewContent"
+                                                                required></textarea>
                                                         </div>
                                                     </div>
                                                     <div class="form-group row mb-3">
                                                         <div class="col">
-                                                            <label class="col-form-label"><span class="text-danger">*</span> Đánh giá sản phẩm</label>
+                                                            <label class="col-form-label"><span
+                                                                    class="text-danger">*</span> Đánh giá sản
+                                                                phẩm</label>
                                                             &nbsp;&nbsp;&nbsp; Bad&nbsp;
                                                             <input type="radio" value="1" name="rating" id="rating1">
                                                             &nbsp;
@@ -307,11 +313,12 @@
                                                         </div>
                                                     </div>
                                                     <div class="buttons">
-                                                        <button class="btn" type="button" id="submitReview">Đăng</button>
+                                                        <button class="btn" type="button"
+                                                            id="submitReview">Đăng</button>
                                                     </div>
                                                 </form>
                                             </div>
-                                            
+
                                         </div>
                                     </div>
                                 </div>
@@ -381,7 +388,7 @@
                             <div class="product-details">
                                 <h5 style="margin-bottom: 10px;" class="modal-title" id="productName-1">Product Name
                                 </h5>
-                                <div style="margin-bottom: 10px; class="pro-review">
+                                <div style="margin-bottom: 10px;" class="pro-review">
                                     <p>Số lượt đánh giá: <span style="margin-bottom: 10px;" id="reviews-1"></span></p>
                                 </div>
                                 <div style="margin-bottom: 10px;" class="price-box">
@@ -761,6 +768,18 @@
                 // Gọi API lấy danh sách ảnh của từng sản phẩm
 
                 let productImage = product.images && product.images.length > 0 ? product.images[0] : 'assets/img/default-image.jpg';
+                let rating = 0;
+
+                try {
+                    // Gọi API để lấy rating
+                    const responseRate = await fetch(`http://localhost:8080/review/average?productId=${product.productId}`);
+                    const dataRate = await responseRate.json();
+                    if (dataRate.code === 200) {
+                        rating = Math.round(dataRate.result.result); // Làm tròn số sao
+                    }
+                } catch (error) {
+                    console.error(`Error fetching rating for product ${product.productId}:`, error);
+                }
 
                 const productHTML = `
                     <div class="product-item mb-50">
@@ -773,6 +792,10 @@
                                     <h5 class="product-name">
                                         <a href="product-details.html">${product.productName}</a>
                                     </h5>
+                                    <div class="ratings mb-2">
+                                    ${'<span><i class="ion-android-star"></i></span>'.repeat(rating)}
+                                    ${'<span><i class="ion-android-star-outline"></i></span>'.repeat(5 - rating)}
+                                </div>
                                     <div class="price-box">
                                         <span class="price-regular">${product.price * (100 - product.discount) / 100} VND</span>
                                         <span class="price-old"><del>${product.price}</del></span>
@@ -839,10 +862,16 @@
     // Lấy chi tiết sản phẩm từ API và hiển thị vào modal
     async function fetchQuickViewProduct(productId) {
         try {
-            const rv = await fetch(`http://localhost:8080/review/count?productId=${productId}`);
-            const datarv = await rv.json();
-            const rvs = datarv.result.result;
-            console.log("Re",rvs)
+            let rvs = "No reviews available"; // Giá trị mặc định
+            try {
+                const rv = await fetch(`http://localhost:8080/review/count?productId=${productId}`);
+                const datarv = await rv.json();
+                rvs = datarv.result.result; // Nếu fetch và json thành công
+            } catch (error) {
+                console.error("Error fetching review count:", error); // Ghi log lỗi
+            }
+
+            console.log("Re", rvs)
 
             const response = await fetch(`http://localhost:8080/product/${productId}`, {
                 method: 'GET',
@@ -904,9 +933,15 @@
     // Hàm để fetch thông tin sản phẩm từ API và cập nhật DOM
     async function fetchProductDetails(productId) {
         try {
-            const rv = await fetch(`http://localhost:8080/review/count?productId=${productId}`);
-            const datarv = await rv.json();
-            const rvs = datarv.result.result;
+            let rvs = "No reviews available"; // Giá trị mặc định
+            try {
+                const rv = await fetch(`http://localhost:8080/review/count?productId=${productId}`);
+                const datarv = await rv.json();
+                rvs = datarv.result.result; // Nếu fetch và json thành công
+            } catch (error) {
+                console.error("Error fetching review count:", error); // Ghi log lỗi
+            }
+
 
             const response = await fetch(`http://localhost:8080/product/${productId}`);
             const token = localStorage.getItem('token');
@@ -1074,8 +1109,6 @@
         }
     }
 
-
-
     document.getElementById("addToCart").addEventListener("click", function () {
         const selectedColor = document.querySelector('.color-box.selected')?.getAttribute('data-color');
         const selectedSize = document.querySelector('.size-box.selected')?.getAttribute('data-size');
@@ -1107,7 +1140,7 @@
     // Gọi API khi trang được tải
     window.addEventListener('DOMContentLoaded', () => {
         // Lấy productId từ URL
-        const productId = getUrlParameter('id');
+        const productId = getUrlParameter('productId');
         if (productId) {
             // Gọi hàm để fetch chi tiết sản phẩm
             fetchProductDetails(productId);
@@ -1186,24 +1219,24 @@
         };
     });
 
-    
-    
+
+
     document.addEventListener('DOMContentLoaded', async () => {
         const reviewList = document.getElementById('review-list');
         const reviewCount = document.getElementById('review-count');
         const reviewForm = document.getElementById('reviewForm');
         const submitReviewButton = document.getElementById('submitReview');
-    
+
         // Lấy userId từ localStorage và productId từ URL
         const userId = localStorage.getItem('userId');
         const urlParams = new URLSearchParams(window.location.search);
         const productId = urlParams.get('id');
-    
+
         if (!userId || !productId) {
             console.error('Missing userId or productId.');
             return;
         }
-    
+
         // Hàm gọi API để lấy danh sách bình luận
         async function fetchReviews() {
             try {
@@ -1213,24 +1246,25 @@
                         'Content-Type': 'application/json',
                     },
                 });
-    
+
                 if (!response.ok) {
                     throw new Error(`HTTP error! Status: ${response.status}`);
                 }
-    
+
                 const data = await response.json();
                 console.log('API response:', data.result);
-    
+
+
                 // Xử lý kết quả trả về
                 if (!data.result.result) {
                     reviewList.innerHTML = '<p>No reviews available.</p>';
                     reviewCount.textContent = `0 review(s)`;
                     return;
                 }
-    
+
                 // Đảm bảo "result" là mảng
                 const reviews = Array.isArray(data.result.result) ? data.result.result : [data.result.result];
-    
+
                 // Cập nhật giao diện
                 reviewCount.textContent = `${reviews.length} review(s)`;
                 reviewList.innerHTML = reviews.map(review => `
@@ -1240,7 +1274,7 @@
                         </div>
                         <div class="review-box">
                             <div class="ratings">
-                                ${Array(5 - (5-review.rating)).fill('<span><i class="fa fa-star"></i></span>').join('')}
+                                ${Array(5 - (5 - review.rating)).fill('<span><i class="fa fa-star"></i></span>').join('')}
                             </div>
                             <div class="post-author">
                                 <p><span>${review.userId} -</span> ${new Date(review.createdAt).toLocaleDateString()}</p>
@@ -1254,17 +1288,17 @@
                 reviewList.innerHTML = '<p>Error loading reviews. Please try again later.</p>';
             }
         }
-    
+
         // Hàm thêm bình luận
         async function addReview() {
             const reviewContent = document.getElementById('reviewContent').value;
             const rating = document.querySelector('input[name="rating"]:checked').value;
-    
+
             const reviewData = {
                 comment: reviewContent,
-                rating: parseInt(rating, 5),
+                rating: parseInt(rating, 10),
             };
-    
+
             try {
                 const response = await fetch(`http://localhost:8080/review?userId=${userId}&productId=${productId}`, {
                     method: 'POST',
@@ -1276,14 +1310,14 @@
                 if (!response.ok) {
                     throw new Error(`HTTP error! Status: ${response.status}`);
                 }
-    
+
                 const data = await response.json();
                 console.log('Review added successfully:', data.result);
-    
+
                 // Làm rỗng form
                 document.getElementById('reviewContent').value = '';
                 document.querySelector('input[name="rating"]:checked').checked = false;
-    
+
                 // Cập nhật danh sách bình luận
                 await fetchReviews();
             } catch (error) {
@@ -1291,16 +1325,16 @@
                 alert('Failed to add review. Please try again later.');
             }
         }
-    
+
         // Gắn sự kiện cho nút "Đăng"
         submitReviewButton.addEventListener('click', async () => {
             await addReview();
         });
-    
+
         // Tải danh sách bình luận khi tải trang
         await fetchReviews();
     });
-    
+
 
 </script>
 
