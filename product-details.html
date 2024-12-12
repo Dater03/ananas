@@ -1140,7 +1140,7 @@
     // Gọi API khi trang được tải
     window.addEventListener('DOMContentLoaded', () => {
         // Lấy productId từ URL
-        const productId = getUrlParameter('productId');
+        const productId = getUrlParameter('id');
         if (productId) {
             // Gọi hàm để fetch chi tiết sản phẩm
             fetchProductDetails(productId);

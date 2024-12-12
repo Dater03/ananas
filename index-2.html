@@ -252,7 +252,7 @@
         <!-- top seller area end -->
 
         <!-- service features start -->
-        <section class="voucher-section mt-5 mb-5">
+        <section class="hero-slider voucher-section mt-5 mb-5">
             <div class="container">
                 <div class="voucher-container bg-light p-4">
                     <div id="voucherCarousel" class="carousel slide" data-bs-ride="carousel">
@@ -657,7 +657,7 @@
                                     </div>
                                     <div class="product-content">
                                         <h5 class="product-name">
-                                            <a href="product-details.html">${product.productName}</a>
+                                            <a href="product-details.html?id=${product.productId}">${product.productName}</a>
                                         </h5>
                                         <div class="ratings mb-2">
                                             ${'<span><i class="ion-android-star"></i></span>'.repeat(rating)}
@@ -686,12 +686,11 @@
                                 <div class="product-thumb">
                                     <a href="product-details.html?id=${product.productId}">
                                         <img src="http://localhost:8080/images/product/${product.images[0]}" alt="${product.productName}" style="height: 180px; width: 169px;">
-    
                                     </a>
                                 </div>
                                 <div class="pro-small-content">
                                     <h6 class="product-name">
-                                        <a href="product-details.html?productId=${product.productId}">${product.productName}</a>
+                                        <a href="product-details.html?id=${product.productId}">${product.productName}</a>
                                     </h6>
                                     <div class="price-box">
                                             <span class="price-regular">${product.price * (100 - product.discount) / 100} VND</span>
@@ -1057,6 +1056,51 @@
             }
         }
 
+        // Lấy chi tiết sản phẩm từ API khi thay đổi màu sắc hoặc kích thước
+        async function updateAvailability(productId, selectedColor, selectedSize) {
+            try {
+                const response = await fetch(`http://localhost:8080/product/sum?productId=${productId}&color=${selectedColor}&size=${selectedSize}`);
+                if (!response.ok) {
+                    throw new Error(`Failed to fetch product availability: ${response.statusText}`);
+                }
+                const rs = await response.json();
+                const data = rs.result;
+                document.getElementById("availability").textContent = data; // Cập nhật availability
+            } catch (error) {
+                console.error("Error fetching availability:", error);
+                document.getElementById("availability").textContent = "Error fetching availability";
+            }
+        }
+
+        // Xử lý sự kiện khi chọn màu sắc
+        document.querySelectorAll('.color-box').forEach(colorBox => {
+            colorBox.addEventListener('click', () => {
+                const selectedColor = colorBox.getAttribute('data-color');
+                const selectedSize = document.querySelector('.size-box.selected')?.getAttribute('data-size') || '';
+                const productId = document.getElementById("qvId").textContent; // Lấy productId từ modal
+                updateAvailability(productId, selectedColor, selectedSize);
+                
+                // Thay đổi trạng thái lựa chọn
+                document.querySelectorAll('.color-box').forEach(box => box.classList.remove('selected'));
+                colorBox.classList.add('selected');
+            });
+        });
+
+        // Xử lý sự kiện khi chọn kích thước
+        document.querySelectorAll('.size-box').forEach(sizeBox => {
+            sizeBox.addEventListener('click', () => {
+                const selectedSize = sizeBox.getAttribute('data-size');
+                const selectedColor = document.querySelector('.color-box.selected')?.getAttribute('data-color') || '';
+                const productId = document.getElementById("qvId").textContent; // Lấy productId từ modal
+                updateAvailability(productId, selectedColor, selectedSize);
+                
+                // Thay đổi trạng thái lựa chọn
+                document.querySelectorAll('.size-box').forEach(box => box.classList.remove('selected'));
+                sizeBox.classList.add('selected');
+            });
+        });
+
+
         // Hàm lấy dữ liệu tổng hợp giỏ hàng (số lượng và giá trị)
         async function fetchCartSummary(userId) {
             try {
@@ -1348,7 +1392,43 @@
         background-color: #c9302c;
     }
 
+    /* voucher */
+    .carousel-control-prev,
+    .carousel-control-next {
+        background-color: rgba(0, 0, 0, 0.5);
+        width: 40px;
+        height: 60px;
+        margin: auto -40px ;
+    }
 
-
-    /* top seller */
+    /* banner */
+    a{
+        text-decoration: none;
+    }
+    @-webkit-keyframes glowing {
+        0% { background-color: #ECF7E6; -webkit-box-shadow: 0 0 3px #ECF7E6; }
+        50% { background-color: #FFCC98; -webkit-box-shadow: 0 0 10px #FFCC98; }
+        100% { background-color: #EE7600; -webkit-box-shadow: 0 0 3px #EE7600; }
+      }
+      @-moz-keyframes glowing {
+        0% { background-color: #ECF7E6; -moz-box-shadow: 0 0 3px #ECF7E6; }
+        50% { background-color: #FFCC98; -moz-box-shadow: 0 0 10px #FFCC98; }
+        100% { background-color: #EE7600; -moz-box-shadow: 0 0 3px #EE7600; }
+      }
+      @-o-keyframes glowing {
+        0% { background-color: #ECF7E6; box-shadow: 0 0 3px #ECF7E6; }
+        50% { background-color: #FFCC98; box-shadow: 0 0 10px #FFCC98; }
+        100% { background-color: #EE7600; box-shadow: 0 0 3px #EE7600; }
+      }
+      @keyframes glowing {
+        0% { background-color: #ECF7E6; box-shadow: 0 0 3px #ECF7E6; }
+        50% { background-color: #FFCC98; box-shadow: 0 0 10px #FFCC98; }
+        100% { background-color: #EE7600; box-shadow: 0 0 3px #EE7600; }
+      }
+      .btn-hero {
+        -webkit-animation: glowing 1500ms infinite;
+        -moz-animation: glowing 1500ms infinite;
+        -o-animation: glowing 1500ms infinite;
+        animation: glowing 1500ms infinite;
+      }
 </style>

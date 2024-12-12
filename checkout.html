@@ -9,8 +9,7 @@
     <title>Ananas - Shoes Store</title>
     <!--=== Favicon ===-->
     <link rel="shortcut icon" href="assets/img/favicon.ico" type="image/x-icon" />
-    <!--=== All Plugins CSS ===-->
-    <link href="assets/css/plugins.css" rel="stylesheet">
+
     <!--=== All Vendor CSS ===-->
     <link href="assets/css/vendor.css" rel="stylesheet">
     <!--=== Main Style CSS ===-->
@@ -156,8 +155,7 @@
                         <!-- Checkout Login Coupon Accordion Start -->
                         <div class="checkoutaccordion" id="checkOutAccordion">
                             <div class="card">
-                                <h5>Returning Customer? <span data-bs-toggle="collapse"
-                                        data-bs-target="#logInaccordion">Click Here To Login</span></h5>
+
                                 <div id="logInaccordion" class="collapse">
                                     <div class="card-body">
                                         <p>If you have shopped with us before, please enter your details in the boxes
@@ -237,140 +235,52 @@
 
                                     <div class="single-input-item">
                                         <label for="email" class="required">Email</label>
-                                        <input type="email" id="email" placeholder="Email Address" required />
+                                        <input type="email" id="email" placeholder="Email của bạn" required />
                                     </div>
 
-                                    <!-- Thành phố -->
-                                    <div class="single-input-item">
-                                        <label for="city" class="required">Thành phố</label>
-                                        <select name="city" id="city">
-   
-                                        </select>
-                                    </div>
+                                    <!-- Thành phố, Huyện, Xã nằm trên cùng 1 dòng -->
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <div class="single-input-item">
+                                                <label for="city" class="required">Thành phố/Tỉnh</label>
+                                                <select name="city" id="city" class="form-control">
+                                                    <option value="">Thành phố/Tỉnh</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="single-input-item">
+                                                <label for="district" class="required">Quận/Huyện</label>
+                                                <select name="district" id="district" class="form-control">
 
-                                    <!-- Huyện/Quận -->
-                                    <div class="single-input-item">
-                                        <label for="district" class="required">Huyện</label>
-                                        <select name="district" id="district">
-        
-                                        </select>
-                                    </div>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="single-input-item">
+                                                <label for="commune" class="required">Phường/Xã</label>
+                                                <select name="commune" id="commune" class="form-control">
 
-                                    <!-- Xã -->
-                                    <div class="single-input-item">
-                                        <label for="commune" class="required">Xã</label>
-                                        <select name="commune" id="commune">
-                                          
-                                        </select>
+                                                </select>
+                                            </div>
+                                        </div>
                                     </div>
 
                                     <div class="single-input-item">
                                         <label for="street-address" class="required mt-20">Địa chỉ chi tiết</label>
-                                        <input type="text" id="street-address" placeholder="Street address Line 1"
-                                            required />
+                                        <input type="text" id="street-address" placeholder="Số nhà của bạn" required />
                                     </div>
-
-                                    <!-- <div class="checkout-box-wrap">
-                                        <div class="single-input-item">
-                                            <div class="form-check custom-checkbox">
-                                                <input type="checkbox" class="form-check-input" id="create_pwd">
-                                                <label class="form-check-label" for="create_pwd">Create an
-                                                    account?</label>
-                                            </div>
-                                        </div>
-                                        <div class="account-create single-form-row">
-                                            <p>Create an account by entering the information below. If you are a
-                                                returning customer please login at the top of the page.</p>
-                                            <div class="single-input-item">
-                                                <label for="pwd" class="required">Account Password</label>
-                                                <input type="password" id="pwd" placeholder="Account Password" required />
-                                            </div>
-                                        </div>
-                                    </div> -->
-
-                                    <!-- <div class="checkout-box-wrap">
-                                        <div class="single-input-item">
-                                            <div class="form-check custom-checkbox">
-                                                <input type="checkbox" class="form-check-input" id="ship_to_different">
-                                                <label class="form-check-label" for="ship_to_different">Ship to a
-                                                    different address?</label>
-                                            </div>
-                                        </div>
-                                        <div class="ship-to-different single-form-row">
-                                            <div class="row">
-                                                <div class="col-md-6">
-                                                    <div class="single-input-item">
-                                                        <label for="f_name_2" class="required">First Name</label>
-                                                        <input type="text" id="f_name_2" placeholder="First Name" required />
-                                                    </div>
-                                                </div>
-
-                                                <div class="col-md-6">
-                                                    <div class="single-input-item">
-                                                        <label for="l_name_2" class="required">Last Name</label>
-                                                        <input type="text" id="l_name_2" placeholder="Last Name" required />
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                            <div class="single-input-item">
-                                                <label for="email_2" class="required">Email Address</label>
-                                                <input type="email" id="email_2" placeholder="Email Address" required />
-                                            </div>
-
-                                            <div class="single-input-item">
-                                                <label for="com-name_2">Company Name</label>
-                                                <input type="text" id="com-name_2" placeholder="Company Name" />
-                                            </div>
-
-                                            <div class="single-input-item">
-                                                <label for="country_2" class="required">Country</label>
-                                                <select name="country" id="country_2">
-                                                    <option value="Bangladesh">Bangladesh</option>
-                                                    <option value="India">India</option>
-                                                    <option value="Pakistan">Pakistan</option>
-                                                    <option value="England">England</option>
-                                                    <option value="London">London</option>
-                                                    <option value="London">London</option>
-                                                    <option value="Chaina">Chaina</option>
-                                                </select>
-                                            </div>
-
-                                            <div class="single-input-item">
-                                                <label for="street-address_2" class="required mt-20">Street address</label>
-                                                <input type="text" id="street-address_2" placeholder="Street address Line 1" required />
-                                            </div>
-
-                                            <div class="single-input-item">
-                                                <input type="text" placeholder="Street address Line 2 (Optional)" />
-                                            </div>
-
-                                            <div class="single-input-item">
-                                                <label for="town_2" class="required">Town / City</label>
-                                                <input type="text" id="town_2" placeholder="Town / City" required />
-                                            </div>
-
-                                            <div class="single-input-item">
-                                                <label for="state_2">State / Divition</label>
-                                                <input type="text" id="state_2" placeholder="State / Divition" />
-                                            </div>
-
-                                            <div class="single-input-item">
-                                                <label for="postcode_2" class="required">Postcode / ZIP</label>
-                                                <input type="text" id="postcode_2" placeholder="Postcode / ZIP" required />
-                                            </div>
-                                        </div>
-                                    </div> -->
 
                                     <div class="single-input-item">
                                         <label for="ordernote">Ghi chú</label>
                                         <textarea name="ordernote" id="ordernote" cols="30" rows="3"
-                                            placeholder="Notes about your order, e.g. special notes for delivery."></textarea>
+                                            placeholder="Viết các lưu ý của bạn về đơn hàng này"></textarea>
                                     </div>
                                 </form>
                             </div>
                         </div>
                     </div>
+
 
                     <!-- Order Summary Details -->
                     <div class="col-lg-6">
@@ -446,8 +356,8 @@
                                     <div class="single-payment-method show">
                                         <div class="payment-method-name">
                                             <div class="form-check">
-                                                <input type="radio" id="cashon" name="paymentmethod" value="cash"
-                                                    class="form-check-input" checked />
+                                                <input type="radio" id="cashon" name="paymentmethod"
+                                                    value="CASH_ON_DELIVERY" class="form-check-input" checked />
                                                 <label class="form-check-label" for="cashon">Cash On Delivery</label>
                                             </div>
                                         </div>
@@ -458,8 +368,8 @@
                                     <div class="single-payment-method">
                                         <div class="payment-method-name">
                                             <div class="form-check">
-                                                <input type="radio" id="directbank" name="paymentmethod" value="bank"
-                                                    class="form-check-input" />
+                                                <input type="radio" id="directbank" name="paymentmethod"
+                                                    value="CREDIT_CARD" class="form-check-input" />
                                                 <label class="form-check-label" for="directbank">Direct Bank
                                                     Transfer</label>
                                             </div>
@@ -477,7 +387,8 @@
                                             <label class="form-check-label" for="terms">I have read and agree to
                                                 the website <a href="index.html">terms and conditions.</a></label>
                                         </div>
-                                        <button type="submit" class="btn btn-sqr">Place Order</button>
+                                        <button type="submit" class="btn btn-sqr" id="placeOrderButton">Đặt
+                                            hàng</button>
                                     </div>
                                 </div>
                             </div>
@@ -583,7 +494,322 @@
     <script>
         const TOKEN = localStorage.getItem("token"); // Token lấy từ đâu đó (localStorage, session, v.v.)
         const userId = localStorage.getItem("userId");
-        
+
+        const data = {
+            "Hà Nội": {
+                districts: {
+                    "Ba Đình": ["Phúc Xá", "Vĩnh Phúc", "Trúc Bạch"],
+                    "Hoàn Kiếm": ["Hàng Bạc", "Hàng Buồm", "Cửa Đông"],
+                    "Tây Hồ": ["Quảng An", "Nhật Tân", "Tứ Liên"],
+                    "Cầu Giấy": ["Dịch Vọng", "Dịch Vọng Hậu", "Mai Dịch"],
+                    "Long Biên": ["Bồ Đề", "Ngọc Thụy", "Phúc Lợi"],
+                    "Thanh Xuân": ["Thanh Xuân Bắc", "Thanh Xuân Nam"]
+                }
+            },
+            "TP. Hồ Chí Minh": {
+                districts: {
+                    "Quận 1": ["Bến Nghé", "Bến Thành", "Phường Nguyễn Thái Bình"],
+                    "Quận 2": ["Thảo Điền", "An Phú", "Bình An"],
+                    "Quận 3": ["Phường 1", "Phường 2", "Phường 3"],
+                    "Quận 7": ["Tân Hưng", "Phú Mỹ", "Tân Thuận Đông"],
+                    "Quận 10": ["Phú Trung", "Tân Sơn Nhì"],
+                    "Thủ Đức": ["Tam Bình", "Trường Thọ"]
+                }
+            },
+            "Đà Nẵng": {
+                districts: {
+                    "Hải Châu": ["Hải Châu 1", "Hải Châu 2", "Phường Thạch Thang"],
+                    "Ngũ Hành Sơn": ["Mỹ An", "Mỹ Khê", "Phước Mỹ"],
+                    "Cẩm Lệ": ["Hòa Phát", "Hòa Thọ Đông", "Hòa Thọ Tây"],
+                    "Liên Chiểu": ["Hòa Hiệp Nam", "Hòa Khánh Bắc"]
+                }
+            },
+            "Bình Dương": {
+                districts: {
+                    "Thủ Dầu Một": ["Phú Lợi", "Chánh Nghĩa", "Tương Bình Hiệp"],
+                    "Dĩ An": ["An Bình", "Bình An", "Dĩ An"],
+                    "Thuận An": ["Lái Thiêu", "An Sơn", "Bình Chuẩn"]
+                }
+            },
+            "Khánh Hòa": {
+                districts: {
+                    "Nha Trang": ["Lộc Thọ", "Vĩnh Hòa", "Phước Long"],
+                    "Cam Ranh": ["Cam Nghĩa", "Cam Lâm", "Bắc Sơn"],
+                    "Vạn Ninh": ["Vạn Thạnh", "Vạn Hòa"]
+                }
+            },
+            "Cần Thơ": {
+                districts: {
+                    "Ninh Kiều": ["Tân An", "Cái Khế", "Bình Thủy"],
+                    "Cái Răng": ["Lê Bình", "Bình Thủy", "Tân Phú"],
+                    "Bình Thủy": ["Bình Thủy", "Long Tuyền"]
+                }
+            },
+            "Hải Phòng": {
+                districts: {
+                    "Lê Chân": ["Dư Hàng Kênh", "Dư Hàng", "Lam Sơn"],
+                    "Kiến An": ["Lãm Hà", "Niệm Nghĩa", "Hồng Bàng"],
+                    "Đồ Sơn": ["Vạn Hương", "Bảo An"]
+                }
+            },
+            "Quảng Ninh": {
+                districts: {
+                    "Hạ Long": ["Bãi Cháy", "Hồng Hải", "Hà Khẩu"],
+                    "Móng Cái": ["Trà Cổ", "Móng Cái", "Cẩm Phả"],
+                    "Uông Bí": ["Quảng Yên", "Vĩnh Tuy"]
+                }
+            },
+            "Thái Nguyên": {
+                districts: {
+                    "Thái Nguyên": ["Phường Túc Duyên", "Phường Quang Trung", "Phường Hoàng Văn Thụ"],
+                    "Sông Công": ["Bắc Sơn", "Cải Đan", "Trung Sơn"],
+                    "Đại Từ": ["Cao Sơn", "Tân Phú"]
+                }
+            },
+            "Bình Định": {
+                districts: {
+                    "Quy Nhơn": ["Ghềnh Ráng", "Trần Quang Diệu", "Hoài Đức"],
+                    "Tuy Phước": ["Tuy Phước", "Bình Thành", "Tân Phú"],
+                    "An Nhơn": ["Nhơn Hòa", "Nhơn Khánh", "An Quang"]
+                }
+            },
+            "Hà Giang": {
+                districts: {
+                    "Hà Giang": ["Phương Thiện", "Minh Khai", "Quang Trung"],
+                    "Quản Bạ": ["Tả Phìn", "Tam Sơn"],
+                    "Yên Minh": ["Bạch Đích", "Vinh Quang"]
+                }
+            },
+            "Lạng Sơn": {
+                districts: {
+                    "Lạng Sơn": ["Vĩnh Trại", "Tân Thành", "Đông Kinh"],
+                    "Cao Lộc": ["Bắc Sơn", "Cao Minh"]
+                }
+            },
+            "Nghệ An": {
+                districts: {
+                    "Vinh": ["Hưng Bình", "Cửa Nam", "Hải Lý"],
+                    "Hưng Nguyên": ["Xuân Hải", "Hưng Thịnh"]
+                }
+            },
+            "Thanh Hóa": {
+                districts: {
+                    "Thanh Hóa": ["Phường Lam Sơn", "Phường Tĩnh Gia"],
+                    "Sầm Sơn": ["Trung Sơn", "Quảng Cư"]
+                }
+            },
+            "Hải Dương": {
+                districts: {
+                    "Hải Dương": ["Tân Hưng", "Phú Thái", "An Lạc"],
+                    "Chí Linh": ["An Dương", "Vũ Linh"]
+                }
+            }
+        };
+
+        function populateCities() {
+            const citySelect = document.getElementById('city');
+            for (let city in data) {
+                const option = document.createElement('option');
+                option.value = city;
+                option.text = city;
+                citySelect.appendChild(option);
+            }
+        }
+
+        function populateDistricts(city) {
+            const districtSelect = document.getElementById('district');
+            districtSelect.innerHTML = '<option value="">Chọn Quận/Huyện</option>'; // reset huyện
+            if (city && data[city]) {
+                for (let district in data[city].districts) {
+                    const option = document.createElement('option');
+                    option.value = district;
+                    option.text = district;
+                    districtSelect.appendChild(option);
+                }
+            }
+        }
+
+        function populateCommunes(city, district) {
+            const communeSelect = document.getElementById('commune');
+            communeSelect.innerHTML = '<option value="">Chọn Phường/Xã</option>'; // reset xã
+            if (city && district && data[city] && data[city].districts[district]) {
+                data[city].districts[district].forEach(commune => {
+                    const option = document.createElement('option');
+                    option.value = commune;
+                    option.text = commune;
+                    communeSelect.appendChild(option);
+                });
+            }
+        }
+
+        document.getElementById('city').addEventListener('change', function () {
+            const selectedCity = this.value;
+            populateDistricts(selectedCity);
+            populateCommunes(selectedCity, ''); // reset xã
+        });
+
+        document.getElementById('district').addEventListener('change', function () {
+            const selectedCity = document.getElementById('city').value;
+            const selectedDistrict = this.value;
+            populateCommunes(selectedCity, selectedDistrict);
+        });
+        populateCities();
+
+        document.getElementById('placeOrderButton').addEventListener('click', function (e) {
+            const termsCheckbox = document.getElementById('terms');
+            if (!termsCheckbox.checked) {
+                event.preventDefault();
+                alert('Bạn cần đồng ý với các điều khoản trước khi đặt hàng!');
+                return;
+            }
+            const paymentMethods = document.getElementsByName('paymentmethod');
+            let selectedPaymentMethod = '';
+
+            // Duyệt qua các radio button để tìm radio đang được chọn
+            for (const method of paymentMethods) {
+                if (method.checked) {
+                    selectedPaymentMethod = method.value;
+                    break;
+                }
+            }
+            const urlParams = new URLSearchParams(window.location.search);
+            var discountCode = urlParams.get('code');
+            const recipientName = document.getElementById('f_name').value;
+            const recipientPhone = document.getElementById('l_name').value;
+            const description = document.getElementById('ordernote').value;
+            const city = document.getElementById('city').value;
+            const district = document.getElementById('district').value;
+            const commune = document.getElementById('commune').value;
+            const streetAddress = document.getElementById('street-address').value;
+            let fullAddress = "";
+            if (streetAddress) fullAddress += streetAddress;
+            if (commune) fullAddress += `, ${commune}`;
+            if (district) fullAddress += `, ${district}`;
+            if (city) fullAddress += `, ${city}`;
+
+            if (!recipientName) {
+                alert("Vui lòng nhập tên người nhận.");
+                return;
+            }
+
+            if (!recipientPhone) {
+                alert("Vui lòng nhập số điện thoại người nhận.");
+                return;
+            }
+
+            if (!city) {
+                alert("Vui lòng chọn Thành phố/Tỉnh.");
+                return;
+            }
+
+            if (!district) {
+                alert("Vui lòng chọn Quận/Huyện.");
+                return;
+            }
+
+            if (!commune) {
+                alert("Vui lòng chọn Phường/Xã.");
+                return;
+            }
+
+            if (!streetAddress) {
+                alert("Vui lòng nhập địa chỉ chi tiết.");
+                return;
+            }
+            // Thông tin giỏ hàng (lấy từ API giỏ hàng)
+            fetch(`http://localhost:8080/cart?userId=${userId}`)
+                .then(response => response.json())
+                .then(data => {
+                    const orderItems = data.result.map(item => ({
+                        productVariantId: item.product.variantId,
+                        quantity: item.quantity
+                    }));
+
+                    // Tạo request data
+                    var orderData = {
+                        paymentMethod: selectedPaymentMethod,
+                        recipientName: recipientName,
+                        recipientPhone: recipientPhone,
+                        recipientAddress: fullAddress,
+                        description: description,
+                        orderItems: orderItems
+                    };
+                    if (discountCode !== "") {
+                        orderData.code = discountCode;
+                    }
+
+                    // Gửi yêu cầu tạo đơn hàng
+                    fetch(`http://localhost:8080/order/create/${userId}`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify(orderData),
+                    })
+                        .then(response => response.json())
+                        .then(result => {
+                            if (result.code === 200) {
+                                fetch(`http://localhost:8080/cart?userId=${userId}`, {
+                                    method: 'DELETE'
+                                })
+                                    .then(response2 => {
+                                        if (response2.ok) {
+                                            return response2.text();
+                                        } else {
+                                            throw new Error("Lỗi khi xóa giỏ hàng.");
+                                        }
+                                    })
+                                    .then(message => {
+                                        console.log(message);
+                                        if (selectedPaymentMethod === 'CASH_ON_DELIVERY') {
+                                            alert("Đơn hàng đã được đặt thành công!");
+                                            window.location.href = 'index-2.html';
+                                        } else if (selectedPaymentMethod === 'CREDIT_CARD') {
+                                            fetch(`http://localhost:8080/createPayment?orderInfo=${result.result.description}&amount=${result.result.totalPrice}&orderId=${result.result.id}`, { method: 'GET' })
+                                                .then(response => {
+                                                    if (!response.ok) {
+                                                        throw new Error("Lỗi khi gọi API tạo thanh toán");
+                                                    }
+                                                    return response.text();
+                                                })
+                                                .then(paymentUrl => {
+                                                    console.log("Payment URL:", paymentUrl);
+                                                    const newTab = window.open(paymentUrl, '_blank');
+                                                    if (newTab) {
+                                                      
+                                                        newTab.focus(); 
+                                                        window.location.href = 'index-2.html';
+                                                    } else {
+                                                        alert("Trình duyệt chặn cửa sổ bật lên. Vui lòng cho phép cửa sổ bật lên và thử lại.");
+                                                    }
+                                                })
+                                                .catch(error => {
+                                                    console.error("Xảy ra lỗi:", error.message);
+                                                    alert("Không thể tạo thanh toán, vui lòng thử lại.");
+                                                });
+
+                                        } else {
+                                            alert('Vui lòng chọn phương thức thanh toán!');
+                                            return;
+                                        }
+                                    })
+                                    .catch(error => {
+                                        console.error("Xảy ra lỗi khi xóa giỏ hàng:", error.message);
+                                        alert("Đã có lỗi xảy ra khi xóa giỏ hàng.");
+                                    });
+
+                            } else {
+                                alert("Đã có lỗi xảy ra khi tạo đơn hàng.");
+                            }
+                        })
+                        .catch(error => {
+                            alert("Lỗi kết nối với máy chủ.");
+                        });
+                })
+                .catch(error => {
+                    console.error("Lỗi khi lấy giỏ hàng:", error);
+                });
+        });
 
         // Bắt đầu xử lý mini card
         function renderMiniCart(cartItems, summary) {
@@ -813,9 +1039,7 @@
     </script>
     <!--=== All Vendor Js ===-->
     <script src="assets/js/vendor.js"></script>
-    <!--=== All Plugins Js ===-->
-    <script src="assets/js/plugins.js"></script>
-    <!--=== Active Js ===-->
+
     <script src="assets/js/active.js"></script>
 
 </body>

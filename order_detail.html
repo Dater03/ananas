@@ -183,11 +183,9 @@
                                 <!-- Cột thứ hai: Phương thức thanh toán -->
                                 <div class="col-lg-6 mb-3">
                                     <label for="payment-method" class="form-label">Phương thức thanh toán</label>
-                                    <div class="form-group">
-                                        <select id="payment-method" class="form-control py-2" data-selected-method="CREDIT_CARD">
-                                            <option value="CASH_ON_DELIVERY">CASH_ON_DELIVERY</option>
-                                            <option value="CREDIT_CARD">CREDIT_CARD</option>
-                                        </select>
+                                    <div>
+                                        <input type="text" class="form-control" id="payment-method"
+                                            placeholder="Phương thức thanh toán" readonly>
                                     </div>
                                 </div>
 
@@ -391,13 +389,22 @@
             const recipientAddress = document.getElementById('address').value;
             var paymentMethod = document.getElementById('payment-method').value;
             const description = document.getElementById('description').value;
-
+            var payment ="";
+            
+            if(paymentMethod == "Thanh toán khi nhận hàng")
+            {
+                payment = "CASH_ON_DELIVERY";
+            }
+            else
+            {
+                payment = "CREDIT_CARD";
+            }
             // Lấy danh sách các sản phẩm từ bảng
             const orderItems = [];
             const quantityElements = document.querySelectorAll('.form-control.text-center');
             quantityElements.forEach((element) => {
-                const variantId = element.id.split('-')[1]; // Lấy variantId từ ID của input
-                const quantity = parseInt(element.value, 10); // Chuyển đổi số lượng sang số nguyên
+                const variantId = element.id.split('-')[1];
+                const quantity = parseInt(element.value, 10);
                 if (variantId && quantity > 0) {
                     orderItems.push({
                         productVariantId: parseInt(variantId, 10),
@@ -405,11 +412,10 @@
                     });
                 }
             });
-
             // Tạo payload để gửi tới API
             const payload = {
-                code: document.getElementById('status-dropdown')?.value || null, // Lấy mã giảm giá nếu có
-                paymentMethod: paymentMethod,
+                code: document.getElementById('status-dropdown')?.value || null,
+                paymentMethod: payment,
                 recipientName: recipientName,
                 recipientPhone: recipientPhone,
                 recipientAddress: recipientAddress,
@@ -577,8 +583,13 @@
             loadVoucherCodes(userId, order.code);
             renderCartTable(order);
             renderCartSummary(order);
-            document.getElementById('payment-method').value = order.paymentMethod;
-            paymentMethodSelect.setAttribute('data-selected-method', paymentMethodSelect.value);
+            if (order.paymentMethod == "CASH_ON_DELIVERY") {
+                document.getElementById('payment-method').value = "Thanh toán khi nhận hàng";
+            }
+            else
+            {
+                document.getElementById('payment-method').value = "Thanh toán trực tuyến";
+            }
         }
 
         function monitorChangesAndToggleUpdateButton() {

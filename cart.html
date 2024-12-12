@@ -342,7 +342,7 @@
 
 
     <script>
-        const TOKEN = localStorage.getItem("token"); // Token lấy từ đâu đó (localStorage, session, v.v.)
+        const TOKEN = localStorage.getItem("token"); 
         const userId = localStorage.getItem("userId");
         var sum = 0;
         var sale = 0;
@@ -566,6 +566,7 @@
 
 
         document.addEventListener("DOMContentLoaded", async () => {
+
 
             // Nếu có token, gọi API lấy số lượng sản phẩm trong giỏ hàng
             if (TOKEN !== null && TOKEN !== undefined) {
