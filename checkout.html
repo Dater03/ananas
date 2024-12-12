@@ -155,8 +155,7 @@
                         <!-- Checkout Login Coupon Accordion Start -->
                         <div class="checkoutaccordion" id="checkOutAccordion">
                             <div class="card">
-                                <h5>Returning Customer? <span data-bs-toggle="collapse"
-                                        data-bs-target="#logInaccordion">Click Here To Login</span></h5>
+
                                 <div id="logInaccordion" class="collapse">
                                     <div class="card-body">
                                         <p>If you have shopped with us before, please enter your details in the boxes
@@ -661,133 +660,155 @@
             if (!termsCheckbox.checked) {
                 event.preventDefault();
                 alert('Bạn cần đồng ý với các điều khoản trước khi đặt hàng!');
-            } else {
-                const paymentMethods = document.getElementsByName('paymentmethod');
-                let selectedPaymentMethod = '';
+                return;
+            }
+            const paymentMethods = document.getElementsByName('paymentmethod');
+            let selectedPaymentMethod = '';
 
-                // Duyệt qua các radio button để tìm radio đang được chọn
-                for (const method of paymentMethods) {
-                    if (method.checked) {
-                        selectedPaymentMethod = method.value;
-                        break;
-                    }
-                }
-                // Kiểm tra giá trị của phương thức thanh toán đã chọn
-                if (selectedPaymentMethod === 'CASH_ON_DELIVERY') {
-                    const urlParams = new URLSearchParams(window.location.search);
-                    const discountCode = urlParams.get('code');
-                    const recipientName = document.getElementById('f_name').value;
-                    const recipientPhone = document.getElementById('l_name').value;
-                    const description = document.getElementById('ordernote').value;
-                    const city = document.getElementById('city').value;
-                    const district = document.getElementById('district').value;
-                    const commune = document.getElementById('commune').value;
-                    const streetAddress = document.getElementById('street-address').value;
-                    let fullAddress = "";
-                    if (streetAddress) fullAddress += streetAddress;
-                    if (commune) fullAddress += `, ${commune}`;
-                    if (district) fullAddress += `, ${district}`;
-                    if (city) fullAddress += `, ${city}`;
-
-                    if (!recipientName) {
-                        alert("Vui lòng nhập tên người nhận.");
-                        return;
-                    }
-
-                    if (!recipientPhone) {
-                        alert("Vui lòng nhập số điện thoại người nhận.");
-                        return;
-                    }
-
-                    if (!city) {
-                        alert("Vui lòng chọn Thành phố/Tỉnh.");
-                        return;
-                    }
-
-                    if (!district) {
-                        alert("Vui lòng chọn Quận/Huyện.");
-                        return;
-                    }
-
-                    if (!commune) {
-                        alert("Vui lòng chọn Phường/Xã.");
-                        return;
-                    }
-
-                    if (!streetAddress) {
-                        alert("Vui lòng nhập địa chỉ chi tiết.");
-                        return;
-                    }
-                    // Thông tin giỏ hàng (lấy từ API giỏ hàng)
-                    fetch(`http://localhost:8080/cart?userId=${userId}`)
-                        .then(response => response.json())
-                        .then(data => {
-                            const orderItems = data.result.map(item => ({
-                                productVariantId: item.product.variantId,
-                                quantity: item.quantity
-                            }));
-
-                            // Tạo request data
-                            const orderData = {
-                                code: discountCode,
-                                paymentMethod: selectedPaymentMethod,
-                                recipientName: recipientName,
-                                recipientPhone: recipientPhone,
-                                recipientAddress: fullAddress,
-                                description: description,
-                                orderItems: orderItems
-                            };
-
-                            // Gửi yêu cầu tạo đơn hàng
-                            fetch(`http://localhost:8080/order/create/${userId}`, {
-                                method: 'POST',
-                                headers: {
-                                    'Content-Type': 'application/json',
-                                },
-                                body: JSON.stringify(orderData),
-                            })
-                                .then(response => response.json())
-                                .then(result => {
-                                    if (result.code === 200) {
-                                        fetch(`http://localhost:8080/cart?userId=${userId}`, {
-                                            method: 'DELETE'
-                                        })
-                                            .then(response => {
-                                                if (response.ok) {
-                                                    return response.text();
-                                                } else {
-                                                    throw new Error("Lỗi khi xóa giỏ hàng.");
-                                                }
-                                            })
-                                            .then(message => {
-                                                console.log(message);
-                                                alert("Đơn hàng đã được đặt thành công!");
-                                                window.location.href = 'index-2.html';
-                                            })
-                                            .catch(error => {
-                                                console.error("Xảy ra lỗi khi xóa giỏ hàng:", error.message);
-                                                alert("Đã có lỗi xảy ra khi xóa giỏ hàng.");
-                                            });
-
-                                    } else {
-                                        alert("Đã có lỗi xảy ra khi tạo đơn hàng.");
-                                    }
-                                })
-                                .catch(error => {
-                                    alert("Lỗi kết nối với máy chủ.");
-                                });
-                        })
-                        .catch(error => {
-                            console.error("Lỗi khi lấy giỏ hàng:", error);
-                        });
-                } else if (selectedPaymentMethod === 'CREDIT_CARD') {
-
-                    alert("Thanh Cao! Hãy xử lý việc thanh toán trực tuyến này đi ^-^");
-
-                } else {
-                    alert('Vui lòng chọn phương thức thanh toán!');
+            // Duyệt qua các radio button để tìm radio đang được chọn
+            for (const method of paymentMethods) {
+                if (method.checked) {
+                    selectedPaymentMethod = method.value;
+                    break;
                 }
             }
+            const urlParams = new URLSearchParams(window.location.search);
+            var discountCode = urlParams.get('code');
+            const recipientName = document.getElementById('f_name').value;
+            const recipientPhone = document.getElementById('l_name').value;
+            const description = document.getElementById('ordernote').value;
+            const city = document.getElementById('city').value;
+            const district = document.getElementById('district').value;
+            const commune = document.getElementById('commune').value;
+            const streetAddress = document.getElementById('street-address').value;
+            let fullAddress = "";
+            if (streetAddress) fullAddress += streetAddress;
+            if (commune) fullAddress += `, ${commune}`;
+            if (district) fullAddress += `, ${district}`;
+            if (city) fullAddress += `, ${city}`;
+
+            if (!recipientName) {
+                alert("Vui lòng nhập tên người nhận.");
+                return;
+            }
+
+            if (!recipientPhone) {
+                alert("Vui lòng nhập số điện thoại người nhận.");
+                return;
+            }
+
+            if (!city) {
+                alert("Vui lòng chọn Thành phố/Tỉnh.");
+                return;
+            }
+
+            if (!district) {
+                alert("Vui lòng chọn Quận/Huyện.");
+                return;
+            }
+
+            if (!commune) {
+                alert("Vui lòng chọn Phường/Xã.");
+                return;
+            }
+
+            if (!streetAddress) {
+                alert("Vui lòng nhập địa chỉ chi tiết.");
+                return;
+            }
+            // Thông tin giỏ hàng (lấy từ API giỏ hàng)
+            fetch(`http://localhost:8080/cart?userId=${userId}`)
+                .then(response => response.json())
+                .then(data => {
+                    const orderItems = data.result.map(item => ({
+                        productVariantId: item.product.variantId,
+                        quantity: item.quantity
+                    }));
+
+                    // Tạo request data
+                    var orderData = {
+                        paymentMethod: selectedPaymentMethod,
+                        recipientName: recipientName,
+                        recipientPhone: recipientPhone,
+                        recipientAddress: fullAddress,
+                        description: description,
+                        orderItems: orderItems
+                    };
+                    if (discountCode !== "") {
+                        orderData.code = discountCode;
+                    }
+
+                    // Gửi yêu cầu tạo đơn hàng
+                    fetch(`http://localhost:8080/order/create/${userId}`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify(orderData),
+                    })
+                        .then(response => response.json())
+                        .then(result => {
+                            if (result.code === 200) {
+                                fetch(`http://localhost:8080/cart?userId=${userId}`, {
+                                    method: 'DELETE'
+                                })
+                                    .then(response2 => {
+                                        if (response2.ok) {
+                                            return response2.text();
+                                        } else {
+                                            throw new Error("Lỗi khi xóa giỏ hàng.");
+                                        }
+                                    })
+                                    .then(message => {
+                                        console.log(message);
+                                        if (selectedPaymentMethod === 'CASH_ON_DELIVERY') {
+                                            alert("Đơn hàng đã được đặt thành công!");
+                                            window.location.href = 'index-2.html';
+                                        } else if (selectedPaymentMethod === 'CREDIT_CARD') {
+                                            fetch(`http://localhost:8080/createPayment?orderInfo=${result.result.description}&amount=${result.result.totalPrice}&orderId=${result.result.id}`, { method: 'GET' })
+                                                .then(response => {
+                                                    if (!response.ok) {
+                                                        throw new Error("Lỗi khi gọi API tạo thanh toán");
+                                                    }
+                                                    return response.text();
+                                                })
+                                                .then(paymentUrl => {
+                                                    console.log("Payment URL:", paymentUrl);
+                                                    const newTab = window.open(paymentUrl, '_blank');
+                                                    if (newTab) {
+                                                      
+                                                        newTab.focus(); 
+                                                        window.location.href = 'index-2.html';
+                                                    } else {
+                                                        alert("Trình duyệt chặn cửa sổ bật lên. Vui lòng cho phép cửa sổ bật lên và thử lại.");
+                                                    }
+                                                })
+                                                .catch(error => {
+                                                    console.error("Xảy ra lỗi:", error.message);
+                                                    alert("Không thể tạo thanh toán, vui lòng thử lại.");
+                                                });
+
+                                        } else {
+                                            alert('Vui lòng chọn phương thức thanh toán!');
+                                            return;
+                                        }
+                                    })
+                                    .catch(error => {
+                                        console.error("Xảy ra lỗi khi xóa giỏ hàng:", error.message);
+                                        alert("Đã có lỗi xảy ra khi xóa giỏ hàng.");
+                                    });
+
+                            } else {
+                                alert("Đã có lỗi xảy ra khi tạo đơn hàng.");
+                            }
+                        })
+                        .catch(error => {
+                            alert("Lỗi kết nối với máy chủ.");
+                        });
+                })
+                .catch(error => {
+                    console.error("Lỗi khi lấy giỏ hàng:", error);
+                });
         });
 
         // Bắt đầu xử lý mini card
