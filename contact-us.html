@@ -557,10 +557,11 @@
                     const newMessage = await response.json();
                     const formattedMessage = { ...newMessage, type: "sender" };
                     messages.push(formattedMessage);
-                    location.reload(); // Thêm tin nhắn mới vào cuối danh sách
+                    
                     displayMessages();
                     scrollToBottom(); // Cuộn đến tin nhắn mới
                     messageInput.value = ""; // Xóa nội dung ô nhập
+                    loadMessages(senderId);
                 } else {
                     alert("Failed to send message. Please try again.");
                 }
@@ -571,7 +572,7 @@
         }
 
         // Lấy số lượng sản phẩm trong giỏ hàng
-        fetch(`${cartQuantityApi}?userId=${id}`)
+        fetch(`${cartQuantityApi}?userId=${senderId}`)
             .then(response => response.json())
             .then(data => {
                 if (data.code === 200) {
