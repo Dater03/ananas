@@ -46,4 +46,6 @@ public interface IProductService {
     Double getMaxPrice() ;
 
     Double getMinPrice();
+
+    int getNumberOfProductBySizeAndColor(int productId, String color, int size);
 }

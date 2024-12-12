@@ -12,6 +12,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 
@@ -38,4 +39,34 @@ public interface Order_Repository extends JpaRepository<Order, Integer>, JpaSpec
     List<Order> findByUser_UsernameAndPaymentStats(@Param("username") String username, @Param("status") PaymentStatus paymentStatus);
 
      */
+
+    // Tổng tiền theo ngày
+    @Query(value = "SELECT SUM(o.total_price) " +
+            "FROM ananas.orders o " +
+            "WHERE DATE(o.created_at) = :date", nativeQuery = true)
+    BigDecimal getTotalOrderAmountByDate(@Param("date") String date);
+
+    // Tổng tiền theo các tháng trong năm
+    @Query(value = "SELECT COALESCE(SUM(o.total_price), 0) " +
+            "FROM ananas.orders o " +
+            "WHERE MONTH(o.created_at) = :month AND YEAR(o.created_at) = :year", nativeQuery = true)
+    BigDecimal getTotalOrderAmountByMonth(@Param("month") int month, @Param("year") int year);
+
+    // Tổng tiền theo các năm (6 năm trước và năm hiện tại)
+    @Query(value = "SELECT COALESCE(SUM(o.total_price), 0) " +
+            "FROM ananas.orders o " +
+            "WHERE YEAR(o.created_at) = :year", nativeQuery = true)
+    BigDecimal getTotalOrderAmountByYear(@Param("year") int year);
+
+//    // Tổng tiền theo tháng
+//    @Query(value = "SELECT SUM(o.total_price) " +
+//            "FROM ananas.orders o " +
+//            "WHERE YEAR(o.created_at) = :year AND MONTH(o.created_at) = :month", nativeQuery = true)
+//    List<BigDecimal> getTotalOrderAmountByMonth(@Param("year") int year, @Param("month") int month);
+//
+//    // Tổng tiền theo năm
+//    @Query(value = "SELECT SUM(o.total_price) " +
+//            "FROM ananas.orders o " +
+//            "WHERE YEAR(o.created_at) = :year", nativeQuery = true)
+//    List<BigDecimal> getTotalOrderAmountByYear(@Param("year") int year);
 }

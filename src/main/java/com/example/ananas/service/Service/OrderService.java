@@ -106,6 +106,21 @@ public class OrderService implements IOrderService {
 
 
     @Override
+    public BigDecimal getSumByDay(String date) {
+        return orderRepository.getTotalOrderAmountByDate(date);
+    }
+
+    @Override
+    public BigDecimal getSumByMonth(int month, int year) {
+        return orderRepository.getTotalOrderAmountByMonth(month, year);
+    }
+
+    @Override
+    public BigDecimal getSumByYear(int year) {
+        return orderRepository.getTotalOrderAmountByYear(year);
+    }
+
+    @Override
     public OrderResponse createOrder(Integer userId, OrderCreate orderCreate) {
         Order order = new Order();
         if(userId != null)

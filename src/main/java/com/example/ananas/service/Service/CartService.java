@@ -25,6 +25,7 @@ public class CartService implements ICartService {
     ICartItemMapper cartItemMapper;
     ProductVariant_Repository productVariantRepository;
     @Override
+    @Transactional
     public void addProductToCart(int userId, int productId,int size, String color, int quantity) {
         User user = this.userRepository.findById(userId).get();
         if (this.userRepository.existsById(userId)) {

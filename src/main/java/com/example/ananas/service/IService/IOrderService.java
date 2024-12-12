@@ -6,6 +6,7 @@ import com.example.ananas.dto.response.OrderResponse;
 import com.example.ananas.dto.response.ResultPaginationDTO;
 import org.springframework.data.domain.Pageable;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 public interface IOrderService {
@@ -37,6 +38,12 @@ public interface IOrderService {
     ResultPaginationDTO getOrderByUserId(Integer userId, Pageable pageable);
 
     OrderResponse getOrderByOrderId(Integer orderId);
+
+    BigDecimal getSumByDay(String date);
+
+    BigDecimal getSumByMonth(int month, int year);
+
+    BigDecimal getSumByYear(int year);
 
     void handleAfterCreateOrder(int orderId);
 }

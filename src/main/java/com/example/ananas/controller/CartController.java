@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -22,6 +23,7 @@ public class CartController {
 
     // thêm một sản phẩm vào giỏ hàng
     @PostMapping("/cart")
+    @Transactional
     public ResponseEntity<String> addProductToCart(@RequestParam(name = "userId") int userId,
                                                    @RequestParam(name = "productId") int productId, @RequestParam(name = "quantity") int quantity,
                                                    @RequestParam(name = "size") int size, @RequestParam(name = "color") String color)
