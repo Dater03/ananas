@@ -688,6 +688,36 @@
                     if (commune) fullAddress += `, ${commune}`;
                     if (district) fullAddress += `, ${district}`;
                     if (city) fullAddress += `, ${city}`;
+
+                    if (!recipientName) {
+                        alert("Vui lòng nhập tên người nhận.");
+                        return;
+                    }
+
+                    if (!recipientPhone) {
+                        alert("Vui lòng nhập số điện thoại người nhận.");
+                        return;
+                    }
+
+                    if (!city) {
+                        alert("Vui lòng chọn Thành phố/Tỉnh.");
+                        return;
+                    }
+
+                    if (!district) {
+                        alert("Vui lòng chọn Quận/Huyện.");
+                        return;
+                    }
+
+                    if (!commune) {
+                        alert("Vui lòng chọn Phường/Xã.");
+                        return;
+                    }
+
+                    if (!streetAddress) {
+                        alert("Vui lòng nhập địa chỉ chi tiết.");
+                        return;
+                    }
                     // Thông tin giỏ hàng (lấy từ API giỏ hàng)
                     fetch(`http://localhost:8080/cart?userId=${userId}`)
                         .then(response => response.json())
@@ -730,7 +760,7 @@
                                                 }
                                             })
                                             .then(message => {
-                                                console.log(message); 
+                                                console.log(message);
                                                 alert("Đơn hàng đã được đặt thành công!");
                                                 window.location.href = 'index-2.html';
                                             })
