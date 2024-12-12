@@ -301,62 +301,101 @@
   </div>
 
   <script>
-      // Dữ liệu mẫu doanh thu theo ngày, tháng, năm
-      const revenueData = {
-          day: [150, 200, 300, 250, 220, 310, 290], // Ví dụ: doanh thu theo ngày trong tuần
-          month: [3000, 4500, 3200, 4000, 5200, 4700, 6000, 7200, 6800, 7500, 8200, 9100], // Doanh thu từng tháng
-          year: [45000, 48000, 52000, 61000, 69000, 78000, 85000] // Doanh thu từng năm
-      };
+    // Nhãn cho từng khoảng thời gian
+    const labels = {
+        day: Array.from({ length: 31 }, (_, i) => `Ngày ${i + 1}`), // Tối đa 31 ngày
+        month: ["Tháng 1", "Tháng 2", "Tháng 3", "Tháng 4", "Tháng 5", "Tháng 6", "Tháng 7", "Tháng 8", "Tháng 9", "Tháng 10", "Tháng 11", "Tháng 12"],
+        year: Array.from({ length: 7 }, (_, i) => `${new Date().getFullYear() - 6 + i}`) // 6 năm trước và năm hiện tại
+    };
 
-      // Nhãn cho từng khoảng thời gian
-      const labels = {
-          day: ["Thứ 2", "Thứ 3", "Thứ 4", "Thứ 5", "Thứ 6", "Thứ 7", "CN"],
-          month: ["Tháng 1", "Tháng 2", "Tháng 3", "Tháng 4", "Tháng 5", "Tháng 6", "Tháng 7", "Tháng 8", "Tháng 9", "Tháng 10", "Tháng 11", "Tháng 12"],
-          year: ["2017", "2018", "2019", "2020", "2021", "2022", "2023"]
-      };
+    // Tạo biểu đồ
+    const ctx = document.getElementById('revenueChart').getContext('2d');
+    let revenueChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: [],
+            datasets: [{
+                label: 'Doanh Thu (VND)',
+                data: [],
+                backgroundColor: 'rgba(54, 162, 235, 0.6)',
+                borderColor: 'rgba(54, 162, 235, 1)',
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: true,
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    title: {
+                        display: true,
+                        text: 'Doanh Thu (VND)'
+                    }
+                },
+                x: {
+                    title: {
+                        display: true,
+                        text: 'Khoảng Thời Gian'
+                    }
+                }
+            }
+        }
+    });
 
-      // Tạo biểu đồ
-      const ctx = document.getElementById('revenueChart').getContext('2d');
-      let revenueChart = new Chart(ctx, {
-          type: 'bar', // Biểu đồ dạng cột
-          data: {
-              labels: labels.day, // Gán nhãn ban đầu là theo ngày
-              datasets: [{
-                  label: 'Doanh Thu (VND)',
-                  data: revenueData.day, // Gán dữ liệu ban đầu là theo ngày
-                  backgroundColor: 'rgba(54, 162, 235, 0.6)',
-                  borderColor: 'rgba(54, 162, 235, 1)',
-                  borderWidth: 1
-              }]
-          },
-          options: {
-              responsive: true,
-              scales: {
-                  y: {
-                      beginAtZero: true,
-                      title: {
-                          display: true,
-                          text: 'Doanh Thu (VND)'
-                      }
-                  },
-                  x: {
-                      title: {
-                          display: true,
-                          text: 'Khoảng Thời Gian'
-                      }
-                  }
-              }
-          }
-      });
+    // Hàm gọi API và cập nhật dữ liệu biểu đồ
+    async function fetchRevenueData(filterValue) {
+        let apiUrl = '';
+        let params = {};
 
-      // Hàm cập nhật biểu đồ khi thay đổi bộ lọc
-      function updateChart() {
-          const filterValue = document.getElementById('filter').value;
-          revenueChart.data.labels = labels[filterValue];
-          revenueChart.data.datasets[0].data = revenueData[filterValue];
-          revenueChart.update();
-      }
-  </script>
+        // Tùy chọn URL và tham số dựa trên bộ lọc
+        if (filterValue === 'day') {
+            const today = new Date();
+            apiUrl = 'http://localhost:8080/order/admin/getDay';
+            params = { year: today.getFullYear(), month: today.getMonth() + 1 }; // Năm và tháng hiện tại
+        } else if (filterValue === 'month') {
+            apiUrl = 'http://localhost:8080/order/admin/getMonth';
+            params = { year: new Date().getFullYear() }; // Năm hiện tại
+        } else if (filterValue === 'year') {
+            apiUrl = 'http://localhost:8080/order/admin/getYear';
+            params = {}; // Không cần tham số
+        }
+
+        // Tạo query string từ params
+        const queryString = new URLSearchParams(params).toString();
+
+        try {
+            const response = await fetch(`${apiUrl}?${queryString}`);
+
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+
+            const rs = await response.json();
+            const data = rs.result;
+            console.log("Data",data)
+            updateChart(filterValue, data);
+        } catch (error) {
+            console.error('Error fetching revenue data:', error);
+        }
+    }
+
+    // Hàm cập nhật biểu đồ
+    function updateChart(filterValue, data) {
+        revenueChart.data.labels = labels[filterValue];
+        revenueChart.data.datasets[0].data = data; // Gán dữ liệu từ API trả về
+        revenueChart.update();
+    }
+
+    // Lắng nghe sự kiện thay đổi bộ lọc
+    document.getElementById('filter').addEventListener('change', function () {
+        const filterValue = this.value;
+        fetchRevenueData(filterValue);
+    });
+
+    // Tải dữ liệu ban đầu
+    fetchRevenueData('day');
+</script>
+
 
   <!-- Bootstrap JS -->
   <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>

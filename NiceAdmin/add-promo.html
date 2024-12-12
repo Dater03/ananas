@@ -328,30 +328,40 @@
       </table>
     </div>
     <!-- Popup Modal -->
-    <div class="modal fade" id="voucherDetailsModal" tabindex="-1" aria-labelledby="voucherDetailsLabel"
-      aria-hidden="true">
-      <div class="modal-dialog modal-dialog-centered">
+    <div class="modal fade" id="voucherDetailsModal" tabindex="-1" aria-labelledby="voucherDetailsModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-lg">
         <div class="modal-content">
-          <div class="modal-header text-center">
-            <h5 class="modal-title w-100" id="voucherDetailsLabel">Chi tiết Voucher</h5>
+          <div class="modal-header">
+            <h5 class="modal-title" id="voucherDetailsModalLabel">Chi tiết Voucher</h5>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
           <div class="modal-body">
-            <p><strong>Id:</strong> <span id="voucherId"></span></p>
-            <p><strong>Code:</strong> <span id="voucherCode"></span></p>
-            <p><strong>Loại giảm giá:</strong> <span id="discountType"></span></p>
-            <p><strong>Giá trị giảm giá:</strong> <span id="discountValue"></span></p>
-            <p><strong>Mô tả:</strong> <span id="description"></span></p>
-            <p><strong>Số lượng giới hạn:</strong> <span id="usageLimit"></span></p>
-            <p><strong>Giá trị tối thiểu:</strong> <span id="minOrderValue"></span></p>
-            <p><strong>Giá trị tối đa:</strong> <span id="maxDiscount"></span></p>
-            <p><strong>Ngày bắt đầu:</strong> <span id="startDate"></span></p>
-            <p><strong>Ngày kết thúc:</strong> <span id="endDate"></span></p>
-            <p><strong>Ngày tạo:</strong> <span id="createdAt"></span></p>
+            <div class="row">
+              <div class="col-md-5">
+                <p><strong>ID:</strong> <span id="voucherId"></span></p>
+                <p><strong>Mã Voucher:</strong> <span id="voucherCode"></span></p>
+                <p><strong>Mô tả: </strong><span id="description"></span></p>
+                <p><strong>Loại khuyến mãi:</strong> <span id="discountType"></span></p>
+                <p><strong>Giá trị khuyến mãi:</strong> <span id="discountValue"></span></p>
+              </div>
+              <div class="col-md-7">
+                <p><strong>Giới hạn sử dụng:</strong> <span id="usageLimit"></span></p>
+                <p><strong>Đơn tối thiểu:</strong> <span id="minOrderValue"></span></p>
+                <p><strong>Giảm tối đa:</strong> <span id="maxDiscount"></span></p>
+                <p><strong>Ngày bắt đầu:</strong> <span id="startDate"></span></p>
+                <p><strong>Ngày kết thúc:</strong> <span id="endDate"></span></p>
+                <p><strong>Ngày tạo:</strong> <span id="createdAt"></span></p>
+              </div>
+            </div>
+            
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
           </div>
         </div>
       </div>
     </div>
+    
     <div class="modal fade" id="editVoucherModal" tabindex="-1" aria-labelledby="editVoucherModalLabel"
       aria-hidden="true">
       <div class="modal-dialog modal-lg">
@@ -818,3 +828,41 @@
 </body>
 
 </html>
+
+<style>
+  /* Đặt hình nền cho modal */
+#voucherDetailsModal .modal-content {
+  background: url('assets/img/back.jpg') no-repeat;
+  background-size: cover;
+  color: white;
+  border-radius: 10px;
+}
+
+/* Header với nền mờ */
+#voucherDetailsModal .modal-header {
+  background: rgba(0, 0, 0, 0.6); /* Nền mờ */
+  color: white;
+}
+
+/* Body với nền mờ */
+#voucherDetailsModal .modal-body {
+  background: rgba(0, 0, 0, 0.5); /* Nền mờ */
+  padding: 20px;
+}
+
+/* Footer với nền mờ */
+#voucherDetailsModal .modal-footer {
+  background: rgba(0, 0, 0, 0.6); /* Nền mờ */
+}
+
+/* Tùy chỉnh font chữ và khoảng cách */
+#voucherDetailsModal p {
+  margin-bottom: 10px;
+  font-size: 16px;
+}
+
+#voucherDetailsModal strong {
+  color: #ffdd57; /* Màu vàng nổi bật */
+}
+
+</style>
