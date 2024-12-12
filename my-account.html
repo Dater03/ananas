@@ -169,7 +169,7 @@
                                             <i class="fa fa-map-marker"></i>
                                             Địa chỉ
                                         </button>
-                                        <a href="login.html"><i class="fa fa-sign-out"></i>Đăng xuất</a>
+                                        <a class="dangxuat" href="login.html"><i class="fa fa-sign-out"></i>Đăng xuất</a>
                                     </div>
                                 </div>
                                 <!-- My Account Tab Menu End -->
@@ -720,6 +720,10 @@
             renderMiniCart(cartItems, cartSummary);
         }
     });
+
+    document.querySelector(".dangxuat").addEventListener("click", async(event) => {
+        localStorage.clear();
+    })
 
     // Xử lý khi nhấn nút xóa sản phẩm khỏi giỏ hàng
     document.addEventListener("click", async (event) => {
