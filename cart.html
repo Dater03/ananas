@@ -18,7 +18,7 @@
     <!-- Modernizer JS -->
     <script src="assets/js/modernizr-2.8.3.min.js"></script>
     <style>
-        #status-dropdown{
+        #status-dropdown {
             width: 300px;
             margin-top: 10px;
         }
@@ -224,7 +224,7 @@
                                         </table>
                                     </div>
                                 </div>
-                                <a href="checkout.html" class="btn d-block">ĐẶT HÀNG</a>
+                                <button class="btn d-block" onclick="redirectToCheckout()">ĐẶT HÀNG</button>
                             </div>
                         </div>
                     </div>
@@ -338,14 +338,21 @@
 
 
     <script>
-        const TOKEN = localStorage.getItem("token"); // Token lấy từ đâu đó (localStorage, session, v.v.)
+        const TOKEN = localStorage.getItem("token"); 
         const userId = localStorage.getItem("userId");
+
+        function redirectToCheckout() {
+
+            const selectedCode = document.getElementById('status-dropdown').value;
+            window.location.href = `checkout.html?code=${encodeURIComponent(selectedCode)}`;
+        }
+
         function loadVoucherCodes(userId) {
             const apiUrl = `http://localhost:8080/voucher/listVoucherArchive/${userId}`;
             fetch(apiUrl)
                 .then(response => {
                     if (!response.ok) {
-                        console.log( "restponse"+response)
+                        console.log("restponse" + response)
                         throw new Error(`HTTP error! status: ${response.status}`);
                     }
                     return response.json();
@@ -364,17 +371,17 @@
                         select.className = "form-control";
 
                         // Thêm một option mặc định
-                            const defaultOption = document.createElement("option");
-                            defaultOption.value = "";
-                            defaultOption.textContent = "Chọn mã giảm giá";
-                            select.appendChild(defaultOption);
+                        const defaultOption = document.createElement("option");
+                        defaultOption.value = "";
+                        defaultOption.textContent = "Chọn mã giảm giá";
+                        select.appendChild(defaultOption);
 
                         // Thêm các mã voucher từ dữ liệu API
                         data.result.forEach(voucher => {
-                                const option = document.createElement("option");
-                                option.value = voucher.code;
-                                option.textContent = `${voucher.code}`;
-                                select.appendChild(option);
+                            const option = document.createElement("option");
+                            option.value = voucher.code;
+                            option.textContent = `${voucher.code}`;
+                            select.appendChild(option);
                         });
 
                         // Gắn <select> vào container
@@ -499,7 +506,7 @@
 
 
         document.addEventListener("DOMContentLoaded", async () => {
-           
+
             // Nếu có token, gọi API lấy số lượng sản phẩm trong giỏ hàng
             if (TOKEN !== null && TOKEN !== undefined) {
                 console.log("abc")
@@ -786,4 +793,5 @@
         text-align: center;
         margin-bottom: 20px;
     }
-</styl>
+
+    </styl>
