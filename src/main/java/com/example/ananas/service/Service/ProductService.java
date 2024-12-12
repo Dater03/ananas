@@ -221,4 +221,10 @@ public class ProductService implements IProductService {
         return this.productRepository.findMinPrice();
     }
 
+    // dem so luong hang
+    @Override
+    public int getNumberOfProductBySizeAndColor(int productId, String color, int size ) {
+        return this.productVariantRepository.getSumOfProduct(productId, color, size);
+    }
+
 }

@@ -12,6 +12,12 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.time.YearMonth;
+import java.util.ArrayList;
+import java.util.List;
+
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/order")
@@ -93,6 +99,42 @@ public class OrderController {
     @GetMapping("/admin/listOrderByPaymentStatus")
     public ResponseEntity<ResultPaginationDTO> getOrderByPaymentStatus(@RequestParam("paymentStatus") String paymentStatus, Pageable pageable) {
         return ResponseEntity.ok(orderService.getOrderByPaymentStatus(paymentStatus, pageable));
+    }
+
+    // loc gia tri don hang
+    @GetMapping("/admin/getDay")
+    public ResponseEntity<List<BigDecimal>> getOrderByDay(@RequestParam(name = "year") int year, @RequestParam(name = "month") int month) {
+        YearMonth yearMonth = YearMonth.of(year, month);
+        int daysInMonth = yearMonth.lengthOfMonth();
+        List<BigDecimal> revenues = new ArrayList<>();
+
+        for (int day = 1; day <= daysInMonth; day++) {
+            LocalDate date = LocalDate.of(year, month, day);
+            BigDecimal revenue =  orderService.getSumByDay(date.toString());
+            revenues.add(revenue);
+        }
+        return ResponseEntity.ok(revenues);
+    }
+
+    @GetMapping("/admin/getMonth")
+    public ResponseEntity<List<BigDecimal>> getOrderByMonth(@RequestParam(name = "year") int year) {
+        List<BigDecimal> revenues = new ArrayList<>();
+        for (int month = 1; month <= 12; month++) {
+            BigDecimal revenue =  orderService.getSumByMonth(month, year);
+            revenues.add(revenue);
+        }
+        return ResponseEntity.ok( revenues);
+    }
+
+    @GetMapping("/admin/getYear")
+    public ResponseEntity<List<BigDecimal>> getOrderByYear() {
+        int currentYear = LocalDate.now().getYear();
+        List<BigDecimal> revenues = new ArrayList<>();
+        for (int year = currentYear - 6; year <= currentYear; year++) {
+            BigDecimal revenue =  orderService.getSumByYear(year);
+            revenues.add(revenue);
+        }
+        return ResponseEntity.ok(revenues);
     }
 
 }

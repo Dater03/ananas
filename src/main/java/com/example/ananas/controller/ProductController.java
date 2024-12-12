@@ -17,6 +17,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -147,4 +148,9 @@ public class ProductController {
         return ResponseEntity.ok(this.productService.getAllProductVariants(id));
     }
 
+
+    @GetMapping("product/sum")
+    public ResponseEntity<Integer> getSumOfProduct(@RequestParam(name = "productId") int productId, @RequestParam(name = "color") String color, @RequestParam(name = "size") int size) throws IdException{
+        return ResponseEntity.ok(productService.getNumberOfProductBySizeAndColor(productId,color, size));
+    }
 }
