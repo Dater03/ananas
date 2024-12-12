@@ -186,4 +186,14 @@ public class VoucherService implements IVoucherService {
         }
         return voucherResponses;
     }
+
+    @Override
+    public BigDecimal getSumDiscount(String code, BigDecimal price) {
+        Voucher voucher = this.voucherRepository.findVoucherByCode(code);
+        if(checkVoucher(code, price))
+        {
+            return this.applyVoucher(voucher,price);
+        }
+        return new  BigDecimal(0);
+    }
 }

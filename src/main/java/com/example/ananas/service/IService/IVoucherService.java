@@ -32,4 +32,6 @@ public interface IVoucherService {
      List<VoucherResponse> getVoucherOfUser(Integer userId);
 
      List<Voucher> getVoucherOk();
+
+    BigDecimal getSumDiscount(String code, BigDecimal price);
 }

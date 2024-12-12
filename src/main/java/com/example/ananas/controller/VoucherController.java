@@ -14,6 +14,7 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @RestController
@@ -70,6 +71,11 @@ public class VoucherController {
     @GetMapping("/voucherOk")
     public ResponseEntity<List<Voucher>> getVoucherOk() {
         return ResponseEntity.ok(voucherService.getVoucherOk());
+    }
+    @GetMapping("/getSumDiscount")
+    public ResponseEntity<BigDecimal> getSumDiscount(@RequestParam(name = "code" )String code, @RequestParam(name = "price") BigDecimal price )
+    {
+        return ResponseEntity.ok(this.voucherService.getSumDiscount(code,price));
     }
 
 }

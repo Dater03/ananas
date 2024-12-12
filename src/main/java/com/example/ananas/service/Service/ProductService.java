@@ -2,6 +2,7 @@ package com.example.ananas.service.Service;
 
 import com.example.ananas.dto.ProductVatriantDTO;
 import com.example.ananas.dto.request.ProductCreateRequest;
+import com.example.ananas.dto.response.CartItemResponse;
 import com.example.ananas.dto.response.ProductImagesResponse;
 import com.example.ananas.dto.response.ProductResponse;
 import com.example.ananas.dto.response.ResultPaginationDTO;
@@ -12,10 +13,7 @@ import com.example.ananas.entity.Product_Image;
 import com.example.ananas.mapper.IProductImageMapper;
 import com.example.ananas.mapper.IProductMapper;
 import com.example.ananas.mapper.IProductVariantMapper;
-import com.example.ananas.repository.Category_Repository;
-import com.example.ananas.repository.ProductVariant_Repository;
-import com.example.ananas.repository.Product_Image_Repository;
-import com.example.ananas.repository.Product_Repository;
+import com.example.ananas.repository.*;
 import com.example.ananas.service.IService.IProductService;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
@@ -48,6 +46,7 @@ public class ProductService implements IProductService {
     IProductImageMapper productImageMapper;
     ProductVariant_Repository productVariantRepository;
     IProductVariantMapper productVariantMapper;
+    Cart_Item_Repository cartItemRepository;
     @Override
     public ProductResponse createProduct(ProductCreateRequest productCreateRequest) {
 
@@ -112,6 +111,10 @@ public class ProductService implements IProductService {
         product.setPrice(productCreateRequest.getPrice());
         this.productRepository.save(product);
 
+        // Xóa các cart_item liên quan
+        this.productVariantRepository.findProductVariantsByProduct(product).forEach(item->{
+            this.cartItemRepository.deleteByProductVariant(item);
+        });
         this.productVariantRepository.deleteProductVariantsByProduct(product);
         List<ProductVatriantDTO> productVatriantDTOList = productCreateRequest.getVariants();
         productVatriantDTOList.stream().forEach(item ->{

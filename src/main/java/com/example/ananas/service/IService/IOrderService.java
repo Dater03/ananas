@@ -37,4 +37,6 @@ public interface IOrderService {
     ResultPaginationDTO getOrderByUserId(Integer userId, Pageable pageable);
 
     OrderResponse getOrderByOrderId(Integer orderId);
+
+    void handleAfterCreateOrder(int orderId);
 }

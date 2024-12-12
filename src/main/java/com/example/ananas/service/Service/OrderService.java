@@ -5,6 +5,7 @@ import com.example.ananas.dto.request.OrderUpdateUser;
 import com.example.ananas.dto.request.Order_Items_Create;
 import com.example.ananas.dto.response.OrderResponse;
 import com.example.ananas.dto.response.ResultPaginationDTO;
+import com.example.ananas.entity.Cart;
 import com.example.ananas.entity.Order_Item;
 import com.example.ananas.entity.ProductVariant;
 import com.example.ananas.entity.User;
@@ -50,7 +51,8 @@ public class OrderService implements IOrderService {
     VoucherService voucherService;
 
     IOrderMapper orderMapper;
-
+    Cart_Repository cartRepository;
+    Cart_Item_Repository cartItemRepository;
     @Override
     public ResultPaginationDTO getOrdersForAdmin(Pageable pageable) {
         Page<Order> orders = orderRepository.findAll(pageable);
@@ -101,6 +103,7 @@ public class OrderService implements IOrderService {
         }
         return orderMapper.orderToOrderResponse(order);
     }
+
 
     @Override
     public OrderResponse createOrder(Integer userId, OrderCreate orderCreate) {
@@ -418,5 +421,15 @@ public class OrderService implements IOrderService {
         re.setMeta(mt);
         re.setResult(orderMapper.listOrderToOrderResponse(orders.getContent()));
         return re;
+    }
+
+    @Override
+    @Transactional
+    public void handleAfterCreateOrder(int orderId) {
+        Order order = this.orderRepository.findByOrderId(orderId);
+        User user = order.getUser();
+        Cart cartDelete = this.cartRepository.findByUser(user);
+        this.cartItemRepository.deleteByCart(cartDelete);
+        this.cartRepository.deleteByUser(user);
     }
 }

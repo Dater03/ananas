@@ -81,10 +81,15 @@ public class PaymentController {
                 //dùng một bảng phụ để lưu các thông tin liên quan đến đơn hàng gửi đi trước khi thanh toán.
                 TempOrder tempOrder = this.tempOrderService.findByTxnRef(vnp_TxnRef);
                 this.orderService.changePaymentStatus(tempOrder.getOrderId(),"paid");
+                this.orderService.handleAfterCreateOrder(tempOrder.getOrderId());
 
-                return "Giao dịch thành công";
+                return "Giao dịch thành công mời bạn về trang chủ";
             } else {
-                return "Giao dịch thất bại";
+
+                //xóa order trước khi thông báo không thanhf công
+                TempOrder tempOrder = this.tempOrderService.findByTxnRef(vnp_TxnRef);
+                this.orderService.deleteOrder(tempOrder.getOrderId());
+                return "Giao dịch thất bại mời bạn về trang chủ";
             }
         } else {
             return "Chữ ký không hợp lệ";
