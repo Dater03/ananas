@@ -196,4 +196,22 @@ public class VoucherService implements IVoucherService {
         }
         return new  BigDecimal(0);
     }
+
+    @Override
+    public List<Integer> getVoucherUserByVoucherId(Integer voucherId) {
+        return voucherUserRepository.findVoucherUserByVoucherId(voucherId);
+    }
+
+    @Override
+    public Boolean deleteVoucherUser(String code) {
+        Voucher voucher = this.voucherRepository.findVoucherByCode(code);
+        List<Integer> list = getVoucherUserByVoucherId(voucher.getVoucherId());
+        if(!list.isEmpty())
+        {
+            voucherUserRepository.deleteListVoucherUser(list);
+        }
+        return true;
+    }
+
+
 }

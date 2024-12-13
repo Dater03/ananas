@@ -1,6 +1,7 @@
 package com.example.ananas.entity.voucher;
 
 import com.example.ananas.entity.User;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Data;
@@ -19,6 +20,7 @@ public class Voucher_User {
     Integer voucher_userId;
 
     @ManyToOne
+    @JsonBackReference
     @JoinColumn(name = "user_id", nullable = false)
     User user;
 
