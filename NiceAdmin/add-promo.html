@@ -328,7 +328,8 @@
       </table>
     </div>
     <!-- Popup Modal -->
-    <div class="modal fade" id="voucherDetailsModal" tabindex="-1" aria-labelledby="voucherDetailsModalLabel" aria-hidden="true">
+    <div class="modal fade" id="voucherDetailsModal" tabindex="-1" aria-labelledby="voucherDetailsModalLabel"
+      aria-hidden="true">
       <div class="modal-dialog modal-lg">
         <div class="modal-content">
           <div class="modal-header">
@@ -338,30 +339,31 @@
           <div class="modal-body">
             <div class="row">
               <div class="col-md-5">
-                <p><strong>ID:</strong> <span id="voucherId"></span></p>
-                <p><strong>Mã Voucher:</strong> <span id="voucherCode"></span></p>
-                <p><strong>Mô tả: </strong><span id="description"></span></p>
-                <p><strong>Loại khuyến mãi:</strong> <span id="discountType"></span></p>
-                <p><strong>Giá trị khuyến mãi:</strong> <span id="discountValue"></span></p>
+                <p class="my-3"><strong>ID:</strong> <span id="voucherId"></span></p>
+                <p class="my-3"><strong>Mã Voucher:</strong> <span id="voucherCode"></span></p>
+                <p class="my-3"><strong>Mô tả: </strong><span id="description"></span></p>
+                <p class="my-3"><strong>Loại khuyến mãi:</strong> <span id="discountType"></span></p>
+                <p class="my-3"><strong>Giá trị khuyến mãi:</strong> <span id="discountValue"></span></p>
               </div>
-              <div class="col-md-7">
-                <p><strong>Giới hạn sử dụng:</strong> <span id="usageLimit"></span></p>
-                <p><strong>Đơn tối thiểu:</strong> <span id="minOrderValue"></span></p>
-                <p><strong>Giảm tối đa:</strong> <span id="maxDiscount"></span></p>
-                <p><strong>Ngày bắt đầu:</strong> <span id="startDate"></span></p>
-                <p><strong>Ngày kết thúc:</strong> <span id="endDate"></span></p>
-                <p><strong>Ngày tạo:</strong> <span id="createdAt"></span></p>
+              <div class="col-md-2"></div>
+              <div class="col-md-5">
+                <p class="my-3"><strong>Giới hạn sử dụng:</strong> <span id="usageLimit"></span></p>
+                <p class="my-3"><strong>Đơn tối thiểu:</strong> <span id="minOrderValue"></span></p>
+                <p class="my-3"><strong>Giảm tối đa:</strong> <span id="maxDiscount"></span></p>
+                <p class="my-3"><strong>Ngày bắt đầu:</strong> <span id="startDate"></span></p>
+                <p class="my-3"><strong>Ngày kết thúc:</strong> <span id="endDate"></span></p>
+                <p class="my-3"><strong>Ngày tạo:</strong> <span id="createdAt"></span></p>
               </div>
             </div>
-            
+
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+            <button type="button" class="btn btn-warning" data-bs-dismiss="modal">Đóng</button>
           </div>
         </div>
       </div>
     </div>
-    
+
     <div class="modal fade" id="editVoucherModal" tabindex="-1" aria-labelledby="editVoucherModalLabel"
       aria-hidden="true">
       <div class="modal-dialog modal-lg">
@@ -490,25 +492,60 @@
     <!-- JavaScript quản lý khuyến mại -->
     <script>
 
-
-      // // Fetch danh sách voucher từ API
-      // function fetchVoucherList() {
-      //   fetch("http://localhost:8080/voucher/admin/list", {
-      //     headers: {
-      //       "Authorization": `Bearer ${token}`, // Thêm Bearer trước token
-      //       "Content-Type": "application/json"
-      //     }
-      //   })
-      //     .then((response) => {
-      //       if (!response.ok) throw new Error("Unauthorized or API Error");
-      //       return response.json();
-      //     })
-      //     .then((data) => populateVoucherTable(data.result.result)) // Đọc `result.result` từ API response
-      //     .catch((error) => console.error("Error:", error));
-      // }
-
       const token = localStorage.getItem("token");
       let voucherList = {}; // Biến toàn cục lưu trữ chi tiết các voucher
+
+      function deleteVoucher(event, code) {
+        if (confirm(`Bạn có chắc chắn muốn xóa voucher với code: ${code}?`)) {
+          event.stopPropagation(); // Ngăn sự kiện click vào row bị kích hoạt
+          fetch(`http://localhost:8080/voucher/voucheruser/${code}`, {
+            method: "DELETE",
+          })
+            .then((response) => {
+              if (!response.ok) {
+                throw new Error("Không thể xóa voucher user.");
+              }
+              return response.json();
+            })
+            .then((data) => {
+              if (data.result) {
+                console.log("Xóa voucher_user thành công:", data.message);
+
+                // Sau khi xóa voucher_user, gọi API xóa voucher admin (yêu cầu token)
+                const token = localStorage.getItem("token"); // Lấy token từ localStorage
+                if (!token) {
+                  throw new Error("Không tìm thấy token.");
+                }
+
+                return fetch(`http://localhost:8080/voucher/admin/delete/${code}`, {
+                  method: "DELETE",
+                  headers: {
+                    Authorization: `Bearer ${token}`,
+                  },
+                });
+              } else {
+                throw new Error("Không thể tiếp tục vì kết quả API xóa voucher_user không hợp lệ.");
+              }
+            })
+            .then((response) => {
+              if (!response.ok) {
+                throw new Error("Không thể xóa voucher admin.");
+              }
+              return response.text();
+            })
+            .then((message) => {
+              console.log("Xóa voucher admin thành công:", message);
+              alert("Xóa voucher thành công!");
+              const row = event.target.closest("tr");
+              row.remove();
+            })
+            .catch((error) => {
+              console.error("Xảy ra lỗi khi xóa voucher:", error.message);
+              alert("Xóa voucher thất bại, vui lòng thử lại.");
+            });
+        }
+      }
+
 
       function fetchVoucherList() {
         fetch("http://localhost:8080/voucher/admin/list", {
@@ -530,7 +567,6 @@
           })
           .catch((error) => console.error("Error:", error));
       }
-
       // Hiển thị danh sách voucher trong bảng
       function populateVoucherTable(vouchers) {
         const tableBody = document.getElementById("promoTableBody");
@@ -562,45 +598,6 @@
           tableBody.appendChild(row);
         });
       }
-
-      // // Hiển thị chi tiết voucher trong modal
-      // function showVoucherDetails(code) {
-      //   fetch(`http://localhost:8080/voucher/${code}`, {
-      //     headers: {
-      //       "Content-Type": "application/json"  // Chỉ cần content-type
-      //     }
-      //   })
-      //     .then(response => {
-      //       if (!response.ok) throw new Error("Failed to fetch voucher details");
-      //       return response.json();
-      //     })
-      //     .then(data => {
-      //       const voucher = data.result;
-      //       // Gắn dữ liệu vào modal
-      //       document.getElementById("voucherId").innerText = voucher.voucherId;
-      //       document.getElementById("voucherCode").innerText = voucher.code;
-      //       document.getElementById("discountType").innerText = voucher.discountType;
-
-      //       // Kiểm tra loại giảm giá và thêm đơn vị
-      //       const discountValue = voucher.discountType === "FIXED"
-      //         ? `${voucher.discountValue}.000 VNĐ`
-      //         : `${voucher.discountValue} %`;
-      //       document.getElementById("discountValue").innerText = discountValue;
-
-      //       document.getElementById("description").innerText = voucher.description;
-      //       document.getElementById("usageLimit").innerText = voucher.usageLimit;
-      //       document.getElementById("minOrderValue").innerText = voucher.minOrderValue;
-      //       document.getElementById("maxDiscount").innerText = voucher.maxDiscount;
-      //       document.getElementById("startDate").innerText = voucher.startDate;
-      //       document.getElementById("endDate").innerText = voucher.endDate;
-      //       document.getElementById("createdAt").innerText = voucher.createdAt;
-
-      //       // Hiển thị modal
-      //       const modal = new bootstrap.Modal(document.getElementById("voucherDetailsModal"));
-      //       modal.show();
-      //     })
-      //     .catch(error => console.error("Error fetching voucher details:", error));
-      // }
 
       function showVoucherDetails(code) {
         const voucher = voucherList[code]; // Lấy dữ liệu từ biến `voucherList`
@@ -774,25 +771,6 @@
           .catch((error) => console.error("Error updating voucher:", error));
       }
 
-      // Xử lý xóa voucher
-      function deleteVoucher(event, code) {
-        event.stopPropagation(); // Ngăn sự kiện click dòng
-        if (confirm(`Bạn có chắc chắn muốn xóa voucher với code: ${code}?`)) {
-          fetch(`http://localhost:8080/voucher/admin/delete/${code}`, {
-            method: "DELETE",
-            headers: {
-              "Authorization": `Bearer ${token}`,
-              "Content-Type": "application/json"
-            }
-          })
-            .then((response) => {
-              if (!response.ok) throw new Error("Failed to delete voucher");
-              alert("Xóa voucher thành công!");
-              fetchVoucherList(); // Tải lại danh sách sau khi xóa
-            })
-            .catch((error) => console.error("Error deleting voucher:", error));
-        }
-      }
     </script>
 
 
@@ -831,38 +809,41 @@
 
 <style>
   /* Đặt hình nền cho modal */
-#voucherDetailsModal .modal-content {
-  background: url('assets/img/back.jpg') no-repeat;
-  background-size: cover;
-  color: white;
-  border-radius: 10px;
-}
+  #voucherDetailsModal .modal-content {
+    background: url('https://toigingiuvedep.vn/wp-content/uploads/2022/06/hinh-anh-sale.jpg') no-repeat;
+    background-size: cover;
+    color: white;
+    border-radius: 10px;
+  }
 
-/* Header với nền mờ */
-#voucherDetailsModal .modal-header {
-  background: rgba(0, 0, 0, 0.6); /* Nền mờ */
-  color: white;
-}
+  /* Header với nền mờ */
+  #voucherDetailsModal .modal-header {
+    background: rgba(0, 0, 0, 0.7);
+    /* Nền mờ */
+    color: white;
+  }
 
-/* Body với nền mờ */
-#voucherDetailsModal .modal-body {
-  background: rgba(0, 0, 0, 0.5); /* Nền mờ */
-  padding: 20px;
-}
+  /* Body với nền mờ */
+  #voucherDetailsModal .modal-body {
+    background: rgba(0, 0, 0, 0.5);
+    /* Nền mờ */
+    padding: 20px;
+  }
 
-/* Footer với nền mờ */
-#voucherDetailsModal .modal-footer {
-  background: rgba(0, 0, 0, 0.6); /* Nền mờ */
-}
+  /* Footer với nền mờ */
+  #voucherDetailsModal .modal-footer {
+    background: rgba(0, 0, 0, 0.6);
+    /* Nền mờ */
+  }
 
-/* Tùy chỉnh font chữ và khoảng cách */
-#voucherDetailsModal p {
-  margin-bottom: 10px;
-  font-size: 16px;
-}
+  /* Tùy chỉnh font chữ và khoảng cách */
+  #voucherDetailsModal p {
+    margin-bottom: 10px;
+    font-size: 16px;
+  }
 
-#voucherDetailsModal strong {
-  color: #ffdd57; /* Màu vàng nổi bật */
-}
-
+  #voucherDetailsModal strong {
+    color: #ffdd57;
+    /* Màu vàng nổi bật */
+  }
 </style>

@@ -283,19 +283,7 @@
   <main id="main" class="main">
 
     <div class="container mt-5">
-        <h1 class="text-center mb-4">Quản Lý Đơn Hàng</h1>
-
-        <!-- Bộ lọc đơn hàng -->
-        <div class="mb-3">
-            <label for="filterStatus" class="form-label">Lọc đơn hàng theo trạng thái:</label>
-            <select id="filterStatus" class="form-select">
-                <option value="all">Tất cả Đơn Hàng</option>
-                <option value="new">Đơn Hàng Mới</option>
-                <option value="processing">Đơn Hàng Đang Xử Lý</option>
-                <option value="returned">Đơn Hàng Hoàn Trả</option>
-            </select>
-        </div>
-
+        <h1 class="text-center">Quản Lý Đơn Hàng</h1>
         <!-- Bảng hiển thị tất cả đơn hàng -->
         <div class="card">
             <div class="card-header">
@@ -304,73 +292,17 @@
             <div class="card-body">
                 <table class="table table-bordered table-hover">
                     <thead class="table-dark">
-                        <tr>
-                            <th>Mã đơn hàng</th>
-                            <th>Ngày đặt</th>
-                            <th>Khách hàng</th>
-                            <th>Số tiền</th>
-                            <th>Trạng thái</th>
+                        <tr class="text-center">
+                            <th class="col-1">Mã đơn</th>
+                            <th class="col-2">Ngày đặt</th>
+                            <th class="col-3">Khách hàng</th>
+                            <th class="col-2">Số tiền</th>
+                            <th class="col-2">Trạng thái đơn hàng</th>
+                            <th class="col-2">Trạng thái thanh toán</th>
                         </tr>
                     </thead>
                     <tbody id="orderTableBody">
-                        <!-- Dữ liệu đơn hàng sẽ được thêm vào đây -->
-                        <tr data-status="new">
-                            <td>DH123456</td>
-                            <td>2024-10-30</td>
-                            <td>Nguyễn Văn A</td>
-                            <td>1,500,000 VND</td>
-                            <td>
-                              <select class="form-control">
-                                  <option value="new" selected>Đơn Hàng Mới</option>
-                                  <option value="processing">Đang Xử Lý</option>
-                                  <option value="completed">Đã Hoàn Thành</option>
-                                  <option value="cancelled">Đã Hủy</option>
-                              </select>
-                          </td>
-                        </tr>
-                        <tr data-status="processing">
-                            <td>DH789101</td>
-                            <td>2024-10-29</td>
-                            <td>Trần Thị B</td>
-                            <td>2,000,000 VND</td>
-                            <td>
-                              <select class="form-control">
-                                  <option value="new" selected>Đơn Hàng Mới</option>
-                                  <option value="processing">Đang Xử Lý</option>
-                                  <option value="completed">Đã Hoàn Thành</option>
-                                  <option value="cancelled">Đã Hủy</option>
-                              </select>
-                          </td>
-                        </tr>
-                        <tr data-status="returned">
-                            <td>DH112233</td>
-                            <td>2024-10-28</td>
-                            <td>Phạm Văn C</td>
-                            <td>3,000,000 VND</td>
-                            <td>
-                              <select class="form-control">
-                                  <option value="new" selected>Đơn Hàng Mới</option>
-                                  <option value="processing">Đang Xử Lý</option>
-                                  <option value="completed">Đã Hoàn Thành</option>
-                                  <option value="cancelled">Đã Hủy</option>
-                              </select>
-                          </td>
-                        </tr>
-                        <tr data-status="new">
-                            <td>DH445566</td>
-                            <td>2024-10-27</td>
-                            <td>Lê Thị D</td>
-                            <td>750,000 VND</td>
-                            <td>
-                              <select class="form-control">
-                                  <option value="new" selected>Đơn Hàng Mới</option>
-                                  <option value="processing">Đang Xử Lý</option>
-                                  <option value="completed">Đã Hoàn Thành</option>
-                                  <option value="cancelled">Đã Hủy</option>
-                              </select>
-                          </td>
-                        </tr>
-                        <!-- Thêm nhiều đơn hàng khác tại đây -->
+                      
                     </tbody>
                 </table>
             </div>
