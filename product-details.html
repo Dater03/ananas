@@ -173,10 +173,13 @@
                                             <span class="old-price"><del id="oldPrice"></del></span>
                                         </div>
                                         <p id="description"></p>
+                                        <div class="availability">
+                                            <strong>Tồn kho:</strong> <span id="availability" class="text-success"></span>
+                                        </div>
 
                                         <!-- Chọn màu -->
-                                        <div class="color-selection mt-3">
-                                            <label><strong>Color:</strong></label>
+                                        <div class="color-selection">
+                                            <label><strong>Màu sắc:</strong></label>
                                             <div class="d-flex mt-2">
                                                 <div class="color-box me-2" style="background-color: white;"
                                                     data-color="White">
@@ -187,14 +190,14 @@
                                                 <div class="color-box me-2" style="background-color: blue;"
                                                     data-color="Blue">
                                                 </div>
-                                                <div class="color-box" style="background-color: red;" data-color="Red">
+                                                <div class="color-box me-2" style="background-color: red;" data-color="Red">
                                                 </div>
                                             </div>
                                         </div>
 
                                         <!-- Chọn size -->
                                         <div class="size-selection mt-3">
-                                            <label><strong>Size:</strong></label>
+                                            <label><strong>Kích cỡ:</strong></label>
                                             <div class="d-flex mt-2">
                                                 <div class="size-box me-2" data-size="37">37</div>
                                                 <div class="size-box me-2" data-size="38">38</div>
@@ -203,18 +206,18 @@
                                                 <div class="size-box me-2" data-size="41">41</div>
                                                 <div class="size-box me-2" data-size="42">42</div>
                                                 <div class="size-box me-2" data-size="43">43</div>
-                                                <div class="size-box" data-size="44">44</div>
+                                                <div class="size-box me-2" data-size="44">44</div>
                                             </div>
                                         </div>
                                         <!-- Số lượng và nút thêm giỏ hàng -->
                                         <div style="margin-bottom: 10px;" class="quantity mt-3">
-                                            <label for="quantityInput">Quantity:</label>
-                                            <input id="quantityInput" type="number" value="1" min="1"
+                                            <label for="quantityInput">Số lượng:</label>
+                                            <input class="quantityInput" id="quantityInput" type="number" value="0" min="0" max="0"
                                                 class="form-control w-25 d-inline">
-                                            <button id="addToCart2" class="btn btn-dark ms-2">Add to Cart</button>
+                                            <button id="addToCart2" class="btn btn-dark ms-2">Thêm giỏ hàng</button>
                                         </div>
                                         <div class="share-icon">
-                                            <h5 class="cat-title">Share:</h5>
+                                            <h5 class="cat-title">Chia sẻ:</h5>
                                             <a href="#"><i class="fa fa-facebook"></i></a>
                                             <a href="#"><i class="fa fa-twitter"></i></a>
                                             <a href="#"><i class="fa fa-pinterest"></i></a>
@@ -270,8 +273,8 @@
                                                 <table class="table table-bordered">
                                                     <thead>
                                                         <tr>
-                                                            <th>Size</th>
-                                                            <th>Color</th>
+                                                            <th>Kích cỡ</th>
+                                                            <th>Màu sắc</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody id="product-variants">
@@ -299,7 +302,7 @@
                                                             <label class="col-form-label"><span
                                                                     class="text-danger">*</span> Đánh giá sản
                                                                 phẩm</label>
-                                                            &nbsp;&nbsp;&nbsp; Bad&nbsp;
+                                                            &nbsp;&nbsp;&nbsp; Tệ&nbsp;
                                                             <input type="radio" value="1" name="rating" id="rating1">
                                                             &nbsp;
                                                             <input type="radio" value="2" name="rating">
@@ -309,7 +312,7 @@
                                                             <input type="radio" value="4" name="rating">
                                                             &nbsp;
                                                             <input type="radio" value="5" name="rating" checked>
-                                                            &nbsp;Good
+                                                            &nbsp;Tốt
                                                         </div>
                                                     </div>
                                                     <div class="buttons">
@@ -386,26 +389,24 @@
                         <!-- Details Section -->
                         <div class="col-md-6">
                             <div class="product-details">
-                                <h5 style="margin-bottom: 10px;" class="modal-title" id="productName-1">Product Name
+                                <h5 style="margin-bottom: 10px;" class="modal-title" id="productName-1"> 
                                 </h5>
                                 <div style="margin-bottom: 10px;" class="pro-review">
                                     <p>Số lượt đánh giá: <span style="margin-bottom: 10px;" id="reviews-1"></span></p>
                                 </div>
                                 <div style="margin-bottom: 10px;" class="price-box">
-                                    <span id="currentPrice-1" class="price-regular">$70.00</span>
-                                    <span id="oldPrice-1" class="price-old text-muted"><del>$80.00</del></span>
+                                    <span id="currentPrice-1" class="price-regular"></span>
+                                    <span id="oldPrice-1" class="price-old text-muted"><del></del></span>
                                 </div>
-                                <p style="margin-bottom: 10px;" id="description-1">Lorem ipsum dolor sit amet,
-                                    consectetur adipiscing elit.</p>
-                                <div class="availability">
-                                    <strong>Availability:</strong> <span id="availability" class="text-success">In
-                                        Stock</span>
+                                <p style="margin-bottom: 10px;" id="description-1"></p>
+                                <div class="availability-1">
+                                    <strong>Tồn kho:</strong> <span id="availability-1" class="text-success"></span>
                                 </div>
                                 <div id="qvId" style="display: none;"></div>
 
                                 <!-- Chọn màu -->
                                 <div class="color-selection mt-3">
-                                    <label><strong>Color:</strong></label>
+                                    <label><strong>Màu sắc:</strong></label>
                                     <div class="d-flex mt-2">
                                         <div class="color-box me-2" style="background-color: white;" data-color="White">
                                         </div>
@@ -413,13 +414,13 @@
                                         </div>
                                         <div class="color-box me-2" style="background-color: blue;" data-color="Blue">
                                         </div>
-                                        <div class="color-box" style="background-color: red;" data-color="Red"></div>
+                                        <div class="color-box me-2" style="background-color: red;" data-color="Red"></div>
                                     </div>
                                 </div>
 
                                 <!-- Chọn size -->
                                 <div class="size-selection mt-3">
-                                    <label><strong>Size:</strong></label>
+                                    <label><strong>Kích cỡ:</strong></label>
                                     <div class="d-flex mt-2">
                                         <div class="size-box me-2" data-size="37">37</div>
                                         <div class="size-box me-2" data-size="38">38</div>
@@ -428,20 +429,20 @@
                                         <div class="size-box me-2" data-size="41">41</div>
                                         <div class="size-box me-2" data-size="42">42</div>
                                         <div class="size-box me-2" data-size="43">43</div>
-                                        <div class="size-box" data-size="44">44</div>
+                                        <div class="size-box me-2" data-size="44">44</div>
                                     </div>
                                 </div>
 
                                 <!-- Số lượng và nút thêm giỏ hàng -->
                                 <div style="margin-bottom: 10px;" class="quantity mt-3">
-                                    <label for="quantityInput">Quantity:</label>
-                                    <input id="quantityInput" type="number" value="1" min="1"
+                                    <label for="quantityInput">Số lượng:</label>
+                                    <input id="quantityInput-1" type="number" value="0" min="0" max="0"
                                         class="form-control w-25 d-inline">
-                                    <button id="addToCart" class="btn btn-dark ms-2">Add to Cart</button>
+                                    <button id="addToCart" class="btn btn-dark ms-2">Thêm giỏ hàng</button>
                                 </div>
 
                                 <div style="margin-bottom: 10px;" class="social-share mt-3">
-                                    <strong>Share:</strong>
+                                    <strong>Chia sẻ:</strong>
                                     <a href="#" class="ms-2"><i class="ion-social-facebook"></i></a>
                                     <a href="#" class="ms-2"><i class="ion-social-twitter"></i></a>
                                     <a href="#" class="ms-2"><i class="ion-social-pinterest"></i></a>
@@ -471,7 +472,7 @@
                                     <li><i class="ion-ios-location-outline"></i>Minh Khai Ward, Bac Tu Liem District,
                                         Hanoi City.</li>
                                     <li><i class="ion-ios-email-outline"></i>Mail: <a
-                                            href="mailto:yourmail@gmail.com">yourmail@gmail.com</a></li>
+                                            href="mailto:yourmail@gmail.com">ananas@gmail.com</a></li>
                                     <li><i class="ion-ios-telephone-outline"></i>Phone: <a
                                             href="%2b0025425456554.html">+0123456789</a></li>
                                 </ul>
@@ -790,7 +791,7 @@
                                 </div>
                                 <div class="product-content">
                                     <h5 class="product-name">
-                                        <a href="product-details.html">${product.productName}</a>
+                                        <a href="product-details.html?id=${product.productId}">${product.productName}</a>
                                     </h5>
                                     <div class="ratings mb-2">
                                     ${'<span><i class="ion-android-star"></i></span>'.repeat(rating)}
@@ -893,7 +894,6 @@
             document.getElementById('oldPrice-1').innerText = product.discount ? `$${product.price}` : '';
             document.getElementById('description-1').innerText = product.description;
             document.getElementById("qvId").textContent = product.productId;
-            document.getElementById("availability").textContent = product.soldQuantity;
             document.getElementById("reviews-1").textContent = rvs;
 
             // Cập nhật hình ảnh chính và hình ảnh thumbnail
@@ -958,9 +958,6 @@
             document.getElementById('currentPrice').innerText = `$${(product.price * (100 - product.discount) / 100).toFixed(2)}`;
             document.getElementById('oldPrice').innerText = product.discount ? `$${product.price}` : '';
             document.getElementById('description').innerText = product.description;
-            document.getElementById('availability').innerText = product.availability ? 'In Stock' : 'Out of Stock';
-            document.getElementById('availability').classList.toggle('text-success', product.availability);
-            document.getElementById('availability').classList.toggle('text-danger', !product.availability);
             document.getElementById('des').innerText = product.description;
             document.getElementById("reviews").textContent = rvs;
 
@@ -1112,9 +1109,12 @@
     document.getElementById("addToCart").addEventListener("click", function () {
         const selectedColor = document.querySelector('.color-box.selected')?.getAttribute('data-color');
         const selectedSize = document.querySelector('.size-box.selected')?.getAttribute('data-size');
-        const quantity = document.getElementById("quantityInput").value;
+        const quantity = document.getElementById("quantityInput-1").value;
         const qvId = document.getElementById("qvId").textContent.trim();
         console.log("abc" + qvId);
+
+        const min_1 = document.getElementById("quantityInput-1").min;
+        const max_2 = document.getElementById("quantityInput-1").max;
 
         if (!selectedColor || !selectedSize) {
             alert("Please select both color and size.");
@@ -1125,7 +1125,11 @@
         console.log("Add to Cart:", { color: selectedColor, size: selectedSize, quantity });
 
         // Logic thêm sản phẩm vào giỏ hàng
-        addToCart(id, qvId, quantity, selectedSize, selectedColor);
+        if(quantity > min_1 && quantity <= max_2){
+            addToCart(userId, qvId, quantity, selectedSize, selectedColor);
+        } else {
+            alert("So luong khong hop le");
+        }
     });
 
 
@@ -1150,8 +1154,12 @@
                 const selectedColor = document.querySelector('.color-box.selected')?.getAttribute('data-color');
                 const selectedSize = document.querySelector('.size-box.selected')?.getAttribute('data-size');
                 const quantity = document.getElementById("quantityInput").value;
+
                 const qvId = document.getElementById("qvId").textContent.trim();
                 console.log("abc" + qvId);
+
+                const min = document.getElementById("quantityInput").min;
+                const max = document.getElementById("quantityInput").max;
 
                 if (!selectedColor || !selectedSize) {
                     alert("Please select both color and size.");
@@ -1162,7 +1170,11 @@
                 console.log("Add to Cart:", { color: selectedColor, size: selectedSize, quantity });
 
                 // Logic thêm sản phẩm vào giỏ hàng
-                addToCart(id, productId, quantity, selectedSize, selectedColor);
+                if(quantity > min && quantity <= max){
+                    addToCart(id, productId, quantity, selectedSize, selectedColor);
+                } else {
+                    alert("So luong khong hop le");
+                }
             });
         } else {
             console.error('Product ID not found in URL');
@@ -1336,6 +1348,59 @@
     });
 
 
+    // Lấy chi tiết sản phẩm từ API khi thay đổi màu sắc hoặc kích thước
+    async function updateAvailability(productId, selectedColor, selectedSize) {
+        try {
+            const urlParams = new URLSearchParams(window.location.search);
+            const productId = urlParams.get('id');
+            const response = await fetch(`http://localhost:8080/product/sum?productId=${productId}&color=${selectedColor}&size=${selectedSize}`);
+            if (!response.ok) {
+                throw new Error(`Failed to fetch product availability: ${response.statusText}`);
+            }
+            const rs = await response.json();
+            const data = rs.result;
+
+            console.log("rs",data)
+            document.getElementById("availability").textContent = data; // Cập nhật availability
+            document.getElementById("quantityInput").max = data;
+
+            document.getElementById("availability-1").textContent = data; // Cập nhật availability
+            document.getElementById("quantityInput-1").max = data;
+        } catch (error) {
+            console.error("Error fetching availability:", error);
+            document.getElementById("availability").textContent = "0";
+        }
+    }
+
+    // Xử lý sự kiện khi chọn màu sắc
+    document.querySelectorAll('.color-box').forEach(colorBox => {
+        colorBox.addEventListener('click', () => {
+            const selectedColor = colorBox.getAttribute('data-color');
+            const selectedSize = document.querySelector('.size-box.selected')?.getAttribute('data-size') || '';
+            const productId = document.getElementById("qvId").textContent; // Lấy productId từ modal
+            updateAvailability(productId, selectedColor, selectedSize);
+            
+            // Thay đổi trạng thái lựa chọn
+            document.querySelectorAll('.color-box').forEach(box => box.classList.remove('selected'));
+            colorBox.classList.add('selected');
+        });
+    });
+
+    // Xử lý sự kiện khi chọn kích thước
+    document.querySelectorAll('.size-box').forEach(sizeBox => {
+        sizeBox.addEventListener('click', () => {
+            const selectedSize = sizeBox.getAttribute('data-size');
+            const selectedColor = document.querySelector('.color-box.selected')?.getAttribute('data-color') || '';
+            const productId = document.getElementById("qvId").textContent; // Lấy productId từ modal
+            updateAvailability(productId, selectedColor, selectedSize);
+            
+            // Thay đổi trạng thái lựa chọn
+            document.querySelectorAll('.size-box').forEach(box => box.classList.remove('selected'));
+            sizeBox.classList.add('selected');
+        });
+    });
+
+
 </script>
 
 <style>
@@ -1432,5 +1497,18 @@
     .size-box.selected {
         border: 2px solid #000;
         background-color: #f0f0f0;
+    }
+    
+     /* cart */
+     .minicart-inner-content {
+        display: flex;
+        flex-direction: column;
+        height: 100%; /* Chiều cao toàn phần của nội dung */
+    }
+    
+    .minicart-item-wrapper {
+        flex-grow: 1; /* Phần danh sách sản phẩm mở rộng để chiếm không gian còn lại */
+        overflow-y: auto; /* Kích hoạt cuộn dọc */
+        max-height: calc(100vh - 150px); /* Tính toán chiều cao dựa trên nội dung khác */
     }
 </style>

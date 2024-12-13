@@ -177,8 +177,8 @@
                                 <img class="w-100" src="assets/img/banner/banner-1.jpg" alt="banner-image">
                             </a>
                             <div class="banner-text">
-                                <h5 class="banner-subtitle">sports shoes</h5>
-                                <h3 class="banner-title">20% Off<br>For Sports men</h3>
+                                <h5 class="banner-subtitle">Giày thể thao</h5>
+                                <h3 class="banner-title">Giảm 20%<br>cho giày nam</h3>
                             </div>
                         </div>
                     </div>
@@ -188,8 +188,8 @@
                                 <img class="w-100" src="assets/img/banner/banner-2.jpg" alt="banner-image">
                             </a>
                             <div class="banner-text">
-                                <h5 class="banner-subtitle">sports shoes</h5>
-                                <h3 class="banner-title">20% Off<br>For Sports men</h3>
+                                <h5 class="banner-subtitle">Giày thể thao</h5>
+                                <h3 class="banner-title">Giảm 20%<br>cho giày nam</h3>
                             </div>
                         </div>
                     </div>
@@ -312,22 +312,22 @@
                         <!-- Details Section -->
                         <div class="col-md-6">
                             <div class="product-details">
-                                <h5 style="margin-bottom: 10px;" class="modal-title" id="productName">Product Name</h5>
+                                <h5 style="margin-bottom: 10px;" class="modal-title" id="productName"></h5>
                                 <p style="margin-bottom: 10px;">Số lượt đánh giá: <span style="margin-bottom: 10px;"
                                         id="reviews"></span></p>
                                 <div style="margin-bottom: 10px;" class="price-box">
-                                    <span id="currentPrice" class="price-regular">$70.00</span>
-                                    <span id="oldPrice" class="price-old text-muted"><del>$80.00</del></span>
+                                    <span id="currentPrice" class="price-regular"></span>
+                                    <span id="oldPrice" class="price-old text-muted"><del></del></span>
                                 </div>
                                 <p style="margin-bottom: 10px;" id="description"></p>
                                 <div class="availability">
-                                    <strong>Availability:</strong> <span id="availability" class="text-success"></span>
+                                    <strong>Tồn kho:</strong> <span id="availability" class="text-success"></span>
                                 </div>
                                 <div id="qvId" style="display: none;"></div>
 
                                 <!-- Chọn màu -->
                                 <div class="color-selection mt-3">
-                                    <label><strong>Color:</strong></label>
+                                    <label><strong>Màu sắc:</strong></label>
                                     <div class="d-flex mt-2">
                                         <div class="color-box me-2" style="background-color: white;" data-color="White">
                                         </div>
@@ -335,13 +335,13 @@
                                         </div>
                                         <div class="color-box me-2" style="background-color: blue;" data-color="Blue">
                                         </div>
-                                        <div class="color-box" style="background-color: red;" data-color="Red"></div>
+                                        <div class="color-box me-2" style="background-color: red;" data-color="Red"></div>
                                     </div>
                                 </div>
 
                                 <!-- Chọn size -->
                                 <div class="size-selection mt-3">
-                                    <label><strong>Size:</strong></label>
+                                    <label><strong>Kích cỡ:</strong></label>
                                     <div class="d-flex mt-2">
                                         <div class="size-box me-2" data-size="37">37</div>
                                         <div class="size-box me-2" data-size="38">38</div>
@@ -350,19 +350,19 @@
                                         <div class="size-box me-2" data-size="41">41</div>
                                         <div class="size-box me-2" data-size="42">42</div>
                                         <div class="size-box me-2" data-size="43">43</div>
-                                        <div class="size-box" data-size="44">44</div>
+                                        <div class="size-box me-2" data-size="44">44</div>
                                     </div>
                                 </div>
 
                                 <!-- Số lượng và nút thêm giỏ hàng -->
                                 <div style="margin-bottom: 10px;" class="quantity mt-3">
-                                    <label for="quantityInput">Quantity:</label>
-                                    <input id="quantityInput" type="number" value="1" min="1"
+                                    <label for="quantityInput">Số lượng:</label>
+                                    <input class="quantityInput" id="quantityInput" type="number" value="0" min="0" max="0"
                                         class="form-control w-25 d-inline">
-                                    <button id="addToCart" class="btn btn-dark ms-2">Add to Cart</button>
+                                    <button id="addToCart" class="btn btn-dark ms-2">Thêm giỏ hàng</button>
                                 </div>
                                 <div style="margin-bottom: 10px;" class="social-share mt-3">
-                                    <strong>Share:</strong>
+                                    <strong>Chia sẻ:</strong>
                                     <a href="#" class="ms-2"><i class="ion-social-facebook"></i></a>
                                     <a href="#" class="ms-2"><i class="ion-social-twitter"></i></a>
                                     <a href="#" class="ms-2"><i class="ion-social-pinterest"></i></a>
@@ -850,8 +850,8 @@
                 document.getElementById('oldPrice').innerText = product.discount ? `$${product.price}` : '';
                 document.getElementById('description').innerText = product.description;
                 document.getElementById("qvId").textContent = product.productId;
-                document.getElementById("availability").textContent = product.soldQuantity;
                 document.getElementById("reviews").textContent = rvs;
+
                 //document.getElementById('availability').classList.toggle('text-danger', product.soldQuantity === 0);
 
                 // Cập nhật hình ảnh chính và hình ảnh thumbnail
@@ -974,6 +974,11 @@
             const qvId = document.getElementById("qvId").textContent.trim();
             console.log("abc" + qvId);
 
+            const min = document.getElementById("quantityInput").min;
+            const max = document.getElementById("quantityInput").max;
+
+            console.log("min",min);
+
             if (!selectedColor || !selectedSize) {
                 alert("Please select both color and size.");
                 return;
@@ -983,7 +988,11 @@
             console.log("Add to Cart:", { color: selectedColor, size: selectedSize, quantity });
 
             // Logic thêm sản phẩm vào giỏ hàng
-            addToCart(userId, qvId, quantity, selectedSize, selectedColor);
+            if(quantity > min && quantity <= max){
+                addToCart(userId, qvId, quantity, selectedSize, selectedColor);
+            } else {
+                alert("So luong khong hop le");
+            }
         });
 
         // Bắt đầu xử lý mini card
@@ -1066,9 +1075,10 @@
                 const rs = await response.json();
                 const data = rs.result;
                 document.getElementById("availability").textContent = data; // Cập nhật availability
+                document.getElementById("quantityInput").max = data;
             } catch (error) {
                 console.error("Error fetching availability:", error);
-                document.getElementById("availability").textContent = "Error fetching availability";
+                document.getElementById("availability").textContent = "0";
             }
         }
 
@@ -1431,4 +1441,18 @@
         -o-animation: glowing 1500ms infinite;
         animation: glowing 1500ms infinite;
       }
+
+      /* cart */
+    .minicart-inner-content {
+        display: flex;
+        flex-direction: column;
+        height: 100%; /* Chiều cao toàn phần của nội dung */
+    }
+    
+    .minicart-item-wrapper {
+        flex-grow: 1; /* Phần danh sách sản phẩm mở rộng để chiếm không gian còn lại */
+        overflow-y: auto; /* Kích hoạt cuộn dọc */
+        max-height: calc(100vh - 150px); /* Tính toán chiều cao dựa trên nội dung khác */
+    }
+
 </style>

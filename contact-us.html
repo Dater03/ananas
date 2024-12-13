@@ -561,7 +561,7 @@
                     displayMessages();
                     scrollToBottom(); // Cuộn đến tin nhắn mới
                     messageInput.value = ""; // Xóa nội dung ô nhập
-                    loadMessages(senderId);
+                    location.reload();
                 } else {
                     alert("Failed to send message. Please try again.");
                 }
@@ -689,5 +689,18 @@
     .user-thumbnail a {
         display: inline-block;
         text-decoration: none;
+    }
+
+     /* cart */
+     .minicart-inner-content {
+        display: flex;
+        flex-direction: column;
+        height: 100%; /* Chiều cao toàn phần của nội dung */
+    }
+    
+    .minicart-item-wrapper {
+        flex-grow: 1; /* Phần danh sách sản phẩm mở rộng để chiếm không gian còn lại */
+        overflow-y: auto; /* Kích hoạt cuộn dọc */
+        max-height: calc(100vh - 150px); /* Tính toán chiều cao dựa trên nội dung khác */
     }
 </style>
