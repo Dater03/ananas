@@ -184,7 +184,7 @@ public class OrderService implements IOrderService {
         }
         else
         {
-            description.append("Đơn hàng của bạn không đủ kiều kiện áp dụng voucher hoặc voucher đã hết hạn!");
+            description.append("Đơn hàng của bạn không đủ kiều kiện áp dụng voucher hoặc voucher đã hết hạn");
             description.append("\n");
             order.setVoucher(null);
             sum_after = sum_before;
@@ -292,7 +292,7 @@ public class OrderService implements IOrderService {
         {
             if(order.getVoucher() != null)
             {
-                description.append("Đơn hàng của bạn không đủ kiều kiện áp dụng voucher hoặc voucher đã hết hạn!");
+                description.append("Đơn hàng của bạn không đủ kiều kiện áp dụng voucher hoặc voucher đã hết hạn");
                 description.append("\n");
             }
             order.setVoucher(null);
