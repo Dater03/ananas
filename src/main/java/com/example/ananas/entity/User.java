@@ -56,6 +56,9 @@ public class User {
     @Column(name = "updateAt")
     LocalDateTime updateAt;
 
+    @Column(name = "isActive")
+    Boolean isActive;
+
     @ElementCollection
     Set<String>roles;
 

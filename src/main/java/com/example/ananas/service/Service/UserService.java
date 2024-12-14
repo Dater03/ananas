@@ -20,6 +20,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.jwt.JwtException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -55,6 +56,7 @@ public class UserService implements IUserService {
         roles.add(Role.User.name()); // cho phep user them nguoidungmoi
         user.setRoles(roles);
         user.setCreateAt(LocalDateTime.now());
+        user.setIsActive(true);
         if (userCreateRequest.getEmail() != null && !userCreateRequest.getEmail().isEmpty()) {
             String subject = "Welcome to our service";
             String text = "Dear "+userCreateRequest.getUsername()+","+userCreateRequest.getEmail()+","+userCreateRequest.getPassword();
@@ -74,10 +76,12 @@ public class UserService implements IUserService {
     }
 
     @PostAuthorize("hasRole('Admin')")
+    @Transactional
     public String deleteUser(int id) {
         User userDelete = userRepository.findById(id)
                 .orElseThrow(() -> new AppException(ErrException.USER_NOT_EXISTED));
-        userRepository.delete(userDelete);
+        userDelete.setIsActive(false);
+        userRepository.save(userDelete);
         return "xoa thanh cong";
     }
 
@@ -94,6 +98,7 @@ public class UserService implements IUserService {
                 .orElseThrow(() -> new AppException(ErrException.USER_NOT_EXISTED));
         return userMapper.toUserResponse(user);
     }
+
 
     private boolean isPhoto(MultipartFile file) {
         String contentType = file.getContentType();

@@ -65,17 +65,23 @@ public class AuthenticationService {
     public AuthenticationResponse authenticationResponse(AuthenticationRequest authenticationRequest) {
         var user = userRepository.findByUsername(authenticationRequest.getUsername())
                 .orElseThrow(() -> new AppException((ErrException.USER_NOT_EXISTED)));
-        boolean checked = passwordEncoder.matches(authenticationRequest.getPassword(), user.getPassword());
-        if (!checked) {
+        if (user.getIsActive().equals(true)){
+            boolean checked = passwordEncoder.matches(authenticationRequest.getPassword(), user.getPassword());
+            if (!checked) {
+                throw new AppException(ErrException.USER_NOT_EXISTED);
+            }
+            var token = createToken(user);
+            return AuthenticationResponse.builder()
+                    .token(token)
+                    .check(true)
+                    .userId(user.getUserId())
+                    .username(user.getUsername())
+                    .build();
+        }
+        else {
             throw new AppException(ErrException.USER_NOT_EXISTED);
         }
-        var token = createToken(user);
-        return AuthenticationResponse.builder()
-                .token(token)
-                .check(true)
-                .userId(user.getUserId())
-                .username(user.getUsername())
-                .build();
+
     }
 
     private Object buildScopeToRoles(User user) {

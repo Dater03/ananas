@@ -29,6 +29,7 @@ public class CreateAdminConfig {
                         .password(passwordEncoder.encode("admin"))
                         .email("admin@gmail.com")
                         .roles(role)
+                        .isActive(true)
                         .build();
                 userRepository.save(user);
             }
