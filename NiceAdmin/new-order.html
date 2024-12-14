@@ -30,6 +30,7 @@
 
   <!-- Template Main CSS File -->
   <link href="assets/css/style.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 </head>
 
@@ -323,180 +324,34 @@
           </div>
         </div>
       </div>
-
-      <!-- Bảng hiển thị danh sách đơn hàng -->
-      <div class="card">
-        <div class="card-header">
-          <h5 class="card-title">Danh Sách Đơn Hàng</h5>
-        </div>
-        <div class="card-body">
-          <table class="table table-bordered table-hover">
-            <thead class="table-dark">
-              <tr class="text-center">
-                <th class="col-1">Mã đơn</th>
-                <th class="col-1">Ngày đặt</th>
-                <th class="col-2">Khách hàng</th>
-                <th class="col-2">Số tiền</th>
-                <th class="col-2">Trạng thái đơn hàng</th>
-                <th class="col-2">Thanh toán</th>
-                <th class="col-2">Thao tác</th>
-              </tr>
-            </thead>
-            <tbody id="orderTableBody" class="text-center"></tbody>
-          </table>
-          <div id="paginationControls" class="d-flex justify-content-end mt-3"></div>
-        </div>
-
-      </div>
-    </div>
-
-    <!-- Modal -->
-    <div class="modal fade" id="orderModal" tabindex="-1" aria-labelledby="orderModalLabel" aria-hidden="true">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="orderModalLabel">Xem chi tiết đơn hàng</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-          </div>
-          <div class="modal-body">
-            <!-- breadcrumb area start -->
-            <div class="breadcrumb-area">
-              <div class="container">
-                <div class="row">
-                  <div class="col-12">
-                    <div class="breadcrumb-wrap text-center">
-                      <h3 class="breadcrumb-title">Thông tin đơn hàng</h3>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <!-- breadcrumb area end -->
-
-            <!-- cart main wrapper start -->
-            <div class="cart-main-wrapper mb-5">
-              <div class="container">
-                <div class="section-bg-color">
-                  <div class="mb-3">
-                    <label for="exampleFormControlInput1" class="form-label">Thông tin người nhận</label>
-                    <div id="user-info" class="p-4 rounded border">
-                      <div class="row mb-4">
-                        <div class="col-lg-6 mb-3">
-                          <label for="recipient-name" class="form-label">Người nhận</label>
-                          <input type="text" class="form-control" id="recipient-name" placeholder="Nhập tên người nhận"
-                            readonly>
-                        </div>
-                        <div class="col-lg-6 mb-3">
-                          <label for="phone-number" class="form-label">Số điện thoại</label>
-                          <input type="text" class="form-control" id="phone-number" placeholder="Nhập số điện thoại"
-                            readonly>
-                        </div>
-                      </div>
-                      <div class="row mb-4">
-                        <div class="col-lg-6 mb-3">
-                          <label for="address" class="form-label">Địa chỉ</label>
-                          <input type="text" class="form-control" id="address" placeholder="Nhập địa chỉ" readonly>
-                        </div>
-                        <div class="col-lg-6 mb-3">
-                          <label for="payment-method" class="form-label">Phương thức thanh toán</label>
-                          <div>
-                            <input type="text" class="form-control" id="payment-method"
-                              placeholder="Phương thức thanh toán" readonly>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div class="section-bg-color">
-                  <div class="row">
-                    <div class="col-lg-12">
-                      <!-- Cart Table Area -->
-                      <div class="cart-table table-responsive">
-                        <table class="table table-bordered">
-                          <thead>
-                            <tr>
-                              <th class="pro-thumbnail">Ảnh</th>
-                              <th class="pro-title">Sản phẩm</th>
-                              <th class="pro-price">Giá</th>
-                              <th class="pro-quantity">Số lượng</th>
-                              <th class="pro-subtotal">Tổng số</th>
-                              <th class="pro-title">Trạng thái</th>
-                              <th class="pro-remove">Xóa</th>
-                            </tr>
-                          </thead>
-                          <tbody id="cart-table-body">
-                            <!-- Render data -->
-                          </tbody>
-                        </table>
-                      </div>
-                      <div class="section-bg-color mt-3">
-                        <div class="row mb-4">
-                          <div class="col-lg-6 mb-3">
-                            <label for="payment-status" class="form-label">Trạng thái thanh toán</label>
-                            <input type="text" class="form-control" id="payment-status"
-                              placeholder="Trạng thái thanh toán" readonly>
-                          </div>
-                          <div class="col-lg-6 mb-3">
-                            <label for="discount-code" class="form-label">Mã giảm giá</label>
-                            <input type="text" class="form-control" id="discount-code" placeholder="Nhập mã giảm giá"
-                              readonly>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="row">
-                    <div class="col-lg-5 mt-20">
-                      <div class="mb-3">
-                        <label for="exampleFormControlTextarea1" class="form-label">
-                          <h6>Mô tả đơn hàng</h6>
-                        </label>
-                        <textarea class="form-control" id="description" rows="3" readonly></textarea>
-                      </div>
-                    </div>
-                    <div class="col-lg-5 ms-auto">
-                      <div class="cart-calculator-wrapper">
-                        <div class="cart-calculate-items">
-                          <h3>Tổng đơn hàng</h3>
-                          <div class="table-responsive">
-                            <table class="table">
-                              <tr>
-                                <td>Tổng đơn hàng trước thuế</td>
-                                <td id="cart-sub-total-berfor">--</td>
-                              </tr>
-                              <tr>
-                                <td>Áp dụng mã giảm giá</td>
-                                <td id="cart-voucher">--</td>
-                              </tr>
-                              <tr>
-                                <td>VAT(10%)</td>
-                                <td id="cart-vat">--</td>
-                              </tr>
-                              <tr>
-                                <td>Phí vận chuyển</td>
-                                <td id="cart-shipping">--</td>
-                              </tr>
-                              <tr class="total">
-                                <td>Tổng</td>
-                                <td id="cart-total-amount" class="total-amount">--</td>
-                              </tr>
-                            </table>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <!-- cart main wrapper end -->
-          </div>
-        </div>
-      </div>
     </div>
 
 
+    <!-- Bảng hiển thị danh sách đơn hàng -->
+    <div class="card">
+      <div class="card-header">
+        <h5 class="card-title">Danh Sách Đơn Hàng</h5>
+      </div>
+      <div class="card-body">
+        <table class="table table-bordered table-hover">
+          <thead class="table-dark">
+            <tr class="text-center">
+              <th class="col-1">Mã đơn</th>
+              <th class="col-1">Ngày đặt</th>
+              <th class="col-2">Khách hàng</th>
+              <th class="col-2">Số tiền</th>
+              <th class="col-2">Trạng thái đơn hàng</th>
+              <th class="col-2">Thanh toán</th>
+              <th class="col-2">Thao tác</th>
+            </tr>
+          </thead>
+          <tbody id="orderTableBody" class="text-center"></tbody>
+        </table>
+        <div id="paginationControls" class="d-flex justify-content-end mt-3"></div>
+      </div>
+
+    </div>
+    </div>
   </main>
 
 
@@ -533,6 +388,23 @@
   <script>
     const token = localStorage.getItem("token");
     let originalStatusValues = {};
+    let orderStatusChartInstance = null;
+    let paymentStatusChartInstance = null;
+
+    function storageOrderStatus(orders) {
+      orders.forEach((order) => {
+        // Lưu trạng thái ban đầu của 'orderStatus' và 'paymentStatus'
+        originalStatusValues[order.id] = {
+          orderStatus: order.status,
+          paymentStatus: order.paymentStatus
+        };
+      });
+    }
+
+    function viewOrderDetails(orderId) {
+      // Chuyển hướng sang trang chi tiết đơn hàng
+      window.location.href = `detail_order.html?orderId=${orderId}`;
+    }
 
     document.addEventListener("DOMContentLoaded", function () {
       let currentPage = 1;
@@ -555,19 +427,10 @@
               const meta = data.result.meta;
               populateOrderTable(orders);
               setupPagination(meta);
+              fetchAndRenderCharts();
             }
           })
           .catch((error) => console.error("Lỗi:", error));
-      }
-
-      function storageOrderStatus(orders) {
-        orders.forEach((order) => {
-          // Lưu trạng thái ban đầu của 'orderStatus' và 'paymentStatus'
-          originalStatusValues[order.id] = {
-            orderStatus: order.status,
-            paymentStatus: order.paymentStatus
-          };
-        });
       }
 
       function populateOrderTable(orders) {
@@ -635,6 +498,7 @@
           // Lắng nghe sự kiện thay đổi trạng thái
           row.querySelectorAll("select").forEach((select) => {
             select.addEventListener("change", function () {
+              event.stopPropagation();
               const orderId = this.getAttribute("data-order-id");
               const statusType = this.getAttribute("data-status");
               const newValue = this.value;
@@ -645,6 +509,7 @@
                 } else if (statusType === "paymentStatus") {
                   updatePaymentStatus(orderId, newValue);
                 }
+                fetchAndRenderCharts();
               } else {
                 this.value = originalValue;
               }
@@ -653,12 +518,6 @@
 
           tableBody.appendChild(row);
         });
-      }
-
-      // Hàm xử lý khi click vào nút "Xem chi tiết"
-      function viewOrderDetails(orderId) {
-        // Chuyển hướng sang trang chi tiết đơn hàng
-        window.location.href = `/order-details.html?orderId=${orderId}`;
       }
 
       function setupPagination(meta) {
@@ -679,7 +538,7 @@
         }
       }
 
-      function updateOrderStatus(orderId, status) {
+      async function updateOrderStatus(orderId, status) {
         fetch(`http://localhost:8080/order/admin/statusOrder/${orderId}?status=${status}`, {
           method: "PUT",
           headers: {
@@ -699,7 +558,7 @@
           .catch((error) => console.error("Lỗi:", error));
       }
 
-      function updatePaymentStatus(orderId, paymentStatus) {
+      async function updatePaymentStatus(orderId, paymentStatus) {
         fetch(`http://localhost:8080/order/admin/paymentStatus/${orderId}?paymentStatus=${paymentStatus}`, {
           method: "PUT",
           headers: {
@@ -722,6 +581,124 @@
       fetchOrders();
     });
 
+    // Hàm để lấy dữ liệu từ API và vẽ biểu đồ
+    function fetchAndRenderCharts() {
+      fetch('http://localhost:8080/order/admin/list', {
+        method: 'GET', // Phương thức GET
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json'
+        }
+      })
+        .then(response => response.json())
+        .then(data => {
+          const orders = data.result.result;
+
+          // Xử lý dữ liệu cho biểu đồ trạng thái đơn hàng
+          const orderStatusCount = {
+            PENDING: 0,
+            SHIPPED: 0,
+            DELIVERED: 0,
+            CANCELED: 0
+          };
+
+          // Xử lý dữ liệu cho biểu đồ trạng thái thanh toán
+          const paymentStatusCount = {
+            PAID: 0,
+            UNPAID: 0
+          };
+
+          // Đếm trạng thái đơn hàng và trạng thái thanh toán
+          orders.forEach(order => {
+            orderStatusCount[order.status] = (orderStatusCount[order.status] || 0) + 1;
+            paymentStatusCount[order.paymentStatus] = (paymentStatusCount[order.paymentStatus] || 0) + 1;
+          });
+
+          if (orderStatusChartInstance) {
+            orderStatusChartInstance.destroy();
+          }
+          if (paymentStatusChartInstance) {
+            paymentStatusChartInstance.destroy();
+          }
+
+          // Render biểu đồ trạng thái đơn hàng
+          renderOrderStatusChart(orderStatusCount);
+
+          // Render biểu đồ trạng thái thanh toán
+          renderPaymentStatusChart(paymentStatusCount);
+
+        })
+        .catch(error => console.error('Error fetching data:', error));
+    }
+
+    // Hàm render biểu đồ trạng thái đơn hàng
+    function renderOrderStatusChart(orderStatusCount) {
+      const orderStatusChart = new Chart(document.getElementById('orderStatusChart'), {
+        type: 'pie',
+        data: {
+          labels: ['PENDING', 'SHIPPED', 'DELIVERED', 'CANCELED'],
+          datasets: [{
+            data: [orderStatusCount.PENDING, orderStatusCount.SHIPPED, orderStatusCount.DELIVERED, orderStatusCount.CANCELED],
+            backgroundColor: ['#FF6347', '#FFA500', '#32CD32', '#808080'], // Màu sắc cho các trạng thái
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: {
+              position: 'top',
+            },
+            tooltip: {
+              callbacks: {
+                label: function (tooltipItem) {
+                  return tooltipItem.label + ': ' + tooltipItem.raw;
+                }
+              }
+            }
+          },
+          aspectRatio: 1,
+        }
+      });
+    }
+
+    // Hàm render biểu đồ trạng thái thanh toán
+    function renderPaymentStatusChart(paymentStatusCount) {
+      const paymentStatusChart = new Chart(document.getElementById('paymentStatusChart'), {
+        type: 'bar',
+        data: {
+          labels: ['PAID', 'UNPAID'],
+          datasets: [{
+            data: [paymentStatusCount.PAID, paymentStatusCount.UNPAID],
+            backgroundColor: ['#4CAF50', '#FF5733'], // Màu sắc cho trạng thái thanh toán
+            borderColor: ['#4CAF50', '#FF5733'],
+            borderWidth: 1
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          scales: {
+            y: {
+              beginAtZero: true
+            }
+          },
+          plugins: {
+            legend: {
+              display: false
+            },
+            tooltip: {
+              callbacks: {
+                label: function (tooltipItem) {
+                  return tooltipItem.label + ': ' + tooltipItem.raw;
+                }
+              }
+            }
+          },
+          aspectRatio: 1,
+        }
+      });
+    }
   </script>
 </body>
 
