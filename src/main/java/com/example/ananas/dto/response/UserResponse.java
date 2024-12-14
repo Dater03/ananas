@@ -3,6 +3,8 @@ package com.example.ananas.dto.response;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
+import java.time.LocalDateTime;
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
@@ -17,4 +19,6 @@ public class UserResponse {
     String firstname;
     String lastname;
     String avatar;
+    LocalDateTime createdAt;
+    LocalDateTime updatedAt;
 }

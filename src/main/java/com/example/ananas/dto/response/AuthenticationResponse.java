@@ -13,4 +13,5 @@ public class AuthenticationResponse {
     String token;
     boolean check;
     int userId;
+    String username;
 }
