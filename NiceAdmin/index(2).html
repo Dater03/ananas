@@ -257,63 +257,67 @@
 
                     <!-- Sales Card -->
                     <div class="col-xxl-6 col-md-6">
-                        <div class="card info-card sales-card">
-                            <div class="filter">
-                                <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
-                                <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                                    <li class="dropdown-header text-start">
-                                        <h6>Bộ lọc</h6>
-                                    </li>
-                                    <li><a class="dropdown-item" href="#">Hôm nay</a></li>
-                                    <li><a class="dropdown-item" href="#">Trong tháng</a></li>
-                                    <li><a class="dropdown-item" href="#">Trong năm</a></li>
-                                </ul>
-                            </div>
-                            <div class="card-body">
-                                <h5 class="card-title">Doanh thu cửa hàng <span>| Hôm nay</span></h5>
-                                <div class="d-flex align-items-center">
-                                    <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
-                                        <i class="bi bi-currency-dollar"></i>
-                                    </div>
-                                    <div class="ps-3">
-                                        <h6>$2,345</h6>
-                                        <span class="text-success small pt-1 fw-bold">20%</span>
-                                        <span class="text-muted small pt-2 ps-1">tăng trưởng</span>
-                                    </div>
-                                </div>
-                            </div>
+                      <div class="card info-card sales-card" id="sales-card">
+                        <div class="filter" id="sales-filter">
+                          <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
+                          <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow" id="sales-dropdown">
+                            <li class="dropdown-header text-start">
+                              <h6>Bộ lọc</h6>
+                            </li>
+                            <li><a class="dropdown-item" href="#" id="sales-today">Hôm nay</a></li>
+                            <li><a class="dropdown-item" href="#" id="sales-month">Trong tháng</a></li>
+                            <li><a class="dropdown-item" href="#" id="sales-year">Trong năm</a></li>
+                          </ul>
                         </div>
-                    </div><!-- End Sales Card -->
+                        <div class="card-body" id="sales-body">
+                          <h5 class="card-title" id="sales-title">Doanh thu cửa hàng <span id="sales-span">| Hôm nay</span></h5>
+                          <div class="d-flex align-items-center" id="sales-content">
+                            <div class="card-icon rounded-circle d-flex align-items-center justify-content-center" id="sales-icon">
+                              <i class="bi bi-currency-dollar"></i>
+                            </div>
+                            <div class="ps-3" id="sales-stats">
+                              <h6 id="sales-total">0.00 VNĐ</h6>
+                              <span class="text-success small pt-1 fw-bold" id="sales-percentage">0%</span>
+                              <span class="text-muted small pt-2 ps-1" id="sales-status">tăng trưởng</span>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <!-- End Sales Card -->
 
                     <!-- Customers Card -->
                     <div class="col-xxl-6 col-md-6">
-                        <div class="card info-card sales-card">
-                            <div class="filter">
-                                <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
-                                <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                                    <li class="dropdown-header text-start">
-                                        <h6>Bộ lọc</h6>
-                                    </li>
-                                    <li><a class="dropdown-item" href="#">Hôm nay</a></li>
-                                    <li><a class="dropdown-item" href="#">Trong tháng</a></li>
-                                    <li><a class="dropdown-item" href="#">Trong năm</a></li>
-                                </ul>
-                            </div>
-                            <div class="card-body">
-                                <h5 class="card-title">Khách hàng mới <span>| Hôm nay</span></h5>
-                                <div class="d-flex align-items-center">
-                                    <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
-                                        <i class="bi bi-people"></i>
-                                    </div>
-                                    <div class="ps-3">
-                                        <h6>1,567</h6>
-                                        <span class="text-danger small pt-1 fw-bold">5%</span>
-                                        <span class="text-muted small pt-2 ps-1">giảm</span>
-                                    </div>
-                                </div>
-                            </div>
+                      <div class="card info-card cus-card" id="customers-card">
+                        <div class="filter" id="customers-filter">
+                          <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
+                          <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow" id="customers-dropdown">
+                            <li class="dropdown-header text-start">
+                              <h6>Bộ lọc</h6>
+                            </li>
+                            <li><a class="dropdown-item" href="#" id="customers-today">Hôm nay</a></li>
+                            <li><a class="dropdown-item" href="#" id="customers-month">Trong tháng</a></li>
+                            <li><a class="dropdown-item" href="#" id="customers-year">Trong năm</a></li>
+                          </ul>
                         </div>
-                    </div><!-- End Customers Card -->
+                        <div class="card-body" id="customers-body">
+                          <h5 class="card-title" id="customers-title">Khách hàng mới <span id="customers-span">| Hôm nay</span></h5>
+                          <div class="d-flex align-items-center" id="customers-content">
+                            <div class="card-icon rounded-circle d-flex align-items-center justify-content-center" id="customers-icon">
+                              <i class="bi bi-people"></i>
+                            </div>
+                            <div class="ps-3" id="customers-stats">
+                              <h6 id="customers-total">0</h6>
+                              <span class="text-danger small pt-1 fw-bold" id="customers-percentage">0%</span>
+                              <span class="text-muted small pt-2 ps-1" id="customers-status">giảm</span>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <!-- End Customers Card -->
+
+                  <!-- End Customers Card -->
 
                     <!-- Products Overview -->
                     <div class="col-12">
@@ -872,3 +876,97 @@
   }
   
 </style>
+<script>
+  async function fetchRevenueForToday(cardClass) {
+    const now = new Date();
+    const year = now.getFullYear();
+    const month = now.getMonth() + 1; // Lấy tháng hiện tại (tháng 0 -> 11)
+    const day = now.getDate(); // Lấy ngày hiện tại
+
+    try {
+        // Gọi API lấy doanh thu của ngày hiện tại
+        const response = await fetch(`http://localhost:8080/order/admin/getDay?year=${year}&month=${month}`);
+        if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
+        
+        const data = await response.json();
+        const dailyRevenues = data.result;
+        const todayRevenue = dailyRevenues[day - 1] || 0; // Doanh thu ngày hiện tại
+
+        // Cập nhật dữ liệu vào card tương ứng
+        const card = document.querySelector(`.${cardClass}`);
+        card.querySelector('.card-title span').innerText = '| Hôm nay';
+        card.querySelector('.ps-3 h6').innerText = `${todayRevenue.toFixed(2)} VNĐ`;
+    } catch (error) {
+        console.error("Lỗi khi lấy doanh thu ngày:", error);
+    }
+}
+
+async function fetchRevenueForThisMonth(cardClass) {
+    const now = new Date();
+    const year = now.getFullYear();
+    const month = now.getMonth() + 1;
+
+    try {
+        // Gọi API lấy doanh thu của tháng hiện tại
+        const response = await fetch(`http://localhost:8080/order/admin/getMonth?year=${year}`);
+        if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
+        
+        const data = await response.json();
+        const monthlyRevenues = data.result;
+        const thisMonthRevenue = monthlyRevenues[month - 1] || 0; // Doanh thu tháng hiện tại
+        console.log("tháng",thisMonthRevenue)
+
+        // Cập nhật dữ liệu vào card tương ứng
+        const card = document.querySelector(`.${cardClass}`);
+        card.querySelector('.card-title span').innerText = '| Trong tháng';
+        card.querySelector('.ps-3 h6').innerText = `${thisMonthRevenue.toFixed(2)} VNĐ`;
+    } catch (error) {
+        console.error("Lỗi khi lấy doanh thu tháng:", error);
+    }
+}
+
+async function fetchRevenueForThisYear(cardClass) {
+    const now = new Date();
+    const year = now.getFullYear();
+
+    try {
+        // Gọi API lấy doanh thu của năm hiện tại
+        const response = await fetch(`http://localhost:8080/order/admin/getYear`);
+        if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
+        
+        const data = await response.json();
+        const yearlyRevenues = data.result;
+        const thisYearRevenue = yearlyRevenues.find((revenue, index) => year - 6 + index === year) || 0;
+
+        // Cập nhật dữ liệu vào card tương ứng
+        const card = document.querySelector(`.${cardClass}`);
+        card.querySelector('.card-title span').innerText = '| Trong năm';
+        card.querySelector('.ps-3 h6').innerText = `${thisYearRevenue.toFixed(2)} VNĐ`;
+    } catch (error) {
+        console.error("Lỗi khi lấy doanh thu năm:", error);
+    }
+}
+
+// Lắng nghe sự kiện khi người dùng chọn filter cho từng card
+document.querySelectorAll('.info-card').forEach((card) => {
+    const cardClass = card.classList.contains('sales-card');
+    card.querySelectorAll('.dropdown-item').forEach((item) => {
+        item.addEventListener('click', (e) => {
+            e.preventDefault();
+            const filterType = e.target.innerText.includes('Hôm nay')
+                ? 'day'
+                : e.target.innerText.includes('Trong tháng')
+                ? 'month'
+                : 'year';
+
+            if (filterType === 'day') fetchRevenueForToday(cardClass);
+            if (filterType === 'month') fetchRevenueForThisMonth(cardClass);
+            if (filterType === 'year') fetchRevenueForThisYear(cardClass);
+        });
+    });
+});
+
+// Gọi API lần đầu mặc định hiển thị doanh thu ngày hiện tại cho từng card
+fetchRevenueForToday('sales-card'); // Card doanh thu
+
+</script>

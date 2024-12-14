@@ -250,7 +250,6 @@
                 <table class="table table-striped">
                     <thead>
                         <tr>
-                            <th>ID</th>
                             <th>Tên khách hàng</th>
                             <th>Email</th>
                             <th>Dịa chỉ</th>
@@ -611,23 +610,24 @@
      tableBody.innerHTML = ''; // Xóa dữ liệu cũ
  
      users.forEach(user => {
-       const row = document.createElement('tr');
-       row.innerHTML = `
-         <td>${user.userId || ''}</td>
-         <td>${user.username || ''}</td>
-         <td>${user.email || ''}</td>
-         <td>${user.address || 'N/A'}</td>
-         <td>${user.firstname || 'N/A'}</td>
-         <td>${user.lastname || 'N/A'}</td>
-         <td>
-           ${user.avatar ? `<img src="http://localhost:8080/images/avatar/${user.avatar}" alt="Avatar" width="50" height="50">` : 'N/A'}
-         </td>
-         <td>${user.phone || 'N/A'}</td>
-         <td>
-           <button onclick="deleteUser(${user.userId})">Xóa</button>
-         </td>
-       `;
-       tableBody.appendChild(row);
+       if(user.isActive === true){
+        const row = document.createElement('tr');
+        row.innerHTML = `
+          <td>${user.username || ''}</td>
+          <td>${user.email || ''}</td>
+          <td>${user.address || 'N/A'}</td>
+          <td>${user.firstname || 'N/A'}</td>
+          <td>${user.lastname || 'N/A'}</td>
+          <td>
+            ${user.avatar ? `<img src="http://localhost:8080/images/avatar/${user.avatar}" alt="Avatar" width="50" height="50">` : 'N/A'}
+          </td>
+          <td>${user.phone || 'N/A'}</td>
+          <td>
+            <button onclick="deleteUser(${user.userId})">Xóa</button>
+          </td>
+        `;
+        tableBody.appendChild(row);
+       }
      });
  
      console.log('Người dùng được hiển thị:', users);
@@ -649,7 +649,7 @@ async function deleteUser(userId) {
       }
 
       const response = await fetch(`http://localhost:8080/user?id=${userId}`, {
-        method: 'DELETE',
+        method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${token}` // Gửi token trong header
