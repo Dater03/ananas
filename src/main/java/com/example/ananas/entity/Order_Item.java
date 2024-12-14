@@ -24,7 +24,7 @@ public class Order_Item {
     @JoinColumn(name = "order_id", nullable = false)
     Order order;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "variant_id", nullable = false)
     ProductVariant productVariant;
 

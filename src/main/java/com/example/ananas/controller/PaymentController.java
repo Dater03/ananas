@@ -84,7 +84,7 @@ public class PaymentController {
                 this.orderService.changePaymentStatus(tempOrder.getOrderId(), "paid");
                 this.orderService.handleAfterCreateOrder(tempOrder.getOrderId());
                 tempOrder.setStatus("success");
-
+                this.tempOrderService.save(tempOrder);
                 // Chuyển hướng tới trang thành công
                 response.sendRedirect("http://localhost:5501/success.html");
             } else {
