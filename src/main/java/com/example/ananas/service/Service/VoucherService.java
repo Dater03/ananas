@@ -190,6 +190,8 @@ public class VoucherService implements IVoucherService {
     @Override
     public BigDecimal getSumDiscount(String code, BigDecimal price) {
         Voucher voucher = this.voucherRepository.findVoucherByCode(code);
+        if(voucher == null)
+            return new BigDecimal(0);
         if(checkVoucher(code, price))
         {
             return this.applyVoucher(voucher,price);

@@ -31,6 +31,10 @@ public class TempOrder {
 
     int orderId;
 
+    double sumPrice;
+
+    String status = "cancel";
+
 //    List<Order_Item_Response> orderItems;
     private Instant createdAt;
 
