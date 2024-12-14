@@ -757,15 +757,19 @@
   .message-modal {
     display: none;
     position: fixed;
-    top: 35%;
-    left: 81%;
-    transform: translate(-50%, -50%);
+    top: 7%; 
+    left: 81%; 
+    transform: translateX(-50%); 
     width: 310px;
+    max-height: 70%; 
+    overflow-y: auto; 
     background: white;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     z-index: 1000;
+    box-sizing: border-box; 
   }
+
   
   .message-modal .close-btn {
     position: absolute;
@@ -833,7 +837,8 @@
   }
   
   #sendMessageBtn {
-    padding: 8px 16px;
+    width: 35px;
+    font-size: 10px;
     background-color: #007bff;
     color: white;
     border: none;
