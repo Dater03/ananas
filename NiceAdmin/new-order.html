@@ -242,9 +242,8 @@
 
   <main id="main" class="main">
 
-    <div class="container mt-5">
       <!-- Vùng hiển thị biểu đồ thống kê -->
-      <div class="card mb-5">
+      <div class="card">
         <div class="card-header">
           <h5 class="card-title">Thống Kê Đơn Hàng</h5>
         </div>
@@ -260,7 +259,6 @@
           </div>
         </div>
       </div>
-    </div>
 
 
     <!-- Bảng hiển thị danh sách đơn hàng -->
@@ -818,7 +816,7 @@
 
     // Hàm render biểu đồ trạng thái đơn hàng
     function renderOrderStatusChart(orderStatusCount) {
-      const orderStatusChart = new Chart(document.getElementById('orderStatusChart'), {
+      orderStatusChartInstance = new Chart(document.getElementById('orderStatusChart'), {
         type: 'pie',
         data: {
           labels: ['PENDING', 'SHIPPED', 'DELIVERED', 'CANCELED'],
@@ -849,7 +847,7 @@
 
     // Hàm render biểu đồ trạng thái thanh toán
     function renderPaymentStatusChart(paymentStatusCount) {
-      const paymentStatusChart = new Chart(document.getElementById('paymentStatusChart'), {
+      paymentStatusChartInstance = new Chart(document.getElementById('paymentStatusChart'), {
         type: 'bar',
         data: {
           labels: ['PAID', 'UNPAID'],
