@@ -75,9 +75,7 @@
               Bạn có 5 thông báo mới
               <a href="#"><span class="badge rounded-pill bg-primary p-2 ms-2">Xem tất cả</span></a>
             </li>
-            <li>
-              <hr class="dropdown-divider">
-            </li>
+            <li><hr class="dropdown-divider"></li>
 
             <li class="notification-item">
               <i class="bi bi-cart text-info"></i>
@@ -88,9 +86,7 @@
               </div>
             </li>
 
-            <li>
-              <hr class="dropdown-divider">
-            </li>
+            <li><hr class="dropdown-divider"></li>
 
             <li class="notification-item">
               <i class="bi bi-truck text-warning"></i>
@@ -100,40 +96,6 @@
                 <p>1 giờ trước</p>
               </div>
             </li>
-
-            <li>
-              <hr class="dropdown-divider">
-            </li>
-
-            <li class="notification-item">
-              <i class="bi bi-check-circle text-success"></i>
-              <div>
-                <h4>Đơn hàng đã giao</h4>
-                <p>Đơn hàng #67890 đã được giao thành công</p>
-                <p>2 giờ trước</p>
-              </div>
-            </li>
-
-            <li>
-              <hr class="dropdown-divider">
-            </li>
-
-            <li class="notification-item">
-              <i class="bi bi-x-circle text-danger"></i>
-              <div>
-                <h4>Đơn hàng bị hủy</h4>
-                <p>Đơn hàng #98765 đã bị hủy</p>
-                <p>4 giờ trước</p>
-              </div>
-            </li>
-
-            <li>
-              <hr class="dropdown-divider">
-            </li>
-
-            <li class="dropdown-footer">
-              <a href="#">Hiển thị tất cả thông báo</a>
-            </li>
           </ul><!-- End Notification Dropdown Items -->
 
         </li><!-- End Notification Nav -->
@@ -142,50 +104,33 @@
         <li class="nav-item dropdown">
           <a class="nav-link nav-icon" href="#" data-bs-toggle="dropdown">
             <i class="bi bi-chat-left-text"></i>
-            <span class="badge bg-success badge-number">2</span>
+            <span class="badge bg-success badge-number" id="messageCount-2"></span>
           </a><!-- End Messages Icon -->
 
-          <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow messages">
+          <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow messages" id="messageList">
             <li class="dropdown-header">
-              Bạn có 2 tin nhắn mới
-              <a href="#"><span class="badge rounded-pill bg-primary p-2 ms-2">Xem tất cả</span></a>
+              Bạn có <span id="messageCount">0</span> tin nhắn mới
             </li>
-            <li>
-              <hr class="dropdown-divider">
-            </li>
-
-            <li class="message-item">
-              <a href="#">
-                <img src="assets/img/messages-3.jpg" alt class="rounded-circle">
-                <div>
-                  <h4>Đỗ Thành Đạt</h4>
-                  <p>Sản phẩm này có kích cỡ 42 không?</p>
-                  <p>2 giờ trước</p>
-                </div>
-              </a>
-            </li>
-            <li>
-              <hr class="dropdown-divider">
-            </li>
-
-            <li class="message-item">
-              <a href="#">
-                <img src="assets/img/messages-1.jpg" alt class="rounded-circle">
-                <div>
-                  <h4>Đỗ Thị Ling Ling</h4>
-                  <p>Tôi muốn đổi sản phẩm, quy trình như thế nào?</p>
-                  <p>4 giờ trước</p>
-                </div>
-              </a>
-            </li>
-            <li>
-              <hr class="dropdown-divider">
-            </li>
-
-            <li class="dropdown-footer">
-              <a href="#">Hiển thị tất cả tin nhắn</a>
-            </li>
-          </ul><!-- End Messages Dropdown Items -->
+            <li><hr class="dropdown-divider"></li>
+            
+            <!-- Tin nhắn sẽ được load vào đây bằng JavaScript -->
+            
+            <li><hr class="dropdown-divider"></li>
+          </ul>
+          
+          <!-- Modal hiển thị chi tiết tin nhắn -->
+          <div id="messageModal" class="message-modal">
+            <div class="message-modal-content">
+              <span class="close-btn">&times;</span>
+              <img id="avatarMes" style="width: 25px;" src="assets/img/apple-touch-icon.png" alt=""><span id="usernameMess"> User</span>
+              <ul id="messageDetails"></ul>
+              <!-- Ô nhập tin nhắn và nút gửi -->
+              <div class="send-message-container">
+                <input type="text" id="messageInput" placeholder="Nhập tin nhắn..." />
+                <button id="sendMessageBtn">Gửi</button>
+              </div>
+            </div>
+          </div>
 
         </li><!-- End Messages Nav -->
 
@@ -201,9 +146,7 @@
               <h6>Quản lý Cửa hàng</h6>
               <span>Quản lý hệ thống</span>
             </li>
-            <li>
-              <hr class="dropdown-divider">
-            </li>
+            <li><hr class="dropdown-divider"></li>
 
             <li>
               <a class="dropdown-item d-flex align-items-center" href="users-profile.html">
@@ -211,11 +154,7 @@
                 <span>Thông tin cá nhân</span>
               </a>
             </li>
-            <li>
-              <hr class="dropdown-divider">
-            </li>
-
-
+            <li><hr class="dropdown-divider"></li>
 
             <li>
               <a class="dropdown-item d-flex align-items-center" href="pages-login.html">
@@ -290,13 +229,10 @@
 
       <!-- Quản lý Khuyến mãi -->
       <li class="nav-item">
-        <a class="nav-link collapsed" data-bs-target="#promo-nav" data-bs-toggle="collapse" href="#">
-          <i class="bi bi-gift"></i><span>Quản lý Khuyến mãi</span><i class="bi bi-chevron-down ms-auto"></i>
+        <a class="nav-link collapsed" href="add-promo.html">
+          <i class="bi bi-gift"></i><span>Quản lý Khuyến mãi</span>
         </a>
-        <ul id="promo-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
-          <li><a href="add-promo.html"><i class="bi bi-plus-circle"></i><span>Thêm Khuyến mãi</span></a></li>
-          <li><a href="list-promos.html"><i class="bi bi-list"></i><span>Danh sách Khuyến mãi</span></a></li>
-        </ul>
+
       </li><!-- End Promo Nav -->
 
 
@@ -531,6 +467,255 @@
   <!-- Template Main JS File -->
   <script src="assets/js/main.js"></script>
   <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const receiverId = localStorage.getItem("userId");
+      const token = localStorage.getItem("token");
+      let currentSenderId = null;
+    
+      const messageList = document.getElementById("messageList");
+      const messageCount = document.getElementById("messageCount");
+      const messageCount_2 = document.getElementById("messageCount-2");
+      const messageModal = document.getElementById("messageModal");
+      const messageDetails = document.getElementById("messageDetails");
+      const messageInput = document.getElementById("messageInput");
+      const sendMessageBtn = document.getElementById("sendMessageBtn");
+    
+      async function fetchMessages() {
+        try {
+            const response = await fetch(`http://localhost:8080/message/latest?receiverId=${receiverId}`, {
+                headers: { Authorization: `Bearer ${token}` },
+            });
+    
+            if (!response.ok) {
+                throw new Error(`HTTP error! Status: ${response.status}`);
+            }
+    
+            const data = await response.json();
+            const messages = data.result;
+    
+            console.log("Messages:", messages);
+    
+            // Cập nhật số lượng tin nhắn
+            messageCount.innerText = messages.length;
+            messageCount_2.innerText = messages.length;
+    
+            // Xóa các tin nhắn cũ
+            messageList.querySelectorAll(".message-item").forEach((item) => item.remove());
+    
+            // Lặp qua từng tin nhắn
+            for (const message of messages) {
+                try {
+                    const userResponse = await fetch(`http://localhost:8080/user/${message.senderId}`, {
+                        method: "GET",
+                        headers: { 'Content-Type': 'application/json' },
+                    });
+    
+                    if (!userResponse.ok) {
+                        throw new Error(`HTTP error! Status: ${userResponse.status}`);
+                    }
+    
+                    const userData = await userResponse.json();
+                    const user = userData.result.result;
+  
+                    // Cập nhật avatar và username cho modal
+                    const avatarMesElement = document.querySelector("#avatarMes");
+                    const usernameMesElement = document.querySelector("#usernameMess");
+  
+                    if (avatarMesElement) {
+                        avatarMesElement.src = user.avatar
+                            ? `http://localhost:8080/images/avatar/${user.avatar}`
+                            : "assets/img/about/avatar.jpg";
+                    }
+  
+                    if (usernameMesElement) {
+                        usernameMesElement.innerText = user.username || "Người dùng";
+                    }
+    
+                    const avt = user.avatar
+                        ? `http://localhost:8080/images/avatar/${user.avatar}`
+                        : "assets/img/messages-1.jpg";
+    
+                    const messageItem = document.createElement("li");
+                    messageItem.classList.add("message-item");
+                    messageItem.dataset.senderId = message.senderId;
+    
+                    messageItem.innerHTML = `
+                        <a href="#">
+                            <img src="${avt}" alt class="rounded-circle">
+                            <div>
+                                <h4>${message.senderId === receiverId ? "Bạn" : message.senderName}</h4>
+                                <p>${message.message}</p>
+                                <p>${formatTimeAgo2(message.createdAt)}</p>
+                            </div>
+                        </a>
+                    `;
+    
+                    // Thêm vào danh sách tin nhắn
+                    messageList.insertBefore(messageItem, messageList.querySelector(".dropdown-footer"));
+    
+                    // Thêm sự kiện click để lấy tin nhắn của người gửi
+                    messageItem.addEventListener("click", () => fetchMessagesFromSender(message.senderId));
+                } catch (innerError) {
+                    console.error("Lỗi khi lấy thông tin người dùng:", innerError);
+                }
+            }
+        } catch (error) {
+            console.error("Lỗi khi lấy danh sách tin nhắn:", error);
+        }
+    }
+    
+    
+      async function fetchMessagesFromSender(senderId) {
+        try {
+          // Lấy tin nhắn gửi đi
+          const responseSent = await fetch(
+            `http://localhost:8080/message/both?senderId=${receiverId}&receiverId=${senderId}`,
+            { headers: { Authorization: `Bearer ${token}` } }
+          );
+          const sentMessages = await responseSent.json();
+        
+          // Lấy tin nhắn nhận vào
+          const responseReceived = await fetch(
+            `http://localhost:8080/message/both2?receiverId=${receiverId}&senderId=${senderId}`,
+            { headers: { Authorization: `Bearer ${token}` } }
+          );
+          const receivedMessages = await responseReceived.json();
+        
+          // Kết hợp tin nhắn gửi và nhận
+          const messages = [
+            ...sentMessages.result.map((msg) => ({ ...msg, type: "sent" })),
+            ...receivedMessages.result.map((msg) => ({ ...msg, type: "received" })),
+          ];
+        
+          // Sắp xếp theo thời gian (cũ đến mới)
+          messages.sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt));
+        
+          // Hiển thị tin nhắn
+          currentSenderId = senderId;
+          messageDetails.innerHTML = messages
+            .map((msg) => {
+              const messageClass = msg.type === "sent" ? "sender-message" : "receiver-message";
+              return `
+                <li class="${messageClass}">
+                  <div class="message-content">${msg.message}</div>
+                  <small>${formatTimeAgo(msg.createdAt)}</small>
+                </li>`;
+            })
+            .join("");
+        
+          // Đảm bảo cuộn đến cuối modal khi mở
+          setTimeout(() => {
+            const lastMessage = messageDetails.lastElementChild;
+            if (lastMessage) {
+              lastMessage.scrollIntoView({ behavior: "smooth", block: "end" });
+            }
+          }, 100); // Đợi một chút để nội dung được render trước khi cuộn xuống
+        
+          openModal();
+        } catch (error) {
+          console.error("Lỗi khi lấy tin nhắn chi tiết:", error);
+        }
+      }
+      
+      function openModal() {
+        messageModal.style.display = "block";
+        // Đảm bảo cuộn đến cuối modal khi mở
+        setTimeout(() => {
+          const lastMessage = messageDetails.lastElementChild;
+          if (lastMessage) {
+            lastMessage.scrollIntoView({ behavior: "smooth", block: "end" });
+          }
+        }, 100); // Đợi một chút để nội dung được render trước khi cuộn xuống
+      }
+      
+    
+      async function sendMessage() {
+        const messageContent = messageInput.value.trim();
+        if (!messageContent || !currentSenderId) return;
+    
+        const messageData = {
+          senderId: receiverId,
+          receiverId: currentSenderId,
+          message: messageContent,
+        };
+    
+        try {
+          const response = await fetch("http://localhost:8080/message", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`,
+            },
+            body: JSON.stringify(messageData),
+          });
+    
+          if (response.ok) {
+            const newMessage = await response.json();
+            messageDetails.insertAdjacentHTML(
+              "beforeend",
+              `<li class="receiver-message">
+                <div class="message-content">${newMessage.message}</div>
+                <small>${formatTimeAgo(newMessage.createdAt)}</small>
+              </li>`
+            );
+            messageInput.value = "";
+    
+            // Sau khi gửi tin nhắn, tái tải lại danh sách tin nhắn
+            fetchMessagesFromSender(currentSenderId); // Tải lại tin nhắn từ senderId hiện tại
+          }
+        } catch (error) {
+          console.error("Lỗi khi gửi tin nhắn:", error);
+        }
+      }
+    
+      function formatTimeAgo(dateString) {
+        const date = new Date(dateString);
+        const now = new Date();
+        const diff = Math.floor((now - date) / 1000);
+    
+        if (diff < 60) return `${diff} giây trước`;
+        if (diff < 3600) return `${Math.floor(diff / 60)} phút trước`;
+        if (diff < 86400) return `${Math.floor(diff / 3600)} giờ trước`;
+        return `${Math.floor(diff / 86400)} ngày trước`;
+      }
+    
+      function formatTimeAgo2(dateString) {
+        const date = new Date(dateString); // JavaScript hiểu tốt định dạng ISO 8601
+        date.setHours(date.getHours() + 7); // Cộng thêm 7 giờ để điều chỉnh sang UTC+7
+        const now = new Date();
+        const diff = Math.floor((now - date) / 1000); // Hiệu số thời gian tính bằng giây
+    
+        if (diff < 60) {
+          return `${diff} giây trước`;
+        }
+    
+        if (diff < 3600) {
+          const minutes = Math.round(diff / 60); // Làm tròn phút
+          return `${minutes} phút trước`;
+        }
+    
+        if (diff < 86400) {
+          const hours = Math.round(diff / 3600); // Làm tròn giờ
+          return `${hours} giờ trước`;
+        }
+    
+        return `${Math.floor(diff / 86400)} ngày trước`; // Nếu lớn hơn 1 ngày
+      }
+    
+      function openModal() {
+        messageModal.style.display = "block";
+      }
+    
+      function closeModal() {
+        messageModal.style.display = "none";
+      }
+    
+      document.querySelector(".close-btn").addEventListener("click", closeModal);
+      sendMessageBtn.addEventListener("click", sendMessage);
+    
+      fetchMessages();
+    });
+    
     const token = localStorage.getItem("token");
     let originalStatusValues = {};
 
@@ -726,3 +911,117 @@
 </body>
 
 </html>
+
+<style>
+  #messageList {
+    width: 300px; /* Cố định độ rộng của dropdown */
+    overflow-y: auto; /* Thêm thanh cuộn khi nội dung vượt quá chiều cao */
+  }
+  
+  #messageList .dropdown-header {
+    font-weight: bold;
+  }
+  
+  #messageList hr {
+    border: 0;
+    border-top: 1px solid #ddd;
+  }
+
+  
+  .message-modal {
+    display: none;
+    position: fixed;
+    top: 7%; 
+    left: 81%; 
+    transform: translateX(-50%); 
+    width: 310px;
+    max-height: 70%; 
+    overflow-y: auto; 
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+    box-sizing: border-box; 
+  }
+
+  
+  .message-modal .close-btn {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    font-size: 18px;
+    cursor: pointer;
+  }
+  
+  .message-modal ul {
+    list-style: none;
+    padding: 0;
+    max-height: 300px;
+    overflow-y: auto;
+  }
+  
+  .message-modal ul li {
+    padding: 10px 0;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  .sender-message, .receiver-message {
+    font-size: 10px;
+  }
+  
+  .sender-message {
+    text-align: right;
+  }
+  
+  .receiver-message {
+    text-align: left;
+  }
+  
+  .message-content {
+    display: inline-block;
+    max-width: 70%;
+    padding: 10px;
+    border-radius: 10px;
+    position: relative;
+  }
+  
+  .sender-message .message-content {
+    background-color: #f0f0f0;
+  }
+  
+  .receiver-message .message-content {
+    background-color: #d1e7ff;
+  }
+  
+  .message-modal-content {
+    padding: 20px;
+  }
+  
+  .send-message-container {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+  }
+  
+  #messageInput {
+    flex: 1;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  
+  #sendMessageBtn {
+    width: 35px;
+    font-size: 10px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  #sendMessageBtn:hover {
+    background-color: #0056b3;
+  }
+  
+</style>
