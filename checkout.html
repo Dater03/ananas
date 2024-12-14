@@ -292,25 +292,25 @@
                                     <table class="table table-bordered">
                                         <thead>
                                             <tr>
-                                                <th>Products</th>
-                                                <th>Total</th>
+                                                <th>Sản Phẩm</th>
+                                                <th>Giá Tiền</th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             <tr>
-                                                <td><a href="product-details.html">Suscipit Vestibulum <strong> ×
+                                                <td><a href="#">Suscipit Vestibulum <strong> ×
                                                             1</strong></a>
                                                 </td>
                                                 <td>$165.00</td>
                                             </tr>
                                             <tr>
-                                                <td><a href="product-details.html">Ami Vestibulum suscipit <strong> ×
+                                                <td><a href="#">Ami Vestibulum suscipit <strong> ×
                                                             4</strong></a>
                                                 </td>
                                                 <td>$165.00</td>
                                             </tr>
                                             <tr>
-                                                <td><a href="product-details.html">Vestibulum suscipit <strong> ×
+                                                <td><a href="#">Vestibulum suscipit <strong> ×
                                                             2</strong></a>
                                                 </td>
                                                 <td>$165.00</td>
@@ -318,34 +318,12 @@
                                         </tbody>
                                         <tfoot>
                                             <tr>
-                                                <td>Sub Total</td>
+                                                <td>Giá tạm tính</td>
                                                 <td><strong>$400</strong></td>
                                             </tr>
+
                                             <tr>
-                                                <td>Shipping</td>
-                                                <td class="d-flex justify-content-center">
-                                                    <ul class="shipping-type">
-                                                        <li>
-                                                            <div class="form-check">
-                                                                <input type="radio" id="flatrate" name="shipping"
-                                                                    class="form-check-input" checked />
-                                                                <label class="form-check-label" for="flatrate">Flat
-                                                                    Rate: $70.00</label>
-                                                            </div>
-                                                        </li>
-                                                        <li>
-                                                            <div class="form-check">
-                                                                <input type="radio" id="freeshipping" name="shipping"
-                                                                    class="form-check-input" />
-                                                                <label class="form-check-label" for="freeshipping">Free
-                                                                    Shipping</label>
-                                                            </div>
-                                                        </li>
-                                                    </ul>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>Total Amount</td>
+                                                <td>Số tiền thanh toán</td>
                                                 <td><strong>$470</strong></td>
                                             </tr>
                                         </tfoot>
@@ -358,11 +336,12 @@
                                             <div class="form-check">
                                                 <input type="radio" id="cashon" name="paymentmethod"
                                                     value="CASH_ON_DELIVERY" class="form-check-input" checked />
-                                                <label class="form-check-label" for="cashon">Cash On Delivery</label>
+                                                <label class="form-check-label" for="cashon">Thanh toán khi nhận
+                                                    hàng</label>
                                             </div>
                                         </div>
                                         <div class="payment-method-details" data-method="cash">
-                                            <p>Pay with cash upon delivery.</p>
+                                            <p>Thanh toán bằng tiền mặt khi nhận hàng</p>
                                         </div>
                                     </div>
                                     <div class="single-payment-method">
@@ -370,8 +349,8 @@
                                             <div class="form-check">
                                                 <input type="radio" id="directbank" name="paymentmethod"
                                                     value="CREDIT_CARD" class="form-check-input" />
-                                                <label class="form-check-label" for="directbank">Direct Bank
-                                                    Transfer</label>
+                                                <label class="form-check-label" for="directbank">Thanh toán trực
+                                                    tuyến</label>
                                             </div>
                                         </div>
                                         <div class="payment-method-details" data-method="bank">
@@ -384,8 +363,8 @@
                                     <div class="summary-footer-area">
                                         <div class="form-check custom-checkbox mb-20">
                                             <input type="checkbox" class="form-check-input" id="terms" required />
-                                            <label class="form-check-label" for="terms">I have read and agree to
-                                                the website <a href="index.html">terms and conditions.</a></label>
+                                            <label class="form-check-label" for="terms">Tôi đã đọc và đồng ý với điều
+                                                khoản của website</label>
                                         </div>
                                         <button type="submit" class="btn btn-sqr" id="placeOrderButton">Đặt
                                             hàng</button>
@@ -491,6 +470,103 @@
     <!-- Scroll to Top End -->
 
     <!--=======================Javascript============================-->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            const userId = localStorage.getItem("userId");
+            const cartApiUrl = `http://localhost:8080/cart?userId=${userId}`;
+            const voucherApiUrl = "http://localhost:8080/voucher/getSumDiscount";
+            const TOKEN = localStorage.getItem("token");
+
+            // Hàm định dạng tiền tệ
+            function formatCurrency(value) {
+                return new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(value);
+            }
+
+            // Lấy mã voucher từ URL
+            const urlParams = new URLSearchParams(window.location.search);
+            const voucherCode = urlParams.get("code") || "";
+
+            $.ajax({
+                url: cartApiUrl,
+                method: "GET",
+                headers: {
+                    "Authorization": `Bearer ${TOKEN}`
+                },
+                success: function (response) {
+                    if (response.code === 200) {
+                        const cartItems = response.result;
+                        let tbodyHtml = "";
+                        let subTotal = 0;
+
+                        // Tạo các dòng dữ liệu trong bảng
+                        cartItems.forEach(item => {
+                            const product = item.product;
+                            const quantity = item.quantity;
+                            const totalPrice = product.price * quantity;
+
+                            tbodyHtml += `
+                        <tr>
+                            <td>
+                                <a href="#">${product.productName} <strong>× ${quantity}</strong></a>
+                            </td>
+                            <td>${formatCurrency(totalPrice)}</td>
+                        </tr>
+                    `;
+
+                            subTotal += totalPrice;
+                        });
+
+                        // Gọi API tính giảm giá
+                        $.ajax({
+                            url: `${voucherApiUrl}?code=${voucherCode}&price=${subTotal}`,
+                            method: "GET",
+                            headers: {
+                                "Authorization": `Bearer ${TOKEN}`
+                            },
+                            success: function (voucherResponse) {
+                                if (voucherResponse.code === 200) {
+                                    const discount = voucherResponse.result || 0;
+                                    const totalAmount = subTotal - discount;
+
+                                    // Hiển thị dữ liệu trong bảng
+                                    $(".order-summary-table tbody").html(tbodyHtml);
+                                    $(".order-summary-table tfoot").html(`
+                                <tr>
+                                    <td>Giá tạm tính</td>
+                                    <td><strong>${formatCurrency(subTotal)}</strong></td>
+                                </tr>
+                                <tr>
+                                    <td>Giảm giá</td>
+                                    <td><strong>-${formatCurrency(discount)}</strong></td>
+                                </tr>
+                                <tr>
+                                    <td>Số tiền thanh toán</td>
+                                    <td><strong>${formatCurrency(totalAmount)}</strong></td>
+                                </tr>
+                            `);
+                                } else {
+                                    alert("Failed to fetch discount: " + voucherResponse.message);
+                                }
+                            },
+                            error: function (err) {
+                                console.error("Voucher API error:", err);
+                                alert("Có lỗi xảy ra khi gọi API voucher.");
+                            }
+                        });
+                    } else {
+                        alert("Failed to fetch cart data: " + response.message);
+                    }
+                },
+                error: function (err) {
+                    console.error("Cart API error:", err);
+                    alert("Có lỗi xảy ra khi gọi API giỏ hàng.");
+                }
+            });
+        });
+    </script>
+
+
     <script>
         const TOKEN = localStorage.getItem("token"); // Token lấy từ đâu đó (localStorage, session, v.v.)
         const userId = localStorage.getItem("userId");
@@ -765,7 +841,7 @@
                                             alert("Đơn hàng đã được đặt thành công!");
                                             window.location.href = 'index-2.html';
                                         } else if (selectedPaymentMethod === 'CREDIT_CARD') {
-                                            fetch(`http://localhost:8080/createPayment?orderInfo=${result.result.description}&amount=${result.result.totalPrice}&orderId=${result.result.id}`, { method: 'GET' })
+                                            fetch(`http://localhost:8080/createPayment?orderInfo=XX&amount=${result.result.totalPrice}&orderId=${result.result.id}`, { method: 'GET' })
                                                 .then(response => {
                                                     if (!response.ok) {
                                                         throw new Error("Lỗi khi gọi API tạo thanh toán");
@@ -774,10 +850,11 @@
                                                 })
                                                 .then(paymentUrl => {
                                                     console.log("Payment URL:", paymentUrl);
+                                                    alert(paymentUrl)
                                                     const newTab = window.open(paymentUrl, '_blank');
                                                     if (newTab) {
-                                                      
-                                                        newTab.focus(); 
+
+                                                        newTab.focus();
                                                         window.location.href = 'index-2.html';
                                                     } else {
                                                         alert("Trình duyệt chặn cửa sổ bật lên. Vui lòng cho phép cửa sổ bật lên và thử lại.");
