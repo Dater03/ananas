@@ -4,6 +4,7 @@ import com.example.ananas.dto.request.VoucherResquest;
 import com.example.ananas.dto.response.ResultPaginationDTO;
 import com.example.ananas.dto.response.VoucherResponse;
 import com.example.ananas.entity.voucher.Voucher;
+import com.example.ananas.entity.voucher.Voucher_User;
 import com.example.ananas.service.IService.IVoucherService;
 import com.turkraft.springfilter.boot.Filter;
 import jakarta.validation.Valid;
@@ -78,4 +79,8 @@ public class VoucherController {
         return ResponseEntity.ok(this.voucherService.getSumDiscount(code,price));
     }
 
+    @DeleteMapping("/voucheruser/{code}")
+    public ResponseEntity<Boolean> getVoucherUser(@PathVariable String code) {
+        return ResponseEntity.ok(voucherService.deleteVoucherUser(code));
+    }
 }

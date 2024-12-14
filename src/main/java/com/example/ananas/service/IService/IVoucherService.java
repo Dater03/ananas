@@ -5,6 +5,7 @@ import com.example.ananas.dto.request.VoucherResquest;
 import com.example.ananas.dto.response.ResultPaginationDTO;
 import com.example.ananas.dto.response.VoucherResponse;
 import com.example.ananas.entity.voucher.Voucher;
+import com.example.ananas.entity.voucher.Voucher_User;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 
@@ -34,4 +35,8 @@ public interface IVoucherService {
      List<Voucher> getVoucherOk();
 
     BigDecimal getSumDiscount(String code, BigDecimal price);
+
+    List<Integer> getVoucherUserByVoucherId(Integer voucherId);
+
+    Boolean deleteVoucherUser(String code);
 }
