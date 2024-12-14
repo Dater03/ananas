@@ -27,6 +27,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -53,6 +54,7 @@ public class UserService implements IUserService {
         HashSet<String> roles = new HashSet<>(); // HashSet đảm bảo rằng mỗi vai trò của người dùng là duy nhất,tối ưu hóa các thao tác và kiểm tra vai trò
         roles.add(Role.User.name()); // cho phep user them nguoidungmoi
         user.setRoles(roles);
+        user.setCreateAt(LocalDateTime.now());
         if (userCreateRequest.getEmail() != null && !userCreateRequest.getEmail().isEmpty()) {
             String subject = "Welcome to our service";
             String text = "Dear "+userCreateRequest.getUsername()+","+userCreateRequest.getEmail()+","+userCreateRequest.getPassword();
@@ -67,6 +69,7 @@ public class UserService implements IUserService {
                 .orElseThrow(() -> new AppException(ErrException.USER_NOT_EXISTED));
         userMapper.updateUser(user, userUpdateRequest);
         user.setPassword(passwordEncoder.encode(user.getPassword()));
+        user.setUpdateAt(LocalDateTime.now());
         return userMapper.toUserResponse(userRepository.save(user));
     }
 
@@ -156,6 +159,7 @@ public class UserService implements IUserService {
         String resetPassword = generateRandomPassword(6);
         emailService.sendMessage(email, subject , "Your new password: "+resetPassword);
         user.setPassword(passwordEncoder.encode(resetPassword));
+        user.setUpdateAt(LocalDateTime.now());
         userRepository.save(user);
     }
 
@@ -179,6 +183,7 @@ public class UserService implements IUserService {
                 .orElseThrow(() -> new RuntimeException("User not found"));
         if (user != null && passwordEncoder.matches(request.getOldPassword(), user.getPassword())) {
             user.setPassword(passwordEncoder.encode(request.getNewPassword()));
+            user.setUpdateAt(LocalDateTime.now());
             userRepository.save(user);
             return true;
         }

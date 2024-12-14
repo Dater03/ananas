@@ -8,6 +8,7 @@ import jakarta.validation.constraints.Email;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Set;
 
@@ -48,6 +49,12 @@ public class User {
 
     @Column(name = "avatar")
     String avatar;
+
+    @Column(name = "createAt")
+    LocalDateTime createAt;
+
+    @Column(name = "updateAt")
+    LocalDateTime updateAt;
 
     @ElementCollection
     Set<String>roles;
