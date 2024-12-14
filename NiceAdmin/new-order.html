@@ -30,6 +30,7 @@
 
   <!-- Template Main CSS File -->
   <link href="assets/css/style.css" rel="stylesheet">
+
 </head>
 
 <body>
@@ -338,7 +339,7 @@
                 <th class="col-2">Số tiền</th>
                 <th class="col-2">Trạng thái đơn hàng</th>
                 <th class="col-2">Thanh toán</th>
-                <th class="col-2">Chú thích cho đơn hàng</th>
+                <th class="col-2">Thao tác</th>
               </tr>
             </thead>
             <tbody id="orderTableBody" class="text-center"></tbody>
@@ -354,16 +355,147 @@
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="orderModalLabel">Chi tiết đơn hàng</h5>
+            <h5 class="modal-title" id="orderModalLabel">Xem chi tiết đơn hàng</h5>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
           <div class="modal-body">
-            <!-- Nội dung chi tiết đơn hàng sẽ hiển thị tại đây -->
-            <p>Chi tiết đơn hàng sẽ được xử lý sau.</p>
+            <!-- breadcrumb area start -->
+            <div class="breadcrumb-area">
+              <div class="container">
+                <div class="row">
+                  <div class="col-12">
+                    <div class="breadcrumb-wrap text-center">
+                      <h3 class="breadcrumb-title">Thông tin đơn hàng</h3>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- breadcrumb area end -->
+
+            <!-- cart main wrapper start -->
+            <div class="cart-main-wrapper mb-5">
+              <div class="container">
+                <div class="section-bg-color">
+                  <div class="mb-3">
+                    <label for="exampleFormControlInput1" class="form-label">Thông tin người nhận</label>
+                    <div id="user-info" class="p-4 rounded border">
+                      <div class="row mb-4">
+                        <div class="col-lg-6 mb-3">
+                          <label for="recipient-name" class="form-label">Người nhận</label>
+                          <input type="text" class="form-control" id="recipient-name" placeholder="Nhập tên người nhận"
+                            readonly>
+                        </div>
+                        <div class="col-lg-6 mb-3">
+                          <label for="phone-number" class="form-label">Số điện thoại</label>
+                          <input type="text" class="form-control" id="phone-number" placeholder="Nhập số điện thoại"
+                            readonly>
+                        </div>
+                      </div>
+                      <div class="row mb-4">
+                        <div class="col-lg-6 mb-3">
+                          <label for="address" class="form-label">Địa chỉ</label>
+                          <input type="text" class="form-control" id="address" placeholder="Nhập địa chỉ" readonly>
+                        </div>
+                        <div class="col-lg-6 mb-3">
+                          <label for="payment-method" class="form-label">Phương thức thanh toán</label>
+                          <div>
+                            <input type="text" class="form-control" id="payment-method"
+                              placeholder="Phương thức thanh toán" readonly>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="section-bg-color">
+                  <div class="row">
+                    <div class="col-lg-12">
+                      <!-- Cart Table Area -->
+                      <div class="cart-table table-responsive">
+                        <table class="table table-bordered">
+                          <thead>
+                            <tr>
+                              <th class="pro-thumbnail">Ảnh</th>
+                              <th class="pro-title">Sản phẩm</th>
+                              <th class="pro-price">Giá</th>
+                              <th class="pro-quantity">Số lượng</th>
+                              <th class="pro-subtotal">Tổng số</th>
+                              <th class="pro-title">Trạng thái</th>
+                              <th class="pro-remove">Xóa</th>
+                            </tr>
+                          </thead>
+                          <tbody id="cart-table-body">
+                            <!-- Render data -->
+                          </tbody>
+                        </table>
+                      </div>
+                      <div class="section-bg-color mt-3">
+                        <div class="row mb-4">
+                          <div class="col-lg-6 mb-3">
+                            <label for="payment-status" class="form-label">Trạng thái thanh toán</label>
+                            <input type="text" class="form-control" id="payment-status"
+                              placeholder="Trạng thái thanh toán" readonly>
+                          </div>
+                          <div class="col-lg-6 mb-3">
+                            <label for="discount-code" class="form-label">Mã giảm giá</label>
+                            <input type="text" class="form-control" id="discount-code" placeholder="Nhập mã giảm giá"
+                              readonly>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-lg-5 mt-20">
+                      <div class="mb-3">
+                        <label for="exampleFormControlTextarea1" class="form-label">
+                          <h6>Mô tả đơn hàng</h6>
+                        </label>
+                        <textarea class="form-control" id="description" rows="3" readonly></textarea>
+                      </div>
+                    </div>
+                    <div class="col-lg-5 ms-auto">
+                      <div class="cart-calculator-wrapper">
+                        <div class="cart-calculate-items">
+                          <h3>Tổng đơn hàng</h3>
+                          <div class="table-responsive">
+                            <table class="table">
+                              <tr>
+                                <td>Tổng đơn hàng trước thuế</td>
+                                <td id="cart-sub-total-berfor">--</td>
+                              </tr>
+                              <tr>
+                                <td>Áp dụng mã giảm giá</td>
+                                <td id="cart-voucher">--</td>
+                              </tr>
+                              <tr>
+                                <td>VAT(10%)</td>
+                                <td id="cart-vat">--</td>
+                              </tr>
+                              <tr>
+                                <td>Phí vận chuyển</td>
+                                <td id="cart-shipping">--</td>
+                              </tr>
+                              <tr class="total">
+                                <td>Tổng</td>
+                                <td id="cart-total-amount" class="total-amount">--</td>
+                              </tr>
+                            </table>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- cart main wrapper end -->
           </div>
         </div>
       </div>
     </div>
+
 
   </main>
 
@@ -390,12 +522,17 @@
   <script src="assets/vendor/simple-datatables/simple-datatables.js"></script>
   <script src="assets/vendor/tinymce/tinymce.min.js"></script>
   <script src="assets/vendor/php-email-form/validate.js"></script>
+  <!-- jQuery -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+  <!-- Bootstrap JS -->
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
 
   <!-- Template Main JS File -->
   <script src="assets/js/main.js"></script>
   <script>
     const token = localStorage.getItem("token");
-    let originalStatusValues = {}; 
+    let originalStatusValues = {};
 
     document.addEventListener("DOMContentLoaded", function () {
       let currentPage = 1;
@@ -432,9 +569,9 @@
           };
         });
       }
-      
+
       function populateOrderTable(orders) {
-        storageOrderStatus(orders); 
+        storageOrderStatus(orders);
         const tableBody = document.getElementById("orderTableBody");
         tableBody.innerHTML = "";
         orders.forEach((order) => {
@@ -451,45 +588,49 @@
             if (order.status === "PENDING") {
               // Nếu trạng thái là PENDING, cho phép cập nhật sang SHIPPED, DELIVERED, CANCELED
               options = `
-          <option value="PENDING" selected>PENDING</option>
-          <option value="SHIPPED">SHIPPED</option>
-          <option value="DELIVERED">DELIVERED</option>
-          <option value="CANCELED">CANCELED</option>`;
+      <option value="PENDING" selected>PENDING</option>
+      <option value="SHIPPED">SHIPPED</option>
+      <option value="DELIVERED">DELIVERED</option>
+      <option value="CANCELED">CANCELED</option>`;
             } else if (order.status === "SHIPPED") {
               // Nếu trạng thái là SHIPPED, chỉ cho phép chọn DELIVERED, CANCELED
               options = `
-          <option value="SHIPPED" selected>SHIPPED</option>
-          <option value="DELIVERED">DELIVERED</option>
-          <option value="CANCELED">CANCELED</option>`;
+      <option value="SHIPPED" selected>SHIPPED</option>
+      <option value="DELIVERED">DELIVERED</option>
+      <option value="CANCELED">CANCELED</option>`;
             } else {
               // Các trạng thái còn lại không cho phép thay đổi
               options = `
-          <option value="${order.status}" selected>${order.status}</option>`;
+      <option value="${order.status}" selected>${order.status}</option>`;
             }
 
             // Render thẻ <select> với các tùy chọn đã lọc
             return `
-      <select class="form-select" data-order-id="${order.id}" data-status="orderStatus">
-        ${options}
-      </select>`;
+    <select class="form-select" data-order-id="${order.id}" data-status="orderStatus">
+      ${options}
+    </select>`;
           })();
 
           const paymentStatusOptions = `
-        <select class="form-select" data-order-id="${order.id}" data-status="paymentStatus" ${order.paymentStatus === "PAID" ? "disabled" : ""
+    <select class="form-select" data-order-id="${order.id}" data-status="paymentStatus" ${order.paymentStatus === "PAID" ? "disabled" : ""
             }>
-          <option value="PAID" ${order.paymentStatus === "PAID" ? "selected" : ""}>PAID</option>
-          <option value="UNPAID" ${order.paymentStatus === "UNPAID" ? "selected" : ""}>UNPAID</option>
-        </select>`;
+      <option value="PAID" ${order.paymentStatus === "PAID" ? "selected" : ""}>PAID</option>
+      <option value="UNPAID" ${order.paymentStatus === "UNPAID" ? "selected" : ""}>UNPAID</option>
+    </select>`;
+
+          // Tạo nút Xem chi tiết
+          const viewDetailsButton = `
+    <button class="btn btn-info btn-sm" onclick="viewOrderDetails(${order.id})">Xem chi tiết</button>`;
 
           row.innerHTML = `
-        <td>${order.id}</td>
-        <td>${new Date(order.createdAt).toLocaleDateString()}</td>
-        <td>${order.recipientName}</td>
-        <td>${order.totalPrice.toLocaleString()} VND</td>
-        <td>${orderStatusOptions}</td>
-        <td>${paymentStatusOptions}</td>
-        <td>${des}</td>
-      `;
+    <td>${order.id}</td>
+    <td>${new Date(order.createdAt).toLocaleDateString()}</td>
+    <td>${order.recipientName}</td>
+    <td>${order.totalPrice.toLocaleString()} VND</td>
+    <td>${orderStatusOptions}</td>
+    <td>${paymentStatusOptions}</td>
+    <td>${viewDetailsButton}</td>
+  `;
 
           // Lắng nghe sự kiện thay đổi trạng thái
           row.querySelectorAll("select").forEach((select) => {
@@ -512,6 +653,12 @@
 
           tableBody.appendChild(row);
         });
+      }
+
+      // Hàm xử lý khi click vào nút "Xem chi tiết"
+      function viewOrderDetails(orderId) {
+        // Chuyển hướng sang trang chi tiết đơn hàng
+        window.location.href = `/order-details.html?orderId=${orderId}`;
       }
 
       function setupPagination(meta) {
@@ -575,7 +722,6 @@
       fetchOrders();
     });
 
-    
   </script>
 </body>
 
