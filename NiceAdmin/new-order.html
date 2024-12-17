@@ -620,11 +620,6 @@
         const tableBody = document.getElementById("orderTableBody");
         tableBody.innerHTML = "";
         orders.forEach((order) => {
-
-          let des = ""; // Khai báo trước để tránh lỗi
-          if (order.description !== undefined) {
-            des = (order.description).split("\n")[1] || "";
-          }
           const row = document.createElement("tr");
 
           const orderStatusOptions = (() => {
@@ -883,7 +878,6 @@
     }
   </script>
 </body>
-
 </html>
 
 <style>

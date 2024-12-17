@@ -15,7 +15,9 @@
 
   <!-- Google Fonts -->
   <link href="https://fonts.gstatic.com" rel="preconnect">
-  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
+    rel="stylesheet">
 
   <!-- Vendor CSS Files -->
   <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -38,8 +40,8 @@
     <div class="d-flex align-items-center justify-content-between">
       <!-- Thay đổi tên cửa hàng -->
       <!-- <a href="index.html" class="logo d-flex align-items-center"> -->
-        <img src="Screenshot 2024-10-17 142441.png" alt="Logo cửa hàng">
-        <!-- <span class="d-none d-lg-block">Ananas</span> -->
+      <img src="Screenshot 2024-10-17 142441.png" alt="Logo cửa hàng">
+      <!-- <span class="d-none d-lg-block">Ananas</span> -->
       </a>
       <i class="bi bi-list toggle-sidebar-btn"></i>
     </div><!-- End Logo -->
@@ -72,7 +74,9 @@
               Bạn có 5 thông báo mới
               <a href="#"><span class="badge rounded-pill bg-primary p-2 ms-2">Xem tất cả</span></a>
             </li>
-            <li><hr class="dropdown-divider"></li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
 
             <li class="notification-item">
               <i class="bi bi-cart text-info"></i>
@@ -83,7 +87,9 @@
               </div>
             </li>
 
-            <li><hr class="dropdown-divider"></li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
 
             <li class="notification-item">
               <i class="bi bi-truck text-warning"></i>
@@ -108,18 +114,23 @@
             <li class="dropdown-header">
               Bạn có <span id="messageCount">0</span> tin nhắn mới
             </li>
-            <li><hr class="dropdown-divider"></li>
-            
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+
             <!-- Tin nhắn sẽ được load vào đây bằng JavaScript -->
-            
-            <li><hr class="dropdown-divider"></li>
+
+            <li>
+              <hr class="dropdown-divider">
+            </li>
           </ul>
-          
+
           <!-- Modal hiển thị chi tiết tin nhắn -->
           <div id="messageModal" class="message-modal">
             <div class="message-modal-content">
               <span class="close-btn">&times;</span>
-              <img id="avatarMes" style="width: 25px;" src="assets/img/apple-touch-icon.png" alt=""><span id="usernameMess"> User</span>
+              <img id="avatarMes" style="width: 25px;" src="assets/img/apple-touch-icon.png" alt=""><span
+                id="usernameMess"> User</span>
               <ul id="messageDetails"></ul>
               <!-- Ô nhập tin nhắn và nút gửi -->
               <div class="send-message-container">
@@ -143,7 +154,9 @@
               <h6>Quản lý Cửa hàng</h6>
               <span>Quản lý hệ thống</span>
             </li>
-            <li><hr class="dropdown-divider"></li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
 
             <li>
               <a class="dropdown-item d-flex align-items-center" href="users-profile.html">
@@ -151,7 +164,9 @@
                 <span>Thông tin cá nhân</span>
               </a>
             </li>
-            <li><hr class="dropdown-divider"></li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
 
             <li>
               <a class="dropdown-item d-flex align-items-center" href="pages-login.html">
@@ -170,14 +185,14 @@
   <!-- ======= Sidebar ======= -->
   <aside id="sidebar" class="sidebar">
     <ul class="sidebar-nav" id="sidebar-nav">
-  
+
       <li class="nav-item">
         <a class="nav-link" href="index(2).html">
           <i class="bi bi-grid"></i>
           <span>Trang chủ</span>
         </a>
       </li><!-- End Dashboard Nav -->
-  
+
       <!-- Quản lý Sản phẩm -->
       <li class="nav-item">
         <a class="nav-link collapsed" data-bs-target="#products-nav" data-bs-toggle="collapse" href="#">
@@ -190,7 +205,7 @@
           <!-- <li><a href="shoe-inventory.html"><i class="bi bi-box"></i><span>Quản lý Tồn kho</span></a></li> -->
         </ul>
       </li><!-- End Products Nav -->
-  
+
       <!-- Quản lý Đơn hàng -->
       <li class="nav-item">
         <a class="nav-link collapsed" data-bs-target="#orders-nav" data-bs-toggle="collapse" href="#">
@@ -198,10 +213,10 @@
         </a>
         <ul id="orders-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
           <li><a href="new-order.html"><i class="bi bi-plus-square"></i><span>Theo dõi đơn hàng</span></a></li>
-        
+
         </ul>
       </li><!-- End Orders Nav -->
-  
+
       <!-- Quản lý Khách hàng -->
       <li class="nav-item">
         <a class="nav-link collapsed" data-bs-target="#customers-nav" data-bs-toggle="collapse" href="#">
@@ -212,7 +227,7 @@
           <li><a href="customer-history.html"><i class="bi bi-card-list"></i><span>Lịch sử giao dịch</span></a></li>
         </ul>
       </li><!-- End Customers Nav -->
-  
+
       <!-- Quản lý Báo cáo -->
       <li class="nav-item">
         <a class="nav-link collapsed" data-bs-target="#sales-report-nav" data-bs-toggle="collapse" href="#">
@@ -223,7 +238,7 @@
           <li><a href="inventory-report.html"><i class="bi bi-box"></i><span>Báo cáo Tồn kho</span></a></li>
         </ul>
       </li><!-- End Sales Report Nav -->
-  
+
       <!-- Quản lý Khuyến mãi -->
       <li class="nav-item">
         <a class="nav-link collapsed" href="add-promo.html">
@@ -231,250 +246,223 @@
         </a>
 
       </li><!-- End Promo Nav -->
-  
-  
+
+
     </ul>
   </aside><!-- End Sidebar -->
-  
+
   <main id="main" class="main">
 
     <div class="pagetitle">
-        <h1>Dashboard Quản lý Cửa hàng Giày</h1>
-        <nav>
-            <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="index.html">Trang chủ</a></li>
-                <li class="breadcrumb-item active">Quản lý Website</li>
-            </ol>
-        </nav>
+      <h1>Dashboard Quản lý Cửa hàng Giày</h1>
+      <nav>
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="index.html">Trang chủ</a></li>
+          <li class="breadcrumb-item active">Quản lý Website</li>
+        </ol>
+      </nav>
     </div><!-- End Page Title -->
 
     <section class="section dashboard">
-        <div class="row">
+      <div class="row">
 
-            <!-- Left side columns -->
-            <div class="col-lg-8">
-                <div class="row">
+        <!-- Left side columns -->
+        <div class="col-lg-8">
+          <div class="row">
 
-                    <!-- Sales Card -->
-                    <div class="col-xxl-6 col-md-6">
-                      <div class="card info-card sales-card" id="sales-card">
-                        <div class="filter" id="sales-filter">
-                          <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
-                          <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow" id="sales-dropdown">
-                            <li class="dropdown-header text-start">
-                              <h6>Bộ lọc</h6>
-                            </li>
-                            <li><a class="dropdown-item" href="#" id="sales-today">Hôm nay</a></li>
-                            <li><a class="dropdown-item" href="#" id="sales-month">Trong tháng</a></li>
-                            <li><a class="dropdown-item" href="#" id="sales-year">Trong năm</a></li>
-                          </ul>
-                        </div>
-                        <div class="card-body" id="sales-body">
-                          <h5 class="card-title" id="sales-title">Doanh thu cửa hàng <span id="sales-span">| Hôm nay</span></h5>
-                          <div class="d-flex align-items-center" id="sales-content">
-                            <div class="card-icon rounded-circle d-flex align-items-center justify-content-center" id="sales-icon">
-                              <i class="bi bi-currency-dollar"></i>
-                            </div>
-                            <div class="ps-3" id="sales-stats">
-                              <h6 id="sales-total">0.00 VNĐ</h6>
-                              <span class="text-success small pt-1 fw-bold" id="sales-percentage">0%</span>
-                              <span class="text-muted small pt-2 ps-1" id="sales-status">tăng trưởng</span>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <!-- End Sales Card -->
-
-                    <!-- Customers Card -->
-                    <div class="col-xxl-6 col-md-6">
-                      <div class="card info-card cus-card" id="customers-card">
-                        <div class="filter" id="customers-filter">
-                          <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
-                          <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow" id="customers-dropdown">
-                            <li class="dropdown-header text-start">
-                              <h6>Bộ lọc</h6>
-                            </li>
-                            <li><a class="dropdown-item" href="#" id="customers-today">Hôm nay</a></li>
-                            <li><a class="dropdown-item" href="#" id="customers-month">Trong tháng</a></li>
-                            <li><a class="dropdown-item" href="#" id="customers-year">Trong năm</a></li>
-                          </ul>
-                        </div>
-                        <div class="card-body" id="customers-body">
-                          <h5 class="card-title" id="customers-title">Khách hàng mới <span id="customers-span">| Hôm nay</span></h5>
-                          <div class="d-flex align-items-center" id="customers-content">
-                            <div class="card-icon rounded-circle d-flex align-items-center justify-content-center" id="customers-icon">
-                              <i class="bi bi-people"></i>
-                            </div>
-                            <div class="ps-3" id="customers-stats">
-                              <h6 id="customers-total">0</h6>
-                              <span class="text-danger small pt-1 fw-bold" id="customers-percentage">0%</span>
-                              <span class="text-muted small pt-2 ps-1" id="customers-status">giảm</span>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <!-- End Customers Card -->
-
-                  <!-- End Customers Card -->
-
-                    <!-- Products Overview -->
-                    <div class="col-12">
-                        <div class="card">
-                            <div class="filter">
-                                <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
-                                <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                                    <li class="dropdown-header text-start">
-                                        <h6>Bộ lọc</h6>
-                                    </li>
-                                    <li><a class="dropdown-item" href="#">Hôm nay</a></li>
-                                    <li><a class="dropdown-item" href="#">Trong tháng</a></li>
-                                    <li><a class="dropdown-item" href="#">Trong năm</a></li>
-                                </ul>
-                            </div>
-                            <div class="card-body">
-                                <h5 class="card-title">Thống kê Sản phẩm <span>| Hôm nay</span></h5>
-                                <div id="productsChart"></div>
-                                <script>
-                                    document.addEventListener("DOMContentLoaded", () => {
-                                        new ApexCharts(document.querySelector("#productsChart"), {
-                                            series: [
-                                                {
-                                                    name: 'Giày bán ra',
-                                                    data: [30, 40, 35, 50, 49, 60, 70],
-                                                },
-                                                {
-                                                    name: 'Giày nhập kho',
-                                                    data: [50, 60, 70, 80, 90, 100, 120],
-                                                }
-                                            ],
-                                            chart: {
-                                                height: 200,
-                                                type: 'bar',
-                                                toolbar: { show: true },
-                                            },
-                                            colors: ['#4154f1', '#2eca6a'],
-                                            dataLabels: { enabled: false },
-                                            stroke: { curve: 'smooth' },
-                                            xaxis: { categories: ["Tháng 1", "Tháng 2", "Tháng 3", "Tháng 4", "Tháng 5", "Tháng 6", "Tháng 7"] },
-                                            tooltip: { y: { formatter: val => `${val} đôi giày` } },
-                                        }).render();
-                                    });
-                                </script>
-                            </div>
-                        </div>
-                    </div><!-- End Products Overview -->
-
+            <!-- Sales Card -->
+            <div class="col-xxl-6 col-md-6">
+              <div class="card info-card sales-card" id="sales-card">
+                <div class="filter" id="sales-filter">
+                  <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
+                  <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow" id="sales-dropdown">
+                    <li class="dropdown-header text-start">
+                      <h6>Bộ lọc</h6>
+                    </li>
+                    <li><a class="dropdown-item" href="#" id="sales-today">Hôm nay</a></li>
+                    <li><a class="dropdown-item" href="#" id="sales-month">Trong tháng</a></li>
+                    <li><a class="dropdown-item" href="#" id="sales-year">Trong năm</a></li>
+                  </ul>
                 </div>
-            </div><!-- End Left side columns -->
-
-            <!-- Right side columns -->
-            <div class="col-lg-4">
-
-                <!-- Inventory Status -->
-                <div class="card">
-                  <div class="filter">
-                      <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
-                      <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                          <li class="dropdown-header text-start">
-                              <h6>Bộ lọc</h6>
-                          </li>
-                          <li><a class="dropdown-item" href="#">Hôm nay</a></li>
-                          <li><a class="dropdown-item" href="#">Trong tháng</a></li>
-                          <li><a class="dropdown-item" href="#">Trong năm</a></li>
-                      </ul>
-                  </div>
-                  <div class="card-body">
-                      <h5 class="card-title">Tình trạng tồn kho <span>| Hôm nay</span></h5>
-                      <div id="inventoryChart" style="min-height: 400px;" class="echart"></div>
-                      <script>
-                          document.addEventListener("DOMContentLoaded", () => {
-                              echarts.init(document.querySelector("#inventoryChart")).setOption({
-                                  tooltip: { trigger: 'item' },
-                                  legend: { top: '2%', left: 'center' },
-                                  series: [{
-                                      name: 'Số lượng tồn kho',
-                                      type: 'pie',
-                                      radius: ['50%', '80%'],
-                                      avoidLabelOverlap: false,
-                                      itemStyle: { borderRadius: 10, borderColor: '#fff', borderWidth: 2 },
-                                      label: { show: false, position: 'center' },
-                                      emphasis: { label: { show: true, fontSize: '18', fontWeight: 'bold' } },
-                                      labelLine: { show: false },
-                                      data: [
-                                          { value: 1048, name: 'Nike' },
-                                          { value: 735, name: 'Adidas' },
-                                          { value: 580, name: 'Puma' },
-                                          { value: 484, name: 'New Balance' },
-                                      ]
-                                  }]
-                              });
-                          });
-                      </script>
-                  </div>
-                </div><!-- End Inventory Status -->
-
-            </div><!-- End Right side columns -->
-            
-            <!-- Center side columns -->
-            <div class="col-lg-12">
-
-                <!-- Recent Orders -->
-                <div class="card recent-sales overflow-auto">
-                    <div class="filter">
-                        <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
-                        <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                            <li class="dropdown-header text-start">
-                                <h6>Bộ lọc</h6>
-                            </li>
-                            <li><a class="dropdown-item" href="#">Hôm nay</a></li>
-                            <li><a class="dropdown-item" href="#">Trong tháng</a></li>
-                            <li><a class="dropdown-item" href="#">Trong năm</a></li>
-                        </ul>
+                <div class="card-body" id="sales-body">
+                  <h5 class="card-title" id="sales-title">Doanh thu cửa hàng <span id="sales-span">| Hôm nay</span></h5>
+                  <div class="d-flex align-items-center" id="sales-content">
+                    <div class="card-icon rounded-circle d-flex align-items-center justify-content-center"
+                      id="sales-icon">
+                      <i class="bi bi-currency-dollar"></i>
                     </div>
-                    <div class="card-body">
-                        <h5 class="card-title">Đơn hàng gần đây <span>| Hôm nay</span></h5>
-                        <table class="table table-borderless datatable">
-                            <thead>
-                                <tr>
-                                    <th scope="col">Mã đơn hàng</th>
-                                    <th scope="col">Khách hàng</th>
-                                    <th scope="col">Sản phẩm</th>
-                                    <th scope="col">Giá</th>
-                                    <th scope="col">Trạng thái</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <th scope="row"><a href="#">#1234</a></th>
-                                    <td>Đỗ Thành Đạt</td>
-                                    <td><a href="#" class="text-primary">Nike Air Max 2023</a></td>
-                                    <td>$120</td>
-                                    <td><span class="badge bg-success">Đã hoàn thành</span></td>
-                                </tr>
-                                <tr>
-                                    <th scope="row"><a href="#">#1235</a></th>
-                                    <td>Đỗ Thị Ling Ling</td>
-                                    <td><a href="#" class="text-primary">Adidas Ultraboost</a></td>
-                                    <td>$150</td>
-                                    <td><span class="badge bg-warning">Đang xử lý</span></td>
-                                </tr>
-                                <tr>
-                                    <th scope="row"><a href="#">#1236</a></th>
-                                    <td>Nguyễn Văn A</td>
-                                    <td><a href="#" class="text-primary">Puma RS-X</a></td>
-                                    <td>$110</td>
-                                    <td><span class="badge bg-danger">Đã hủy</span></td>
-                                </tr>
-                            </tbody>
-                        </table>
+                    <div class="ps-3" id="sales-stats">
+                      <h6 id="sales-total">0.00 VNĐ</h6>
+                      <span class="text-success small pt-1 fw-bold" id="sales-percentage">0%</span>
+                      <span class="text-muted small pt-2 ps-1" id="sales-status">tăng trưởng</span>
                     </div>
-                </div><!-- End Recent Orders -->
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- End Sales Card -->
 
-            </div><!-- End center side columns -->
+            <!-- Customers Card -->
+            <div class="col-xxl-6 col-md-6">
+              <div class="card info-card cus-card" id="customers-card">
+                <div class="filter" id="customers-filter">
+                  <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
+                  <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow" id="customers-dropdown">
+                    <li class="dropdown-header text-start">
+                      <h6>Bộ lọc</h6>
+                    </li>
+                    <li><a class="dropdown-item" href="#" id="customers-today">Hôm nay</a></li>
+                    <li><a class="dropdown-item" href="#" id="customers-month">Trong tháng</a></li>
+                    <li><a class="dropdown-item" href="#" id="customers-year">Trong năm</a></li>
+                  </ul>
+                </div>
+                <div class="card-body" id="customers-body">
+                  <h5 class="card-title" id="customers-title">Khách hàng mới <span id="customers-span">| Hôm nay</span>
+                  </h5>
+                  <div class="d-flex align-items-center" id="customers-content">
+                    <div class="card-icon rounded-circle d-flex align-items-center justify-content-center"
+                      id="customers-icon">
+                      <i class="bi bi-people"></i>
+                    </div>
+                    <div class="ps-3" id="customers-stats">
+                      <h6 id="customers-total">0</h6>
+                      <span class="text-danger small pt-1 fw-bold" id="customers-percentage">0%</span>
+                      <span class="text-muted small pt-2 ps-1" id="customers-status">giảm</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- End Customers Card -->
 
-        </div>
+            <!-- End Customers Card -->
+
+            <!-- Products Overview -->
+            <div class="col-12">
+              <div class="card">
+                <div class="filter">
+                  <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
+                  <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                    <li class="dropdown-header text-start">
+                      <h6>Bộ lọc</h6>
+                    </li>
+                    <li><a class="dropdown-item" href="#">Hôm nay</a></li>
+                    <li><a class="dropdown-item" href="#">Trong tháng</a></li>
+                    <li><a class="dropdown-item" href="#">Trong năm</a></li>
+                  </ul>
+                </div>
+                <div class="card-body">
+                  <h5 class="card-title">Thống kê Sản phẩm <span>| Hôm nay</span></h5>
+                  <div id="productsChart"></div>
+                  <script>
+                    document.addEventListener("DOMContentLoaded", () => {
+                      new ApexCharts(document.querySelector("#productsChart"), {
+                        series: [
+                          {
+                            name: 'Giày bán ra',
+                            data: [30, 40, 35, 50, 49, 60, 70],
+                          },
+                          {
+                            name: 'Giày nhập kho',
+                            data: [50, 60, 70, 80, 90, 100, 120],
+                          }
+                        ],
+                        chart: {
+                          height: 200,
+                          type: 'bar',
+                          toolbar: { show: true },
+                        },
+                        colors: ['#4154f1', '#2eca6a'],
+                        dataLabels: { enabled: false },
+                        stroke: { curve: 'smooth' },
+                        xaxis: { categories: ["Tháng 1", "Tháng 2", "Tháng 3", "Tháng 4", "Tháng 5", "Tháng 6", "Tháng 7"] },
+                        tooltip: { y: { formatter: val => `${val} đôi giày` } },
+                      }).render();
+                    });
+                  </script>
+                </div>
+              </div>
+            </div><!-- End Products Overview -->
+
+          </div>
+        </div><!-- End Left side columns -->
+
+        <!-- Right side columns -->
+        <div class="col-lg-4">
+
+          <!-- Inventory Status -->
+          <div class="card">
+            <div class="filter">
+              <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
+              <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                <li class="dropdown-header text-start">
+                  <h6>Bộ lọc</h6>
+                </li>
+                <li><a class="dropdown-item" href="#">Hôm nay</a></li>
+                <li><a class="dropdown-item" href="#">Trong tháng</a></li>
+                <li><a class="dropdown-item" href="#">Trong năm</a></li>
+              </ul>
+            </div>
+            <div class="card-body">
+              <h5 class="card-title">Tình trạng tồn kho <span>| Hôm nay</span></h5>
+              <div id="inventoryChart" style="min-height: 400px;" class="echart"></div>
+              <script>
+                document.addEventListener("DOMContentLoaded", () => {
+                  echarts.init(document.querySelector("#inventoryChart")).setOption({
+                    tooltip: { trigger: 'item' },
+                    legend: { top: '2%', left: 'center' },
+                    series: [{
+                      name: 'Số lượng tồn kho',
+                      type: 'pie',
+                      radius: ['50%', '80%'],
+                      avoidLabelOverlap: false,
+                      itemStyle: { borderRadius: 10, borderColor: '#fff', borderWidth: 2 },
+                      label: { show: false, position: 'center' },
+                      emphasis: { label: { show: true, fontSize: '18', fontWeight: 'bold' } },
+                      labelLine: { show: false },
+                      data: [
+                        { value: 1048, name: 'Nike' },
+                        { value: 735, name: 'Adidas' },
+                        { value: 580, name: 'Puma' },
+                        { value: 484, name: 'New Balance' },
+                      ]
+                    }]
+                  });
+                });
+              </script>
+            </div>
+          </div><!-- End Inventory Status -->
+
+        </div><!-- End Right side columns -->
+
+        <!-- Center side columns -->
+        <div class="col-lg-12">
+
+          <!-- Recent Orders -->
+          <div class="card recent-sales overflow-auto">
+            <div class="card-body">
+              <h5 class="card-title">Đơn hàng gần đây</h5>
+            </div>
+            <div class="card align-items-center">
+              <table class="table table-bordered table-hover" style="width: 95%;">
+                <thead class="table-dark">
+                  <tr class="text-center">
+                    <th class="col-1">Mã đơn</th>
+                    <th class="col-1">Ngày đặt</th>
+                    <th class="col-2">Khách hàng</th>
+                    <th class="col-2">Số tiền</th>
+                    <th class="col-2">Trạng thái đơn hàng</th>
+                    <th class="col-2">Thanh toán</th>
+                  </tr>
+                </thead>
+                <tbody id="orderTableBody" class="text-center"></tbody>
+              </table>
+            </div>
+          </div><!-- End Recent Orders -->
+
+        </div><!-- End center side columns -->
+
+      </div>
     </section>
 
   </main><!-- End #main -->
@@ -512,11 +500,76 @@
 
 
 <script>
+  document.getElementById("orderTableBody").addEventListener("click", function () {
+    window.location.href = "new-order.html";
+  });
   document.addEventListener("DOMContentLoaded", function () {
     const receiverId = localStorage.getItem("userId");
     const token = localStorage.getItem("token");
     let currentSenderId = null;
-  
+    let currentPage = 0;
+    const pageSize = 3;
+
+    async function fetchOrders() {
+      await fetch(`http://localhost:8080/order/admin/list?page=${currentPage}&size=${pageSize}`, {
+        method: "GET",
+        headers: {
+          Authorization: token,
+        },
+      })
+        .then((response) => {
+          if (!response.ok) throw new Error("Lỗi khi gọi API");
+          return response.json();
+        })
+        .then((data) => {
+          if (data.code === 200) {
+            const orders = data.result.result;
+            populateOrderTable(orders);
+          }
+        })
+        .catch((error) => console.error("Lỗi:", error));
+    }
+
+    function populateOrderTable(orders) {
+      const tableBody = document.getElementById("orderTableBody");
+      tableBody.innerHTML = "";
+      orders.forEach((order) => {
+        const row = document.createElement("tr");
+        let statusHtml = "";
+        switch (order.status) {
+          case 'SHIPPED':
+            statusHtml = '<div class="badge bg-warning text-dark">Đang ship</div>';
+            break;
+          case 'PENDING':
+            statusHtml = '<div class="badge bg-info text-dark">Chờ xử lý</div>';
+            break;
+          case 'DELIVERED':
+            statusHtml = '<div class="badge bg-success text-light">Đã giao</div>';
+            break;
+          default:
+            statusHtml = `<div class="badge bg-secondary text-light">${order.status}</div>`;
+        }
+        let statusPaid = "";
+        switch(order.paymentStatus)
+        {
+          case 'UNPAID':
+            statusPaid = '<div class = "badge bg-danger text-light">Chưa thanh toán </div>';
+            break;
+          default:
+            statusPaid = '<div class = "badge bg-success text-light">Đã thanh toán </div>';
+        }
+        row.innerHTML = `
+          <td>${order.id}</td>
+          <td>${new Date(order.createdAt).toLocaleDateString()}</td>
+          <td>${order.recipientName}</td>
+          <td>${order.totalPrice.toLocaleString()} VND</td>
+          <td>${statusHtml}</td>
+          <td>${statusPaid}</td>
+        `;
+        tableBody.appendChild(row);
+      });
+    }
+
     const messageList = document.getElementById("messageList");
     const messageCount = document.getElementById("messageCount");
     const messageCount_2 = document.getElementById("messageCount-2");
@@ -524,67 +577,67 @@
     const messageDetails = document.getElementById("messageDetails");
     const messageInput = document.getElementById("messageInput");
     const sendMessageBtn = document.getElementById("sendMessageBtn");
-  
+
     async function fetchMessages() {
       try {
-          const response = await fetch(`http://localhost:8080/message/latest?receiverId=${receiverId}`, {
-              headers: { Authorization: `Bearer ${token}` },
-          });
-  
-          if (!response.ok) {
-              throw new Error(`HTTP error! Status: ${response.status}`);
-          }
-  
-          const data = await response.json();
-          const messages = data.result;
-  
-          console.log("Messages:", messages);
-  
-          // Cập nhật số lượng tin nhắn
-          messageCount.innerText = messages.length;
-          messageCount_2.innerText = messages.length;
-  
-          // Xóa các tin nhắn cũ
-          messageList.querySelectorAll(".message-item").forEach((item) => item.remove());
-  
-          // Lặp qua từng tin nhắn
-          for (const message of messages) {
-              try {
-                  const userResponse = await fetch(`http://localhost:8080/user/${message.senderId}`, {
-                      method: "GET",
-                      headers: { 'Content-Type': 'application/json' },
-                  });
-  
-                  if (!userResponse.ok) {
-                      throw new Error(`HTTP error! Status: ${userResponse.status}`);
-                  }
-  
-                  const userData = await userResponse.json();
-                  const user = userData.result.result;
+        const response = await fetch(`http://localhost:8080/message/latest?receiverId=${receiverId}`, {
+          headers: { Authorization: `Bearer ${token}` },
+        });
 
-                  // Cập nhật avatar và username cho modal
-                  const avatarMesElement = document.querySelector("#avatarMes");
-                  const usernameMesElement = document.querySelector("#usernameMess");
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
 
-                  if (avatarMesElement) {
-                      avatarMesElement.src = user.avatar
-                          ? `http://localhost:8080/images/avatar/${user.avatar}`
-                          : "assets/img/about/avatar.jpg";
-                  }
+        const data = await response.json();
+        const messages = data.result;
 
-                  if (usernameMesElement) {
-                      usernameMesElement.innerText = user.username || "Người dùng";
-                  }
-  
-                  const avt = user.avatar
-                      ? `http://localhost:8080/images/avatar/${user.avatar}`
-                      : "assets/img/messages-1.jpg";
-  
-                  const messageItem = document.createElement("li");
-                  messageItem.classList.add("message-item");
-                  messageItem.dataset.senderId = message.senderId;
-  
-                  messageItem.innerHTML = `
+        console.log("Messages:", messages);
+
+        // Cập nhật số lượng tin nhắn
+        messageCount.innerText = messages.length;
+        messageCount_2.innerText = messages.length;
+
+        // Xóa các tin nhắn cũ
+        messageList.querySelectorAll(".message-item").forEach((item) => item.remove());
+
+        // Lặp qua từng tin nhắn
+        for (const message of messages) {
+          try {
+            const userResponse = await fetch(`http://localhost:8080/user/${message.senderId}`, {
+              method: "GET",
+              headers: { 'Content-Type': 'application/json' },
+            });
+
+            if (!userResponse.ok) {
+              throw new Error(`HTTP error! Status: ${userResponse.status}`);
+            }
+
+            const userData = await userResponse.json();
+            const user = userData.result.result;
+
+            // Cập nhật avatar và username cho modal
+            const avatarMesElement = document.querySelector("#avatarMes");
+            const usernameMesElement = document.querySelector("#usernameMess");
+
+            if (avatarMesElement) {
+              avatarMesElement.src = user.avatar
+                ? `http://localhost:8080/images/avatar/${user.avatar}`
+                : "assets/img/about/avatar.jpg";
+            }
+
+            if (usernameMesElement) {
+              usernameMesElement.innerText = user.username || "Người dùng";
+            }
+
+            const avt = user.avatar
+              ? `http://localhost:8080/images/avatar/${user.avatar}`
+              : "assets/img/messages-1.jpg";
+
+            const messageItem = document.createElement("li");
+            messageItem.classList.add("message-item");
+            messageItem.dataset.senderId = message.senderId;
+
+            messageItem.innerHTML = `
                       <a href="#">
                           <img src="${avt}" alt class="rounded-circle">
                           <div>
@@ -594,22 +647,22 @@
                           </div>
                       </a>
                   `;
-  
-                  // Thêm vào danh sách tin nhắn
-                  messageList.insertBefore(messageItem, messageList.querySelector(".dropdown-footer"));
-  
-                  // Thêm sự kiện click để lấy tin nhắn của người gửi
-                  messageItem.addEventListener("click", () => fetchMessagesFromSender(message.senderId));
-              } catch (innerError) {
-                  console.error("Lỗi khi lấy thông tin người dùng:", innerError);
-              }
+
+            // Thêm vào danh sách tin nhắn
+            messageList.insertBefore(messageItem, messageList.querySelector(".dropdown-footer"));
+
+            // Thêm sự kiện click để lấy tin nhắn của người gửi
+            messageItem.addEventListener("click", () => fetchMessagesFromSender(message.senderId));
+          } catch (innerError) {
+            console.error("Lỗi khi lấy thông tin người dùng:", innerError);
           }
+        }
       } catch (error) {
-          console.error("Lỗi khi lấy danh sách tin nhắn:", error);
+        console.error("Lỗi khi lấy danh sách tin nhắn:", error);
       }
-  }
-  
-  
+    }
+
+
     async function fetchMessagesFromSender(senderId) {
       try {
         // Lấy tin nhắn gửi đi
@@ -618,23 +671,23 @@
           { headers: { Authorization: `Bearer ${token}` } }
         );
         const sentMessages = await responseSent.json();
-      
+
         // Lấy tin nhắn nhận vào
         const responseReceived = await fetch(
           `http://localhost:8080/message/both2?receiverId=${receiverId}&senderId=${senderId}`,
           { headers: { Authorization: `Bearer ${token}` } }
         );
         const receivedMessages = await responseReceived.json();
-      
+
         // Kết hợp tin nhắn gửi và nhận
         const messages = [
           ...sentMessages.result.map((msg) => ({ ...msg, type: "sent" })),
           ...receivedMessages.result.map((msg) => ({ ...msg, type: "received" })),
         ];
-      
+
         // Sắp xếp theo thời gian (cũ đến mới)
         messages.sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt));
-      
+
         // Hiển thị tin nhắn
         currentSenderId = senderId;
         messageDetails.innerHTML = messages
@@ -647,7 +700,7 @@
               </li>`;
           })
           .join("");
-      
+
         // Đảm bảo cuộn đến cuối modal khi mở
         setTimeout(() => {
           const lastMessage = messageDetails.lastElementChild;
@@ -655,13 +708,13 @@
             lastMessage.scrollIntoView({ behavior: "smooth", block: "end" });
           }
         }, 100); // Đợi một chút để nội dung được render trước khi cuộn xuống
-      
+
         openModal();
       } catch (error) {
         console.error("Lỗi khi lấy tin nhắn chi tiết:", error);
       }
     }
-    
+
     function openModal() {
       messageModal.style.display = "block";
       // Đảm bảo cuộn đến cuối modal khi mở
@@ -672,18 +725,18 @@
         }
       }, 100); // Đợi một chút để nội dung được render trước khi cuộn xuống
     }
-    
-  
+
+
     async function sendMessage() {
       const messageContent = messageInput.value.trim();
       if (!messageContent || !currentSenderId) return;
-  
+
       const messageData = {
         senderId: receiverId,
         receiverId: currentSenderId,
         message: messageContent,
       };
-  
+
       try {
         const response = await fetch("http://localhost:8080/message", {
           method: "POST",
@@ -693,7 +746,7 @@
           },
           body: JSON.stringify(messageData),
         });
-  
+
         if (response.ok) {
           const newMessage = await response.json();
           messageDetails.insertAdjacentHTML(
@@ -704,7 +757,7 @@
             </li>`
           );
           messageInput.value = "";
-  
+
           // Sau khi gửi tin nhắn, tái tải lại danh sách tin nhắn
           fetchMessagesFromSender(currentSenderId); // Tải lại tin nhắn từ senderId hiện tại
         }
@@ -712,90 +765,93 @@
         console.error("Lỗi khi gửi tin nhắn:", error);
       }
     }
-  
+
     function formatTimeAgo(dateString) {
       const date = new Date(dateString);
       const now = new Date();
       const diff = Math.floor((now - date) / 1000);
-  
+
       if (diff < 60) return `${diff} giây trước`;
       if (diff < 3600) return `${Math.floor(diff / 60)} phút trước`;
       if (diff < 86400) return `${Math.floor(diff / 3600)} giờ trước`;
       return `${Math.floor(diff / 86400)} ngày trước`;
     }
-  
+
     function formatTimeAgo2(dateString) {
       const date = new Date(dateString); // JavaScript hiểu tốt định dạng ISO 8601
       date.setHours(date.getHours() + 7); // Cộng thêm 7 giờ để điều chỉnh sang UTC+7
       const now = new Date();
       const diff = Math.floor((now - date) / 1000); // Hiệu số thời gian tính bằng giây
-  
+
       if (diff < 60) {
         return `${diff} giây trước`;
       }
-  
+
       if (diff < 3600) {
         const minutes = Math.round(diff / 60); // Làm tròn phút
         return `${minutes} phút trước`;
       }
-  
+
       if (diff < 86400) {
         const hours = Math.round(diff / 3600); // Làm tròn giờ
         return `${hours} giờ trước`;
       }
-  
+
       return `${Math.floor(diff / 86400)} ngày trước`; // Nếu lớn hơn 1 ngày
     }
-  
+
     function openModal() {
       messageModal.style.display = "block";
     }
-  
+
     function closeModal() {
       messageModal.style.display = "none";
     }
-  
+
     document.querySelector(".close-btn").addEventListener("click", closeModal);
     sendMessageBtn.addEventListener("click", sendMessage);
-  
+
     fetchMessages();
+    fetchOrders();
   });
-  
+
 </script>
 
 <style>
   #messageList {
-    width: 300px; /* Cố định độ rộng của dropdown */
-    overflow-y: auto; /* Thêm thanh cuộn khi nội dung vượt quá chiều cao */
+    width: 300px;
+    /* Cố định độ rộng của dropdown */
+    overflow-y: auto;
+    /* Thêm thanh cuộn khi nội dung vượt quá chiều cao */
   }
-  
+
   #messageList .dropdown-header {
     font-weight: bold;
   }
-  
+
   #messageList hr {
     border: 0;
     border-top: 1px solid #ddd;
   }
 
-  
+
   .message-modal {
     display: none;
     position: fixed;
-    top: 7%; 
-    left: 81%; 
-    transform: translateX(-50%); 
+    top: 7%;
+    left: 81%;
+    transform: translateX(-50%);
     width: 310px;
-    max-height: 70%; 
-    overflow-y: auto; 
+    max-height: 70%;
+    overflow-y: auto;
     background: white;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     z-index: 1000;
-    box-sizing: border-box; 
+    box-sizing: border-box;
   }
 
-  
+
   .message-modal .close-btn {
     position: absolute;
     top: 10px;
@@ -803,31 +859,32 @@
     font-size: 18px;
     cursor: pointer;
   }
-  
+
   .message-modal ul {
     list-style: none;
     padding: 0;
     max-height: 300px;
     overflow-y: auto;
   }
-  
+
   .message-modal ul li {
     padding: 10px 0;
     border-bottom: 1px solid #ddd;
   }
-  
-  .sender-message, .receiver-message {
+
+  .sender-message,
+  .receiver-message {
     font-size: 10px;
   }
-  
+
   .sender-message {
     text-align: right;
   }
-  
+
   .receiver-message {
     text-align: left;
   }
-  
+
   .message-content {
     display: inline-block;
     max-width: 70%;
@@ -835,32 +892,32 @@
     border-radius: 10px;
     position: relative;
   }
-  
+
   .sender-message .message-content {
     background-color: #f0f0f0;
   }
-  
+
   .receiver-message .message-content {
     background-color: #d1e7ff;
   }
-  
+
   .message-modal-content {
     padding: 20px;
   }
-  
+
   .send-message-container {
     display: flex;
     gap: 10px;
     margin-top: 10px;
   }
-  
+
   #messageInput {
     flex: 1;
     padding: 8px;
     border: 1px solid #ccc;
     border-radius: 4px;
   }
-  
+
   #sendMessageBtn {
     width: 35px;
     font-size: 10px;
@@ -870,11 +927,10 @@
     border-radius: 4px;
     cursor: pointer;
   }
-  
+
   #sendMessageBtn:hover {
     background-color: #0056b3;
   }
-  
 </style>
 <script>
   async function fetchRevenueForToday(cardClass) {
@@ -884,89 +940,89 @@
     const day = now.getDate(); // Lấy ngày hiện tại
 
     try {
-        // Gọi API lấy doanh thu của ngày hiện tại
-        const response = await fetch(`http://localhost:8080/order/admin/getDay?year=${year}&month=${month}`);
-        if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
-        
-        const data = await response.json();
-        const dailyRevenues = data.result;
-        const todayRevenue = dailyRevenues[day - 1] || 0; // Doanh thu ngày hiện tại
+      // Gọi API lấy doanh thu của ngày hiện tại
+      const response = await fetch(`http://localhost:8080/order/admin/getDay?year=${year}&month=${month}`);
+      if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
 
-        // Cập nhật dữ liệu vào card tương ứng
-        const card = document.querySelector(`.${cardClass}`);
-        card.querySelector('.card-title span').innerText = '| Hôm nay';
-        card.querySelector('.ps-3 h6').innerText = `${todayRevenue.toFixed(2)} VNĐ`;
+      const data = await response.json();
+      const dailyRevenues = data.result;
+      const todayRevenue = dailyRevenues[day - 1] || 0; // Doanh thu ngày hiện tại
+
+      // Cập nhật dữ liệu vào card tương ứng
+      const card = document.querySelector(`.${cardClass}`);
+      card.querySelector('.card-title span').innerText = '| Hôm nay';
+      card.querySelector('.ps-3 h6').innerText = `${todayRevenue.toFixed(2)} VNĐ`;
     } catch (error) {
-        console.error("Lỗi khi lấy doanh thu ngày:", error);
+      console.error("Lỗi khi lấy doanh thu ngày:", error);
     }
-}
+  }
 
-async function fetchRevenueForThisMonth(cardClass) {
+  async function fetchRevenueForThisMonth(cardClass) {
     const now = new Date();
     const year = now.getFullYear();
     const month = now.getMonth() + 1;
 
     try {
-        // Gọi API lấy doanh thu của tháng hiện tại
-        const response = await fetch(`http://localhost:8080/order/admin/getMonth?year=${year}`);
-        if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
-        
-        const data = await response.json();
-        const monthlyRevenues = data.result;
-        const thisMonthRevenue = monthlyRevenues[month - 1] || 0; // Doanh thu tháng hiện tại
-        console.log("tháng",thisMonthRevenue)
+      // Gọi API lấy doanh thu của tháng hiện tại
+      const response = await fetch(`http://localhost:8080/order/admin/getMonth?year=${year}`);
+      if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
 
-        // Cập nhật dữ liệu vào card tương ứng
-        const card = document.querySelector(`.${cardClass}`);
-        card.querySelector('.card-title span').innerText = '| Trong tháng';
-        card.querySelector('.ps-3 h6').innerText = `${thisMonthRevenue.toFixed(2)} VNĐ`;
+      const data = await response.json();
+      const monthlyRevenues = data.result;
+      const thisMonthRevenue = monthlyRevenues[month - 1] || 0; // Doanh thu tháng hiện tại
+      console.log("tháng", thisMonthRevenue)
+
+      // Cập nhật dữ liệu vào card tương ứng
+      const card = document.querySelector(`.${cardClass}`);
+      card.querySelector('.card-title span').innerText = '| Trong tháng';
+      card.querySelector('.ps-3 h6').innerText = `${thisMonthRevenue.toFixed(2)} VNĐ`;
     } catch (error) {
-        console.error("Lỗi khi lấy doanh thu tháng:", error);
+      console.error("Lỗi khi lấy doanh thu tháng:", error);
     }
-}
+  }
 
-async function fetchRevenueForThisYear(cardClass) {
+  async function fetchRevenueForThisYear(cardClass) {
     const now = new Date();
     const year = now.getFullYear();
 
     try {
-        // Gọi API lấy doanh thu của năm hiện tại
-        const response = await fetch(`http://localhost:8080/order/admin/getYear`);
-        if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
-        
-        const data = await response.json();
-        const yearlyRevenues = data.result;
-        const thisYearRevenue = yearlyRevenues.find((revenue, index) => year - 6 + index === year) || 0;
+      // Gọi API lấy doanh thu của năm hiện tại
+      const response = await fetch(`http://localhost:8080/order/admin/getYear`);
+      if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
 
-        // Cập nhật dữ liệu vào card tương ứng
-        const card = document.querySelector(`.${cardClass}`);
-        card.querySelector('.card-title span').innerText = '| Trong năm';
-        card.querySelector('.ps-3 h6').innerText = `${thisYearRevenue.toFixed(2)} VNĐ`;
+      const data = await response.json();
+      const yearlyRevenues = data.result;
+      const thisYearRevenue = yearlyRevenues.find((revenue, index) => year - 6 + index === year) || 0;
+
+      // Cập nhật dữ liệu vào card tương ứng
+      const card = document.querySelector(`.${cardClass}`);
+      card.querySelector('.card-title span').innerText = '| Trong năm';
+      card.querySelector('.ps-3 h6').innerText = `${thisYearRevenue.toFixed(2)} VNĐ`;
     } catch (error) {
-        console.error("Lỗi khi lấy doanh thu năm:", error);
+      console.error("Lỗi khi lấy doanh thu năm:", error);
     }
-}
+  }
 
-// Lắng nghe sự kiện khi người dùng chọn filter cho từng card
-document.querySelectorAll('.info-card').forEach((card) => {
+  // Lắng nghe sự kiện khi người dùng chọn filter cho từng card
+  document.querySelectorAll('.info-card').forEach((card) => {
     const cardClass = card.classList.contains('sales-card');
     card.querySelectorAll('.dropdown-item').forEach((item) => {
-        item.addEventListener('click', (e) => {
-            e.preventDefault();
-            const filterType = e.target.innerText.includes('Hôm nay')
-                ? 'day'
-                : e.target.innerText.includes('Trong tháng')
-                ? 'month'
-                : 'year';
+      item.addEventListener('click', (e) => {
+        e.preventDefault();
+        const filterType = e.target.innerText.includes('Hôm nay')
+          ? 'day'
+          : e.target.innerText.includes('Trong tháng')
+            ? 'month'
+            : 'year';
 
-            if (filterType === 'day') fetchRevenueForToday(cardClass);
-            if (filterType === 'month') fetchRevenueForThisMonth(cardClass);
-            if (filterType === 'year') fetchRevenueForThisYear(cardClass);
-        });
+        if (filterType === 'day') fetchRevenueForToday(cardClass);
+        if (filterType === 'month') fetchRevenueForThisMonth(cardClass);
+        if (filterType === 'year') fetchRevenueForThisYear(cardClass);
+      });
     });
-});
+  });
 
-// Gọi API lần đầu mặc định hiển thị doanh thu ngày hiện tại cho từng card
-fetchRevenueForToday('sales-card'); // Card doanh thu
+  // Gọi API lần đầu mặc định hiển thị doanh thu ngày hiện tại cho từng card
+  fetchRevenueForToday('sales-card'); // Card doanh thu
 
 </script>
