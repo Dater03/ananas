@@ -246,8 +246,8 @@
             <div class="card-header">
                 <h5 class="card-title">Danh sách khách hàng</h5>
             </div>
-            <div class="card-body">
-                <table class="table table-striped">
+            <div class="card-body table-responsive">
+                <table class="table table-striped ">
                     <thead>
                         <tr>
                             <th>Tên khách hàng</th>
@@ -797,4 +797,13 @@ async function deleteUser(userId) {
     background-color: #0056b3;
   }
   
+  @media (max-width: 768px) {
+    th:nth-child(3), td:nth-child(3), /* Địa chỉ */
+    th:nth-child(4), td:nth-child(4), /* Tên họ */
+    th:nth-child(5), td:nth-child(5), /* Tên */
+    th:nth-child(6), td:nth-child(6) { /* Avatar */
+        display: none;
+    }
+}
+
 </style>
