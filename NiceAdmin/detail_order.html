@@ -100,40 +100,6 @@
                 <p>1 giờ trước</p>
               </div>
             </li>
-
-            <li>
-              <hr class="dropdown-divider">
-            </li>
-
-            <li class="notification-item">
-              <i class="bi bi-check-circle text-success"></i>
-              <div>
-                <h4>Đơn hàng đã giao</h4>
-                <p>Đơn hàng #67890 đã được giao thành công</p>
-                <p>2 giờ trước</p>
-              </div>
-            </li>
-
-            <li>
-              <hr class="dropdown-divider">
-            </li>
-
-            <li class="notification-item">
-              <i class="bi bi-x-circle text-danger"></i>
-              <div>
-                <h4>Đơn hàng bị hủy</h4>
-                <p>Đơn hàng #98765 đã bị hủy</p>
-                <p>4 giờ trước</p>
-              </div>
-            </li>
-
-            <li>
-              <hr class="dropdown-divider">
-            </li>
-
-            <li class="dropdown-footer">
-              <a href="#">Hiển thị tất cả thông báo</a>
-            </li>
           </ul><!-- End Notification Dropdown Items -->
 
         </li><!-- End Notification Nav -->
@@ -142,50 +108,38 @@
         <li class="nav-item dropdown">
           <a class="nav-link nav-icon" href="#" data-bs-toggle="dropdown">
             <i class="bi bi-chat-left-text"></i>
-            <span class="badge bg-success badge-number">2</span>
+            <span class="badge bg-success badge-number" id="messageCount-2"></span>
           </a><!-- End Messages Icon -->
 
-          <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow messages">
+          <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow messages" id="messageList">
             <li class="dropdown-header">
-              Bạn có 2 tin nhắn mới
-              <a href="#"><span class="badge rounded-pill bg-primary p-2 ms-2">Xem tất cả</span></a>
+              Bạn có <span id="messageCount">0</span> tin nhắn mới
             </li>
             <li>
               <hr class="dropdown-divider">
             </li>
 
-            <li class="message-item">
-              <a href="#">
-                <img src="assets/img/messages-3.jpg" alt class="rounded-circle">
-                <div>
-                  <h4>Đỗ Thành Đạt</h4>
-                  <p>Sản phẩm này có kích cỡ 42 không?</p>
-                  <p>2 giờ trước</p>
-                </div>
-              </a>
-            </li>
+            <!-- Tin nhắn sẽ được load vào đây bằng JavaScript -->
+
             <li>
               <hr class="dropdown-divider">
             </li>
+          </ul>
 
-            <li class="message-item">
-              <a href="#">
-                <img src="assets/img/messages-1.jpg" alt class="rounded-circle">
-                <div>
-                  <h4>Đỗ Thị Ling Ling</h4>
-                  <p>Tôi muốn đổi sản phẩm, quy trình như thế nào?</p>
-                  <p>4 giờ trước</p>
-                </div>
-              </a>
-            </li>
-            <li>
-              <hr class="dropdown-divider">
-            </li>
-
-            <li class="dropdown-footer">
-              <a href="#">Hiển thị tất cả tin nhắn</a>
-            </li>
-          </ul><!-- End Messages Dropdown Items -->
+          <!-- Modal hiển thị chi tiết tin nhắn -->
+          <div id="messageModal" class="message-modal">
+            <div class="message-modal-content">
+              <span class="close-btn">&times;</span>
+              <img id="avatarMes" style="width: 25px;" src="assets/img/apple-touch-icon.png" alt=""><span
+                id="usernameMess"> User</span>
+              <ul id="messageDetails"></ul>
+              <!-- Ô nhập tin nhắn và nút gửi -->
+              <div class="send-message-container">
+                <input type="text" id="messageInput" placeholder="Nhập tin nhắn..." />
+                <button id="sendMessageBtn">Gửi</button>
+              </div>
+            </div>
+          </div>
 
         </li><!-- End Messages Nav -->
 
@@ -214,8 +168,6 @@
             <li>
               <hr class="dropdown-divider">
             </li>
-
-
 
             <li>
               <a class="dropdown-item d-flex align-items-center" href="pages-login.html">
@@ -290,13 +242,10 @@
 
       <!-- Quản lý Khuyến mãi -->
       <li class="nav-item">
-        <a class="nav-link collapsed" data-bs-target="#promo-nav" data-bs-toggle="collapse" href="#">
-          <i class="bi bi-gift"></i><span>Quản lý Khuyến mãi</span><i class="bi bi-chevron-down ms-auto"></i>
+        <a class="nav-link collapsed" href="add-promo.html">
+          <i class="bi bi-gift"></i><span>Quản lý Khuyến mãi</span>
         </a>
-        <ul id="promo-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
-          <li><a href="add-promo.html"><i class="bi bi-plus-circle"></i><span>Thêm Khuyến mãi</span></a></li>
-          <li><a href="list-promos.html"><i class="bi bi-list"></i><span>Danh sách Khuyến mãi</span></a></li>
-        </ul>
+
       </li><!-- End Promo Nav -->
 
 
@@ -372,7 +321,7 @@
                     </div>
                     <div class="row mb-4">
                       <h6 class="text-body text-body-emphasis col-6">Mã khuyến mãi áp dụng: <span
-                          id="code_voucher"></span></h6>
+                          class="badge bg-success" id="code_voucher"></span></h6>
                     </div>
                   </div>
                 </div>
@@ -448,9 +397,23 @@
     </div>
   </main>
 </body>
-<script src="assets/js/vendor.js"></script>
-<script src="assets/js/plugins.js"></script>
-<script src="assets/js/active.js"></script>
+  <!-- Vendor JS Files -->
+  <script src="assets/vendor/apexcharts/apexcharts.min.js"></script>
+  <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="assets/vendor/chart.js/chart.umd.js"></script>
+  <script src="assets/vendor/echarts/echarts.min.js"></script>
+  <script src="assets/vendor/quill/quill.js"></script>
+  <script src="assets/vendor/simple-datatables/simple-datatables.js"></script>
+  <script src="assets/vendor/tinymce/tinymce.min.js"></script>
+  <script src="assets/vendor/php-email-form/validate.js"></script>
+  <!-- jQuery -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+  <!-- Bootstrap JS -->
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+
+  <!-- Template Main JS File -->
+  <script src="assets/js/main.js"></script>
 <script>
   const TOKEN = localStorage.getItem("token");
   const userId = localStorage.getItem("userId");
@@ -484,7 +447,7 @@
     document.getElementById('address').value = order.recipientAddress || '';
     document.getElementById('status_order').value = order.status || '';
     document.getElementById('status_paid').value = order.paymentStatus || '';
-    document.getElementById('code_voucher').value = order.code || '';
+    document.getElementById('code_voucher').innerHTML = order.code || '';
     renderCartTable(order);
     renderCartSummary(order);
     if (order.paymentMethod == "CASH_ON_DELIVERY") {
@@ -524,16 +487,8 @@
 
     // Tính toán
     const vat = subTotal * vatRate;
-    var description;
-    if (orderData.description.includes("\n")) {
-      description = orderData.description.split("\n")[1];
-    }
-    else {
-      description = orderData.description;
-    }
-
     if (description != null) {
-      document.getElementById("description").value = description;
+      document.getElementById("description").value = orderData.description;
     }
 
     // Hiển thị dữ liệu
@@ -587,6 +542,120 @@
   .tb_head {
     color: #2980b9;
     font-weight: 600;
+  }
+
+  #messageList {
+    width: 300px;
+    /* Cố định độ rộng của dropdown */
+    overflow-y: auto;
+    /* Thêm thanh cuộn khi nội dung vượt quá chiều cao */
+  }
+
+  #messageList .dropdown-header {
+    font-weight: bold;
+  }
+
+  #messageList hr {
+    border: 0;
+    border-top: 1px solid #ddd;
+  }
+
+
+  .message-modal {
+    display: none;
+    position: fixed;
+    top: 7%;
+    left: 81%;
+    transform: translateX(-50%);
+    width: 310px;
+    max-height: 70%;
+    overflow-y: auto;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+    box-sizing: border-box;
+  }
+
+
+  .message-modal .close-btn {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    font-size: 18px;
+    cursor: pointer;
+  }
+
+  .message-modal ul {
+    list-style: none;
+    padding: 0;
+    max-height: 300px;
+    overflow-y: auto;
+  }
+
+  .message-modal ul li {
+    padding: 10px 0;
+    border-bottom: 1px solid #ddd;
+  }
+
+  .sender-message,
+  .receiver-message {
+    font-size: 10px;
+  }
+
+  .sender-message {
+    text-align: right;
+  }
+
+  .receiver-message {
+    text-align: left;
+  }
+
+  .message-content {
+    display: inline-block;
+    max-width: 70%;
+    padding: 10px;
+    border-radius: 10px;
+    position: relative;
+  }
+
+  .sender-message .message-content {
+    background-color: #f0f0f0;
+  }
+
+  .receiver-message .message-content {
+    background-color: #d1e7ff;
+  }
+
+  .message-modal-content {
+    padding: 20px;
+  }
+
+  .send-message-container {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+  }
+
+  #messageInput {
+    flex: 1;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+
+  #sendMessageBtn {
+    width: 35px;
+    font-size: 10px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+
+  #sendMessageBtn:hover {
+    background-color: #0056b3;
   }
 </style>
 
