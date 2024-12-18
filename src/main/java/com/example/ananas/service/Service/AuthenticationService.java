@@ -63,8 +63,10 @@ public class AuthenticationService {
     }
 
     public AuthenticationResponse authenticationResponse(AuthenticationRequest authenticationRequest) {
-        var user = userRepository.findByUsername(authenticationRequest.getUsername())
-                .orElseThrow(() -> new AppException((ErrException.USER_NOT_EXISTED)));
+        var user = userRepository.findByUsernameOrEmail(
+                        authenticationRequest.getIdentifier(), // Tìm cả username và email
+                        authenticationRequest.getIdentifier())
+                .orElseThrow(() -> new AppException(ErrException.USER_NOT_EXISTED));
         if (user.getIsActive().equals(true)){
             boolean checked = passwordEncoder.matches(authenticationRequest.getPassword(), user.getPassword());
             if (!checked) {

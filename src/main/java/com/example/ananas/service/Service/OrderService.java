@@ -53,6 +53,7 @@ public class OrderService implements IOrderService {
     IOrderMapper orderMapper;
     Cart_Repository cartRepository;
     Cart_Item_Repository cartItemRepository;
+    EmailService emailService;
     @Override
     public ResultPaginationDTO getOrdersForAdmin(Pageable pageable) {
         Page<Order> orders = orderRepository.findAll(pageable);
@@ -201,6 +202,14 @@ public class OrderService implements IOrderService {
         order.setUpdatedAt(new Timestamp(System.currentTimeMillis()));
         order.setOrderItems(orderItems);
         orderRepository.save(order);
+
+        Optional<User> user = userRepository.findById(userId);
+
+        if (user.get().getEmail() != null && !user.get().getEmail().isEmpty()) {
+            String subject = "You have placed your order successfully";
+            String text = "\nDear "+user.get().getUsername()+"\nYour order is being prepared.Thank you for your order <3";
+            emailService.sendMessage(user.get().getEmail(), subject, text);
+        }
         return orderMapper.orderToOrderResponse(order);
     }
 

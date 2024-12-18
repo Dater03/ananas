@@ -31,7 +31,16 @@ public class SecurityConfig {
         http.authorizeHttpRequests(request ->
                 request.requestMatchers("/admin/**").hasRole("Admin")
                         .requestMatchers("/user/**").permitAll()
+                        .requestMatchers("/voucher/**").permitAll()
+                        .requestMatchers("/voucher/admin/**").hasRole("Admin")
+                        .requestMatchers("/order/**").permitAll()
+                        .requestMatchers("/order/admin/**").hasRole("Admin")
+                        .requestMatchers("/product/**").permitAll()
+                        .requestMatchers("/category/**").permitAll()
+                        .requestMatchers("/message/**").hasAnyRole("Admin", "User")
+                        .requestMatchers("/cart").permitAll()
                         .requestMatchers("/auth/**").permitAll()
+                        .requestMatchers(("/review/**")).permitAll()
                         .requestMatchers("/**").permitAll()
                         .anyRequest().authenticated()
                 );

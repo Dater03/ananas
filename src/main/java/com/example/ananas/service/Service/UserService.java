@@ -59,7 +59,7 @@ public class UserService implements IUserService {
         user.setIsActive(true);
         if (userCreateRequest.getEmail() != null && !userCreateRequest.getEmail().isEmpty()) {
             String subject = "Welcome to our service";
-            String text = "Dear "+userCreateRequest.getUsername()+","+userCreateRequest.getEmail()+","+userCreateRequest.getPassword();
+            String text = "\nDear "+userCreateRequest.getUsername()+","+userCreateRequest.getEmail()+","+userCreateRequest.getPassword();
             emailService.sendMessage(userCreateRequest.getEmail(), subject, text);
         }
         return userMapper.toUserResponse(userRepository.save(user));
@@ -162,7 +162,7 @@ public class UserService implements IUserService {
 
         String subject = "Dear, "+user.getUsername()+", your account has been reset password successfully.";
         String resetPassword = generateRandomPassword(6);
-        emailService.sendMessage(email, subject , "Your new password: "+resetPassword);
+        emailService.sendMessage(email, subject , "\nYour new password: "+resetPassword);
         user.setPassword(passwordEncoder.encode(resetPassword));
         user.setUpdateAt(LocalDateTime.now());
         userRepository.save(user);
