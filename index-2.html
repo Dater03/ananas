@@ -638,83 +638,86 @@
 
 
                 for (const product of products) {
-                    // Gọi API lấy danh sách ảnh của từng sản phẩm
-                    let rating = 0;
-                    const responseRate = await fetch(`http://localhost:8080/review/average?productId=${product.productId}`);
-                    const dataRate = await responseRate.json();
-                    if (dataRate.code === 200) {
-                        rating = Math.round(dataRate.result.result); // Làm tròn số sao
-                    }
-
-                    let productImage = product.images && product.images.length > 0 ? product.images[0] : 'assets/img/default-image.jpg';
-
-                    const productHTML = `
-                        <div class="product-item mb-50">
+                    try {
+                        let rating = 0;
+                        const responseRate = await fetch(`http://localhost:8080/review/average?productId=${product.productId}`);
+                
+                        if (responseRate.ok) {
+                            const dataRate = await responseRate.json();
+                            if (dataRate.code === 200 && dataRate.result && dataRate.result.result !== null) {
+                                rating = Math.round(dataRate.result.result); // Làm tròn số sao
+                            }
+                        }
+                
+                        let productImage = product.images && product.images.length > 0 ? product.images[0] : 'assets/img/default-image.jpg';
+                
+                        const productHTML = `
+                            <div class="product-item mb-50">
+                                <div class="product-thumb">
+                                    <a href="product-details.html?id=${product.productId}">
+                                        <img src="http://localhost:8080/images/product/${productImage}" alt="">
+                                    </a>
+                                </div>
+                                <div class="product-content">
+                                    <h5 class="product-name">
+                                        <a href="product-details.html?id=${product.productId}">${product.productName}</a>
+                                    </h5>
+                                    <div class="ratings mb-2">
+                                        ${'<span><i class="ion-android-star"></i></span>'.repeat(rating)}
+                                        ${'<span><i class="ion-android-star-outline"></i></span>'.repeat(5 - rating)}
+                                    </div>
+                                    <div class="price-box">
+                                        <span class="price-regular">${product.price * (100 - product.discount) / 100} VND</span>
+                                        <span class="price-old"><del>${product.price}</del></span>
+                                    </div>
+                                    <div class="product-action-link">
+                                        <a href="#" data-bs-toggle="tooltip" title="Wishlist"><i class="ion-android-favorite-outline"></i></a>
+                                        <a href="product-details.html?id=${product.productId}" data-bs-toggle="tooltip" title="Add To Cart"><i class="ion-bag"></i></a>
+                                        <a href="#" data-bs-toggle="modal" data-bs-target="#quick_view" data-product-id="${product.productId}"> <span
+                                            data-bs-toggle="tooltip" title="Quick View"><i class="ion-ios-eye-outline"></i></span> </a>
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                
+                        const topProductHTML = `
+                            <div class="slide-item">
+                                <div class="pro-item-small mt-30">
                                     <div class="product-thumb">
                                         <a href="product-details.html?id=${product.productId}">
-                                            <img src="http://localhost:8080/images/product/${product.images[0]}" alt="">
+                                            <img src="http://localhost:8080/images/product/${productImage}" alt="${product.productName}" style="height: 180px; width: 169px;">
                                         </a>
                                     </div>
-                                    <div class="product-content">
-                                        <h5 class="product-name">
+                                    <div class="pro-small-content">
+                                        <h6 class="product-name">
                                             <a href="product-details.html?id=${product.productId}">${product.productName}</a>
-                                        </h5>
-                                        <div class="ratings mb-2">
-                                            ${'<span><i class="ion-android-star"></i></span>'.repeat(rating)}
-                                            ${'<span><i class="ion-android-star-outline"></i></span>'.repeat(5 - rating)}
-                                        </div>
+                                        </h6>
                                         <div class="price-box">
                                             <span class="price-regular">${product.price * (100 - product.discount) / 100} VND</span>
                                             <span class="price-old"><del>${product.price}</del></span>
                                         </div>
-                                        <div class="product-action-link">
-                                            <a href="#" data-bs-toggle="tooltip" title="Wishlist"><i
-                                                    class="ion-android-favorite-outline"></i></a>
-                                            <a href="product-details.html?id=${product.productId}" data-bs-toggle="tooltip" title="Add To Cart"><i
-                                                    class="ion-bag"></i></a>
+                                        <div class="ratings">
+                                            ${'<span><i class="ion-android-star"></i></span>'.repeat(rating)}
+                                            ${'<span><i class="ion-android-star-outline"></i></span>'.repeat(5 - rating)}
+                                        </div>
+                                        <div class="product-link-2">
+                                            <a href="#" data-bs-toggle="tooltip" title="Wishlist"><i class="ion-android-favorite-outline"></i></a>
+                                            <a href="product-details.html?id=${product.productId}" data-bs-toggle="tooltip" title="Add To Cart"><i class="ion-bag"></i></a>
                                             <a href="#" data-bs-toggle="modal" data-bs-target="#quick_view" data-product-id="${product.productId}"> <span
-                                                    data-bs-toggle="tooltip" title="Quick View"><i
-                                                        class="ion-ios-eye-outline"></i></span> </a>
+                                                data-bs-toggle="tooltip" title="Quick View"><i class="ion-ios-eye-outline"></i></span> </a>
                                         </div>
-                                    </div>
-                                </div>
-                    `;
-
-                    const topProductHTML = `
-                        <div class="slide-item">
-                            <div class="pro-item-small mt-30">
-                                <div class="product-thumb">
-                                    <a href="product-details.html?id=${product.productId}">
-                                        <img src="http://localhost:8080/images/product/${product.images[0]}" alt="${product.productName}" style="height: 180px; width: 169px;">
-                                    </a>
-                                </div>
-                                <div class="pro-small-content">
-                                    <h6 class="product-name">
-                                        <a href="product-details.html?id=${product.productId}">${product.productName}</a>
-                                    </h6>
-                                    <div class="price-box">
-                                            <span class="price-regular">${product.price * (100 - product.discount) / 100} VND</span>
-                                            <span class="price-old"><del>${product.price}</del></span>
-                                        </div>
-                                    <div class="ratings">
-                                        ${'<span><i class="ion-android-star"></i></span>'.repeat(rating)}
-                                        ${'<span><i class="ion-android-star-outline"></i></span>'.repeat(5 - rating)}
-                                    </div>
-                                    <div class="product-link-2">
-                                        <a href="#" data-bs-toggle="tooltip" title="Wishlist"><i class="ion-android-favorite-outline"></i></a>
-                                        <a href="product-details.html?id=${product.productId}" data-bs-toggle="tooltip" title="Add To Cart"><i class="ion-bag"></i></a>
-                                        <a href="#" data-bs-toggle="modal" data-bs-target="#quick_view" data-product-id="${product.productId}"> <span
-                                                    data-bs-toggle="tooltip" title="Quick View"><i
-                                                        class="ion-ios-eye-outline"></i></span> </a>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    `;
-
-                    productContainer.insertAdjacentHTML('beforeend', productHTML);
-                    topProductContainer.insertAdjacentHTML('beforeend', topProductHTML);
+                        `;
+                
+                        productContainer.insertAdjacentHTML('beforeend', productHTML);
+                        topProductContainer.insertAdjacentHTML('beforeend', topProductHTML);
+                    } catch (error) {
+                        console.error('Error fetching average rating:', error);
+                    }
                 }
+                
 
                 // Khởi tạo slider sau khi thêm sản phẩm
                 $('.product-carousel').slick({
@@ -973,8 +976,8 @@
             const quantity = parseInt(document.getElementById("quantityInput").value);
             const qvId = document.getElementById("qvId")?.textContent.trim();
         
-            const min = parseInt(document.getElementById("quantityInput").min, 10) || 0;
-            const max = parseInt(document.getElementById("quantityInput").max, 10) || Infinity;
+            const min = parseInt(document.getElementById("quantityInput").min);
+            const max = parseInt(document.getElementById("quantityInput").max);
         
             if (!selectedColor || !selectedSize) {
                 alert("Please select both color and size.");
