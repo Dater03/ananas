@@ -4,11 +4,14 @@ import com.example.ananas.dto.request.OrderCreate;
 import com.example.ananas.dto.request.OrderUpdateUser;
 import com.example.ananas.dto.response.OrderResponse;
 import com.example.ananas.dto.response.ResultPaginationDTO;
+import com.example.ananas.entity.TempOrder;
 import com.example.ananas.service.Service.OrderService;
+import com.turkraft.springfilter.boot.Filter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -135,6 +138,17 @@ public class OrderController {
             revenues.add(revenue);
         }
         return ResponseEntity.ok(revenues);
+    }
+
+    @GetMapping("/admin/temp-order")
+    public ResponseEntity<ResultPaginationDTO> getAllTempOrder(@Filter Specification<TempOrder> spec, Pageable pageable)
+    {
+        return ResponseEntity.ok(this.orderService.getAllTempOrder(spec,pageable));
+    }
+    @GetMapping("/admin/getAllTempOrder")
+    public ResponseEntity<List<TempOrder>> getAllTemp()
+    {
+        return ResponseEntity.ok(this.orderService.getAllTemp());
     }
 
 }

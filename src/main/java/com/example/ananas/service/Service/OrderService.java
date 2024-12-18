@@ -5,10 +5,7 @@ import com.example.ananas.dto.request.OrderUpdateUser;
 import com.example.ananas.dto.request.Order_Items_Create;
 import com.example.ananas.dto.response.OrderResponse;
 import com.example.ananas.dto.response.ResultPaginationDTO;
-import com.example.ananas.entity.Cart;
-import com.example.ananas.entity.Order_Item;
-import com.example.ananas.entity.ProductVariant;
-import com.example.ananas.entity.User;
+import com.example.ananas.entity.*;
 import com.example.ananas.entity.order.Order;
 import com.example.ananas.entity.order.OrderSpecification;
 import com.example.ananas.entity.order.OrderStatus;
@@ -24,6 +21,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -49,6 +47,7 @@ public class OrderService implements IOrderService {
     Product_Repository productRepository;
 
     VoucherService voucherService;
+    Temp_Order_Repository tempOrderRepository;
 
     IOrderMapper orderMapper;
     Cart_Repository cartRepository;
@@ -446,5 +445,27 @@ public class OrderService implements IOrderService {
         Cart cartDelete = this.cartRepository.findByUser(user);
         this.cartItemRepository.deleteByCart(cartDelete);
         this.cartRepository.deleteByUser(user);
+    }
+
+    @Override
+    public ResultPaginationDTO getAllTempOrder(Specification<TempOrder> spec, Pageable pageable) {
+        Page<TempOrder> tempOrderPage = this.tempOrderRepository.findAll(spec,pageable);
+        ResultPaginationDTO rs = new ResultPaginationDTO();
+        ResultPaginationDTO.Meta mt = new ResultPaginationDTO.Meta();
+
+        mt.setPage(pageable.getPageNumber()+1);
+        mt.setPageSize(pageable.getPageSize());
+        mt.setPages(tempOrderPage.getTotalPages());
+        mt.setTotal(tempOrderPage.getTotalElements());
+
+        rs.setMeta(mt);
+        List<TempOrder> tempOrderList = tempOrderPage.getContent();
+        rs.setResult(tempOrderList);
+        return rs;
+    }
+
+    @Override
+    public List<TempOrder> getAllTemp() {
+      return   this.tempOrderRepository.findAll();
     }
 }
