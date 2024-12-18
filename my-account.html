@@ -165,11 +165,12 @@
                                         </button>
                                         <button id="address-edit_btn" type="button" data-bs-target="#address-edit"
                                             data-bs-toggle="tab" role="tab" aria-controls="address-edit"
-                                            aria-selected="false"> 
+                                            aria-selected="false">
                                             <i class="fa fa-map-marker"></i>
                                             Địa chỉ
                                         </button>
-                                        <a class="dangxuat" href="login.html"><i class="fa fa-sign-out"></i>Đăng xuất</a>
+                                        <a class="dangxuat" href="login.html"><i class="fa fa-sign-out"></i>Đăng
+                                            xuất</a>
                                     </div>
                                 </div>
                                 <!-- My Account Tab Menu End -->
@@ -209,14 +210,14 @@
                                                             </div>
                                                         </div>
                                                         <div class="single-input-item">
-                                                            <label for="display-name" class="required">Tên đăng nhập</label>
+                                                            <label for="display-name" class="required">Tên đăng
+                                                                nhập</label>
                                                             <input type="text" id="display-name"
                                                                 placeholder="Tên đăng nhập" readonly />
                                                         </div>
                                                         <div class="single-input-item">
                                                             <label for="email" class="required">Email</label>
-                                                            <input type="email" id="email"
-                                                                placeholder="Email" />
+                                                            <input type="email" id="email" placeholder="Email" />
                                                         </div>
                                                         <div class="single-input-item">
                                                             <label for="phone" class="required">Số điện thoại</label>
@@ -238,21 +239,24 @@
                                                     <legend>Đổi mật khẩu</legend>
                                                     <form id="password-change-form">
                                                         <div class="single-input-item">
-                                                            <label for="current-pwd" class="required">Mật khẩu hiện tại</label>
+                                                            <label for="current-pwd" class="required">Mật khẩu hiện
+                                                                tại</label>
                                                             <input type="password" id="current-pwd"
                                                                 placeholder="Mật khẩu hiện tại" required />
                                                         </div>
                                                         <div class="row">
                                                             <div class="col-lg-6">
                                                                 <div class="single-input-item">
-                                                                    <label for="new-pwd" class="required">Mật khẩu mới</label>
+                                                                    <label for="new-pwd" class="required">Mật khẩu
+                                                                        mới</label>
                                                                     <input type="password" id="new-pwd"
                                                                         placeholder="Mật khẩu mới" required />
                                                                 </div>
                                                             </div>
                                                             <div class="col-lg-6">
                                                                 <div class="single-input-item">
-                                                                    <label for="confirm-pwd" class="required">Xác nhận mật khẩu mới</label>
+                                                                    <label for="confirm-pwd" class="required">Xác nhận
+                                                                        mật khẩu mới</label>
                                                                     <input type="password" id="confirm-pwd"
                                                                         placeholder="Xác nhận mật khẩu mới" required />
                                                                 </div>
@@ -336,7 +340,8 @@
                                                     <p>...</p>
                                                     <p>...</p>
                                                 </address>
-                                                <a href="#" class="check-btn sqr-btn "><i class="fa fa-edit"></i> Sửa địa chỉ</a>
+                                                <a href="#" class="check-btn sqr-btn "><i class="fa fa-edit"></i> Sửa
+                                                    địa chỉ</a>
                                             </div>
                                         </div>
                                         <!-- Single Tab Content End -->
@@ -543,11 +548,25 @@
             }).join("");  // Nối tất cả các sản phẩm lại với nhau trong cột sản phẩm
 
             // Tạo HTML cho các cột khác trong bảng
+            let statusHtml = "";
+            switch (order.status) {
+                case 'SHIPPED':
+                    statusHtml = '<div id="statusOrd" class="badge bg-warning text-dark">Đang ship</div>';
+                    break;
+                case 'PENDING':
+                    statusHtml = '<div id="statusOrd" class="badge bg-info text-dark">Chờ xử lý</div>';
+                    break;
+                case 'DELIVERED':
+                    statusHtml = '<div id="statusOrd" class="badge bg-success text-light">Đã giao</div>';
+                    break;
+                default:
+                    statusHtml = `<div id="statusOrd" class="badge bg-secondary text-light">${order.status}</div>`;
+            }
             row.innerHTML = `
             <td>${order.id}</td>
             <td>${productColumn}</td> <!-- Cột sản phẩm -->
             <td>${new Date(order.createdAt).toLocaleDateString()}</td>
-            <td>${order.status}</td>
+            <td>${statusHtml}</td>
             <td>${order.totalAmount.toLocaleString()} VNĐ</td>
             <td><button class="btn btn-success" onclick="viewOrderDetails(${order.id})">Xem chi tiết</button></td>
         `;
@@ -721,7 +740,7 @@
         }
     });
 
-    document.querySelector(".dangxuat").addEventListener("click", async(event) => {
+    document.querySelector(".dangxuat").addEventListener("click", async (event) => {
         localStorage.clear();
     })
 
@@ -1000,67 +1019,84 @@
         margin-top: 10px;
     }
 
-     /* cart */
-     .minicart-inner-content {
+    /* cart */
+    .minicart-inner-content {
         display: flex;
         flex-direction: column;
-        height: 100%; /* Chiều cao toàn phần của nội dung */
+        height: 100%;
+        /* Chiều cao toàn phần của nội dung */
     }
-    
+
     .minicart-item-wrapper {
-        flex-grow: 1; /* Phần danh sách sản phẩm mở rộng để chiếm không gian còn lại */
-        overflow-y: auto; /* Kích hoạt cuộn dọc */
+        flex-grow: 1;
+        /* Phần danh sách sản phẩm mở rộng để chiếm không gian còn lại */
+        overflow-y: auto;
+        /* Kích hoạt cuộn dọc */
     }
+
     /* footer */
-.footer-wrapper {
-    padding: 20px 0;
-}
-
-.footer-widget-area {
-    background-color: #f9f9f9;
-}
-
-.widget-item {
-    margin-bottom: 20px;
-}
-
-.location-wrap li {
-    font-size: 16px;
-    margin-bottom: 10px;
-}
-
-/* Thay đổi bố cục và kích thước cho màn hình nhỏ hơn */
-@media (max-width: 992px) {
-    .col-xl-5, .col-lg-3, .col-md-6 {
-        flex: 0 0 50%;
-        max-width: 50%;
+    .footer-wrapper {
+        padding: 20px 0;
     }
 
-    .col-xl-3, .col-lg-3, .col-md-4 {
-        flex: 0 0 100%;
-        max-width: 100%;
-        text-align: center; /* Căn giữa nội dung */
+    .footer-widget-area {
+        background-color: #f9f9f9;
     }
 
-    iframe {
-        width: 100%;
-        height: 150px; /* Điều chỉnh chiều cao iframe */
+    .widget-item {
+        margin-bottom: 20px;
     }
-}
 
-@media (max-width: 576px) {
     .location-wrap li {
-        font-size: 14px; /* Thu nhỏ font chữ */
+        font-size: 16px;
+        margin-bottom: 10px;
     }
 
-    .col-xl-5, .col-lg-3, .col-md-6,
-    .col-xl-3, .col-lg-3, .col-md-4 {
-        flex: 0 0 100%;
-        max-width: 100%;
+    /* Thay đổi bố cục và kích thước cho màn hình nhỏ hơn */
+    @media (max-width: 992px) {
+
+        .col-xl-5,
+        .col-lg-3,
+        .col-md-6 {
+            flex: 0 0 50%;
+            max-width: 50%;
+        }
+
+        .col-xl-3,
+        .col-lg-3,
+        .col-md-4 {
+            flex: 0 0 100%;
+            max-width: 100%;
+            text-align: center;
+            /* Căn giữa nội dung */
+        }
+
+        iframe {
+            width: 100%;
+            height: 150px;
+            /* Điều chỉnh chiều cao iframe */
+        }
     }
 
-    iframe {
-        height: 120px; /* Điều chỉnh thêm cho màn hình nhỏ */
+    @media (max-width: 576px) {
+        .location-wrap li {
+            font-size: 14px;
+            /* Thu nhỏ font chữ */
+        }
+
+        .col-xl-5,
+        .col-lg-3,
+        .col-md-6,
+        .col-xl-3,
+        .col-lg-3,
+        .col-md-4 {
+            flex: 0 0 100%;
+            max-width: 100%;
+        }
+
+        iframe {
+            height: 120px;
+            /* Điều chỉnh thêm cho màn hình nhỏ */
+        }
     }
-}
 </style>

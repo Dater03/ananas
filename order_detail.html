@@ -199,7 +199,8 @@
                                     </label>
                                     <div class="mb-4 rounded border p-3">
                                         <p class="mb-4">Phương thức thanh toán: <span id="payment-method"></span></p>
-                                        <p>Trạng thái đơn hàng: <span id="status-order"></span></p>
+                                        <p class="mb-4">Trạng thái đơn hàng: <span id="status-order"></span></p>
+                                        <p>Trạng thái thanh toán: <span id="status-paid-order"></span></p>
                                     </div>
                                 </div>
                                 <div class="col-lg-8">
@@ -208,7 +209,7 @@
                                             <h6>Mô tả đơn hàng</h6>
                                         </label>
                                         <textarea class="form-control p-3" id="description" rows="3"
-                                            style="height: 111px;"></textarea>
+                                            style="height: 161px;"></textarea>
                                     </div>
                                 </div>
                             </div>
@@ -228,7 +229,6 @@
                                             <th class="pro-price">Giá</th>
                                             <th class="pro-quantity">Số lượng</th>
                                             <th class="pro-subtotal">Tổng số</th>
-                                            <th class="pro-remove">Xóa</th>
                                         </tr>
                                     </thead>
                                     <tbody id="cart-table-body">
@@ -239,15 +239,16 @@
                             <!-- Cart Update Option -->
                             <div class="cart-update-option d-block d-md-flex justify-content-between">
                                 <div class="cart-update">
-                                    <a href="#" class="btn disabled" id="update-order-btn">Cập nhật đơn hàng</a>
+                                    <button class="btn btn-outline-light" id="update-order-btn">Cập nhật đơn hàng</button>
                                 </div>
 
                                 <div class="cart-dropdown1">
                                     <div style="align-content: center; padding-right: 10px;">
                                         <h6>Mã giảm giá của bạn</h6>
+                                        <span id="voucher_order"></span>
                                     </div>
-                                    <div class="cart-dropdown" style="width: 15%; text-align: center;">
-                                    </div>
+                                    <!-- <div class="cart-dropdown" style="width: 15%; text-align: center;">
+                                    </div> -->
                                 </div>
                             </div>
 
@@ -396,36 +397,41 @@
         const apiUrl = `http://localhost:8080/order/orderDetail/${orderId}`;
 
         async function updateOrder(orderId) {
-            // Lấy thông tin từ giao diện
-            const recipientName = document.getElementById('recipient-name').value;
-            const recipientPhone = document.getElementById('phone-number').value;
-            const recipientAddress = document.getElementById('address').value;
-            var paymentMethod = document.getElementById('payment-method-id').value;
-            const description = document.getElementById('description').value;
+            const paymentMethod = document.getElementById('payment-method-id').innerText;
+            const stord = document.getElementById("statusOrd").innerText;
+            const stPi = document.getElementById("staPai").innerText;
             var payment = "";
-
             if (paymentMethod == "Thanh toán khi nhận hàng") {
                 payment = "CASH_ON_DELIVERY";
             }
             else {
                 payment = "CREDIT_CARD";
             }
-            // Lấy danh sách các sản phẩm từ bảng
+            if(payment == "CREDIT_CARD" || stord != "Chờ xử lý" || stPi == "Đã thanh toán")
+            {
+                alert("Đơn hàng đã tạo thành công hoặc bạn đã thanh toán");
+                return;
+            }
+            // Lấy thông tin từ giao diện
+            const recipientName = document.getElementById('recipient-name').value;
+            const recipientPhone = document.getElementById('phone-number').value;
+            const recipientAddress = document.getElementById('address').value;
+            const description = document.getElementById('description').value;
+            const tableBody = document.getElementById("cart-table-body");
+            const rows = tableBody.querySelectorAll("tr");
             const orderItems = [];
-            const quantityElements = document.querySelectorAll('.form-control.text-center');
-            quantityElements.forEach((element) => {
-                const variantId = element.id.split('-')[1];
-                const quantity = parseInt(element.value, 10);
-                if (variantId && quantity > 0) {
-                    orderItems.push({
-                        productVariantId: parseInt(variantId, 10),
-                        quantity: quantity,
-                    });
-                }
+            rows.forEach((row) => {
+                const productVariantId = row.getAttribute("data-product-variant-id");
+                const quantityInput = document.getElementById("quantity_value_" + productVariantId).innerHTML;
+                orderItems.push({
+                    productVariantId: parseInt(productVariantId, 10), // Chuyển thành số nguyên
+                    quantity: parseInt(quantityInput, 10),
+                });
             });
+
+
             // Tạo payload để gửi tới API
-            const payload = {
-                code: document.getElementById('status-dropdown')?.value || null,
+            var payload = {
                 paymentMethod: payment,
                 recipientName: recipientName,
                 recipientPhone: recipientPhone,
@@ -433,14 +439,18 @@
                 description: description,
                 orderItems: orderItems,
             };
-
+            if(document.getElementById("value_voucher"))
+            {
+                payload.code = document.getElementById("value_voucher").innerText;
+            }
+            
             try {
                 // Gửi dữ liệu tới API
                 const response = await fetch(`http://localhost:8080/order/updateOrder/${orderId}`, {
                     method: 'PUT',
                     headers: {
                         'Content-Type': 'application/json',
-                        'Authorization': `Bearer ${TOKEN}`, // Thêm token nếu cần
+                        'Authorization': `Bearer ${TOKEN}`,
                     },
                     body: JSON.stringify(payload),
                 });
@@ -466,65 +476,6 @@
                 alert('Không tìm thấy ID đơn hàng!');
             }
         });
-
-        //status-dropdown
-        function loadVoucherCodes(userId, defVoucher) {
-            const apiUrl = `http://localhost:8080/voucher/listVoucherArchive/${userId}`;
-
-            fetch(apiUrl)
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error(`HTTP error! status: ${response.status}`);
-                    }
-                    return response.json();
-                })
-                .then(data => {
-                    // Kiểm tra nếu API trả về dữ liệu hợp lệ
-                    if (data.code === 200 && Array.isArray(data.result)) {
-                        const dropdownContainer = document.querySelector(".cart-dropdown");
-
-                        // Xóa nội dung cũ trong container (nếu có)
-                        dropdownContainer.innerHTML = '';
-
-                        // Tạo phần tử <select>
-                        const select = document.createElement("select");
-                        select.id = "status-dropdown";
-                        select.className = "form-control";
-
-                        // Thêm một option mặc định
-                        if (defVoucher != null) {
-                            const defaultOption = document.createElement("option");
-                            defaultOption.value = defVoucher;
-                            defaultOption.textContent = defVoucher;
-                            select.appendChild(defaultOption);
-                        }
-                        else {
-                            const defaultOption = document.createElement("option");
-                            defaultOption.value = "";
-                            defaultOption.textContent = "Chọn mã giảm giá";
-                            select.appendChild(defaultOption);
-                        }
-
-                        // Thêm các mã voucher từ dữ liệu API
-                        data.result.forEach(voucher => {
-                            if (voucher.code != defVoucher) {
-                                const option = document.createElement("option");
-                                option.value = voucher.code;
-                                option.textContent = `${voucher.code}`;
-                                select.appendChild(option);
-                            }
-                        });
-
-                        // Gắn <select> vào container
-                        dropdownContainer.appendChild(select);
-                    } else {
-                        console.error("Dữ liệu trả về không hợp lệ hoặc không có mã voucher.");
-                    }
-                })
-                .catch(error => {
-                    console.error("Lỗi khi lấy dữ liệu từ API:", error);
-                });
-        }
 
         document.addEventListener('DOMContentLoaded', async () => {
             const userId_2 = localStorage.getItem("userId");
@@ -603,109 +554,74 @@
             document.getElementById('recipient-name').value = order.recipientName || '';
             document.getElementById('phone-number').value = order.recipientPhone || '';
             document.getElementById('address').value = order.recipientAddress || '';
-            var bt_xoa = document.getElementById('btn-xoa');
+            const vou = document.getElementById('voucher_order');
+            if (order.code != undefined && order.code != null) {
+                vou.innerHTML = `<span id="value_voucher" class="badge bg-success">${order.code}</span>`;
+            }
+            else {
+                vou.innerHTML = '';
+            }
             if (order.description != null) {
                 document.getElementById("description").value = order.description;
             }
-            if (order.status == "PENDING") {
-                monitorChangesAndToggleUpdateButton(order.status);
+            if (order.paymentStatus == "PAID" & order.status != "PENDING") {
+                fielReadonly();
             }
-            // setAttribute('readonly', true);
             let statusHtml = "";
             switch (order.status) {
                 case 'SHIPPED':
-                    statusHtml = '<div class="badge bg-warning text-dark">Đang ship</div>';
-                    document.getElementById('recipient-name').setAttribute('readonly', true);
-                    document.getElementById('phone-number').setAttribute('readonly', true);
-                    document.getElementById('address').setAttribute('readonly', true);
-                    document.getElementById("description").setAttribute('readonly', true);
+                    statusHtml = '<div id="statusOrd" class="badge bg-warning text-dark">Đang ship</div>';
+                    fielReadonly();
                     break;
                 case 'PENDING':
-                    statusHtml = '<div class="badge bg-info text-dark">Chờ xử lý</div>';
+                    statusHtml = '<div id="statusOrd" class="badge bg-info text-dark">Chờ xử lý</div>';
                     break;
                 case 'DELIVERED':
-                    statusHtml = '<div class="badge bg-success text-light">Đã giao</div>';
-                    document.getElementById('recipient-name').setAttribute('readonly', true);
-                    document.getElementById('phone-number').setAttribute('readonly', true);
-                    document.getElementById('address').setAttribute('readonly', true);
-                    document.getElementById("description").setAttribute('readonly', true);
+                    statusHtml = '<div id="statusOrd" class="badge bg-success text-light">Đã giao</div>';
+                    fielReadonly();
                     break;
                 default:
-                    statusHtml = `<div class="badge bg-secondary text-light">${order.status}</div>`;
+                    statusHtml = `<div id="statusOrd" class="badge bg-secondary text-light">${order.status}</div>`;
             }
             document.getElementById('status-order').innerHTML = statusHtml;
-            // Render bảng sản phẩm và tổng tiền
-            loadVoucherCodes(userId, order.code);
+            let statusPaid = "";
+            switch (order.paymentStatus) {
+                case 'PAID':
+                    statusPaid = '<div id="staPai" class="badge bg-success text-light">Đã thanh toán</div>';
+                    fielReadonly();
+                    break;
+                case 'UNPAID':
+                    statusPaid = '<div id="staPai" class="badge bg-warning text-dark">Chưa thanh toán</div>';
+                    break;
+                default:
+                    statusPaid = `<div class="badge bg-secondary text-light">${order.paymentStatus}</div>`;
+            }
+            document.getElementById('status-paid-order').innerHTML = statusPaid;
             renderCartTable(order);
             renderCartSummary(order);
             if (order.paymentMethod == "CASH_ON_DELIVERY") {
                 document.getElementById('payment-method').innerHTML = '<div class="badge bg-primary text-light" id="payment-method-id">Thanh toán khi nhận hàng</div>';
             }
             else {
-                document.getElementById('payment-method').innerHTML = '<div class="badge bg-success text-light id="payment-method-id">Thanh toán online</div>';
+                document.getElementById('payment-method').innerHTML = '<div class="badge bg-success text-light" id="payment-method-id">Thanh toán online</div>';
             }
         }
 
-        function monitorChangesAndToggleUpdateButton(status) {
-            // Lấy các trường input, dropdown và nút cập nhật
-            const recipientName = document.getElementById('recipient-name');
-            const phoneNumber = document.getElementById('phone-number');
-            const address = document.getElementById('address');
-            const description = document.getElementById('description');
-            const discountCode = document.getElementById('status-dropdown');
-            const updateButton = document.getElementById('update-order-btn');
-
-            // Thêm trường số lượng
-            const quantityFields = document.querySelectorAll('.form-control.text-center');
-            // Lưu giá trị ban đầu
-            let originalData = {
-                recipientName: recipientName.value,
-                phoneNumber: phoneNumber.value,
-                address: address.value,
-                description: description.value,
-                discountCode: discountCode ? discountCode.value : "",
-                quantities: Array.from(quantityFields).map(input => input.value)
-            };
-
-            // Hàm kiểm tra sự thay đổi
-            function checkChanges() {
-                const hasChanges = recipientName.value !== originalData.recipientName ||
-                    phoneNumber.value !== originalData.phoneNumber ||
-                    address.value !== originalData.address ||
-                    description.value !== originalData.description ||
-                    (discountCode && discountCode.value !== originalData.discountCode) ||
-                    Array.from(quantityFields).some((input, index) => input.value !== originalData.quantities[index]);
-                // Nếu có thay đổi, bật nút cập nhật
-                if (hasChanges) {
-                    updateButton.classList.remove('disabled');
-                } else {
-                    updateButton.classList.add('disabled');
-                }
-            }
-
-            // Lắng nghe sự thay đổi trong các trường nhập liệu và dropdown
-            recipientName.addEventListener('input', checkChanges);
-            phoneNumber.addEventListener('input', checkChanges);
-            address.addEventListener('input', checkChanges);
-            description.addEventListener('input', checkChanges);
-            if (discountCode) {
-                discountCode.addEventListener('change', checkChanges); // Sự kiện cho dropdown discountCode
-            }
-            // Lắng nghe sự thay đổi trong các trường số lượng
-            quantityFields.forEach((input) => {
-                input.addEventListener('input', checkChanges);
-            });
+        function fielReadonly() {
+            document.getElementById('recipient-name').setAttribute('readonly', true);
+            document.getElementById('phone-number').setAttribute('readonly', true);
+            document.getElementById('address').setAttribute('readonly', true);
+            document.getElementById("description").setAttribute('readonly', true);
         }
-
 
         function renderCartTable(order) {
             const tableBody = document.getElementById('cart-table-body');
-            tableBody.innerHTML = ''; // Xóa nội dung cũ
+            tableBody.innerHTML = ''; 
 
             order.orderItems.forEach((item) => {
                 const row = document.createElement('tr');
+                row.setAttribute("data-product-variant-id", item.productVariantId);
 
-                // Tạo phần HTML cho mỗi hàng
                 row.innerHTML = `
             <td class="pro-thumbnail">
                 <img class="img-fluid" src="http://localhost:8080/images/product/${item.image}" alt="${item.productName}">
@@ -716,42 +632,14 @@
             </td>
             <td class="pro-price">${item.price.toLocaleString()} VNĐ</td>
             <td class="pro-quantity" style="padding-left:5px">
-                <div class="input-group input-group-sm">
-                    <span class="input-group-text up-arrow" role="button" onclick="changeQuantity('${item.productVariantId}', -1)">
-                        <i class="bi bi-chevron-down"></i>
-                    </span>
-                    <input type="number" class="form-control text-center" id="quantity-${item.productVariantId}" style="padding:1px; padding-left:12px" value="${item.quantity}" readonly>
-                    <span class="input-group-text down-arrow" role="button" onclick="changeQuantity('${item.productVariantId}', 1)">
-                        <i class="bi bi-chevron-up"></i>
-                    </span>
-                </div>
+                <div id="quantity_value_${item.productVariantId}">${item.quantity}</div>
             </td>
             <td class="pro-subtotal">${(item.price * item.quantity).toLocaleString()} VNĐ</td>
-            <td class="pro-remove">
-                <button id="btn-xoa" class="btn btn-danger btn-sm" onclick="removeItem('${item.productVariantId}')">Xóa</button>
-            </td>
         `;
                 tableBody.appendChild(row);
             });
         }
-        // Hàm thay đổi số lượng
-        function changeQuantity(variantId, change) {
-            const quantityElement = document.getElementById(`quantity-${variantId}`);
-            let currentQuantity = parseInt(quantityElement.value);
-            const updateButton = document.getElementById('update-order-btn');
-            // Kiểm tra nếu số lượng hợp lệ trước khi thay đổi (không giảm xuống dưới 1)
-            if (currentQuantity + change >= 1) {
-                currentQuantity += change;
-                quantityElement.value = currentQuantity;
-
-                // Cập nhật lại tổng tiền subtotal nếu cần
-                const row = quantityElement.closest('tr');
-                const price = parseFloat(row.querySelector('.pro-price').textContent.replace(' VNĐ', '').replace(',', ''));
-                row.querySelector('.pro-subtotal').textContent = (price * currentQuantity).toLocaleString() + " VNĐ";
-            }
-            updateButton.classList.remove('disabled');
-        }
-
+        
         function renderCartSummary(orderData) {
             const subTotal = orderData.totalPrice;
             var voucherDiscount = orderData.discount_voucher;
@@ -771,26 +659,6 @@
             document.getElementById('cart-vat').textContent = `${vat.toLocaleString()} VNĐ`;
             document.getElementById('cart-shipping').textContent = `${shippingFee.toLocaleString()} VNĐ`;
             document.getElementById('cart-total-amount').textContent = `${total.toLocaleString()} VNĐ`;
-        }
-
-        function removeItem(productVariantId) {
-            const row = document.querySelector(`#cart-table-body tr`);
-            const rowIndex = Array.from(row.parentNode.children).indexOf(row);
-            const updateButton = document.getElementById('update-order-btn');
-
-            // Kiểm tra xem sản phẩm đã bị xóa còn lại hay không
-            const remainingRows = document.querySelectorAll('#cart-table-body tr');
-            if (remainingRows.length === 1) {
-                // Hiển thị thông báo nếu không còn sản phẩm trong giỏ hàng
-                const confirmation = confirm("Bạn muốn xóa đơn hàng?");
-                if (!confirmation) {
-                    return;
-                } else {
-                    // TODO
-                }
-            }
-            row.remove();
-            updateButton.classList.remove('disabled');
         }
         // Bắt đầu xử lý mini card
         function renderMiniCart(cartItems, summary) {
