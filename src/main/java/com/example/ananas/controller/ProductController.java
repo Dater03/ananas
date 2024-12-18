@@ -153,4 +153,14 @@ public class ProductController {
     public ResponseEntity<Integer> getSumOfProduct(@RequestParam(name = "productId") int productId, @RequestParam(name = "color") String color, @RequestParam(name = "size") int size) throws IdException{
         return ResponseEntity.ok(productService.getNumberOfProductBySizeAndColor(productId,color, size));
     }
+
+    @GetMapping("chart/product/sum")
+    public List<Map<String, Object>> getSumOfProductAdmin(){
+        return productService.getProductNameAndStock();
+    }
+
+    @GetMapping("/product/chart")
+    public List<Map<String, Object>> getChartProduct(){
+        return productService.getMonthlyStatisticsForCurrentYear();
+    }
 }

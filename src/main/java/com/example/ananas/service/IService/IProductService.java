@@ -13,6 +13,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 
 public interface IProductService {
     ProductResponse createProduct(ProductCreateRequest productCreateRequest);
@@ -48,4 +50,8 @@ public interface IProductService {
     Double getMinPrice();
 
     int getNumberOfProductBySizeAndColor(int productId, String color, int size);
+
+    List<Map<String, Object>> getProductNameAndStock();
+
+    List<Map<String, Object>> getMonthlyStatisticsForCurrentYear();
 }

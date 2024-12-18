@@ -30,8 +30,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 @Service
 @RequiredArgsConstructor
@@ -228,6 +227,46 @@ public class ProductService implements IProductService {
     @Override
     public int getNumberOfProductBySizeAndColor(int productId, String color, int size ) {
         return this.productVariantRepository.getSumOfProduct(productId, color, size);
+    }
+
+    @Override
+    public List<Map<String, Object>> getProductNameAndStock() {
+        List<Object[]> results = productRepository.getProductNameAndStock();
+
+        //Map<String, Object> productData = new HashMap<>();
+
+//        if (results != null && !results.isEmpty()) {
+//            Object[] row = results.get(0); // Unwrap the first result
+//            productData.put("product_name", row[0]);
+//            productData.put("total_stock", ((Number) row[1]).intValue());
+//        } else {
+//            productData.put("error", "No data found");
+//        }
+//        return productData;
+
+        List<Map<String, Object>> productList = new ArrayList<>();
+
+        for (Object[] row : results) {
+            Map<String, Object> productData = new HashMap<>();
+            productData.put("category_name", row[0]); // Product Name
+            productData.put("total_stock", ((Number) row[1]).intValue()); // Total Stock
+            productList.add(productData);
+        }
+        return productList;
+    }
+
+    @Override
+    public List<Map<String, Object>> getMonthlyStatisticsForCurrentYear() {
+        List<Object[]> results = productRepository.findMonthlyStatisticsForCurrentYear();
+        List<Map<String, Object>> monthlyStatistics = new ArrayList<>();
+        for (Object[] row : results) {
+            Map<String, Object> productData = new HashMap<>();
+            productData.put("month", row[0]);
+            productData.put("totalStock", ((Number) row[1]).intValue());
+            productData.put("totalSold", ((Number) row[2]).intValue());
+            monthlyStatistics.add(productData);
+        }
+        return monthlyStatistics;
     }
 
 }

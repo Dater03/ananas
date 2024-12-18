@@ -39,4 +39,5 @@ public interface ProductVariant_Repository extends JpaRepository<ProductVariant,
             "FROM ananas.product_variant o " +
             "WHERE o.product_id = :product_id AND o.color = :color AND o.size = :size", nativeQuery = true)
     int getSumOfProduct(@Param("product_id") int product_id, @Param("color") String color, @Param("size") int size);
+
 }
