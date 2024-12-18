@@ -195,9 +195,13 @@
                                     <div style="align-content: center; padding-right: 10px;">
                                         <h6>Mã giảm giá của bạn</h6>
                                     </div>
-                                    <div class="cart-dropdown" style="width: 15%; text-align: center;">
-                                    </div>
+
+                                    <select id="status-dropdown" class="nice-select">
+                                        <option value="">Chọn mã giảm giá</option>
+                                    </select>
+
                                 </div>
+                                <div class="btn btn-success" id="updateVoucher"> Cập nhật mã</div>
                             </div>
                         </div>
                     </div>
@@ -211,20 +215,20 @@
                                         <table class="table">
                                             <tr>
                                                 <td>Giá tạm tính:</td>
-                                                <td></td>
+                                                <td id="tempPrice"></td>
                                             </tr>
                                             <tr>
                                                 <td>Tổng giá đã giảm:</td>
-                                                <td></td>
+                                                <td id="discountPrice"></td>
                                             </tr>
                                             <tr class="total">
                                                 <td>Tổng giá:</td>
-                                                <td class="total-amount"></td>
+                                                <td class="total-amount" id="totalPrice"></td>
                                             </tr>
                                         </table>
                                     </div>
                                 </div>
-                                <button class="btn d-block" onclick="redirectToCheckout()">ĐẶT HÀNG</button>
+                                <a class="btn d-block" id="checkout">ĐẶT HÀNG</a>
                             </div>
                         </div>
                     </div>
@@ -340,12 +344,8 @@
     <script>
         const TOKEN = localStorage.getItem("token"); 
         const userId = localStorage.getItem("userId");
-
-        function redirectToCheckout() {
-
-            const selectedCode = document.getElementById('status-dropdown').value;
-            window.location.href = `checkout.html?code=${encodeURIComponent(selectedCode)}`;
-        }
+        var sum = 0;
+        var sale = 0;
 
         function loadVoucherCodes(userId) {
             const apiUrl = `http://localhost:8080/voucher/listVoucherArchive/${userId}`;
@@ -360,32 +360,44 @@
                 .then(data => {
                     // Kiểm tra nếu API trả về dữ liệu hợp lệ
                     if (data.code === 200 && Array.isArray(data.result)) {
-                        const dropdownContainer = document.querySelector(".cart-dropdown");
+                        // const dropdownContainer = document.querySelector(".cart-dropdown");
+                        console.log("successssssss")
 
-                        // Xóa nội dung cũ trong container (nếu có)
-                        dropdownContainer.innerHTML = '';
+                        // // Xóa nội dung cũ trong container (nếu có)
+                        // dropdownContainer.innerHTML = '';
 
-                        // Tạo phần tử <select>
-                        const select = document.createElement("select");
-                        select.id = "status-dropdown";
-                        select.className = "form-control";
+                        // // Tạo phần tử <select>
+                        // const select = document.createElement("select");
+                        // select.id = "status-dropdown";
+                        // select.className = "form-control";
 
-                        // Thêm một option mặc định
-                        const defaultOption = document.createElement("option");
-                        defaultOption.value = "";
-                        defaultOption.textContent = "Chọn mã giảm giá";
-                        select.appendChild(defaultOption);
+                        // // Thêm một option mặc định
+                        // const defaultOption = document.createElement("option");
+                        // defaultOption.value = "";
+                        // defaultOption.textContent = "Chọn mã giảm giá";
+                        // select.appendChild(defaultOption);
 
                         // Thêm các mã voucher từ dữ liệu API
+
                         data.result.forEach(voucher => {
-                            const option = document.createElement("option");
-                            option.value = voucher.code;
-                            option.textContent = `${voucher.code}`;
-                            select.appendChild(option);
+                            // const option = document.createElement("option");
+                            // option.value = voucher.code;
+                            // option.textContent = `${voucher.code}`;
+                            // select.appendChild(option);
+                            const option = `<option value="${voucher.code}">${voucher.code}</option> `;
+                            $('#status-dropdown').append(option);
+                            // Làm mới Nice Select
+                            $('#status-dropdown').niceSelect('update');
+
+                            // Kích hoạt sự kiện change nếu cần
+                            $('#status-dropdown').trigger("change");
+                            console.log("+1")
                         });
 
                         // Gắn <select> vào container
-                        dropdownContainer.appendChild(select);
+                        // dropdownContainer.appendChild(select);
+                        // $('#status-dropdown').niceSelect('update');
+
                     } else {
                         console.error("Dữ liệu trả về không hợp lệ hoặc không có mã voucher.");
                     }
@@ -403,9 +415,21 @@
             function formatPrice(price) {
                 return `${price.toFixed(2)} VND`;
             }
+            $('#updateVoucher').on("click", function (even) {
+                event.preventDefault();
+                var selectedValue = $("#status-dropdown").val();
+                alert("Bạn đã chọn: " + selectedValue);
+                loadCartItems();
+
+            })
+
 
             // Hàm load cart items
             function loadCartItems() {
+                sum = 0; // Đặt lại sum về 0 mỗi lần loadCartItems được gọi
+                sale = 0; // Reset sale nếu cần
+                var selectedValue = $("#status-dropdown").val();
+                console.log(selectedValue)
                 loadVoucherCodes(userId);
                 $.ajax({
                     url: apiUrl,
@@ -417,9 +441,13 @@
                         if (response.code === 200) {
                             const items = response.result; // Lấy danh sách items từ API
                             const $cartItems = $('#cart-items'); // Vị trí để render
+                            const $total = $('#totalPrice');
+                            const $temp = $('#tempPrice');
 
                             // Xóa nội dung cũ (nếu có)
                             $cartItems.empty();
+                            $temp.empty();
+                            $total.empty();
 
                             // Duyệt qua từng item và tạo HTML
                             items.forEach((item) => {
@@ -428,35 +456,64 @@
                                 const price = product.price || 0; // Sử dụng giá mặc định nếu không có `product.price`
                                 const variantId = product.variantId; // Lấy variantId để dùng khi xóa
 
+                                // Cộng giá tiền của item vào tổng sum
+                                sum += price * quantity;
+
                                 // Tạo dòng mới
                                 const row = `
-                        <tr>
-                            <td class="pro-thumbnail">
-                                <a href="#"><img class="img-fluid" src="http://localhost:8080/images/product/${product.images[0]}" alt="${product.productName}" /></a>
-                            </td>
-                            <td class="pro-title">
-                                <a href="#">${product.productName}</a>
-                            </td>
-                            <td class="pro-price">
-                                <span>${formatPrice(price)}</span>
-                            </td>
-                            <td class="pro-quantity">
-                                <div class="pro-qty"><p>${quantity}</p></div>
-                            </td>
-                            <td class="pro-subtotal">
-                                <span>${formatPrice(price * quantity)}</span>
-                            </td>
-                            <td class="pro-remove">
-                                <a href="#" class="remove-item" data-variant-id="${variantId}">
-                                    <i class="fa fa-trash-o"></i>
-                                </a>
-                            </td>
-                        </tr>
-                    `;
+                                        <tr>
+                                            <td class="pro-thumbnail">
+                                                <a href="#"><img class="img-fluid" src="http://localhost:8080/images/product/${product.images[0]}" alt="${product.productName}" /></a>
+                                            </td>
+                                            <td class="pro-title">
+                                                <a href="#">${product.productName}</a>
+                                            </td>
+                                            <td class="pro-price">
+                                                <span>${formatPrice(price)}</span>
+                                            </td>
+                                            <td class="pro-quantity">
+                                                <div class="pro-qty"><p>${quantity}</p></div>
+                                            </td>
+                                            <td class="pro-subtotal">
+                                                <span>${formatPrice(price * quantity)}</span>
+                                            </td>
+                                            <td class="pro-remove">
+                                                <a href="#" class="remove-item" data-variant-id="${variantId}">
+                                                    <i class="fa fa-trash-o"></i>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    `;
 
                                 // Thêm vào bảng
                                 $cartItems.append(row);
                             });
+
+                            // Cập nhật tổng giá
+                            console.log("sum:", sum);
+                            $temp.append(`${formatPrice(sum)} VND`);
+
+                            $.ajax({
+                                url: `http://localhost:8080/voucher/getSumDiscount`,
+                                type: `GET`,
+                                data: { code: selectedValue, price: sum },
+                                headers: {
+                                    'Authorization': TOKEN // Thêm token vào header
+                                },
+                                success: function (response) {
+                                    sale = response.result
+                                    $('#discountPrice').empty();
+                                    $('#discountPrice').append(sale);
+
+                                    $total.append(`${formatPrice(sum - sale)} VND`);
+                                },
+                                error: function (error) {
+                                    console.error('API call sumvoucher failed:', error);
+                                }
+                            })
+
+
+
                         } else {
                             console.error('Error fetching cart items:', response.message);
                         }
@@ -465,7 +522,9 @@
                         console.error('API call failed:', error);
                     }
                 });
+
             }
+
 
             // Hàm xóa item
             function removeCartItem(variantId) {
@@ -478,6 +537,7 @@
                     },
                     success: function (response) {
                         if (response === "success") {
+
                             alert('Xóa sản phẩm thành công!');
                             loadCartItems(); // Reload danh sách cart sau khi xóa
                         } else {
@@ -506,6 +566,7 @@
 
 
         document.addEventListener("DOMContentLoaded", async () => {
+
 
             // Nếu có token, gọi API lấy số lượng sản phẩm trong giỏ hàng
             if (TOKEN !== null && TOKEN !== undefined) {
@@ -551,39 +612,39 @@
                 const quantity = item.quantity;
                 console.log(product.price);
                 const cartItemHTML = `
-            <li class="minicart-item">
-                <div class="minicart-thumb">
-                    <a href="product-details.html?id=${product.productId}">
-                        <img src="http://localhost:8080/images/product/${product.images[0]}" alt="${product.productName}">
-                    </a>
-                </div>
-                <div class="minicart-content">
-                    <h3 class="product-name" style="padding: 0px;">
-                        <a href="product-details.html?id=${product.productId}">${product.productName}</a>
-                    </h3>
-                    <p>
-                        <span class="cart-quantity">${quantity} <strong>&times;</strong></span>
-                        <span class="cart-price">${(product.price).toLocaleString()} VNĐ</span>
-                    </p>
-                    <p>
-                        <span class="product-name">Màu sắc: ${product.color}</span><br>
-                        <span class="product-name">Kích thước: ${product.size}</span>
-                    </p>
-                </div>
-                <button class="minicart-remove" data-variant-id="${product.variantId}">
-                    <i class="ion-android-close"></i>
-                </button>
-            </li>
-        `;
+                        <li class="minicart-item">
+                            <div class="minicart-thumb">
+                                <a href="product-details.html?id=${product.productId}">
+                                    <img src="http://localhost:8080/images/product/${product.images[0]}" alt="${product.productName}">
+                                </a>
+                            </div>
+                            <div class="minicart-content">
+                                <h3 class="product-name" style="padding: 0px;">
+                                    <a href="product-details.html?id=${product.productId}">${product.productName}</a>
+                                </h3>
+                                <p>
+                                    <span class="cart-quantity">${quantity} <strong>&times;</strong></span>
+                                    <span class="cart-price">${(product.price).toLocaleString()} VNĐ</span>
+                                </p>
+                                <p>
+                                    <span class="product-name">Màu sắc: ${product.color}</span><br>
+                                    <span class="product-name">Kích thước: ${product.size}</span>
+                                </p>
+                            </div>
+                            <button class="minicart-remove" data-variant-id="${product.variantId}">
+                                <i class="ion-android-close"></i>
+                            </button>
+                        </li>
+                    `;
                 cartWrapper.innerHTML += cartItemHTML;
             });
             document.getElementById('cart-quantity').innerText = summary.totalQuantity;
             // Render tổng giá trị
             pricingBox.innerHTML += `
-        <li><span>Tổng giá trước thuế</span><span><strong>${summary.totalPrice.toLocaleString()} VNĐ</strong></span></li>
-        <li><span>VAT (10%)</span><span><strong>${(summary.totalPrice * 0.1).toLocaleString()} VNĐ</strong></span></li>
-        <li class="total"><span>Tổng giá sau thuế</span><span><strong>${(summary.totalPrice * 1.1).toLocaleString()} VNĐ</strong></span></li>
-    `;
+                <li><span>Tổng giá trước thuế</span><span><strong>${summary.totalPrice.toLocaleString()} VNĐ</strong></span></li>
+                <li><span>VAT (10%)</span><span><strong>${(summary.totalPrice * 0.1).toLocaleString()} VNĐ</strong></span></li>
+                <li class="total"><span>Tổng giá sau thuế</span><span><strong>${(summary.totalPrice * 1.1).toLocaleString()} VNĐ</strong></span></li>
+                `;
         }
 
         // Hàm lấy dữ liệu sản phẩm trong giỏ hàng
@@ -760,6 +821,17 @@
                 console.error('Error fetching cart quantity:', error);
             }
         });
+        $("#checkout").on("click", function (event) {
+            // Ngăn chặn hành vi mặc định
+            event.preventDefault();
+
+            var selectedValue = $("#status-dropdown").val();
+
+            // Thực hiện hành động nhảy đến đường link
+            window.location.href = "checkout.html?code=" + selectedValue;
+        });
+
+
     </script>
     <!--=======================Javascript============================-->
     <!--=== All Vendor Js ===-->
