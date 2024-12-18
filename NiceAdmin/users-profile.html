@@ -93,34 +93,6 @@
                 <p>1 giờ trước</p>
               </div>
             </li>
-
-            <li><hr class="dropdown-divider"></li>
-
-            <li class="notification-item">
-              <i class="bi bi-check-circle text-success"></i>
-              <div>
-                <h4>Đơn hàng đã giao</h4>
-                <p>Đơn hàng #67890 đã được giao thành công</p>
-                <p>2 giờ trước</p>
-              </div>
-            </li>
-
-            <li><hr class="dropdown-divider"></li>
-
-            <li class="notification-item">
-              <i class="bi bi-x-circle text-danger"></i>
-              <div>
-                <h4>Đơn hàng bị hủy</h4>
-                <p>Đơn hàng #98765 đã bị hủy</p>
-                <p>4 giờ trước</p>
-              </div>
-            </li>
-
-            <li><hr class="dropdown-divider"></li>
-
-            <li class="dropdown-footer">
-              <a href="#">Hiển thị tất cả thông báo</a>
-            </li>
           </ul><!-- End Notification Dropdown Items -->
 
         </li><!-- End Notification Nav -->
@@ -129,44 +101,33 @@
         <li class="nav-item dropdown">
           <a class="nav-link nav-icon" href="#" data-bs-toggle="dropdown">
             <i class="bi bi-chat-left-text"></i>
-            <span class="badge bg-success badge-number">2</span>
+            <span class="badge bg-success badge-number" id="messageCount-2"></span>
           </a><!-- End Messages Icon -->
 
-          <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow messages">
+          <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow messages" id="messageList">
             <li class="dropdown-header">
-              Bạn có 2 tin nhắn mới
-              <a href="#"><span class="badge rounded-pill bg-primary p-2 ms-2">Xem tất cả</span></a>
+              Bạn có <span id="messageCount">0</span> tin nhắn mới
             </li>
             <li><hr class="dropdown-divider"></li>
-
-            <li class="message-item">
-              <a href="#">
-                <img src="assets/img/messages-3.jpg" alt class="rounded-circle">
-                <div>
-                  <h4>Đỗ Thành Đạt</h4>
-                  <p>Sản phẩm này có kích cỡ 42 không?</p>
-                  <p>2 giờ trước</p>
-                </div>
-              </a>
-            </li>
+            
+            <!-- Tin nhắn sẽ được load vào đây bằng JavaScript -->
+            
             <li><hr class="dropdown-divider"></li>
-
-            <li class="message-item">
-              <a href="#">
-                <img src="assets/img/messages-1.jpg" alt class="rounded-circle">
-                <div>
-                  <h4>Đỗ Thị Ling Ling</h4>
-                  <p>Tôi muốn đổi sản phẩm, quy trình như thế nào?</p>
-                  <p>4 giờ trước</p>
-                </div>
-              </a>
-            </li>
-            <li><hr class="dropdown-divider"></li>
-
-            <li class="dropdown-footer">
-              <a href="#">Hiển thị tất cả tin nhắn</a>
-            </li>
-          </ul><!-- End Messages Dropdown Items -->
+          </ul>
+          
+          <!-- Modal hiển thị chi tiết tin nhắn -->
+          <div id="messageModal" class="message-modal">
+            <div class="message-modal-content">
+              <span class="close-btn">&times;</span>
+              <img id="avatarMes" style="width: 25px;" src="assets/img/apple-touch-icon.png" alt=""><span id="usernameMess"> User</span>
+              <ul id="messageDetails"></ul>
+              <!-- Ô nhập tin nhắn và nút gửi -->
+              <div class="send-message-container">
+                <input type="text" id="messageInput" placeholder="Nhập tin nhắn..." />
+                <button id="sendMessageBtn">Gửi</button>
+              </div>
+            </div>
+          </div>
 
         </li><!-- End Messages Nav -->
 
@@ -191,8 +152,6 @@
               </a>
             </li>
             <li><hr class="dropdown-divider"></li>
-
-          
 
             <li>
               <a class="dropdown-item d-flex align-items-center" href="pages-login.html">
@@ -222,11 +181,11 @@
       <!-- Quản lý Sản phẩm -->
       <li class="nav-item">
         <a class="nav-link collapsed" data-bs-target="#products-nav" data-bs-toggle="collapse" href="#">
-          <i class="bi bi-box-seam"></i><span>Quản lý Giày</span><i class="bi bi-chevron-down ms-auto"></i>
+          <i class="bi bi-box-seam"></i><span>Quản Lý Sản Phẩm</span><i class="bi bi-chevron-down ms-auto"></i>
         </a>
         <ul id="products-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
-          <li><a href="add-shoe.html"><i class="bi bi-plus-circle"></i><span>Thêm Giày mới</span></a></li>
-          <li><a href="list-shoes.html"><i class="bi bi-list-ul"></i><span>Danh sách Giày</span></a></li>
+          <li><a href="add-shoe.html"><i class="bi bi-plus-circle"></i><span>Sản Phẩm</span></a></li>
+          <li><a href="list-shoes.html"><i class="bi bi-list-ul"></i><span>Danh Mục Sản Phẩm</span></a></li>
           <!-- <li><a href="edit-shoe.html"><i class="bi bi-pencil-square"></i><span>Cập nhật Giày</span></a></li> -->
           <!-- <li><a href="shoe-inventory.html"><i class="bi bi-box"></i><span>Quản lý Tồn kho</span></a></li> -->
         </ul>
@@ -239,7 +198,7 @@
         </a>
         <ul id="orders-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
           <li><a href="new-order.html"><i class="bi bi-plus-square"></i><span>Theo dõi đơn hàng</span></a></li>
-        
+
         </ul>
       </li><!-- End Orders Nav -->
   
@@ -267,122 +226,61 @@
   
       <!-- Quản lý Khuyến mãi -->
       <li class="nav-item">
-        <a class="nav-link collapsed" data-bs-target="#promo-nav" data-bs-toggle="collapse" href="#">
-          <i class="bi bi-gift"></i><span>Quản lý Khuyến mãi</span><i class="bi bi-chevron-down ms-auto"></i>
+        <a class="nav-link collapsed" href="add-promo.html">
+          <i class="bi bi-gift"></i><span>Quản lý Khuyến mãi</span>
         </a>
-        <ul id="promo-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
-          <li><a href="add-promo.html"><i class="bi bi-plus-circle"></i><span>Thêm Khuyến mãi</span></a></li>
-          <li><a href="list-promos.html"><i class="bi bi-list"></i><span>Danh sách Khuyến mãi</span></a></li>
-        </ul>
+
       </li><!-- End Promo Nav -->
-  
-  
     </ul>
   </aside><!-- End Sidebar -->
   
   <main id="main" class="main">
     <div class="container mt-5">
-      <h1 class="text-center mb-4">Thông Tin Cá Nhân</h1>
-
-      <!-- Thông tin cá nhân -->
-      <form id="personalInfoForm">
-          <div class="mb-3">
-              <label for="name" class="form-label">Họ Tên</label>
-              <input type="text" class="form-control" id="name" value="Nguyễn Văn A" disabled>
+      <div class="card">
+        <div class="card-header">
+          <h1 class="text-center text-dark">Thông Tin Cá Nhân</h1>
+        </div>
+        <div class="card-body">
+          <!-- Avatar -->
+          <div class="text-center mb-4">
+            <div class="avatar-container">
+                <img id="avatarPreview" src="" alt="Avatar" class="rounded-circle" style="width: 150px; height: 150px; object-fit: cover;">
+                <input type="file" id="avatarInput" style="display: none;" onchange="previewAvatar()">
+            </div>
+            <button type="button" class="btn btn-outline-primary mt-2" onclick="selectAvatar()">Chọn Ảnh</button>
+            <button type="button" class="btn btn-success btn-save-avatar mt-2" onclick="uploadAvatar()" style="display: none;">Lưu Avatar</button>
+            
           </div>
-          <div class="mb-3">
-              <label for="email" class="form-label">Email</label>
-              <input type="email" class="form-control" id="email" value="nguyenvana@gmail.com" disabled>
-          </div>
-          <div class="mb-3">
-              <label for="phone" class="form-label">Số Điện Thoại</label>
-              <input type="text" class="form-control" id="phone" value="0123456789" disabled>
-          </div>
-          <div class="mb-3">
-              <label for="address" class="form-label">Địa Chỉ</label>
-              <input type="text" class="form-control" id="address" value="123 Đường ABC, Quận 1, TP. Hồ Chí Minh" disabled>
-          </div>
-          <!-- Nút sửa và lưu thông tin cá nhân -->
-          <button type="button" class="btn btn-primary" id="editInfoBtn" onclick="enableEdit()">Sửa Thông Tin</button>
-          <button type="button" class="btn btn-success" id="saveInfoBtn" onclick="saveInfo()" style="display: none;">Lưu</button>
-          <button type="button" class="btn btn-secondary" id="cancelEditBtn" onclick="cancelEdit()" style="display: none;">Hủy</button>
-      </form>
-
-      <!-- Thay đổi mật khẩu -->
-      <h2 class="mt-5">Thay Đổi Mật Khẩu</h2>
-      <form id="changePasswordForm">
-          <div class="mb-3">
-              <label for="currentPassword" class="form-label">Mật Khẩu Hiện Tại</label>
-              <input type="password" class="form-control" id="currentPassword">
-          </div>
-          <div class="mb-3">
-              <label for="newPassword" class="form-label">Mật Khẩu Mới</label>
-              <input type="password" class="form-control" id="newPassword">
-          </div>
-          <div class="mb-3">
-              <label for="confirmPassword" class="form-label">Xác Nhận Mật Khẩu Mới</label>
-              <input type="password" class="form-control" id="confirmPassword">
-          </div>
-          <button type="button" class="btn btn-primary" onclick="changePassword()">Đổi Mật Khẩu</button>
-      </form>
+        
+          <form id="personalInfoForm">
+              <div class="mb-3">
+                  <label for="name" class="form-label">Họ Tên</label>
+                  <input type="text" class="form-control" id="name" value="" disabled>
+              </div>
+              <div class="mb-3">
+                  <label for="email" class="form-label">Email</label>
+                  <input type="email" class="form-control" id="email" value="" disabled>
+              </div>
+              <div class="mb-3">
+                  <label for="phone" class="form-label">Số Điện Thoại</label>
+                  <input type="text" class="form-control" id="phone" value="" disabled>
+              </div>
+              <div class="mb-3">
+                  <label for="address" class="form-label">Địa Chỉ</label>
+                  <input type="text" class="form-control" id="address" value="" disabled>
+              </div>
+              <button type="button" class="btn btn-primary" id="editInfoBtn" onclick="enableEdit()">Sửa Thông Tin</button>
+              <button type="button" class="btn btn-success" id="saveInfoBtn" onclick="saveInfo()" style="display: none;">Lưu</button>
+              <button type="button" class="btn btn-secondary" id="cancelEditBtn" onclick="cancelEdit()" style="display: none;">Hủy</button>
+          </form>
+        </div>
+      </div>
   </div>
+  
 
   <!-- Bootstrap JS và Popper -->
   <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
-
-  <!-- JavaScript quản lý thao tác -->
-  <script>
-      function enableEdit() {
-          // Bật chế độ chỉnh sửa cho các trường
-          document.querySelectorAll("#personalInfoForm input").forEach(input => input.disabled = false);
-          document.getElementById("editInfoBtn").style.display = "none";
-          document.getElementById("saveInfoBtn").style.display = "inline-block";
-          document.getElementById("cancelEditBtn").style.display = "inline-block";
-      }
-
-      function saveInfo() {
-          // Lưu thông tin sau khi chỉnh sửa
-          document.querySelectorAll("#personalInfoForm input").forEach(input => input.disabled = true);
-          document.getElementById("editInfoBtn").style.display = "inline-block";
-          document.getElementById("saveInfoBtn").style.display = "none";
-          document.getElementById("cancelEditBtn").style.display = "none";
-          alert("Thông tin đã được lưu thành công!");
-      }
-
-      function cancelEdit() {
-          // Hủy chỉnh sửa và đặt lại giá trị ban đầu
-          document.getElementById("name").value = "Nguyễn Văn A";
-          document.getElementById("email").value = "nguyenvana@gmail.com";
-          document.getElementById("phone").value = "0123456789";
-          document.getElementById("address").value = "123 Đường ABC, Quận 1, TP. Hồ Chí Minh";
-
-          document.querySelectorAll("#personalInfoForm input").forEach(input => input.disabled = true);
-          document.getElementById("editInfoBtn").style.display = "inline-block";
-          document.getElementById("saveInfoBtn").style.display = "none";
-          document.getElementById("cancelEditBtn").style.display = "none";
-      }
-
-      function changePassword() {
-          // Đổi mật khẩu nếu xác nhận đúng
-          const currentPassword = document.getElementById("currentPassword").value;
-          const newPassword = document.getElementById("newPassword").value;
-          const confirmPassword = document.getElementById("confirmPassword").value;
-
-          if (newPassword !== confirmPassword) {
-              alert("Mật khẩu mới và xác nhận mật khẩu không khớp.");
-              return;
-          }
-
-          if (currentPassword && newPassword && confirmPassword) {
-              alert("Mật khẩu đã được thay đổi thành công!");
-              document.getElementById("changePasswordForm").reset();
-          } else {
-              alert("Vui lòng nhập đầy đủ thông tin mật khẩu.");
-          }
-      }
-  </script>
-
   </main><!-- End #main -->
 
 
@@ -415,3 +313,498 @@
 </body>
 
 </html>
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+      const userId = localStorage.getItem("userId");
+      if (userId) {
+          fetchUserData(userId);
+      }
+  });
+
+  async function fetchUserData(id) {
+      try {
+          const response = await fetch(`http://localhost:8080/user/${id}`);
+          if (response.ok) {
+              const data = await response.json();
+              updateForm(data.result.result);
+              document.getElementById("avatarPreview").src = `http://localhost:8080/images/avatar/${data.result.result.avatar}` || "default-avatar.png";
+          } else {
+              console.error("Failed to fetch user data");
+          }
+      } catch (error) {
+          console.error("Error:", error);
+      }
+  }
+
+  function updateForm(user) {
+      document.getElementById("name").value = user.username;
+      document.getElementById("email").value = user.email;
+      document.getElementById("phone").value = user.phone;
+      document.getElementById("address").value = user.address;
+  }
+
+  function enableEdit() {
+      document.getElementById("phone").disabled = false;
+      document.getElementById("address").disabled = false;
+      document.getElementById("editInfoBtn").style.display = "none";
+      document.getElementById("saveInfoBtn").style.display = "inline-block";
+      document.getElementById("cancelEditBtn").style.display = "inline-block";
+  }
+
+  function disableEdit() {
+      document.getElementById("phone").disabled = true;
+      document.getElementById("address").disabled = true;
+      document.getElementById("editInfoBtn").style.display = "inline-block";
+      document.getElementById("saveInfoBtn").style.display = "none";
+      document.getElementById("cancelEditBtn").style.display = "none";
+  }
+
+  function cancelEdit() {
+      const userId = localStorage.getItem("userId");
+      if (userId) {
+          fetchUserData(userId);
+      }
+      disableEdit();
+  }
+
+  async function saveInfo() {
+      const userId = localStorage.getItem("userId");
+      const updatedUser = {
+          phone: document.getElementById("phone").value,
+          address: document.getElementById("address").value,
+          email: document.getElementById("email").value
+
+      };
+
+      try {
+          const response = await fetch(`http://localhost:8080/user/update/${userId}`, {
+              method: "PUT",
+              headers: {
+                  "Content-Type": "application/json"
+              },
+              body: JSON.stringify(updatedUser)
+          });
+
+          if (response.ok) {
+              alert("Thông tin đã được cập nhật thành công!");
+              disableEdit();
+          } else {
+              alert("Cập nhật thông tin thất bại!");
+          }
+      } catch (error) {
+          alert("Có lỗi xảy ra khi cập nhật thông tin!");
+      }
+  }
+
+  function selectAvatar() {
+      document.getElementById("avatarInput").click();
+  }
+
+  function previewAvatar() {
+      const fileInput = document.getElementById("avatarInput");
+      const file = fileInput.files[0];
+
+      if (file) {
+          const reader = new FileReader();
+          reader.onload = function (e) {
+              document.getElementById("avatarPreview").src = e.target.result;
+              document.querySelector(".btn-save-avatar").style.display = "inline-block";
+          };
+          reader.readAsDataURL(file);
+      }
+  }
+
+  async function uploadAvatar() {
+      const userId = localStorage.getItem("userId");
+      const fileInput = document.getElementById("avatarInput");
+      const file = fileInput.files[0];
+
+      if (!file) {
+          alert("Vui lòng chọn ảnh trước khi tải lên!");
+          return;
+      }
+
+      const formData = new FormData();
+      formData.append("avatar", file);
+
+      try {
+          const response = await fetch(`http://localhost:8080/user/photo/${userId}`, {
+              method: "PUT",
+              body: formData
+          });
+
+          if (response.ok) {
+              alert("Avatar đã được cập nhật thành công!");
+              document.querySelector(".btn-save-avatar").style.display = "none";
+          } else {
+              alert("Cập nhật avatar thất bại!");
+          }
+      } catch (error) {
+          alert("Có lỗi xảy ra khi cập nhật avatar!");
+      }
+  }
+
+
+  document.addEventListener("DOMContentLoaded", function () {
+    const receiverId = localStorage.getItem("userId");
+    const token = localStorage.getItem("token");
+    let currentSenderId = null;
+  
+    const messageList = document.getElementById("messageList");
+    const messageCount = document.getElementById("messageCount");
+    const messageCount_2 = document.getElementById("messageCount-2");
+    const messageModal = document.getElementById("messageModal");
+    const messageDetails = document.getElementById("messageDetails");
+    const messageInput = document.getElementById("messageInput");
+    const sendMessageBtn = document.getElementById("sendMessageBtn");
+  
+    async function fetchMessages() {
+      try {
+          const response = await fetch(`http://localhost:8080/message/latest?receiverId=${receiverId}`, {
+              headers: { Authorization: `Bearer ${token}` },
+          });
+  
+          if (!response.ok) {
+              throw new Error(`HTTP error! Status: ${response.status}`);
+          }
+  
+          const data = await response.json();
+          const messages = data.result;
+  
+          console.log("Messages:", messages);
+  
+          // Cập nhật số lượng tin nhắn
+          messageCount.innerText = messages.length;
+          messageCount_2.innerText = messages.length;
+  
+          // Xóa các tin nhắn cũ
+          messageList.querySelectorAll(".message-item").forEach((item) => item.remove());
+  
+          // Lặp qua từng tin nhắn
+          for (const message of messages) {
+              try {
+                  const userResponse = await fetch(`http://localhost:8080/user/${message.senderId}`, {
+                      method: "GET",
+                      headers: { 'Content-Type': 'application/json' },
+                  });
+  
+                  if (!userResponse.ok) {
+                      throw new Error(`HTTP error! Status: ${userResponse.status}`);
+                  }
+  
+                  const userData = await userResponse.json();
+                  const user = userData.result.result;
+
+                  // Cập nhật avatar và username cho modal
+                  const avatarMesElement = document.querySelector("#avatarMes");
+                  const usernameMesElement = document.querySelector("#usernameMess");
+
+                  if (avatarMesElement) {
+                      avatarMesElement.src = user.avatar
+                          ? `http://localhost:8080/images/avatar/${user.avatar}`
+                          : "assets/img/about/avatar.jpg";
+                  }
+
+                  if (usernameMesElement) {
+                      usernameMesElement.innerText = user.username || "Người dùng";
+                  }
+  
+                  const avt = user.avatar
+                      ? `http://localhost:8080/images/avatar/${user.avatar}`
+                      : "assets/img/messages-1.jpg";
+  
+                  const messageItem = document.createElement("li");
+                  messageItem.classList.add("message-item");
+                  messageItem.dataset.senderId = message.senderId;
+  
+                  messageItem.innerHTML = `
+                      <a href="#">
+                          <img src="${avt}" alt class="rounded-circle">
+                          <div>
+                              <h4>${message.senderId === receiverId ? "Bạn" : message.senderName}</h4>
+                              <p>${message.message}</p>
+                              <p>${formatTimeAgo2(message.createdAt)}</p>
+                          </div>
+                      </a>
+                  `;
+  
+                  // Thêm vào danh sách tin nhắn
+                  messageList.insertBefore(messageItem, messageList.querySelector(".dropdown-footer"));
+  
+                  // Thêm sự kiện click để lấy tin nhắn của người gửi
+                  messageItem.addEventListener("click", () => fetchMessagesFromSender(message.senderId));
+              } catch (innerError) {
+                  console.error("Lỗi khi lấy thông tin người dùng:", innerError);
+              }
+          }
+      } catch (error) {
+          console.error("Lỗi khi lấy danh sách tin nhắn:", error);
+      }
+  }
+  
+  
+    async function fetchMessagesFromSender(senderId) {
+      try {
+        // Lấy tin nhắn gửi đi
+        const responseSent = await fetch(
+          `http://localhost:8080/message/both?senderId=${receiverId}&receiverId=${senderId}`,
+          { headers: { Authorization: `Bearer ${token}` } }
+        );
+        const sentMessages = await responseSent.json();
+      
+        // Lấy tin nhắn nhận vào
+        const responseReceived = await fetch(
+          `http://localhost:8080/message/both2?receiverId=${receiverId}&senderId=${senderId}`,
+          { headers: { Authorization: `Bearer ${token}` } }
+        );
+        const receivedMessages = await responseReceived.json();
+      
+        // Kết hợp tin nhắn gửi và nhận
+        const messages = [
+          ...sentMessages.result.map((msg) => ({ ...msg, type: "sent" })),
+          ...receivedMessages.result.map((msg) => ({ ...msg, type: "received" })),
+        ];
+      
+        // Sắp xếp theo thời gian (cũ đến mới)
+        messages.sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt));
+      
+        // Hiển thị tin nhắn
+        currentSenderId = senderId;
+        messageDetails.innerHTML = messages
+          .map((msg) => {
+            const messageClass = msg.type === "sent" ? "sender-message" : "receiver-message";
+            return `
+              <li class="${messageClass}">
+                <div class="message-content">${msg.message}</div>
+                <small>${formatTimeAgo(msg.createdAt)}</small>
+              </li>`;
+          })
+          .join("");
+      
+        // Đảm bảo cuộn đến cuối modal khi mở
+        setTimeout(() => {
+          const lastMessage = messageDetails.lastElementChild;
+          if (lastMessage) {
+            lastMessage.scrollIntoView({ behavior: "smooth", block: "end" });
+          }
+        }, 100); // Đợi một chút để nội dung được render trước khi cuộn xuống
+      
+        openModal();
+      } catch (error) {
+        console.error("Lỗi khi lấy tin nhắn chi tiết:", error);
+      }
+    }
+    
+    function openModal() {
+      messageModal.style.display = "block";
+      // Đảm bảo cuộn đến cuối modal khi mở
+      setTimeout(() => {
+        const lastMessage = messageDetails.lastElementChild;
+        if (lastMessage) {
+          lastMessage.scrollIntoView({ behavior: "smooth", block: "end" });
+        }
+      }, 100); // Đợi một chút để nội dung được render trước khi cuộn xuống
+    }
+    
+  
+    async function sendMessage() {
+      const messageContent = messageInput.value.trim();
+      if (!messageContent || !currentSenderId) return;
+  
+      const messageData = {
+        senderId: receiverId,
+        receiverId: currentSenderId,
+        message: messageContent,
+      };
+  
+      try {
+        const response = await fetch("http://localhost:8080/message", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify(messageData),
+        });
+  
+        if (response.ok) {
+          const newMessage = await response.json();
+          messageDetails.insertAdjacentHTML(
+            "beforeend",
+            `<li class="receiver-message">
+              <div class="message-content">${newMessage.message}</div>
+              <small>${formatTimeAgo(newMessage.createdAt)}</small>
+            </li>`
+          );
+          messageInput.value = "";
+  
+          // Sau khi gửi tin nhắn, tái tải lại danh sách tin nhắn
+          fetchMessagesFromSender(currentSenderId); // Tải lại tin nhắn từ senderId hiện tại
+        }
+      } catch (error) {
+        console.error("Lỗi khi gửi tin nhắn:", error);
+      }
+    }
+  
+    function formatTimeAgo(dateString) {
+      const date = new Date(dateString);
+      const now = new Date();
+      const diff = Math.floor((now - date) / 1000);
+  
+      if (diff < 60) return `${diff} giây trước`;
+      if (diff < 3600) return `${Math.floor(diff / 60)} phút trước`;
+      if (diff < 86400) return `${Math.floor(diff / 3600)} giờ trước`;
+      return `${Math.floor(diff / 86400)} ngày trước`;
+    }
+  
+    function formatTimeAgo2(dateString) {
+      const date = new Date(dateString); // JavaScript hiểu tốt định dạng ISO 8601
+      date.setHours(date.getHours() + 7); // Cộng thêm 7 giờ để điều chỉnh sang UTC+7
+      const now = new Date();
+      const diff = Math.floor((now - date) / 1000); // Hiệu số thời gian tính bằng giây
+  
+      if (diff < 60) {
+        return `${diff} giây trước`;
+      }
+  
+      if (diff < 3600) {
+        const minutes = Math.round(diff / 60); // Làm tròn phút
+        return `${minutes} phút trước`;
+      }
+  
+      if (diff < 86400) {
+        const hours = Math.round(diff / 3600); // Làm tròn giờ
+        return `${hours} giờ trước`;
+      }
+  
+      return `${Math.floor(diff / 86400)} ngày trước`; // Nếu lớn hơn 1 ngày
+    }
+  
+    function openModal() {
+      messageModal.style.display = "block";
+    }
+  
+    function closeModal() {
+      messageModal.style.display = "none";
+    }
+  
+    document.querySelector(".close-btn").addEventListener("click", closeModal);
+    sendMessageBtn.addEventListener("click", sendMessage);
+  
+    fetchMessages();
+  });
+  
+</script>
+
+<style>
+  #messageList {
+    width: 300px; /* Cố định độ rộng của dropdown */
+    overflow-y: auto; /* Thêm thanh cuộn khi nội dung vượt quá chiều cao */
+  }
+  
+  #messageList .dropdown-header {
+    font-weight: bold;
+  }
+  
+  #messageList hr {
+    border: 0;
+    border-top: 1px solid #ddd;
+  }
+
+  
+  .message-modal {
+    display: none;
+    position: fixed;
+    top: 7%; 
+    left: 81%; 
+    transform: translateX(-50%); 
+    width: 310px;
+    max-height: 70%; 
+    overflow-y: auto; 
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+    box-sizing: border-box; 
+  }
+
+  
+  .message-modal .close-btn {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    font-size: 18px;
+    cursor: pointer;
+  }
+  
+  .message-modal ul {
+    list-style: none;
+    padding: 0;
+    max-height: 300px;
+    overflow-y: auto;
+  }
+  
+  .message-modal ul li {
+    padding: 10px 0;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  .sender-message, .receiver-message {
+    font-size: 10px;
+  }
+  
+  .sender-message {
+    text-align: right;
+  }
+  
+  .receiver-message {
+    text-align: left;
+  }
+  
+  .message-content {
+    display: inline-block;
+    max-width: 70%;
+    padding: 10px;
+    border-radius: 10px;
+    position: relative;
+  }
+  
+  .sender-message .message-content {
+    background-color: #f0f0f0;
+  }
+  
+  .receiver-message .message-content {
+    background-color: #d1e7ff;
+  }
+  
+  .message-modal-content {
+    padding: 20px;
+  }
+  
+  .send-message-container {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+  }
+  
+  #messageInput {
+    flex: 1;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  
+  #sendMessageBtn {
+    width: 35px;
+    font-size: 10px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  #sendMessageBtn:hover {
+    background-color: #0056b3;
+  }
+</style>
