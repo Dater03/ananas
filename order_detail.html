@@ -163,38 +163,54 @@
             <div class="container">
                 <div class="section-bg-color">
                     <div class="mb-3">
-                        <label for="exampleFormControlInput1" class="form-label">Thông tin người nhận</label>
+                        <label for="exampleFormControlInput1" class="form-label">
+                            <h6>Thông tin người nhận</h6>
+                        </label>
                         <div id="user-info" class="p-4 rounded border">
                             <div class="row mb-4">
                                 <!-- Cột đầu tiên: Tên người nhận -->
-                                <div class="col-lg-6 mb-3">
-                                    <label for="recipient-name" class="form-label">Người nhận</label>
+                                <div class="col-lg-4 mb-3">
+                                    <label for="recipient-name" class="form-label">
+                                        <h6>Người nhận</h6>
+                                    </label>
                                     <input type="text" class="form-control" id="recipient-name"
                                         placeholder="Nhập tên người nhận" required>
                                 </div>
                                 <!-- Cột thứ hai: Số điện thoại -->
-                                <div class="col-lg-6 mb-3">
-                                    <label for="phone-number" class="form-label">Số điện thoại</label>
+                                <div class="col-lg-4 mb-3">
+                                    <label for="phone-number" class="form-label">
+                                        <h6>Số điện thoại</h6>
+                                    </label>
                                     <input type="text" class="form-control" id="phone-number"
                                         placeholder="Nhập số điện thoại" required>
                                 </div>
-                            </div>
-                            <div class="row mb-4">
-                                <!-- Cột đầu tiên: Địa chỉ -->
-                                <div class="col-lg-6 mb-3">
-                                    <label for="address" class="form-label">Địa chỉ</label>
+                                <div class="col-lg-4 mb-3">
+                                    <label for="address" class="form-label">
+                                        <h6>Địa chỉ</h6>
+                                    </label>
                                     <input type="text" class="form-control" id="address" placeholder="Nhập địa chỉ"
                                         required>
                                 </div>
-                                <!-- Cột thứ hai: Phương thức thanh toán -->
-                                <div class="col-lg-6 mb-3">
-                                    <label for="payment-method" class="form-label">Phương thức thanh toán</label>
-                                    <div>
-                                        <input type="text" class="form-control" id="payment-method"
-                                            placeholder="Phương thức thanh toán" readonly>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-4">
+                                    <label for="" class="form-label">
+                                        <h6>Trạng thái</h6>
+                                    </label>
+                                    <div class="mb-4 rounded border p-3">
+                                        <p class="mb-4">Phương thức thanh toán: <span id="payment-method"></span></p>
+                                        <p>Trạng thái đơn hàng: <span id="status-order"></span></p>
                                     </div>
                                 </div>
-
+                                <div class="col-lg-8">
+                                    <div class="mb-3">
+                                        <label for="exampleFormControlTextarea1" class="form-label">
+                                            <h6>Mô tả đơn hàng</h6>
+                                        </label>
+                                        <textarea class="form-control p-3" id="description" rows="3"
+                                            style="height: 111px;"></textarea>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -212,7 +228,6 @@
                                             <th class="pro-price">Giá</th>
                                             <th class="pro-quantity">Số lượng</th>
                                             <th class="pro-subtotal">Tổng số</th>
-                                            <th class="pro-title">Trạng thái</th>
                                             <th class="pro-remove">Xóa</th>
                                         </tr>
                                     </thead>
@@ -239,14 +254,6 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-lg-5 mt-20">
-                            <div class="mb-3">
-                                <label for="exampleFormControlTextarea1" class="form-label">
-                                    <h6>Mô tả đơn hàng</h6>
-                                </label>
-                                <textarea class="form-control" id="description" rows="3"></textarea>
-                            </div>
-                        </div>
                         <div class="col-lg-5 ms-auto">
                             <!-- Cart Calculation Area -->
                             <div class="cart-calculator-wrapper">
@@ -393,16 +400,14 @@
             const recipientName = document.getElementById('recipient-name').value;
             const recipientPhone = document.getElementById('phone-number').value;
             const recipientAddress = document.getElementById('address').value;
-            var paymentMethod = document.getElementById('payment-method').value;
+            var paymentMethod = document.getElementById('payment-method-id').value;
             const description = document.getElementById('description').value;
-            var payment ="";
-            
-            if(paymentMethod == "Thanh toán khi nhận hàng")
-            {
+            var payment = "";
+
+            if (paymentMethod == "Thanh toán khi nhận hàng") {
                 payment = "CASH_ON_DELIVERY";
             }
-            else
-            {
+            else {
                 payment = "CREDIT_CARD";
             }
             // Lấy danh sách các sản phẩm từ bảng
@@ -443,17 +448,7 @@
                 // Xử lý kết quả trả về từ API
                 if (response.ok) {
                     const result = await response.json();
-                    if (result.result.description.includes("\n")) {
-                        const alertMessage = result.result.description.split("\n")[0];
-                        document.getElementById('description').innerHTML = result.result.description.split("\n")[1];
-                        alert(alertMessage);
-                        window.location.reload();
-                    }
-                    else {
-                        alert('Cập nhật đơn hàng thành công!');
-                        window.location.href = 'my-account.html';
-                    }
-
+                    alert('Cập nhật đơn hàng thành công!');
                 } else {
                     const error = await response.json();
                     alert(`Lỗi khi cập nhật đơn hàng: ${error.message}`);
@@ -471,7 +466,6 @@
                 alert('Không tìm thấy ID đơn hàng!');
             }
         });
-
 
         //status-dropdown
         function loadVoucherCodes(userId, defVoucher) {
@@ -535,7 +529,6 @@
         document.addEventListener('DOMContentLoaded', async () => {
             const userId_2 = localStorage.getItem("userId");
             const token_2 = localStorage.getItem("token");
-            monitorChangesAndToggleUpdateButton();
             // Kiểm tra nếu không có ID hoặc token
             if (!userId_2 || !token_2) {
                 alert("User ID or Token is missing!");
@@ -610,40 +603,68 @@
             document.getElementById('recipient-name').value = order.recipientName || '';
             document.getElementById('phone-number').value = order.recipientPhone || '';
             document.getElementById('address').value = order.recipientAddress || '';
-
+            var bt_xoa = document.getElementById('btn-xoa');
+            if (order.description != null) {
+                document.getElementById("description").value = order.description;
+            }
+            if (order.status == "PENDING") {
+                monitorChangesAndToggleUpdateButton(order.status);
+            }
+            // setAttribute('readonly', true);
+            let statusHtml = "";
+            switch (order.status) {
+                case 'SHIPPED':
+                    statusHtml = '<div class="badge bg-warning text-dark">Đang ship</div>';
+                    document.getElementById('recipient-name').setAttribute('readonly', true);
+                    document.getElementById('phone-number').setAttribute('readonly', true);
+                    document.getElementById('address').setAttribute('readonly', true);
+                    document.getElementById("description").setAttribute('readonly', true);
+                    break;
+                case 'PENDING':
+                    statusHtml = '<div class="badge bg-info text-dark">Chờ xử lý</div>';
+                    break;
+                case 'DELIVERED':
+                    statusHtml = '<div class="badge bg-success text-light">Đã giao</div>';
+                    document.getElementById('recipient-name').setAttribute('readonly', true);
+                    document.getElementById('phone-number').setAttribute('readonly', true);
+                    document.getElementById('address').setAttribute('readonly', true);
+                    document.getElementById("description").setAttribute('readonly', true);
+                    break;
+                default:
+                    statusHtml = `<div class="badge bg-secondary text-light">${order.status}</div>`;
+            }
+            document.getElementById('status-order').innerHTML = statusHtml;
             // Render bảng sản phẩm và tổng tiền
             loadVoucherCodes(userId, order.code);
             renderCartTable(order);
             renderCartSummary(order);
             if (order.paymentMethod == "CASH_ON_DELIVERY") {
-                document.getElementById('payment-method').value = "Thanh toán khi nhận hàng";
+                document.getElementById('payment-method').innerHTML = '<div class="badge bg-primary text-light" id="payment-method-id">Thanh toán khi nhận hàng</div>';
             }
-            else
-            {
-                document.getElementById('payment-method').value = "Thanh toán trực tuyến";
+            else {
+                document.getElementById('payment-method').innerHTML = '<div class="badge bg-success text-light id="payment-method-id">Thanh toán online</div>';
             }
         }
 
-        function monitorChangesAndToggleUpdateButton() {
+        function monitorChangesAndToggleUpdateButton(status) {
             // Lấy các trường input, dropdown và nút cập nhật
             const recipientName = document.getElementById('recipient-name');
             const phoneNumber = document.getElementById('phone-number');
             const address = document.getElementById('address');
             const description = document.getElementById('description');
-            const discountCode = document.getElementById('status-dropdown'); // Mã giảm giá (dropdown)
+            const discountCode = document.getElementById('status-dropdown');
             const updateButton = document.getElementById('update-order-btn');
 
             // Thêm trường số lượng
-            const quantityFields = document.querySelectorAll('.form-control.text-center'); // Lấy tất cả các trường số lượng
-
+            const quantityFields = document.querySelectorAll('.form-control.text-center');
             // Lưu giá trị ban đầu
             let originalData = {
                 recipientName: recipientName.value,
                 phoneNumber: phoneNumber.value,
                 address: address.value,
                 description: description.value,
-                discountCode: discountCode ? discountCode.value : "", // Nếu có dropdown mã giảm giá
-                quantities: Array.from(quantityFields).map(input => input.value) // Lưu số lượng ban đầu
+                discountCode: discountCode ? discountCode.value : "",
+                quantities: Array.from(quantityFields).map(input => input.value)
             };
 
             // Hàm kiểm tra sự thay đổi
@@ -652,9 +673,8 @@
                     phoneNumber.value !== originalData.phoneNumber ||
                     address.value !== originalData.address ||
                     description.value !== originalData.description ||
-                    (discountCode && discountCode.value !== originalData.discountCode) || // Kiểm tra sự thay đổi ở mã giảm giá nếu có
-                    Array.from(quantityFields).some((input, index) => input.value !== originalData.quantities[index]); // Kiểm tra sự thay đổi trong số lượng
-
+                    (discountCode && discountCode.value !== originalData.discountCode) ||
+                    Array.from(quantityFields).some((input, index) => input.value !== originalData.quantities[index]);
                 // Nếu có thay đổi, bật nút cập nhật
                 if (hasChanges) {
                     updateButton.classList.remove('disabled');
@@ -671,7 +691,6 @@
             if (discountCode) {
                 discountCode.addEventListener('change', checkChanges); // Sự kiện cho dropdown discountCode
             }
-
             // Lắng nghe sự thay đổi trong các trường số lượng
             quantityFields.forEach((input) => {
                 input.addEventListener('input', checkChanges);
@@ -708,9 +727,8 @@
                 </div>
             </td>
             <td class="pro-subtotal">${(item.price * item.quantity).toLocaleString()} VNĐ</td>
-            <td class="pro-title">${order.status}</td>
             <td class="pro-remove">
-                <button class="btn btn-danger btn-sm" onclick="removeItem('${item.productVariantId}')">Xóa</button>
+                <button id="btn-xoa" class="btn btn-danger btn-sm" onclick="removeItem('${item.productVariantId}')">Xóa</button>
             </td>
         `;
                 tableBody.appendChild(row);
@@ -742,17 +760,6 @@
 
             // Tính toán
             const vat = subTotal * vatRate;
-            var description;
-            if (orderData.description.includes("\n")) {
-                description = orderData.description.split("\n")[1];
-            }
-            else {
-                description = orderData.description;
-            }
-
-            if (description != null) {
-                document.getElementById("description").value = description;
-            }
 
             // Hiển thị dữ liệu
             document.getElementById('cart-sub-total-berfor').textContent = `${subTotal.toLocaleString()} VNĐ`;
@@ -986,17 +993,21 @@
         /* Đặt chiều rộng của dropdown */
     }
 
-     /* cart */
-     .minicart-inner-content {
+    /* cart */
+    .minicart-inner-content {
         display: flex;
         flex-direction: column;
-        height: 100%; /* Chiều cao toàn phần của nội dung */
+        height: 100%;
+        /* Chiều cao toàn phần của nội dung */
     }
-    
+
     .minicart-item-wrapper {
-        flex-grow: 1; /* Phần danh sách sản phẩm mở rộng để chiếm không gian còn lại */
-        overflow-y: auto; /* Kích hoạt cuộn dọc */
-        max-height: calc(100vh - 150px); /* Tính toán chiều cao dựa trên nội dung khác */
+        flex-grow: 1;
+        /* Phần danh sách sản phẩm mở rộng để chiếm không gian còn lại */
+        overflow-y: auto;
+        /* Kích hoạt cuộn dọc */
+        max-height: calc(100vh - 150px);
+        /* Tính toán chiều cao dựa trên nội dung khác */
     }
 </style>
 
