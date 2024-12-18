@@ -73,7 +73,7 @@ public class UserController {
                 .build();
     }
 
-    @DeleteMapping
+    @PutMapping
     public ApiResponse<String> deleteUser(@RequestParam int id) {
         return ApiResponse.<String>builder()
                 .result(userService.deleteUser(id))

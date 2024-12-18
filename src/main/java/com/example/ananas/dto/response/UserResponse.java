@@ -21,4 +21,5 @@ public class UserResponse {
     String avatar;
     LocalDateTime createdAt;
     LocalDateTime updatedAt;
+    Boolean isActive;
 }

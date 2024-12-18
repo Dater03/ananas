@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -32,6 +33,13 @@ public class OrderController {
     @GetMapping("/admin/list")
     public ResponseEntity<ResultPaginationDTO> getOrdersForAdmin (Pageable pageable) {
         return ResponseEntity.ok(orderService.getOrdersForAdmin(pageable));
+    }
+
+    @GetMapping("/admin/index/list")
+    public ResponseEntity<ResultPaginationDTO> getOrdersForAdminIndex (Pageable pageable) {
+        Pageable sortedByCreateAt = PageRequest.of(pageable.getPageNumber(), 5, Sort.by("createdAt").descending());
+
+        return ResponseEntity.ok(orderService.getOrdersForAdmin(sortedByCreateAt));
     }
 
     @GetMapping("/orderDetail/{orderId}")

@@ -157,6 +157,16 @@ public class ProductController {
         return ResponseEntity.ok(productService.getNumberOfProductBySizeAndColor(productId,color, size));
     }
 
+    @GetMapping("chart/product/sum")
+    public List<Map<String, Object>> getSumOfProductAdmin(){
+        return productService.getProductNameAndStock();
+    }
+
+    @GetMapping("/product/chart")
+    public List<Map<String, Object>> getChartProduct(){
+        return productService.getMonthlyStatisticsForCurrentYear();
+    }
+
     @PostMapping("product/download")
     public ResponseEntity<byte[]> exportToExel(@RequestParam(name = "id") int id)
     {

@@ -4,6 +4,7 @@ import com.example.ananas.entity.Product;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -22,4 +23,24 @@ public interface Product_Repository extends JpaRepository<Product, Integer>, Jpa
 
     @Query("SELECT MIN(p.price) FROM Product p")
     Double findMinPrice();
+
+    @Query(value = "SELECT c.category_name, SUM(pv.stock) AS total_stock " +
+            "FROM ananas.product_variant pv " +
+            "INNER JOIN ananas.product p ON pv.product_id = p.product_id " +
+            "INNER JOIN ananas.category c ON p.category_id = c.category_id " +
+            "GROUP BY c.category_name",
+            nativeQuery = true)
+    List<Object[]> getProductNameAndStock();
+
+    @Query(value = "SELECT MONTH(p.created_at) AS month, " +
+            "SUM(v.stock) AS totalStock, " +
+            "SUM(p.sold_quantity) AS totalSold " +
+            "FROM ananas.product p " +
+            "INNER JOIN ananas.product_variant v ON p.product_id = v.product_id " +
+            "WHERE YEAR(p.created_at) = YEAR(CURRENT_DATE) " +
+            "GROUP BY MONTH(p.created_at) " +
+            "ORDER BY MONTH(p.created_at)", nativeQuery = true)
+    List<Object[]> findMonthlyStatisticsForCurrentYear();
+
+
 }

@@ -26,6 +26,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
@@ -176,15 +177,14 @@ public class OrderService implements IOrderService {
         if(order.getVoucher() != null && voucherService.checkVoucher(order.getVoucher().getCode(), sum_before))
         {
             BigDecimal discount_vourcher =  voucherService.applyVoucher(order.getVoucher(), sum_before);
-            order.setDiscount_voucher(discount_vourcher);
-            sum_after = sum_before.subtract(discount_vourcher);
+            Integer vou = discount_vourcher.setScale(0, RoundingMode.HALF_EVEN).intValue();
+            order.setDiscount_voucher(BigDecimal.valueOf(vou));
+            sum_after = sum_before.subtract(BigDecimal.valueOf(vou));
             order.getVoucher().setUsageLimit(order.getVoucher().getUsageLimit()-1);
             voucherRepository.save(order.getVoucher());
         }
         else
         {
-            description.append("Đơn hàng của bạn không đủ kiều kiện áp dụng voucher hoặc voucher đã hết hạn");
-            description.append("\n");
             order.setVoucher(null);
             sum_after = sum_before;
         }
@@ -282,18 +282,14 @@ public class OrderService implements IOrderService {
         if(order.getVoucher() != null && voucherService.checkVoucher(order.getVoucher().getCode(), sum_before))
         {
             BigDecimal dis_vour = voucherService.applyVoucher(order.getVoucher(), sum_before);
-            order.setDiscount_voucher(dis_vour);
-            sum_after = sum_before.subtract(dis_vour);
+            Integer vou = dis_vour.setScale(0, RoundingMode.HALF_EVEN).intValue();
+            order.setDiscount_voucher(BigDecimal.valueOf(vou));
+            sum_after = sum_before.subtract(BigDecimal.valueOf(vou));
             order.getVoucher().setUsageLimit(order.getVoucher().getUsageLimit()-1);
             voucherRepository.save(order.getVoucher());
         }
         else
         {
-            if(order.getVoucher() != null)
-            {
-                description.append("Đơn hàng của bạn không đủ kiều kiện áp dụng voucher hoặc voucher đã hết hạn");
-                description.append("\n");
-            }
             order.setVoucher(null);
             order.setDiscount_voucher(null);
             sum_after = sum_before;

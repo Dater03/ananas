@@ -11,6 +11,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import java.time.LocalDateTime;
 import java.util.HashSet;
 
 @Configuration
@@ -29,6 +30,9 @@ public class CreateAdminConfig {
                         .password(passwordEncoder.encode("admin"))
                         .email("admin@gmail.com")
                         .roles(role)
+                        .isActive(true)
+                        .createAt(LocalDateTime.now())
+                        .updateAt(LocalDateTime.now())
                         .build();
                 userRepository.save(user);
             }
