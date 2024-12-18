@@ -226,7 +226,11 @@ public class ProductService implements IProductService {
     // dem so luong hang
     @Override
     public int getNumberOfProductBySizeAndColor(int productId, String color, int size ) {
-        return this.productVariantRepository.getSumOfProduct(productId, color, size);
+        try {
+            return this.productVariantRepository.getSumOfProduct(productId, color, size);
+        } catch (Exception e) {
+            return 0;
+        }
     }
 
     @Override

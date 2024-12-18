@@ -90,12 +90,16 @@ public class ReviewService implements IReviewService {
 
     @Override
     public double getAverageRatingByProductId(int product_id) {
-        int count = getReviewsCountByProductId(product_id);
-        List<Review> reviews = getAllReviewsByProductId(product_id);
-        int sum = 0;
-        for (int i = 0; i < reviews.size(); i++) {
-            sum += reviews.get(i).getRating();
+        try {
+            int count = getReviewsCountByProductId(product_id);
+            List<Review> reviews = getAllReviewsByProductId(product_id);
+            int sum = 0;
+            for (int i = 0; i < reviews.size(); i++) {
+                sum += reviews.get(i).getRating();
+            }
+            return sum / count;
+        } catch (Exception e) {
+            return 0;
         }
-        return sum / count;
     }
 }
