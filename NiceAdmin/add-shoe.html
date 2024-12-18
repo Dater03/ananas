@@ -302,38 +302,44 @@
         </a>
 
       </li><!-- End Promo Nav -->
-
-
-
     </ul>
   </aside><!-- End Sidebar -->
 
   <main id="main" class="main">
 
     <div class="container mt-5">
-      <h2 class="text-center mb-4">Quản lí sản phẩm</h2>
-      <button class="btn btn-success mb-3" data-bs-toggle="modal" data-bs-target="#addProductModal">Thêm mới</button>
-      <table class="table table-bordered text-center">
-        <thead class="table-light">
-          <tr>
-            <th>#</th>
-            <th>Tên sản phẩm</th>
-            <th>Giá</th>
-            <th>Giảm giá (%)</th>
-            <th>Chất liệu</th>
-            <th>Danh mục</th>
-            <th>Đã bán</th>
-            <th>Hành động</th>
-          </tr>
-        </thead>
-        <tbody id="productTable">
-          <!-- Dữ liệu sẽ được thêm động ở đây -->
-        </tbody>
-      </table>
-      <nav aria-label="Page navigation" id="pagination" class="mt-4">
-        <!-- Phân trang sẽ được thêm động ở đây -->
-      </nav>
-    </div>
+      <div class="card">
+          <div class="card-header">
+              <h2 class="text-center text-dark">Quản lí sản phẩm</h2>
+          </div>
+          <div class="card-body">
+              <button class="btn btn-success mb-3" data-bs-toggle="modal" data-bs-target="#addProductModal">Thêm mới</button>
+              <div class="table-responsive">
+                  <table class="table table-bordered text-center">
+                      <thead class="table-light">
+                          <tr>
+                              <th>#</th>
+                              <th>Tên sản phẩm</th>
+                              <th>Giá</th>
+                              <th>Giảm giá (%)</th>
+                              <th>Chất liệu</th>
+                              <th>Danh mục</th>
+                              <th>Đã bán</th>
+                              <th>Hành động</th>
+                          </tr>
+                      </thead>
+                      <tbody id="productTable">
+                          <!-- Dữ liệu sẽ được thêm động ở đây -->
+                      </tbody>
+                  </table>
+              </div>
+              <nav aria-label="Page navigation" id="pagination" class="mt-4">
+                  <!-- Phân trang sẽ được thêm động ở đây -->
+              </nav>
+          </div>
+      </div>
+  </div>
+  
 
     <!-- Modal Thêm sản phẩm -->
     <div class="modal fade" id="addProductModal" tabindex="-1" aria-labelledby="addProductModalLabel"

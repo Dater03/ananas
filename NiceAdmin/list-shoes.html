@@ -306,21 +306,28 @@
   <main id="main" class="main">
 
     <div class="container mt-5">
-      <h2 class="text-center">Quản Lý Danh Mục</h2>
-      <button class="btn btn-success my-3" id="addCategoryBtn">Thêm danh mục</button>
-      <table class="table table-bordered">
-        <thead>
-          <tr>
-            <th>#</th>
-            <th>Tên danh mục</th>
-            <th>Mô tả</th>
-            <th>Hành động</th>
-          </tr>
-        </thead>
-        <tbody id="categoryTableBody">
-          <!-- Danh mục sẽ được hiển thị tại đây -->
-        </tbody>
-      </table>
+      <div class="card">
+        <div class="card-header">
+          <h2 class="text-center text-dark">Quản Lý Danh Mục</h2>
+        </div>
+        <div class="card-body">
+          <button class="btn btn-success my-3" id="addCategoryBtn">Thêm danh mục</button>
+          <div class="table-responsive">
+            <table class="table table-bordered">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Tên danh mục</th>
+                  <th>Mô tả</th>
+                  <th>Hành động</th>
+                </tr>
+              </thead>
+              <tbody id="categoryTableBody">
+                <!-- Danh mục sẽ được hiển thị tại đây -->
+              </tbody>
+            </table>
+        </div>
+      </div>
     </div>
 
     <!-- Modal thêm/sửa danh mục -->

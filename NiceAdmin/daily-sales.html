@@ -281,20 +281,25 @@
   <main id="main" class="main">
 
     <div class="container mt-5">
-      <h1 class="text-center mb-4">Báo Cáo Doanh Thu</h1>
+      <div class="card">
+        <div class="card-header">
+          <h1 class="text-center text-dark">Báo Cáo Doanh Thu</h1>
 
-      <!-- Bộ lọc báo cáo doanh thu -->
-      <div class="mb-4">
-          <label for="filter" class="form-label">Lọc Doanh Thu Theo:</label>
-          <select id="filter" class="form-select" onchange="updateChart()">
-              <option value="day">Theo Ngày</option>
-              <option value="month">Theo Tháng</option>
-              <option value="year">Theo Năm</option>
-          </select>
+          <!-- Bộ lọc báo cáo doanh thu -->
+          <div class="mb-4">
+              <label for="filter" class="form-label">Lọc Doanh Thu Theo:</label>
+              <select id="filter" class="form-select" onchange="updateChart()">
+                  <option value="day">Theo Ngày</option>
+                  <option value="month">Theo Tháng</option>
+                  <option value="year">Theo Năm</option>
+              </select>
+          </div>
+        </div>
+        <div class="card-body">
+                <!-- Biểu đồ doanh thu -->
+          <canvas id="revenueChart" width="400" height="200"></canvas>
+        </div>
       </div>
-
-      <!-- Biểu đồ doanh thu -->
-      <canvas id="revenueChart" width="400" height="200"></canvas>
   </div>
 
   <script>

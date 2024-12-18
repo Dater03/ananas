@@ -302,30 +302,36 @@
   <main id="main" class="main">
 
     <div class="container mt-5">
-      <h1 class="text-center mb-4">Quản lý Khuyến Mại</h1>
-
-      <!-- Button thêm khuyến mại -->
-      <div class="d-flex justify-content-sm-start mb-3">
-        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addPromoModal">Thêm Khuyến Mại</button>
+      <div class="card">
+        <div class="card-header">
+          <h1 class="text-center mb-4">Quản lý Khuyến Mại</h1>
+        </div>
+        <div class="card-body">
+          <!-- Button thêm khuyến mại -->
+          <div class="d-flex justify-content-sm-start mb-3">
+            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addPromoModal">Thêm Khuyến Mại</button>
+          </div>
+          <div class="table-responsive">
+            <!-- Bảng khuyến mại -->
+            <table class="table table-bordered table-hover">
+              <thead class="table-dark text-center">
+                <tr>
+                  <th>Code</th>
+                  <th>Giá trị khuyến mại</th>
+                  <th>Điều kiện tối thiểu</th>
+                  <th>Giá trị tối đa</th>
+                  <th>Ngày bắt đầu</th>
+                  <th>Ngày kết thúc</th>
+                  <th>Hành động</th>
+                </tr>
+              </thead>
+              <tbody id="promoTableBody" class="text-center">
+                <!-- Dữ liệu mẫu -->
+              </tbody>
+            </table>
+          </div>
+        </div>
       </div>
-
-      <!-- Bảng khuyến mại -->
-      <table class="table table-bordered table-hover">
-        <thead class="table-dark text-center">
-          <tr>
-            <th>Code</th>
-            <th>Giá trị khuyến mại</th>
-            <th>Điều kiện tối thiểu</th>
-            <th>Giá trị tối đa</th>
-            <th>Ngày bắt đầu</th>
-            <th>Ngày kết thúc</th>
-            <th>Hành động</th>
-          </tr>
-        </thead>
-        <tbody id="promoTableBody" class="text-center">
-          <!-- Dữ liệu mẫu -->
-        </tbody>
-      </table>
     </div>
     <!-- Popup Modal -->
     <div class="modal fade" id="voucherDetailsModal" tabindex="-1" aria-labelledby="voucherDetailsModalLabel"
