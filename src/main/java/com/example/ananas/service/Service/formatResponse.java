@@ -26,6 +26,11 @@ public class formatResponse implements ResponseBodyAdvice<Object> {
         int status = servletResponse.getStatus();
         ApiResponse<Object> apiResponse = new ApiResponse<Object>();
         apiResponse.setCode(status);
+        // Kiểm tra xem dữ liệu trả về có phải là mảng byte (dữ liệu nhị phân, file)
+        if (body instanceof byte[]) {
+            // Trả về nguyên vẹn dữ liệu byte mà không thay đổi
+            return body;
+        }
         if (body instanceof String)
         {
             return body;

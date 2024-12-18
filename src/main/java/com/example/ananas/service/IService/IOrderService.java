@@ -4,7 +4,9 @@ import com.example.ananas.dto.request.OrderCreate;
 import com.example.ananas.dto.request.OrderUpdateUser;
 import com.example.ananas.dto.response.OrderResponse;
 import com.example.ananas.dto.response.ResultPaginationDTO;
+import com.example.ananas.entity.TempOrder;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -46,4 +48,8 @@ public interface IOrderService {
     BigDecimal getSumByYear(int year);
 
     void handleAfterCreateOrder(int orderId);
+
+    ResultPaginationDTO getAllTempOrder(Specification<TempOrder> spec, Pageable pageable);
+
+    List<TempOrder> getAllTemp();
 }

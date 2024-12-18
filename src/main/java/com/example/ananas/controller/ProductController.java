@@ -6,6 +6,7 @@ import com.example.ananas.dto.response.ProductResponse;
 import com.example.ananas.dto.response.ResultPaginationDTO;
 import com.example.ananas.entity.Product;
 import com.example.ananas.exception.IdException;
+import com.example.ananas.service.Service.ExportService;
 import com.example.ananas.service.Service.ProductService;
 import com.example.ananas.entity.ProductVariant;
 import com.turkraft.springfilter.boot.Filter;
@@ -15,6 +16,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
@@ -32,6 +34,7 @@ import java.util.Map;
 public class ProductController {
 
     ProductService productService;
+    ExportService exportService;
 
 
     @PostMapping("/product") //
@@ -164,4 +167,17 @@ public class ProductController {
         List<Map<String, Object>> result = productService.getMonthlyStatisticsForCurrentYear();
         return ResponseEntity.ok(result); // Trả về kết quả dưới dạng JSON
     }
+
+    @PostMapping("product/download")
+    public ResponseEntity<byte[]> exportToExel(@RequestParam(name = "id") int id)
+    {
+        byte[] fileContent = exportService.exportToExcel(id);
+
+        // Set content type for Excel
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Content-Disposition", "attachment; filename=products.xlsx");
+
+        return new ResponseEntity<>(fileContent, headers, HttpStatus.OK);
+    }
+
 }
