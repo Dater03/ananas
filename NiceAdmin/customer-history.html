@@ -15,7 +15,9 @@
 
   <!-- Google Fonts -->
   <link href="https://fonts.gstatic.com" rel="preconnect">
-  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
+    rel="stylesheet">
 
   <!-- Vendor CSS Files -->
   <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -38,8 +40,8 @@
     <div class="d-flex align-items-center justify-content-between">
       <!-- Thay đổi tên cửa hàng -->
       <!-- <a href="index.html" class="logo d-flex align-items-center"> -->
-        <img src="Screenshot 2024-10-17 142441.png" alt="Logo cửa hàng">
-        <!-- <span class="d-none d-lg-block">Ananas</span> -->
+      <img src="Screenshot 2024-10-17 142441.png" alt="Logo cửa hàng">
+      <!-- <span class="d-none d-lg-block">Ananas</span> -->
       </a>
       <i class="bi bi-list toggle-sidebar-btn"></i>
     </div><!-- End Logo -->
@@ -72,7 +74,9 @@
               Bạn có 5 thông báo mới
               <a href="#"><span class="badge rounded-pill bg-primary p-2 ms-2">Xem tất cả</span></a>
             </li>
-            <li><hr class="dropdown-divider"></li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
 
             <li class="notification-item">
               <i class="bi bi-cart text-info"></i>
@@ -83,7 +87,9 @@
               </div>
             </li>
 
-            <li><hr class="dropdown-divider"></li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
 
             <li class="notification-item">
               <i class="bi bi-truck text-warning"></i>
@@ -108,18 +114,23 @@
             <li class="dropdown-header">
               Bạn có <span id="messageCount">0</span> tin nhắn mới
             </li>
-            <li><hr class="dropdown-divider"></li>
-            
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+
             <!-- Tin nhắn sẽ được load vào đây bằng JavaScript -->
-            
-            <li><hr class="dropdown-divider"></li>
+
+            <li>
+              <hr class="dropdown-divider">
+            </li>
           </ul>
-          
+
           <!-- Modal hiển thị chi tiết tin nhắn -->
           <div id="messageModal" class="message-modal">
             <div class="message-modal-content">
               <span class="close-btn">&times;</span>
-              <img id="avatarMes" style="width: 25px;" src="assets/img/apple-touch-icon.png" alt=""><span id="usernameMess"> User</span>
+              <img id="avatarMes" style="width: 25px;" src="assets/img/apple-touch-icon.png" alt=""><span
+                id="usernameMess"> User</span>
               <ul id="messageDetails"></ul>
               <!-- Ô nhập tin nhắn và nút gửi -->
               <div class="send-message-container">
@@ -143,7 +154,9 @@
               <h6>Quản lý Cửa hàng</h6>
               <span>Quản lý hệ thống</span>
             </li>
-            <li><hr class="dropdown-divider"></li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
 
             <li>
               <a class="dropdown-item d-flex align-items-center" href="users-profile.html">
@@ -151,7 +164,9 @@
                 <span>Thông tin cá nhân</span>
               </a>
             </li>
-            <li><hr class="dropdown-divider"></li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
 
             <li>
               <a class="dropdown-item d-flex align-items-center" href="pages-login.html">
@@ -170,14 +185,14 @@
   <!-- ======= Sidebar ======= -->
   <aside id="sidebar" class="sidebar">
     <ul class="sidebar-nav" id="sidebar-nav">
-  
+
       <li class="nav-item">
         <a class="nav-link" href="index(2).html">
           <i class="bi bi-grid"></i>
           <span>Trang chủ</span>
         </a>
       </li><!-- End Dashboard Nav -->
-  
+
       <!-- Quản lý Sản phẩm -->
       <li class="nav-item">
         <a class="nav-link collapsed" data-bs-target="#products-nav" data-bs-toggle="collapse" href="#">
@@ -190,7 +205,7 @@
           <!-- <li><a href="shoe-inventory.html"><i class="bi bi-box"></i><span>Quản lý Tồn kho</span></a></li> -->
         </ul>
       </li><!-- End Products Nav -->
-  
+
       <!-- Quản lý Đơn hàng -->
       <li class="nav-item">
         <a class="nav-link collapsed" data-bs-target="#orders-nav" data-bs-toggle="collapse" href="#">
@@ -198,10 +213,10 @@
         </a>
         <ul id="orders-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
           <li><a href="new-order.html"><i class="bi bi-plus-square"></i><span>Theo dõi đơn hàng</span></a></li>
-      
+
         </ul>
       </li><!-- End Orders Nav -->
-  
+
       <!-- Quản lý Khách hàng -->
       <li class="nav-item">
         <a class="nav-link collapsed" data-bs-target="#customers-nav" data-bs-toggle="collapse" href="#">
@@ -212,18 +227,18 @@
           <li><a href="customer-history.html"><i class="bi bi-card-list"></i><span>Lịch sử giao dịch</span></a></li>
         </ul>
       </li><!-- End Customers Nav -->
-  
+
       <!-- Quản lý Báo cáo -->
       <li class="nav-item">
         <a class="nav-link collapsed" data-bs-target="#sales-report-nav" data-bs-toggle="collapse" href="#">
           <i class="bi bi-bar-chart"></i><span>Báo cáo Doanh thu</span><i class="bi bi-chevron-down ms-auto"></i>
         </a>
         <ul id="sales-report-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
-            <li><a href="daily-sales.html"><i class="bi bi-calendar-event"></i><span>Doanh thu</span></a></li>
-            <li><a href="inventory-report.html"><i class="bi bi-box"></i><span>Báo cáo Tồn kho</span></a></li>
+          <li><a href="daily-sales.html"><i class="bi bi-calendar-event"></i><span>Doanh thu</span></a></li>
+          <li><a href="inventory-report.html"><i class="bi bi-box"></i><span>Báo cáo Tồn kho</span></a></li>
         </ul>
       </li><!-- End Sales Report Nav -->
-  
+
       <!-- Quản lý Khuyến mãi -->
       <li class="nav-item">
         <a class="nav-link collapsed" href="add-promo.html">
@@ -231,67 +246,54 @@
         </a>
 
       </li><!-- End Promo Nav -->
-  
-     
-  
+
+
+
     </ul>
   </aside><!-- End Sidebar -->
-  
+
   <main id="main" class="main">
 
     <div class="container mt-5">
-        <h1 class="text-center mb-4">Lịch Sử Giao Dịch</h1>
-        
-        <!-- Bảng hiển thị lịch sử giao dịch -->
-        <div class="card">
-            <div class="card-header">
-                <h5 class="card-title">Danh sách giao dịch</h5>
-            </div>
-            <div class="card-body">
-                <table class="table table-bordered table-hover">
-                    <thead class="table-dark">
-                        <tr>
-                            <th>Mã giao dịch</th>
-                            <th>Ngày giao dịch</th>
-                            <th>Số tiền</th>
-                            <th>Trạng thái</th>
-                            <th>Hành động</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <!-- Dữ liệu giao dịch sẽ được thêm vào đây -->
-                        <tr>
-                            <td>GD123456</td>
-                            <td>2024-10-30</td>
-                            <td>1,000,000 VND</td>
-                            <td><span class="badge bg-success">Thành công</span></td>
-                            <td>
-                                <button class="btn btn-info btn-sm">Chi tiết</button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>GD789101</td>
-                            <td>2024-10-29</td>
-                            <td>500,000 VND</td>
-                            <td><span class="badge bg-warning">Đang xử lý</span></td>
-                            <td>
-                                <button class="btn btn-info btn-sm">Chi tiết</button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>GD112233</td>
-                            <td>2024-10-28</td>
-                            <td>2,000,000 VND</td>
-                            <td><span class="badge bg-danger">Thất bại</span></td>
-                            <td>
-                                <button class="btn btn-info btn-sm">Chi tiết</button>
-                            </td>
-                        </tr>
-                        <!-- Thêm nhiều hàng giao dịch hơn tại đây -->
-                    </tbody>
-                </table>
-            </div>
+      <h1 class="text-center mb-4">Lịch Sử Giao Dịch</h1>
+      <div class="card">
+        <div class="card-header">
+          <h5 class="card-title">Tổng quan trạng thái giao dịch</h5>
         </div>
+        <div class="card-body">
+          <canvas id="transactionPieChart" width="400" height="400"></canvas>
+        </div>
+
+      </div>
+
+      <!-- Bảng hiển thị lịch sử giao dịch -->
+      <div class="card">
+        <div class="card-header">
+          <h5 class="card-title">Danh sách giao dịch</h5>
+        </div>
+        <div class="card-body">
+          <table class="table table-bordered table-hover">
+            <thead class="table-dark">
+              <tr>
+                <th>Mã giao dịch</th>
+                <th>Ngày giao dịch</th>
+                <th>Số tiền</th>
+                <th>Trạng thái</th>
+              </tr>
+            </thead>
+            <tbody id="transactionTable">
+              <!-- Dữ liệu giao dịch sẽ được thêm vào đây -->
+            </tbody>
+          </table>
+          <!-- Pagination -->
+          <nav aria-label="Page navigation">
+            <ul class="pagination justify-content-center" id="pagination">
+              <!-- Các nút phân trang sẽ được thêm vào đây -->
+            </ul>
+          </nav>
+        </div>
+
+      </div>
     </div>
 
   </main><!-- End #main -->
@@ -319,9 +321,176 @@
   <script src="assets/vendor/simple-datatables/simple-datatables.js"></script>
   <script src="assets/vendor/tinymce/tinymce.min.js"></script>
   <script src="assets/vendor/php-email-form/validate.js"></script>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
 
   <!-- Template Main JS File -->
   <script src="assets/js/main.js"></script>
+
+  <script>
+    $(document).ready(function () {
+      let currentPage = 0; // Trang hiện tại (bắt đầu từ 0)
+      const pageSize = 10; // Số bản ghi mỗi trang
+
+      // Hàm fetch dữ liệu từ API
+      function fetchTransactions(page) {
+        const apiUrl = `http://localhost:8080/order/admin/temp-order?page=${page}&size=${pageSize}`;
+
+        $.get(apiUrl, function (response) {
+          if (response.code === 200) {
+            renderTable(response.result.result);
+            renderPagination(response.result.meta);
+          } else {
+            console.error("Lỗi khi gọi API:", response.message);
+          }
+        }).fail(function (error) {
+          console.error("Lỗi:", error);
+        });
+      }
+
+      // Hàm hiển thị dữ liệu lên bảng
+      function renderTable(transactions) {
+        const tableBody = $("#transactionTable");
+        tableBody.empty(); // Xóa dữ liệu cũ
+
+        transactions.forEach(transaction => {
+          // Xác định trạng thái và màu sắc
+          let statusText = "Chưa cập nhật";
+          let badgeClass = "bg-secondary"; // Mặc định là xám
+
+          if (transaction.status === "success") {
+            statusText = "Thành công";
+            badgeClass = "bg-success"; // Màu xanh
+          } else if (transaction.status === "cancel") {
+            statusText = "Đã hủy";
+            badgeClass = "bg-danger"; // Màu đỏ
+          }
+
+          const row = `
+            <tr>
+                <td>${transaction.txnRef || "Không có"}</td>
+                <td>${new Date(transaction.createdAt).toLocaleDateString()}</td>
+                <td>${transaction.sumPrice.toLocaleString('vi-VN')} VND</td>
+                <td><span class="badge ${badgeClass}">${statusText}</span></td>
+            </tr>
+        `;
+          tableBody.append(row);
+        });
+      }
+
+
+      // Hàm hiển thị phân trang
+      function renderPagination(meta) {
+        const pagination = $("#pagination");
+        pagination.empty(); // Xóa các nút cũ
+
+        for (let i = 0; i < meta.pages; i++) {
+          const pageItem = `
+                <li class="page-item ${i === currentPage ? "active" : ""}">
+                    <button class="page-link" data-page="${i}">${i + 1}</button>
+                </li>
+            `;
+          pagination.append(pageItem);
+        }
+
+        // Gắn sự kiện khi bấm nút chuyển trang
+        $(".page-link").click(function () {
+          const page = $(this).data("page");
+          changePage(page);
+        });
+      }
+
+      // Hàm thay đổi trang
+      function changePage(page) {
+        currentPage = page;
+        fetchTransactions(currentPage);
+      }
+
+      // Gọi lần đầu để tải dữ liệu
+      fetchTransactions(currentPage);
+    });
+
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <script>
+    $(document).ready(function () {
+      const apiUrl = "http://localhost:8080/order/admin/getAllTempOrder";
+
+      // Lấy dữ liệu từ API
+      $.get(apiUrl, function (response) {
+        if (response.code === 200 && response.result) {
+          const transactions = response.result;
+
+          // Thống kê số lượng theo trạng thái
+          const statusCounts = transactions.reduce((acc, transaction) => {
+            const status = transaction.status || "null";
+            acc[status] = (acc[status] || 0) + 1;
+            return acc;
+          }, {});
+
+          drawPieChart(statusCounts);
+        } else {
+          console.error("API trả về lỗi hoặc không có dữ liệu:", response.message);
+        }
+      }).fail(function (error) {
+        console.error("Lỗi khi gọi API:", error);
+      });
+
+      // Hàm vẽ biểu đồ tròn
+      function drawPieChart(statusCounts) {
+        const ctx = document.getElementById("transactionPieChart").getContext("2d");
+
+        // Lấy tổng số giao dịch
+        const totalTransactions = Object.values(statusCounts).reduce((a, b) => a + b, 0);
+
+        // Dữ liệu cho biểu đồ
+        new Chart(ctx, {
+          type: "pie",
+          data: {
+            labels: ["Thành công", "Đã hủy", "Không xác định"],
+            datasets: [{
+              data: [
+                statusCounts.success || 0,
+                statusCounts.cancel || 0,
+                statusCounts.null || 0
+              ],
+              backgroundColor: [
+                "#28a745", // Màu xanh cho success
+                "#dc3545", // Màu đỏ cho cancel
+                "#6c757d"  // Màu xám cho null
+              ],
+              hoverOffset: 4
+            }]
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+
+            plugins: {
+              legend: {
+                position: "right"
+              },
+              tooltip: {
+                callbacks: {
+                  label: function (tooltipItem) {
+                    const label = tooltipItem.label || "";
+                    const value = tooltipItem.raw || 0;
+                    const percentage = ((value / totalTransactions) * 100).toFixed(2);
+                    return `${label}: ${value} (${percentage}%)`;
+                  }
+                }
+              }
+            },
+            aspectRatio: 1,
+
+          }
+        });
+      }
+    });
+
+
+  </script>
 
 </body>
 
@@ -332,7 +501,7 @@
     const receiverId = localStorage.getItem("userId");
     const token = localStorage.getItem("token");
     let currentSenderId = null;
-  
+
     const messageList = document.getElementById("messageList");
     const messageCount = document.getElementById("messageCount");
     const messageCount_2 = document.getElementById("messageCount-2");
@@ -340,67 +509,67 @@
     const messageDetails = document.getElementById("messageDetails");
     const messageInput = document.getElementById("messageInput");
     const sendMessageBtn = document.getElementById("sendMessageBtn");
-  
+
     async function fetchMessages() {
       try {
-          const response = await fetch(`http://localhost:8080/message/latest?receiverId=${receiverId}`, {
-              headers: { Authorization: `Bearer ${token}` },
-          });
-  
-          if (!response.ok) {
-              throw new Error(`HTTP error! Status: ${response.status}`);
-          }
-  
-          const data = await response.json();
-          const messages = data.result;
-  
-          console.log("Messages:", messages);
-  
-          // Cập nhật số lượng tin nhắn
-          messageCount.innerText = messages.length;
-          messageCount_2.innerText = messages.length;
-  
-          // Xóa các tin nhắn cũ
-          messageList.querySelectorAll(".message-item").forEach((item) => item.remove());
-  
-          // Lặp qua từng tin nhắn
-          for (const message of messages) {
-              try {
-                  const userResponse = await fetch(`http://localhost:8080/user/${message.senderId}`, {
-                      method: "GET",
-                      headers: { 'Content-Type': 'application/json' },
-                  });
-  
-                  if (!userResponse.ok) {
-                      throw new Error(`HTTP error! Status: ${userResponse.status}`);
-                  }
-  
-                  const userData = await userResponse.json();
-                  const user = userData.result.result;
+        const response = await fetch(`http://localhost:8080/message/latest?receiverId=${receiverId}`, {
+          headers: { Authorization: `Bearer ${token}` },
+        });
 
-                  // Cập nhật avatar và username cho modal
-                  const avatarMesElement = document.querySelector("#avatarMes");
-                  const usernameMesElement = document.querySelector("#usernameMess");
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
 
-                  if (avatarMesElement) {
-                      avatarMesElement.src = user.avatar
-                          ? `http://localhost:8080/images/avatar/${user.avatar}`
-                          : "assets/img/about/avatar.jpg";
-                  }
+        const data = await response.json();
+        const messages = data.result;
 
-                  if (usernameMesElement) {
-                      usernameMesElement.innerText = user.username || "Người dùng";
-                  }
-  
-                  const avt = user.avatar
-                      ? `http://localhost:8080/images/avatar/${user.avatar}`
-                      : "assets/img/messages-1.jpg";
-  
-                  const messageItem = document.createElement("li");
-                  messageItem.classList.add("message-item");
-                  messageItem.dataset.senderId = message.senderId;
-  
-                  messageItem.innerHTML = `
+        console.log("Messages:", messages);
+
+        // Cập nhật số lượng tin nhắn
+        messageCount.innerText = messages.length;
+        messageCount_2.innerText = messages.length;
+
+        // Xóa các tin nhắn cũ
+        messageList.querySelectorAll(".message-item").forEach((item) => item.remove());
+
+        // Lặp qua từng tin nhắn
+        for (const message of messages) {
+          try {
+            const userResponse = await fetch(`http://localhost:8080/user/${message.senderId}`, {
+              method: "GET",
+              headers: { 'Content-Type': 'application/json' },
+            });
+
+            if (!userResponse.ok) {
+              throw new Error(`HTTP error! Status: ${userResponse.status}`);
+            }
+
+            const userData = await userResponse.json();
+            const user = userData.result.result;
+
+            // Cập nhật avatar và username cho modal
+            const avatarMesElement = document.querySelector("#avatarMes");
+            const usernameMesElement = document.querySelector("#usernameMess");
+
+            if (avatarMesElement) {
+              avatarMesElement.src = user.avatar
+                ? `http://localhost:8080/images/avatar/${user.avatar}`
+                : "assets/img/about/avatar.jpg";
+            }
+
+            if (usernameMesElement) {
+              usernameMesElement.innerText = user.username || "Người dùng";
+            }
+
+            const avt = user.avatar
+              ? `http://localhost:8080/images/avatar/${user.avatar}`
+              : "assets/img/messages-1.jpg";
+
+            const messageItem = document.createElement("li");
+            messageItem.classList.add("message-item");
+            messageItem.dataset.senderId = message.senderId;
+
+            messageItem.innerHTML = `
                       <a href="#">
                           <img src="${avt}" alt class="rounded-circle">
                           <div>
@@ -410,22 +579,22 @@
                           </div>
                       </a>
                   `;
-  
-                  // Thêm vào danh sách tin nhắn
-                  messageList.insertBefore(messageItem, messageList.querySelector(".dropdown-footer"));
-  
-                  // Thêm sự kiện click để lấy tin nhắn của người gửi
-                  messageItem.addEventListener("click", () => fetchMessagesFromSender(message.senderId));
-              } catch (innerError) {
-                  console.error("Lỗi khi lấy thông tin người dùng:", innerError);
-              }
+
+            // Thêm vào danh sách tin nhắn
+            messageList.insertBefore(messageItem, messageList.querySelector(".dropdown-footer"));
+
+            // Thêm sự kiện click để lấy tin nhắn của người gửi
+            messageItem.addEventListener("click", () => fetchMessagesFromSender(message.senderId));
+          } catch (innerError) {
+            console.error("Lỗi khi lấy thông tin người dùng:", innerError);
           }
+        }
       } catch (error) {
-          console.error("Lỗi khi lấy danh sách tin nhắn:", error);
+        console.error("Lỗi khi lấy danh sách tin nhắn:", error);
       }
-  }
-  
-  
+    }
+
+
     async function fetchMessagesFromSender(senderId) {
       try {
         // Lấy tin nhắn gửi đi
@@ -434,23 +603,23 @@
           { headers: { Authorization: `Bearer ${token}` } }
         );
         const sentMessages = await responseSent.json();
-      
+
         // Lấy tin nhắn nhận vào
         const responseReceived = await fetch(
           `http://localhost:8080/message/both2?receiverId=${receiverId}&senderId=${senderId}`,
           { headers: { Authorization: `Bearer ${token}` } }
         );
         const receivedMessages = await responseReceived.json();
-      
+
         // Kết hợp tin nhắn gửi và nhận
         const messages = [
           ...sentMessages.result.map((msg) => ({ ...msg, type: "sent" })),
           ...receivedMessages.result.map((msg) => ({ ...msg, type: "received" })),
         ];
-      
+
         // Sắp xếp theo thời gian (cũ đến mới)
         messages.sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt));
-      
+
         // Hiển thị tin nhắn
         currentSenderId = senderId;
         messageDetails.innerHTML = messages
@@ -463,7 +632,7 @@
               </li>`;
           })
           .join("");
-      
+
         // Đảm bảo cuộn đến cuối modal khi mở
         setTimeout(() => {
           const lastMessage = messageDetails.lastElementChild;
@@ -471,13 +640,13 @@
             lastMessage.scrollIntoView({ behavior: "smooth", block: "end" });
           }
         }, 100); // Đợi một chút để nội dung được render trước khi cuộn xuống
-      
+
         openModal();
       } catch (error) {
         console.error("Lỗi khi lấy tin nhắn chi tiết:", error);
       }
     }
-    
+
     function openModal() {
       messageModal.style.display = "block";
       // Đảm bảo cuộn đến cuối modal khi mở
@@ -488,18 +657,18 @@
         }
       }, 100); // Đợi một chút để nội dung được render trước khi cuộn xuống
     }
-    
-  
+
+
     async function sendMessage() {
       const messageContent = messageInput.value.trim();
       if (!messageContent || !currentSenderId) return;
-  
+
       const messageData = {
         senderId: receiverId,
         receiverId: currentSenderId,
         message: messageContent,
       };
-  
+
       try {
         const response = await fetch("http://localhost:8080/message", {
           method: "POST",
@@ -509,7 +678,7 @@
           },
           body: JSON.stringify(messageData),
         });
-  
+
         if (response.ok) {
           const newMessage = await response.json();
           messageDetails.insertAdjacentHTML(
@@ -520,7 +689,7 @@
             </li>`
           );
           messageInput.value = "";
-  
+
           // Sau khi gửi tin nhắn, tái tải lại danh sách tin nhắn
           fetchMessagesFromSender(currentSenderId); // Tải lại tin nhắn từ senderId hiện tại
         }
@@ -528,90 +697,92 @@
         console.error("Lỗi khi gửi tin nhắn:", error);
       }
     }
-  
+
     function formatTimeAgo(dateString) {
       const date = new Date(dateString);
       const now = new Date();
       const diff = Math.floor((now - date) / 1000);
-  
+
       if (diff < 60) return `${diff} giây trước`;
       if (diff < 3600) return `${Math.floor(diff / 60)} phút trước`;
       if (diff < 86400) return `${Math.floor(diff / 3600)} giờ trước`;
       return `${Math.floor(diff / 86400)} ngày trước`;
     }
-  
+
     function formatTimeAgo2(dateString) {
       const date = new Date(dateString); // JavaScript hiểu tốt định dạng ISO 8601
       date.setHours(date.getHours() + 7); // Cộng thêm 7 giờ để điều chỉnh sang UTC+7
       const now = new Date();
       const diff = Math.floor((now - date) / 1000); // Hiệu số thời gian tính bằng giây
-  
+
       if (diff < 60) {
         return `${diff} giây trước`;
       }
-  
+
       if (diff < 3600) {
         const minutes = Math.round(diff / 60); // Làm tròn phút
         return `${minutes} phút trước`;
       }
-  
+
       if (diff < 86400) {
         const hours = Math.round(diff / 3600); // Làm tròn giờ
         return `${hours} giờ trước`;
       }
-  
+
       return `${Math.floor(diff / 86400)} ngày trước`; // Nếu lớn hơn 1 ngày
     }
-  
+
     function openModal() {
       messageModal.style.display = "block";
     }
-  
+
     function closeModal() {
       messageModal.style.display = "none";
     }
-  
+
     document.querySelector(".close-btn").addEventListener("click", closeModal);
     sendMessageBtn.addEventListener("click", sendMessage);
-  
+
     fetchMessages();
   });
-  
+
 </script>
 
 <style>
   #messageList {
-    width: 300px; /* Cố định độ rộng của dropdown */
-    overflow-y: auto; /* Thêm thanh cuộn khi nội dung vượt quá chiều cao */
+    width: 300px;
+    /* Cố định độ rộng của dropdown */
+    overflow-y: auto;
+    /* Thêm thanh cuộn khi nội dung vượt quá chiều cao */
   }
-  
+
   #messageList .dropdown-header {
     font-weight: bold;
   }
-  
+
   #messageList hr {
     border: 0;
     border-top: 1px solid #ddd;
   }
 
-  
+
   .message-modal {
     display: none;
     position: fixed;
-    top: 7%; 
-    left: 81%; 
-    transform: translateX(-50%); 
+    top: 7%;
+    left: 81%;
+    transform: translateX(-50%);
     width: 310px;
-    max-height: 70%; 
-    overflow-y: auto; 
+    max-height: 70%;
+    overflow-y: auto;
     background: white;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     z-index: 1000;
-    box-sizing: border-box; 
+    box-sizing: border-box;
   }
 
-  
+
   .message-modal .close-btn {
     position: absolute;
     top: 10px;
@@ -619,31 +790,32 @@
     font-size: 18px;
     cursor: pointer;
   }
-  
+
   .message-modal ul {
     list-style: none;
     padding: 0;
     max-height: 300px;
     overflow-y: auto;
   }
-  
+
   .message-modal ul li {
     padding: 10px 0;
     border-bottom: 1px solid #ddd;
   }
-  
-  .sender-message, .receiver-message {
+
+  .sender-message,
+  .receiver-message {
     font-size: 10px;
   }
-  
+
   .sender-message {
     text-align: right;
   }
-  
+
   .receiver-message {
     text-align: left;
   }
-  
+
   .message-content {
     display: inline-block;
     max-width: 70%;
@@ -651,32 +823,32 @@
     border-radius: 10px;
     position: relative;
   }
-  
+
   .sender-message .message-content {
     background-color: #f0f0f0;
   }
-  
+
   .receiver-message .message-content {
     background-color: #d1e7ff;
   }
-  
+
   .message-modal-content {
     padding: 20px;
   }
-  
+
   .send-message-container {
     display: flex;
     gap: 10px;
     margin-top: 10px;
   }
-  
+
   #messageInput {
     flex: 1;
     padding: 8px;
     border: 1px solid #ccc;
     border-radius: 4px;
   }
-  
+
   #sendMessageBtn {
     width: 35px;
     font-size: 10px;
@@ -686,9 +858,8 @@
     border-radius: 4px;
     cursor: pointer;
   }
-  
+
   #sendMessageBtn:hover {
     background-color: #0056b3;
   }
-  
 </style>
