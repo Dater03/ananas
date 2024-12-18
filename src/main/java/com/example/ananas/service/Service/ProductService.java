@@ -257,16 +257,35 @@ public class ProductService implements IProductService {
 
     @Override
     public List<Map<String, Object>> getMonthlyStatisticsForCurrentYear() {
+        // Gọi query để lấy dữ liệu từ DB
         List<Object[]> results = productRepository.findMonthlyStatisticsForCurrentYear();
-        List<Map<String, Object>> monthlyStatistics = new ArrayList<>();
+
+        // Chuyển đổi kết quả từ query thành Map
+        Map<Integer, Map<String, Object>> monthlyData = new HashMap<>();
         for (Object[] row : results) {
             Map<String, Object> productData = new HashMap<>();
             productData.put("month", row[0]);
             productData.put("totalStock", ((Number) row[1]).intValue());
             productData.put("totalSold", ((Number) row[2]).intValue());
-            monthlyStatistics.add(productData);
+            monthlyData.put((Integer) row[0], productData);
         }
+
+        // Tạo danh sách đầy đủ 12 tháng
+        List<Map<String, Object>> monthlyStatistics = new ArrayList<>();
+        for (int i = 1; i <= 12; i++) {
+            if (monthlyData.containsKey(i)) {
+                monthlyStatistics.add(monthlyData.get(i));
+            } else {
+                Map<String, Object> emptyData = new HashMap<>();
+                emptyData.put("month", i);
+                emptyData.put("totalStock", 0);
+                emptyData.put("totalSold", 0);
+                monthlyStatistics.add(emptyData);
+            }
+        }
+
         return monthlyStatistics;
     }
+
 
 }

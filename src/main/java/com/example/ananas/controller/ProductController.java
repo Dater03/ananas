@@ -160,7 +160,8 @@ public class ProductController {
     }
 
     @GetMapping("/product/chart")
-    public List<Map<String, Object>> getChartProduct(){
-        return productService.getMonthlyStatisticsForCurrentYear();
+    public ResponseEntity<Object> getChartProduct() {
+        List<Map<String, Object>> result = productService.getMonthlyStatisticsForCurrentYear();
+        return ResponseEntity.ok(result); // Trả về kết quả dưới dạng JSON
     }
 }
