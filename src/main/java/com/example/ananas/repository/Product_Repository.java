@@ -32,6 +32,14 @@ public interface Product_Repository extends JpaRepository<Product, Integer>, Jpa
             nativeQuery = true)
     List<Object[]> getProductNameAndStock();
 
+    @Query(value = "SELECT c.category_name, p.product_name, SUM(pv.stock) AS total_stock " +
+            "FROM ananas.product_variant pv " +
+            "INNER JOIN ananas.product p ON pv.product_id = p.product_id " +
+            "INNER JOIN ananas.category c ON p.category_id = c.category_id " +
+            "GROUP BY p.product_name, c.category_name",
+            nativeQuery = true)
+    List<Object[]> getProductNameAndStockAndCategoryName();
+
     @Query(value = "SELECT MONTH(p.created_at) AS month, " +
             "SUM(v.stock) AS totalStock, " +
             "SUM(p.sold_quantity) AS totalSold " +

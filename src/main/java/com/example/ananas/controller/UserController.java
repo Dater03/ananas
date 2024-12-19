@@ -101,7 +101,7 @@ public class UserController {
         if (isReset) {
             return ResponseEntity.ok("Password has been reset successfully.");
         } else {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid verification code or password.");
+            return ResponseEntity.badRequest().body("non");
         }
     }
 }

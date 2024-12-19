@@ -162,6 +162,12 @@ public class ProductController {
         return productService.getProductNameAndStock();
     }
 
+
+    @GetMapping("/product/stock")
+    public List<Map<String, Object>> getProductNameAndStockAndCategoryName(){
+        return productService.getProductNameAndStockAndCategoryName();
+    }
+
     @GetMapping("/product/chart")
     public ResponseEntity<Object> getChartProduct() {
         List<Map<String, Object>> result = productService.getMonthlyStatisticsForCurrentYear();

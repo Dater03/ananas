@@ -259,6 +259,23 @@ public class ProductService implements IProductService {
         return productList;
     }
 
+
+    @Override
+    public List<Map<String, Object>> getProductNameAndStockAndCategoryName() {
+        List<Object[]> results = productRepository.getProductNameAndStockAndCategoryName();
+
+        List<Map<String, Object>> productList = new ArrayList<>();
+
+        for (Object[] row : results) {
+            Map<String, Object> productData = new HashMap<>();
+            productData.put("category_name", row[0]); // Category Name
+            productData.put("product_name", row[1]);
+            productData.put("total_stock", ((Number) row[2]).intValue()); // Total Stock
+            productList.add(productData);
+        }
+        return productList;
+    }
+
     @Override
     public List<Map<String, Object>> getMonthlyStatisticsForCurrentYear() {
         // Gọi query để lấy dữ liệu từ DB
