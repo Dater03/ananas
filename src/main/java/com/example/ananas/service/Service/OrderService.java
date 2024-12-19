@@ -473,4 +473,9 @@ public class OrderService implements IOrderService {
     public List<TempOrder> getAllTemp() {
       return   this.tempOrderRepository.findAll();
     }
+
+    @Override
+    public Order findOrderByOrderId(Integer orderId) {
+        return orderRepository.findByOrderId(orderId);
+    }
 }

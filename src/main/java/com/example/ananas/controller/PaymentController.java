@@ -1,6 +1,8 @@
 package com.example.ananas.controller;
 
 import com.example.ananas.entity.TempOrder;
+import com.example.ananas.entity.order.Order;
+import com.example.ananas.service.Service.CartService;
 import com.example.ananas.service.Service.OrderService;
 import com.example.ananas.service.Service.TempOrderService;
 import com.example.ananas.service.Service.VnpayService;
@@ -25,6 +27,7 @@ public class PaymentController {
     VnpayService vnpayService;
     TempOrderService tempOrderService;
     OrderService orderService;
+    CartService cartService;
 
     @GetMapping("/createPayment")
     public String createPayment(@RequestParam String orderInfo, @RequestParam long amount, @RequestParam int orderId)   {
@@ -82,6 +85,8 @@ public class PaymentController {
             if ("00".equals(vnp_ResponseCode)) {
                 TempOrder tempOrder = this.tempOrderService.findByTxnRef(vnp_TxnRef);
                 this.orderService.changePaymentStatus(tempOrder.getOrderId(), "paid");
+                Order order = orderService.findOrderByOrderId(tempOrder.getOrderId());
+                this.cartService.deleteCart(order.getUser().getUserId());
                 this.orderService.handleAfterCreateOrder(tempOrder.getOrderId());
                 tempOrder.setStatus("success");
                 this.tempOrderService.save(tempOrder);

@@ -5,6 +5,7 @@ import com.example.ananas.dto.request.OrderUpdateUser;
 import com.example.ananas.dto.response.OrderResponse;
 import com.example.ananas.dto.response.ResultPaginationDTO;
 import com.example.ananas.entity.TempOrder;
+import com.example.ananas.entity.order.Order;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 
@@ -52,4 +53,6 @@ public interface IOrderService {
     ResultPaginationDTO getAllTempOrder(Specification<TempOrder> spec, Pageable pageable);
 
     List<TempOrder> getAllTemp();
+
+    Order findOrderByOrderId(Integer orderId);
 }
