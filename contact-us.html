@@ -474,24 +474,28 @@
 
         async function loadMessages(senderId) {
             try {
-                const senderResponse = await fetch(`http://localhost:8080/message/send/${senderId}`);
+                const [senderResponse, receiverResponse] = await Promise.all([
+                    fetch(`http://localhost:8080/message/send/${senderId}`),
+                    fetch(`http://localhost:8080/message/receive/${senderId}`),
+                ]);
+        
                 const senderData = await senderResponse.json();
-                const senderMessages = senderData.result || [];
-
-                const receiverResponse = await fetch(`http://localhost:8080/message/receive/${senderId}`);
                 const receiverData = await receiverResponse.json();
+        
+                const senderMessages = senderData.result || [];
                 const receiverMessages = receiverData.result || [];
-
+        
                 messages.push(...senderMessages.map(msg => ({ ...msg, type: "sender" })));
                 messages.push(...receiverMessages.map(msg => ({ ...msg, type: "receiver" })));
-
-                sortMessagesByOldest(); // Sắp xếp tin nhắn từ cũ đến mới
+        
+                sortMessagesByOldest();
                 displayMessages();
-                scrollToBottom(); // Cuộn đến tin nhắn cuối
+                scrollToBottom();
             } catch (error) {
                 console.error("Error fetching messages:", error);
             }
         }
+        
 
         function sortMessagesByOldest() {
             messages.sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt)); // Sắp xếp tăng dần
