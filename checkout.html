@@ -825,56 +825,58 @@
                         .then(response => response.json())
                         .then(result => {
                             if (result.code === 200) {
-                                fetch(`http://localhost:8080/cart?userId=${userId}`, {
-                                    method: 'DELETE'
-                                })
-                                    .then(response2 => {
-                                        if (response2.ok) {
-                                            return response2.text();
-                                        } else {
-                                            throw new Error("Lỗi khi xóa giỏ hàng.");
-                                        }
+                                if (selectedPaymentMethod === 'CASH_ON_DELIVERY') {
+
+                                    // Xóa đơn hàng
+                                    
+                                    fetch(`http://localhost:8080/cart?userId=${userId}`, {
+                                        method: 'DELETE'
                                     })
-                                    .then(message => {
-                                        console.log(message);
-                                        if (selectedPaymentMethod === 'CASH_ON_DELIVERY') {
-                                            alert("Đơn hàng đã được đặt thành công!");
-                                            window.location.href = 'index-2.html';
-                                        } else if (selectedPaymentMethod === 'CREDIT_CARD') {
-                                            fetch(`http://localhost:8080/createPayment?orderInfo=XX&amount=${result.result.totalPrice}&orderId=${result.result.id}`, { method: 'GET' })
-                                                .then(response => {
-                                                    if (!response.ok) {
-                                                        throw new Error("Lỗi khi gọi API tạo thanh toán");
-                                                    }
-                                                    return response.text();
-                                                })
-                                                .then(paymentUrl => {
-                                                    console.log("Payment URL:", paymentUrl);
-                                                    alert(paymentUrl)
-                                                    const newTab = window.open(paymentUrl, '_blank');
-                                                    if (newTab) {
+                                        .then(response2 => {
+                                            if (response2.ok) {
+                                                alert("Đơn hàng đã được đặt thành công!");
+                                                window.location.href = 'index-2.html';
+                                            } else {
+                                                throw new Error("Lỗi khi xóa giỏ hàng.");
+                                            }
+                                        })
+                                        .then(message => {
+                                            console.log(message);
+                                        })
+                                        .catch(error => {
+                                            console.error("Xảy ra lỗi khi xóa giỏ hàng:", error.message);
+                                            alert("Đã có lỗi xảy ra khi xóa giỏ hàng.");
+                                        });
 
-                                                        newTab.focus();
-                                                        window.location.href = 'index-2.html';
-                                                    } else {
-                                                        alert("Trình duyệt chặn cửa sổ bật lên. Vui lòng cho phép cửa sổ bật lên và thử lại.");
-                                                    }
-                                                })
-                                                .catch(error => {
-                                                    console.error("Xảy ra lỗi:", error.message);
-                                                    alert("Không thể tạo thanh toán, vui lòng thử lại.");
-                                                });
+                                } else if (selectedPaymentMethod === 'CREDIT_CARD') {
+                                    fetch(`http://localhost:8080/createPayment?orderInfo=XX&amount=${result.result.totalPrice}&orderId=${result.result.id}`, { method: 'GET' })
+                                        .then(response => {
+                                            if (!response.ok) {
+                                                throw new Error("Lỗi khi gọi API tạo thanh toán");
+                                            }
+                                            return response.text();
+                                        })
+                                        .then(paymentUrl => {
+                                            console.log("Payment URL:", paymentUrl);
+                                            alert(paymentUrl)
+                                            const newTab = window.open(paymentUrl, '_blank');
+                                            if (newTab) {
 
-                                        } else {
-                                            alert('Vui lòng chọn phương thức thanh toán!');
-                                            return;
-                                        }
-                                    })
-                                    .catch(error => {
-                                        console.error("Xảy ra lỗi khi xóa giỏ hàng:", error.message);
-                                        alert("Đã có lỗi xảy ra khi xóa giỏ hàng.");
-                                    });
+                                                newTab.focus();
+                                                window.location.href = 'index-2.html';
+                                            } else {
+                                                alert("Trình duyệt chặn cửa sổ bật lên. Vui lòng cho phép cửa sổ bật lên và thử lại.");
+                                            }
+                                        })
+                                        .catch(error => {
+                                            console.error("Xảy ra lỗi:", error.message);
+                                            alert("Không thể tạo thanh toán, vui lòng thử lại.");
+                                        });
 
+                                } else {
+                                    alert('Vui lòng chọn phương thức thanh toán!');
+                                    return;
+                                }
                             } else {
                                 alert("Đã có lỗi xảy ra khi tạo đơn hàng.");
                             }
@@ -1143,67 +1145,84 @@
         margin-bottom: 20px;
     }
 
-     /* cart */
-     .minicart-inner-content {
+    /* cart */
+    .minicart-inner-content {
         display: flex;
         flex-direction: column;
-        height: 100%; /* Chiều cao toàn phần của nội dung */
+        height: 100%;
+        /* Chiều cao toàn phần của nội dung */
     }
-    
+
     .minicart-item-wrapper {
-        flex-grow: 1; /* Phần danh sách sản phẩm mở rộng để chiếm không gian còn lại */
-        overflow-y: auto; /* Kích hoạt cuộn dọc */
+        flex-grow: 1;
+        /* Phần danh sách sản phẩm mở rộng để chiếm không gian còn lại */
+        overflow-y: auto;
+        /* Kích hoạt cuộn dọc */
     }
+
     /* footer */
-.footer-wrapper {
-    padding: 20px 0;
-}
-
-.footer-widget-area {
-    background-color: #f9f9f9;
-}
-
-.widget-item {
-    margin-bottom: 20px;
-}
-
-.location-wrap li {
-    font-size: 16px;
-    margin-bottom: 10px;
-}
-
-/* Thay đổi bố cục và kích thước cho màn hình nhỏ hơn */
-@media (max-width: 992px) {
-    .col-xl-5, .col-lg-3, .col-md-6 {
-        flex: 0 0 50%;
-        max-width: 50%;
+    .footer-wrapper {
+        padding: 20px 0;
     }
 
-    .col-xl-3, .col-lg-3, .col-md-4 {
-        flex: 0 0 100%;
-        max-width: 100%;
-        text-align: center; /* Căn giữa nội dung */
+    .footer-widget-area {
+        background-color: #f9f9f9;
     }
 
-    iframe {
-        width: 100%;
-        height: 150px; /* Điều chỉnh chiều cao iframe */
+    .widget-item {
+        margin-bottom: 20px;
     }
-}
 
-@media (max-width: 576px) {
     .location-wrap li {
-        font-size: 14px; /* Thu nhỏ font chữ */
+        font-size: 16px;
+        margin-bottom: 10px;
     }
 
-    .col-xl-5, .col-lg-3, .col-md-6,
-    .col-xl-3, .col-lg-3, .col-md-4 {
-        flex: 0 0 100%;
-        max-width: 100%;
+    /* Thay đổi bố cục và kích thước cho màn hình nhỏ hơn */
+    @media (max-width: 992px) {
+
+        .col-xl-5,
+        .col-lg-3,
+        .col-md-6 {
+            flex: 0 0 50%;
+            max-width: 50%;
+        }
+
+        .col-xl-3,
+        .col-lg-3,
+        .col-md-4 {
+            flex: 0 0 100%;
+            max-width: 100%;
+            text-align: center;
+            /* Căn giữa nội dung */
+        }
+
+        iframe {
+            width: 100%;
+            height: 150px;
+            /* Điều chỉnh chiều cao iframe */
+        }
     }
 
-    iframe {
-        height: 120px; /* Điều chỉnh thêm cho màn hình nhỏ */
+    @media (max-width: 576px) {
+        .location-wrap li {
+            font-size: 14px;
+            /* Thu nhỏ font chữ */
+        }
+
+        .col-xl-5,
+        .col-lg-3,
+        .col-md-6,
+        .col-xl-3,
+        .col-lg-3,
+        .col-md-4 {
+            flex: 0 0 100%;
+            max-width: 100%;
+        }
+
+        iframe {
+            height: 120px;
+            /* Điều chỉnh thêm cho màn hình nhỏ */
+        }
     }
-}
 </style>
