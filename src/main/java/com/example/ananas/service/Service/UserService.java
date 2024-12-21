@@ -25,6 +25,7 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
@@ -97,6 +98,11 @@ public class UserService implements IUserService {
         User user = userRepository.findById(id)
                 .orElseThrow(() -> new AppException(ErrException.USER_NOT_EXISTED));
         return userMapper.toUserResponse(user);
+    }
+
+    @Override
+    public BigDecimal getNumberUsers(String date) {
+        return userRepository.getNumberOfUsersCreatedOn(date);
     }
 
 

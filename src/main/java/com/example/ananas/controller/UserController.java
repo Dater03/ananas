@@ -16,6 +16,9 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.time.YearMonth;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -103,5 +106,19 @@ public class UserController {
         } else {
             return ResponseEntity.badRequest().body("non");
         }
+    }
+
+    @GetMapping("/getSumUser")
+    public ResponseEntity<List<BigDecimal>> getNumberUser(@RequestParam(name = "year") int year, @RequestParam(name = "month") int month) {
+        YearMonth yearMonth = YearMonth.of(year, month);
+        int daysInMonth = yearMonth.lengthOfMonth();
+        List<BigDecimal> revenues = new ArrayList<>();
+
+        for (int day = 1; day <= daysInMonth; day++) {
+            LocalDate date = LocalDate.of(year, month, day);
+            BigDecimal revenue =  userService.getNumberUsers(date.toString());
+            revenues.add(revenue);
+        }
+        return ResponseEntity.ok(revenues);
     }
 }
