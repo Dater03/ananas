@@ -293,8 +293,6 @@
                     </div>
                     <div class="ps-3" id="sales-stats">
                       <h6 id="sales-total">0.00 VNĐ</h6>
-                      <span class="text-success small pt-1 fw-bold" id="sales-percentage">0%</span>
-                      <span class="text-muted small pt-2 ps-1" id="sales-status">tăng trưởng</span>
                     </div>
                   </div>
                 </div>
@@ -305,17 +303,6 @@
             <!-- Customers Card -->
             <div class="col-xxl-6 col-md-6">
               <div class="card shadow-lg info-card cus-card" id="customers-card">
-                <div class="filter" id="customers-filter">
-                  <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
-                  <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow" id="customers-dropdown">
-                    <li class="dropdown-header text-start">
-                      <h6>Bộ lọc</h6>
-                    </li>
-                    <li><a class="dropdown-item" href="#" id="customers-today">Hôm nay</a></li>
-                    <li><a class="dropdown-item" href="#" id="customers-month">Trong tháng</a></li>
-                    <li><a class="dropdown-item" href="#" id="customers-year">Trong năm</a></li>
-                  </ul>
-                </div>
                 <div class="card-body" id="customers-body">
                   <h5 class="card-title" id="customers-title">Khách hàng mới <span id="customers-span">| Hôm nay</span>
                   </h5>
@@ -326,15 +313,11 @@
                     </div>
                     <div class="ps-3" id="customers-stats">
                       <h6 id="customers-total">0</h6>
-                      <span class="text-danger small pt-1 fw-bold" id="customers-percentage">0%</span>
-                      <span class="text-muted small pt-2 ps-1" id="customers-status">giảm</span>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
-            <!-- End Customers Card -->
-
             <!-- End Customers Card -->
 
             <!-- Products Overview -->
@@ -516,6 +499,7 @@
   document.getElementById("orderTableBody").addEventListener("click", function () {
     window.location.href = "new-order.html";
   });
+
   document.addEventListener("DOMContentLoaded", function () {
     const receiverId = localStorage.getItem("userId");
     const token = localStorage.getItem("token");
@@ -542,6 +526,7 @@
         })
         .catch((error) => console.error("Lỗi:", error));
     }
+    
 
     function populateOrderTable(orders) {
       const tableBody = document.getElementById("orderTableBody");
@@ -861,7 +846,54 @@
     fetchAvatar();
     fetchMessages();
     fetchOrders();
+    
+    
   });
+
+  async function fetchUserData(year, month) {
+    try {
+      // Gọi API với fetch
+      const url = `http://localhost:8080/user/getSumUser?year=${year}&month=${month}`;
+      const response = await fetch(url);
+  
+      if (response.ok) {
+        // Parse dữ liệu JSON
+        const rs = await response.json();
+        return rs.result; // Trả về dữ liệu mảng kết quả
+      } else {
+        console.error("Lỗi HTTP:", response.status);
+        return null; // Trả về null nếu có lỗi HTTP
+      }
+    } catch (error) {
+      console.error("Lỗi khi gọi API:", error);
+      return null; // Trả về null nếu có lỗi khi fetch
+    }
+  }
+  
+  async function displayTodayUserCount() {
+    // Lấy năm và tháng hiện tại
+    const year = new Date().getFullYear();
+    const month = new Date().getMonth() + 1;
+  
+    // Gọi function fetchUserData để lấy dữ liệu
+    const data = await fetchUserData(year, month);
+
+    console.log("sum",data)
+  
+    if (data) {
+      // Lấy dữ liệu của ngày hôm nay
+      const today = new Date().getDate();
+      const todayCount = data[today - 1] || 0; // data[0] tương ứng ngày 1
+  
+      // Hiển thị dữ liệu vào thẻ HTML
+      document.getElementById("customers-total").textContent = todayCount;
+    } else {
+      console.error("Không thể hiển thị dữ liệu do lỗi API.");
+    }
+  }
+
+  document.addEventListener("DOMContentLoaded", displayTodayUserCount);
+
 
 </script>
 
