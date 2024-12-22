@@ -499,9 +499,23 @@
         function createMessageElement(message, type) {
             const div = document.createElement("div");
             div.className = `message ${type}`;
-            div.textContent = `${message.message} (${formatTimestamp(message.createdAt)})`;
+        
+            // Tạo phần tử cho nội dung message
+            const messageText = document.createElement("span");
+            messageText.textContent = message.message;
+        
+            // Tạo phần tử cho createdAt và định dạng lại
+            const timestamp = document.createElement("span");
+            timestamp.className = "timestamp";
+            timestamp.textContent = `(${formatTimestamp(message.createdAt)})`;
+        
+            // Thêm messageText và timestamp vào div
+            div.appendChild(messageText);
+            div.appendChild(timestamp);
+        
             return div;
         }
+        
 
         function formatTimestamp(timestamp) {
             const date = new Date(timestamp);
@@ -753,6 +767,12 @@
         border-radius: 8px;
         font-size: 14px;
         color: white;
+    }
+
+    .timestamp {
+        display: block; /* Đảm bảo timestamp sẽ xuất hiện ở dòng mới */
+        font-size: 10px; /* Kích thước chữ nhỏ hơn */
+        margin-top: 5px; /* Khoảng cách giữa message và timestamp */
     }
 
     .sender {
