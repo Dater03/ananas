@@ -173,10 +173,9 @@
         <!-- Thông tin Tài khoản -->
         <li class="nav-item dropdown pe-3">
           <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
-            <img src="assets/img/profile-img.jpg" alt="Profile" class="rounded-circle">
+            <img id="avtView" src="" alt="Profile" class="rounded-circle">
             <span class="d-none d-md-block dropdown-toggle ps-2">Quản lý</span>
           </a><!-- End Profile Iamge Icon -->
-
           <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
             <li class="dropdown-header">
               <h6>Quản lý Cửa hàng</h6>
@@ -373,6 +372,38 @@ document.getElementById('filterStatus').addEventListener('change', function () {
   });
 });
 
+async function fetchAvatar() {
+  try {
+    const userId = localStorage.getItem("userId");
+    // Gửi yêu cầu API
+    const response = await fetch(`http://localhost:8080/user/${userId}`);
+
+    // Kiểm tra trạng thái phản hồi
+    if (!response.ok) {
+      throw new Error(`HTTP error! Status: ${response.status}`);
+    }
+
+    // Phân tích dữ liệu JSON
+    const data = await response.json();
+    const avt = data?.result.result; // Dùng optional chaining để đảm bảo tính an toàn
+
+    console.log("Avatar Data:", avt);
+
+    // Lấy phần tử ảnh từ DOM
+    const avtE = document.querySelector("#avtView");
+
+    if (avtE) {
+      // Gán nguồn ảnh dựa trên dữ liệu từ API
+      avtE.src = `http://localhost:8080/images/avatar/${avt.avatar}`;
+    } else {
+      console.warn("Element with ID 'avtView' not found.");
+    }
+  } catch (error) {
+    // Log lỗi ra console
+    console.error("Error fetching avatar:", error);
+  }
+}
+
 // Hàm gọi API và hiển thị dữ liệu
 async function fetchAndDisplayProducts() {
   try {
@@ -417,6 +448,9 @@ async function fetchAndDisplayProducts() {
 }
 
 // Gọi hàm khi tải trang
-document.addEventListener('DOMContentLoaded', fetchAndDisplayProducts);
+document.addEventListener("DOMContentLoaded", () => {
+  fetchAndDisplayProducts();
+  fetchAvatar();
+});
 
 </script>
