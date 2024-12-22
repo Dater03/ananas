@@ -32,7 +32,7 @@ public class User {
     String password;
 
     @Column(name = "email")
-            @Email(message = "")
+    @Email(message = "")
     String email;
 
     @Column(name = "phone")

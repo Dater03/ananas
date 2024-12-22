@@ -1,5 +1,6 @@
 package com.example.ananas.controller;
 
+import com.example.ananas.config.ProductSpecification;
 import com.example.ananas.dto.request.ProductCreateRequest;
 import com.example.ananas.dto.response.ProductImagesResponse;
 import com.example.ananas.dto.response.ProductResponse;
@@ -58,6 +59,12 @@ public class ProductController {
     @GetMapping("/product")
     public ResponseEntity<ResultPaginationDTO> getAllProduct(@Filter Specification<Product> spec , Pageable pageable)
     {
+        return ResponseEntity.ok(productService.getAllProduct(spec, pageable));
+    }
+    // tim liem san pham
+    @GetMapping("/product/name")
+    public ResponseEntity<ResultPaginationDTO> getAllProduct(@RequestParam String search, Pageable pageable) {
+        Specification<Product> spec = ProductSpecification.searchByName(search);
         return ResponseEntity.ok(productService.getAllProduct(spec, pageable));
     }
 

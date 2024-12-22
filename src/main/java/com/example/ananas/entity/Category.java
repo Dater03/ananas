@@ -37,7 +37,7 @@ public class Category {
 
     @OneToMany(mappedBy = "category")
     @JsonManagedReference("category-products")
-            @JsonIgnore
+    @JsonIgnore
     List<Product> products;
 
     @PrePersist

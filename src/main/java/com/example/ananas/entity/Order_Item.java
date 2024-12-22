@@ -34,4 +34,3 @@ public class Order_Item {
     @Column(name = "price")
     BigDecimal price;
 }
-
