@@ -17,6 +17,8 @@
     <link href="assets/css/style.css" rel="stylesheet">
     <!-- Modernizer JS -->
     <script src="assets/js/modernizr-2.8.3.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 </head>
 
@@ -53,6 +55,15 @@
                                             <li><a href="shop.html">Cửa hàng</a></li>
                                             <li><a href="contact-us.html">Liên hệ</a></li>
                                         </ul>
+                                        <ul class="mt-1 mb-5">
+                                            <li>
+                                                <input type="text" id="searchInput" style="width: 500px;" placeholder="Nhập sản phẩm cần tìm kiếm...">
+                                                <button id="searchBtn"><i class="ion-ios-search-strong"></i> Tìm kiếm</button>
+                                            </li>
+                                        </ul>
+                                        
+                                        <div id="searchResults" class="search-results" style="display: none; width: 500px; border: 1px solid #ccc; padding: 10px; max-height: 300px; overflow-y: auto; margin-top: 10px;"></div>                                        
+                                    
                                     </nav>
                                     <!-- main menu navbar end -->
                                 </div>
@@ -65,11 +76,7 @@
                             <div class="header-configure-wrapper">
                                 <div class="header-configure-area">
                                     <ul class="nav justify-content-end">
-                                        <li>
-                                            <a href="#" class="offcanvas-btn">
-                                                <i class="ion-ios-search-strong"></i>
-                                            </a>
-                                        </li>
+                                        
                                         <li class="user-hover">
                                             <a href="#">
                                                 <i class="ion-ios-gear-outline"></i>
@@ -109,28 +116,6 @@
     </header>
     <!-- end Header Area -->
 
-    <!-- off-canvas menu start -->
-    <aside class="off-canvas-wrapper">
-        <div class="off-canvas-overlay"></div>
-        <div class="off-canvas-inner-content">
-            <div class="btn-close-off-canvas">
-                <i class="ion-android-close"></i>
-            </div>
-
-            <div class="off-canvas-inner">
-                <!-- search box start -->
-                <div class="search-box-offcanvas">
-                    <form>
-                        <input type="text" placeholder="Search Here...">
-                        <button class="search-btn"><i class="ion-ios-search-strong"></i></button>
-                    </form>
-                </div>
-                <!-- search box end -->
-            </div>
-        </div>
-    </aside>
-    <!-- off-canvas menu end -->
-
     <!-- main wrapper start -->
     <main>
 
@@ -157,17 +142,6 @@
                                             <i class="fa fa-cart-arrow-down"></i>
                                             Lịch sử mua hàng
                                         </button>
-                                        <button id="payment-method_btn" type="button" data-bs-target="#payment-method"
-                                            data-bs-toggle="tab" role="tab" aria-controls="payment-method"
-                                            aria-selected="false">
-                                            <i class="fa fa-credit-card"></i>
-                                            Phương thức thanh toán
-                                        </button>
-                                        <button id="address-edit_btn" type="button" data-bs-target="#address-edit"
-                                            data-bs-toggle="tab" role="tab" aria-controls="address-edit"
-                                            aria-selected="false">
-                                            <i class="fa fa-map-marker"></i>
-                                            Địa chỉ
                                         </button>
                                         <a class="dangxuat" href="login.html"><i class="fa fa-sign-out"></i>Đăng
                                             xuất</a>
@@ -186,8 +160,14 @@
 
                                                 <!-- Avatar Section -->
                                                 <div class="avatar-container">
-                                                    <img src="" alt="User Avatar" class="user-avatar">
-                                                    <input type="file" id="avatar-input" accept="image/*">
+                                                    <img src="" alt="User Avatar" class="user-avatar" id="preview-avatar">
+                                                    
+                                                    <!-- Chọn ảnh và lưu nút sẽ được đặt dưới ảnh -->
+                                                    <div class="button-container">
+                                                        <label for="avatar-input" class="custom-file-label">Chọn ảnh</label>
+                                                        <input type="file" id="avatar-input" accept="image/*" style="display: none;">
+                                                        <button id="save-avatar-btn" style="display: none;">Lưu</button>
+                                                    </div>
                                                 </div>
 
                                                 <!-- Account Details Form Start -->
@@ -263,7 +243,7 @@
                                                             </div>
                                                         </div>
                                                         <div class="single-input-item">
-                                                            <button class="btn" type="submit">Save Password</button>
+                                                            <button class="btn" type="submit">Lưu mật khẩu</button>
                                                         </div>
                                                     </form>
                                                 </fieldset>
@@ -315,33 +295,6 @@
                                                     </ul>
                                                 </div>
 
-                                            </div>
-                                        </div>
-                                        <!-- Single Tab Content End -->
-
-
-                                        <!-- Single Tab Content Start -->
-                                        <div class="tab-pane fade" id="payment-method" role="tabpanel"
-                                            aria-labelledby="payment-method_btn">
-                                            <div class="myaccount-content">
-                                                <h3>Phương thực thanh toán</h3>
-                                                <p class="saved-message">You Can't Saved Your Payment Method yet.</p>
-                                            </div>
-                                        </div>
-                                        <!-- Single Tab Content End -->
-
-                                        <!-- Single Tab Content Start -->
-                                        <div class="tab-pane fade" id="address-edit" role="tabpanel"
-                                            aria-labelledby="address-edit_btn">
-                                            <div class="myaccount-content">
-                                                <h3>Địa chỉ</h3>
-                                                <address>
-                                                    <p><strong>...</strong></p>
-                                                    <p>...</p>
-                                                    <p>...</p>
-                                                </address>
-                                                <a href="#" class="check-btn sqr-btn "><i class="fa fa-edit"></i> Sửa
-                                                    địa chỉ</a>
                                             </div>
                                         </div>
                                         <!-- Single Tab Content End -->
@@ -397,24 +350,7 @@
 
     </footer>
     <!-- End Footer Area Wrapper -->
-
-    <!-- offcanvas search form start -->
-    <div class="offcanvas-search-wrapper">
-        <div class="offcanvas-search-inner">
-            <div class="offcanvas-close">
-                <i class="ion-android-close"></i>
-            </div>
-            <div class="container">
-                <div class="offcanvas-search-box">
-                    <form class="d-flex bdr-bottom w-100">
-                        <input type="text" placeholder="Search entire storage here...">
-                        <button class="search-btn"><i class="ion-ios-search-strong"></i>search</button>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- offcanvas search form end -->
+     
 
     <!-- offcanvas mini cart start -->
     <div class="offcanvas-minicart-wrapper">
@@ -800,11 +736,6 @@
         const userId = localStorage.getItem("userId"); // Lấy ID từ localStorage
         const token = localStorage.getItem("token"); // Lấy token từ localStorage
 
-        // Kiểm tra nếu không có ID hoặc token
-        if (!userId || !token) {
-            alert("User ID or Token is missing!");
-            return;
-        }
         try {
             const response = await fetch(`http://localhost:8080/cart/quantity?userId=${userId}`, {
                 method: 'GET',
@@ -868,35 +799,87 @@
             console.error("Error fetching user data:", error);
         }
 
-        // Handle avatar update
+        // Select elements
         const avatarInput = document.getElementById("avatar-input");
-        avatarInput.addEventListener("change", async function () {
+        const saveAvatarBtn = document.getElementById("save-avatar-btn");
+        const previewAvatar = document.getElementById("preview-avatar");
+        const fileLabel = document.querySelector(".custom-file-label");
+
+        // Hiển thị ảnh đã chọn trước và cập nhật label khi có tệp
+        avatarInput.addEventListener("change", function () {
             const file = avatarInput.files[0];
             if (file) {
-                const formData = new FormData();
-                formData.append("avatar", file);
+                const reader = new FileReader();
 
-                try {
-                    const response = await fetch(updateUserPhotoUrl, {
-                        method: "PUT",
-                        headers: {
-                            Authorization: `Bearer ${token}`,
-                        },
-                        body: formData,
-                    });
-                    const data = await response.json();
+                // Đọc file và hiển thị preview
+                reader.onload = function (event) {
+                    previewAvatar.src = event.target.result; // Gán đường dẫn ảnh đã chọn
+                };
 
-                    if (data.code === 200) {
-                        alert("Avatar updated successfully!");
-                        document.querySelector(".user-avatar").src = data.result.avatar;
-                    } else {
-                        alert("Failed to update avatar.");
-                    }
-                } catch (error) {
-                    console.error("Error updating avatar:", error);
-                }
+                reader.readAsDataURL(file); // Đọc file dưới dạng URL
+                saveAvatarBtn.style.display = "inline-block"; // Hiển thị nút Lưu
+
+                // Cập nhật label cho tệp đã chọn
             }
         });
+
+        // Xử lý sự kiện khi ấn nút Lưu
+        saveAvatarBtn.addEventListener("click", async function () {
+            const file = avatarInput.files[0];
+            if (!file) {
+                Swal.fire({
+                    title: "Lỗi!",
+                    text: "Vui lòng chọn một ảnh trước khi lưu.",
+                    icon: "warning",
+                    confirmButtonColor: "#3085d6",
+                });
+                return;
+            }
+
+            const formData = new FormData();
+            formData.append("avatar", file);
+
+            try {
+                const response = await fetch(updateUserPhotoUrl, {
+                    method: "PUT",
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                    body: formData,
+                });
+
+                const data = await response.json();
+
+                if (data.code === 200) {
+                    Swal.fire({
+                        title: "Thành công!",
+                        text: "Avatar đã được cập nhật thành công.",
+                        icon: "success",
+                        confirmButtonColor: "#3085d6",
+                    }).then(() => {
+                        window.location.reload();
+                    });
+
+                    saveAvatarBtn.style.display = "none"; // Ẩn nút Lưu sau khi cập nhật
+                } else {
+                    Swal.fire({
+                        title: "Thất bại!",
+                        text: "Không thể cập nhật avatar. Vui lòng thử lại.",
+                        icon: "error",
+                        confirmButtonColor: "#d33",
+                    });
+                }
+            } catch (error) {
+                console.error("Error updating avatar:", error);
+                Swal.fire({
+                    title: "Lỗi hệ thống!",
+                    text: "Đã xảy ra lỗi. Vui lòng thử lại sau.",
+                    icon: "error",
+                    confirmButtonColor: "#d33",
+                });
+            }
+        });
+
 
         // Handle account details update
         document
@@ -924,9 +907,19 @@
                     const data = await response.json();
 
                     if (data.code === 200) {
-                        alert("Account details updated successfully!");
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Thành công',
+                            text: 'Bạn đã cập nhật thông tin thành công!',
+                            confirmButtonColor: '#3085d6',
+                        })
                     } else {
-                        alert("Failed to update account details.");
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Thất bại',
+                            text: 'Bạn đã cập nhật thông tin thất bại!',
+                            confirmButtonColor: '#3085d6',
+                        })
                     }
                 } catch (error) {
                     console.error("Error updating account details:", error);
@@ -944,12 +937,22 @@
                 const confirmPwd = document.getElementById("confirm-pwd").value.trim();
 
                 if (!currentPwd || !newPwd || !confirmPwd) {
-                    alert("All password fields are required.");
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Thất bại',
+                        text: 'Bạn phải nhập đủ thông tin!',
+                        confirmButtonColor: '#3085d6',
+                    })
                     return;
                 }
 
                 if (newPwd !== confirmPwd) {
-                    alert("New Password and Confirm Password do not match.");
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Thất bại',
+                        text: 'Mật khẩu mới không trùng khớp!',
+                        confirmButtonColor: '#3085d6',
+                    })
                     return;
                 }
 
@@ -971,9 +974,19 @@
                     console.log("e", response)
 
                     if (response.ok) {
-                        alert("Password has been reset.");
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Thành công',
+                            text: 'Mật khẩu đã được đổi!',
+                            confirmButtonColor: '#3085d6',
+                        })
                     } else {
-                        alert("Failed to reset.");
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Thất bại',
+                            text: 'Mật khẩu đổi không thành công!',
+                            confirmButtonColor: '#3085d6',
+                        })
                     }
                 } catch (error) {
                     console.error("Error updating password:", error);
@@ -981,7 +994,85 @@
             });
     });
 
+    document.getElementById("searchBtn").addEventListener("click", async function (e) {
+        e.preventDefault(); 
+    
+        const query = document.getElementById("searchInput").value.trim();
+        if (!query) {
+            const resultsContainer = document.getElementById("searchResults");
+            resultsContainer.innerHTML = "<p>Nhập thông tin cần tìm kiếm.</p>";
+            resultsContainer.style.display = "block"; 
+            return;
+        }
+    
+        console.log("Search query:", query); 
+    
+        try {
+            // Gửi yêu cầu đến API backend
+            const response = await fetch(`http://localhost:8080/product/name?search=productName:like:${encodeURIComponent(query)}&page=0&size=10`, {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json"
+                }
+            });
+    
+            console.log("Response status:", response.status); 
+    
+            if (!response.ok) {
+                throw new Error(`Failed to fetch data from API: ${response.status}`);
+            }
+    
+            const data = await response.json();
+            console.log("Response data:", data); 
+    
+            const resultsContainer = document.getElementById("searchResults");
+            resultsContainer.innerHTML = ""; 
+    
+            if (data.result.result && data.result.result.length > 0) {
+                data.result.result.forEach(item => {
+                    const resultItem = document.createElement("div");
+                    resultItem.classList.add("result-item");
+            
+                    const link = document.createElement("a");
+                    link.href = `product-details.html?id=${item.productId}`;
+                    link.classList.add("result-link");
+            
+                    link.innerHTML = `
+                        <div class="result-thumbnail">
+                            <img src="http://localhost:8080/images/product/${item.images?.[0] || 'default-image.jpg'}" alt="${item.productName}">
+                        </div>
+                        <div class="result-details">
+                            <span class="product-name">${item.productName}</span>
+                            <span class="product-price">Giá: ${(item.price * (100 - item.discount) / 100).toLocaleString()} VND</span>
+                        </div>
+                    `;
+            
+                    resultItem.appendChild(link); 
+                    resultsContainer.appendChild(resultItem);  
+                });
+                resultsContainer.style.display = "block";
+            } else {
+                resultsContainer.innerHTML = "<p>Không có sản phẩm nào được tìm thấy.</p>";
+                resultsContainer.style.display = "block";
+            }
+                
+        } catch (error) {
+            console.error("Error:", error.message); 
+            const resultsContainer = document.getElementById("searchResults");
+            resultsContainer.innerHTML = "<p>Lỗi tìm kiếm.</p>";
+            resultsContainer.style.display = "block"; 
+        }
+    });
 
+    document.addEventListener("click", function (event) {
+        const resultsContainer = document.getElementById("searchResults");
+        const searchInput = document.getElementById("searchInput");
+        const searchBtn = document.getElementById("searchBtn");
+
+        if (!resultsContainer.contains(event.target) && event.target !== searchInput && event.target !== searchBtn) {
+            resultsContainer.style.display = "none"; 
+        }
+    });
 
 </script>
 
@@ -1098,5 +1189,74 @@
             height: 120px;
             /* Điều chỉnh thêm cho màn hình nhỏ */
         }
+    }
+    .search-results {
+        display: none;
+        position: absolute;
+        top: 73%;
+        left: 28%;
+        width: 500px;
+        border: 1px solid #ccc;
+        max-height: 300px;
+        overflow-y: auto;
+        background-color: white;
+        z-index: 9999;
+    }
+    
+    .result-item {
+        display: flex;
+        border-bottom: 1px solid #ccc;
+    }
+    
+    .result-link {
+        display: flex;
+        width: 100%;
+        text-decoration: none;  
+        color: #000;
+    }
+    
+    .result-thumbnail {
+        margin-right: 10px;
+    }
+    
+    .result-thumbnail img {
+        width: 50px;
+        height: 50px;
+    }
+    
+    .result-details {
+        display: flex;
+        flex-direction: column;  
+        justify-content: center;  
+    }
+    
+    .result-item + .result-item {
+        border-top: 1px solid #ccc;
+    }
+    
+    .result-item::after {
+        content: "";
+    }
+
+    #save-avatar-btn {
+        padding: 3px 3px;
+        background-color: #3085d6;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+    .custom-file-label{
+        padding: 3px 3px;
+        background-color: #3085d6;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+    
+    #save-avatar-btn:hover{
+        background-color: #2874c9;
     }
 </style>

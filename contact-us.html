@@ -18,6 +18,10 @@
     <!-- Modernizer JS -->
     <script src="assets/js/modernizr-2.8.3.min.js"></script>
 
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+
     <!--[if lt IE 9]>
 <script src="//oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
 <script src="//oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
@@ -55,6 +59,15 @@
                                             <li><a href="shop.html">Cửa hàng</a></li>
                                             <li class="active"><a href="contact-us.html">Liên hệ</a></li>
                                         </ul>
+                                        <ul class="mt-1 mb-5">
+                                            <li>
+                                                <input type="text" id="searchInput" style="width: 500px;" placeholder="Nhập sản phẩm cần tìm kiếm...">
+                                                <button id="searchBtn"><i class="ion-ios-search-strong"></i> Tìm kiếm</button>
+                                            </li>
+                                        </ul>
+                                        
+                                        <div id="searchResults" class="search-results" style="display: none; width: 500px; border: 1px solid #ccc; padding: 10px; max-height: 300px; overflow-y: auto; margin-top: 10px;"></div>                                        
+                                    
                                     </nav>
                                     <!-- main menu navbar end -->
                                 </div>
@@ -67,11 +80,7 @@
                             <div class="header-configure-wrapper">
                                 <div class="header-configure-area">
                                     <ul class="nav justify-content-end">
-                                        <li>
-                                            <a href="#" class="offcanvas-btn">
-                                                <i class="ion-ios-search-strong"></i>
-                                            </a>
-                                        </li>
+                                       
                                         <li class="user-hover">
                                             <a href="#">
                                                 <i class="ion-ios-gear-outline"></i>
@@ -108,29 +117,7 @@
     </header>
     <!-- end Header Area -->
 
-    <!-- off-canvas menu start -->
-    <aside class="off-canvas-wrapper">
-        <div class="off-canvas-overlay"></div>
-        <div class="off-canvas-inner-content">
-            <div class="btn-close-off-canvas">
-                <i class="ion-android-close"></i>
-            </div>
-
-            <div class="off-canvas-inner">
-                <!-- search box start -->
-                <div class="search-box-offcanvas">
-                    <form>
-                        <input type="text" placeholder="Search Here...">
-                        <button class="search-btn"><i class="ion-ios-search-strong"></i></button>
-                    </form>
-                </div>
-                <!-- search box end -->
-            </div>
-        </div>
-    </aside>
-    <!-- off-canvas menu end -->
-
-    <!-- main wrapper start -->
+     <!-- main wrapper start -->
     <main>
         <!-- contact wrapper area start -->
         <div class="contact-area mt-5" style="padding-bottom: 20px;">
@@ -527,26 +514,34 @@
 
         async function sendMessage(event) {
             event.preventDefault();
-
+        
             const messageContent = messageInput.value.trim();
             if (!messageContent) {
-                alert("Message cannot be empty.");
+                Swal.fire({
+                    title: "Lỗi!",
+                    text: "Tin nhắn không được để trống.",
+                    icon: "warning",
+                    confirmButtonColor: "#3085d6",
+                });
                 return;
             }
-
-
-
+        
             if (!token) {
-                alert("You need to log in to send messages.");
+                Swal.fire({
+                    title: "Cảnh báo!",
+                    text: "Bạn cần đăng nhập để gửi tin nhắn.",
+                    icon: "warning",
+                    confirmButtonColor: "#3085d6",
+                });
                 return;
             }
-
+        
             const messageData = {
                 senderId: userId,
                 receiverId: receiverId,
                 message: messageContent,
             };
-
+        
             try {
                 const response = await fetch("http://localhost:8080/message", {
                     method: "POST",
@@ -556,24 +551,43 @@
                     },
                     body: JSON.stringify(messageData),
                 });
-
+        
                 if (response.ok) {
                     const newMessage = await response.json();
                     const formattedMessage = { ...newMessage, type: "sender" };
                     messages.push(formattedMessage);
-                    
+        
                     displayMessages();
                     scrollToBottom(); // Cuộn đến tin nhắn mới
                     messageInput.value = ""; // Xóa nội dung ô nhập
+        
+                    Swal.fire({
+                        title: "Thành công!",
+                        text: "Tin nhắn đã được gửi.",
+                        icon: "success",
+                        confirmButtonColor: "#3085d6",
+                    });
+        
                     location.reload();
                 } else {
-                    alert("Failed to send message. Please try again.");
+                    Swal.fire({
+                        title: "Thất bại!",
+                        text: "Không thể gửi tin nhắn. Vui lòng thử lại.",
+                        icon: "error",
+                        confirmButtonColor: "#d33",
+                    });
                 }
             } catch (error) {
                 console.error("Error sending message:", error);
-                alert("An error occurred. Please try again.");
+                Swal.fire({
+                    title: "Lỗi hệ thống!",
+                    text: "Đã xảy ra lỗi. Vui lòng thử lại sau.",
+                    icon: "error",
+                    confirmButtonColor: "#d33",
+                });
             }
         }
+        
 
         // Lấy số lượng sản phẩm trong giỏ hàng
         fetch(`${cartQuantityApi}?userId=${senderId}`)
@@ -589,11 +603,6 @@
     document.addEventListener("DOMContentLoaded", async function () {
         const userId = localStorage.getItem("userId"); // Lấy ID từ localStorage
         const token = localStorage.getItem("token"); // Lấy token từ localStorage
-        // Kiểm tra nếu không có ID hoặc token
-        if (!userId || !token) {
-            alert("User ID or Token is missing!");
-            return;
-        }
 
         // API URLs
         const UserUrl = `http://localhost:8080/user/${userId}`;
@@ -641,6 +650,86 @@
             document.getElementById('cart-quantity').innerText = numberOfProduct;
         } catch (error) {
             console.error('Error fetching cart quantity:', error);
+        }
+    });
+
+    document.getElementById("searchBtn").addEventListener("click", async function (e) {
+        e.preventDefault(); 
+    
+        const query = document.getElementById("searchInput").value.trim();
+        if (!query) {
+            const resultsContainer = document.getElementById("searchResults");
+            resultsContainer.innerHTML = "<p>Nhập thông tin cần tìm kiếm.</p>";
+            resultsContainer.style.display = "block"; 
+            return;
+        }
+    
+        console.log("Search query:", query); 
+    
+        try {
+            // Gửi yêu cầu đến API backend
+            const response = await fetch(`http://localhost:8080/product/name?search=productName:like:${encodeURIComponent(query)}&page=0&size=10`, {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json"
+                }
+            });
+    
+            console.log("Response status:", response.status); 
+    
+            if (!response.ok) {
+                throw new Error(`Failed to fetch data from API: ${response.status}`);
+            }
+    
+            const data = await response.json();
+            console.log("Response data:", data); 
+    
+            const resultsContainer = document.getElementById("searchResults");
+            resultsContainer.innerHTML = ""; 
+    
+            if (data.result.result && data.result.result.length > 0) {
+                data.result.result.forEach(item => {
+                    const resultItem = document.createElement("div");
+                    resultItem.classList.add("result-item");
+            
+                    const link = document.createElement("a");
+                    link.href = `product-details.html?id=${item.productId}`;
+                    link.classList.add("result-link");
+            
+                    link.innerHTML = `
+                        <div class="result-thumbnail">
+                            <img src="http://localhost:8080/images/product/${item.images?.[0] || 'default-image.jpg'}" alt="${item.productName}">
+                        </div>
+                        <div class="result-details">
+                            <span class="product-name">${item.productName}</span>
+                            <span class="product-price">Giá: ${(item.price * (100 - item.discount) / 100).toLocaleString()} VND</span>
+                        </div>
+                    `;
+            
+                    resultItem.appendChild(link); 
+                    resultsContainer.appendChild(resultItem);  
+                });
+                resultsContainer.style.display = "block";
+            } else {
+                resultsContainer.innerHTML = "<p>Không có sản phẩm nào được tìm thấy.</p>";
+                resultsContainer.style.display = "block";
+            }
+                
+        } catch (error) {
+            console.error("Error:", error.message); 
+            const resultsContainer = document.getElementById("searchResults");
+            resultsContainer.innerHTML = "<p>Lỗi tìm kiếm.</p>";
+            resultsContainer.style.display = "block"; 
+        }
+    });
+
+    document.addEventListener("click", function (event) {
+        const resultsContainer = document.getElementById("searchResults");
+        const searchInput = document.getElementById("searchInput");
+        const searchBtn = document.getElementById("searchBtn");
+
+        if (!resultsContainer.contains(event.target) && event.target !== searchInput && event.target !== searchBtn) {
+            resultsContainer.style.display = "none"; 
         }
     });
 
@@ -757,5 +846,53 @@
     iframe {
         height: 120px; /* Điều chỉnh thêm cho màn hình nhỏ */
     }
+}
+
+.search-results {
+    display: none;
+    position: absolute;
+    top: 73%;
+    left: 28%;
+    width: 500px;
+    border: 1px solid #ccc;
+    max-height: 300px;
+    overflow-y: auto;
+    background-color: white;
+    z-index: 9999;
+}
+
+.result-item {
+    display: flex;
+    border-bottom: 1px solid #ccc;
+}
+
+.result-link {
+    display: flex;
+    width: 100%;
+    text-decoration: none;  
+    color: #000;
+}
+
+.result-thumbnail {
+    margin-right: 10px;
+}
+
+.result-thumbnail img {
+    width: 50px;
+    height: 50px;
+}
+
+.result-details {
+    display: flex;
+    flex-direction: column;  
+    justify-content: center;  
+}
+
+.result-item + .result-item {
+    border-top: 1px solid #ccc;
+}
+
+.result-item::after {
+    content: "";
 }
 </style>
