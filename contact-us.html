@@ -561,13 +561,7 @@
                     scrollToBottom(); // Cuộn đến tin nhắn mới
                     messageInput.value = ""; // Xóa nội dung ô nhập
         
-                    Swal.fire({
-                        title: "Thành công!",
-                        text: "Tin nhắn đã được gửi.",
-                        icon: "success",
-                        confirmButtonColor: "#3085d6",
-                    });
-        
+                
                     location.reload();
                 } else {
                     Swal.fire({
