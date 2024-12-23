@@ -16,6 +16,8 @@
     <link href="assets/css/style.css" rel="stylesheet">
     <!-- Modernizer JS -->
     <script src="assets/js/modernizr-2.8.3.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 </head>
 
@@ -190,10 +192,22 @@
 
             if (response.ok) {
                 const result = await response.json();
-                alert("Registration successful");
-                window.location.href = "login.html";
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Thành công!',
+                    text: 'Bạn đã đăng ký tài khoản thành công.',
+                    confirmButtonColor: '#3085d6',
+                }).then(() => {
+                    // Đóng modal sau khi thông báo thành công
+                    window.location.href = "login.html";                
+                });
             } else {
-                alert("Registration failed");
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Thất bại!',
+                    text: 'Tài khoản chưa được đăng ký.',
+                    confirmButtonColor: '#3085d6',
+                });
             }
         } catch (error) {
             console.error("Error registering:", error);
