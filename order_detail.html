@@ -239,7 +239,11 @@
                             <!-- Cart Update Option -->
                             <div class="cart-update-option d-block d-md-flex justify-content-between">
                                 <div class="cart-update">
-                                    <button class="btn btn-outline-light" id="update-order-btn">Cập nhật đơn hàng</button>
+                                    <button class="btn btn-outline-info" id="update-order-btn">Cập nhật đơn
+                                        hàng</button>
+                                </div>
+                                <div class="cart-update">
+                                    <button class="btn btn-danger" id="cancel-order-btn">Hủy đơn hàng</button>
                                 </div>
 
                                 <div class="cart-dropdown1">
@@ -396,6 +400,38 @@
         const orderId = urlParams.get('orderId'); // URL dạng: http://localhost/orderDetail.html?id=1
         const apiUrl = `http://localhost:8080/order/orderDetail/${orderId}`;
 
+        async function cancelOrder(orderId) {
+            const paymentMethod = document.getElementById('payment-method-id').innerText;
+            const stord = document.getElementById("statusOrd").innerText;
+            const stPi = document.getElementById("staPai").innerText;
+            var payment = "";
+            if (paymentMethod == "Thanh toán khi nhận hàng") {
+                payment = "CASH_ON_DELIVERY";
+            }
+            else {
+                payment = "CREDIT_CARD";
+            }
+            if (payment == "CREDIT_CARD" || stord != "Chờ xử lý" || stPi == "Đã thanh toán") {
+                alert("Đơn hàng đã tạo thành công hoặc bạn đã thanh toán");
+                return;
+            }
+            try {
+                // Gửi dữ liệu tới API
+                const response = await fetch(`http://localhost:8080/order/cancelOrder/${orderId}`, {
+                    method: 'PUT',
+                    headers: {
+                        'Authorization': `Bearer ${TOKEN}`,
+                    },
+                });
+
+                // Xử lý kết quả trả về từ API
+                alert('Hủy đơn hàng thành công!');
+                window.location.reload();
+            } catch (err) {
+                console.error('Lỗi khi gửi yêu cầu hủy đơn hàng:', err);
+                alert('Đã xảy ra lỗi khi hủy đơn hàng.');
+            }
+        }
         async function updateOrder(orderId) {
             const paymentMethod = document.getElementById('payment-method-id').innerText;
             const stord = document.getElementById("statusOrd").innerText;
@@ -407,8 +443,7 @@
             else {
                 payment = "CREDIT_CARD";
             }
-            if(payment == "CREDIT_CARD" || stord != "Chờ xử lý" || stPi == "Đã thanh toán")
-            {
+            if (payment == "CREDIT_CARD" || stord != "Chờ xử lý" || stPi == "Đã thanh toán") {
                 alert("Đơn hàng đã tạo thành công hoặc bạn đã thanh toán");
                 return;
             }
@@ -439,11 +474,10 @@
                 description: description,
                 orderItems: orderItems,
             };
-            if(document.getElementById("value_voucher"))
-            {
+            if (document.getElementById("value_voucher")) {
                 payload.code = document.getElementById("value_voucher").innerText;
             }
-            
+
             try {
                 // Gửi dữ liệu tới API
                 const response = await fetch(`http://localhost:8080/order/updateOrder/${orderId}`, {
@@ -459,6 +493,7 @@
                 if (response.ok) {
                     const result = await response.json();
                     alert('Cập nhật đơn hàng thành công!');
+                    window.location.reload();
                 } else {
                     const error = await response.json();
                     alert(`Lỗi khi cập nhật đơn hàng: ${error.message}`);
@@ -472,6 +507,16 @@
         document.getElementById('update-order-btn').addEventListener('click', () => {
             if (orderId) {
                 updateOrder(orderId);
+
+            } else {
+                alert('Không tìm thấy ID đơn hàng!');
+            }
+        });
+
+        //cancel-order-btn
+        document.getElementById('cancel-order-btn').addEventListener('click', () => {
+            if (orderId) {
+                cancelOrder(orderId);
             } else {
                 alert('Không tìm thấy ID đơn hàng!');
             }
@@ -582,6 +627,7 @@
                     break;
                 default:
                     statusHtml = `<div id="statusOrd" class="badge bg-secondary text-light">${order.status}</div>`;
+                    fielReadonly();
             }
             document.getElementById('status-order').innerHTML = statusHtml;
             let statusPaid = "";
@@ -616,7 +662,7 @@
 
         function renderCartTable(order) {
             const tableBody = document.getElementById('cart-table-body');
-            tableBody.innerHTML = ''; 
+            tableBody.innerHTML = '';
 
             order.orderItems.forEach((item) => {
                 const row = document.createElement('tr');
@@ -639,7 +685,7 @@
                 tableBody.appendChild(row);
             });
         }
-        
+
         function renderCartSummary(orderData) {
             const subTotal = orderData.totalPrice;
             var voucherDiscount = orderData.discount_voucher;
@@ -870,62 +916,77 @@
     }
 
     .minicart-item-wrapper {
-        flex-grow: 1; /* Phần danh sách sản phẩm mở rộng để chiếm không gian còn lại */
-        overflow-y: auto; /* Kích hoạt cuộn dọc */
+        flex-grow: 1;
+        /* Phần danh sách sản phẩm mở rộng để chiếm không gian còn lại */
+        overflow-y: auto;
+        /* Kích hoạt cuộn dọc */
     }
 
     /* footer */
-.footer-wrapper {
-    padding: 20px 0;
-}
-
-.footer-widget-area {
-    background-color: #f9f9f9;
-}
-
-.widget-item {
-    margin-bottom: 20px;
-}
-
-.location-wrap li {
-    font-size: 16px;
-    margin-bottom: 10px;
-}
-
-/* Thay đổi bố cục và kích thước cho màn hình nhỏ hơn */
-@media (max-width: 992px) {
-    .col-xl-5, .col-lg-3, .col-md-6 {
-        flex: 0 0 50%;
-        max-width: 50%;
+    .footer-wrapper {
+        padding: 20px 0;
     }
 
-    .col-xl-3, .col-lg-3, .col-md-4 {
-        flex: 0 0 100%;
-        max-width: 100%;
-        text-align: center; /* Căn giữa nội dung */
+    .footer-widget-area {
+        background-color: #f9f9f9;
     }
 
-    iframe {
-        width: 100%;
-        height: 150px; /* Điều chỉnh chiều cao iframe */
+    .widget-item {
+        margin-bottom: 20px;
     }
-}
 
-@media (max-width: 576px) {
     .location-wrap li {
-        font-size: 14px; /* Thu nhỏ font chữ */
+        font-size: 16px;
+        margin-bottom: 10px;
     }
 
-    .col-xl-5, .col-lg-3, .col-md-6,
-    .col-xl-3, .col-lg-3, .col-md-4 {
-        flex: 0 0 100%;
-        max-width: 100%;
+    /* Thay đổi bố cục và kích thước cho màn hình nhỏ hơn */
+    @media (max-width: 992px) {
+
+        .col-xl-5,
+        .col-lg-3,
+        .col-md-6 {
+            flex: 0 0 50%;
+            max-width: 50%;
+        }
+
+        .col-xl-3,
+        .col-lg-3,
+        .col-md-4 {
+            flex: 0 0 100%;
+            max-width: 100%;
+            text-align: center;
+            /* Căn giữa nội dung */
+        }
+
+        iframe {
+            width: 100%;
+            height: 150px;
+            /* Điều chỉnh chiều cao iframe */
+        }
     }
 
-    iframe {
-        height: 120px; /* Điều chỉnh thêm cho màn hình nhỏ */
+    @media (max-width: 576px) {
+        .location-wrap li {
+            font-size: 14px;
+            /* Thu nhỏ font chữ */
+        }
+
+        .col-xl-5,
+        .col-lg-3,
+        .col-md-6,
+        .col-xl-3,
+        .col-lg-3,
+        .col-md-4 {
+            flex: 0 0 100%;
+            max-width: 100%;
+        }
+
+        iframe {
+            height: 120px;
+            /* Điều chỉnh thêm cho màn hình nhỏ */
+        }
     }
-}
 </style>
 
 </html>

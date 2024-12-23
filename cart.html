@@ -342,10 +342,12 @@
 
 
     <script>
-        const TOKEN = localStorage.getItem("token"); 
+        const TOKEN = localStorage.getItem("token");
         const userId = localStorage.getItem("userId");
         var sum = 0;
         var sale = 0;
+        var checkVoucher = false;
+        var checkClickUpdateVoucher = false;
 
         function loadVoucherCodes(userId) {
             const apiUrl = `http://localhost:8080/voucher/listVoucherArchive/${userId}`;
@@ -410,7 +412,6 @@
         $(document).ready(function () {
             // URL API
             const apiUrl = `http://localhost:8080/cart?userId=${userId}`;
-
             // Hàm định dạng giá
             function formatPrice(price) {
                 return `${price.toFixed(2)} VND`;
@@ -419,18 +420,16 @@
                 event.preventDefault();
                 var selectedValue = $("#status-dropdown").val();
                 alert("Bạn đã chọn: " + selectedValue);
+                checkClickUpdateVoucher = true;
                 loadCartItems();
-
             })
-
-
             // Hàm load cart items
             function loadCartItems() {
                 sum = 0; // Đặt lại sum về 0 mỗi lần loadCartItems được gọi
                 sale = 0; // Reset sale nếu cần
                 var selectedValue = $("#status-dropdown").val();
                 console.log(selectedValue)
-                loadVoucherCodes(userId);
+                // loadVoucherCodes(userId);
                 $.ajax({
                     url: apiUrl,
                     type: 'GET',
@@ -491,7 +490,7 @@
 
                             // Cập nhật tổng giá
                             console.log("sum:", sum);
-                            $temp.append(`${formatPrice(sum)} VND`);
+                            $temp.append(`${formatPrice(sum)}`);
 
                             $.ajax({
                                 url: `http://localhost:8080/voucher/getSumDiscount`,
@@ -504,11 +503,25 @@
                                     sale = response.result
                                     $('#discountPrice').empty();
                                     $('#discountPrice').append(sale);
-
-                                    $total.append(`${formatPrice(sum - sale)} VND`);
+                                    $total.append(`${formatPrice(sum - sale)}`);
+                                    checkVoucher = true;
                                 },
                                 error: function (error) {
                                     console.error('API call sumvoucher failed:', error);
+                                    // Kiểm tra xem phản hồi lỗi có chứa mã và thông báo không
+                                    if (error.responseJSON && error.responseJSON.message) {
+                                        // Hiển thị thông báo lỗi cho người dùng
+                                        alert(error.responseJSON.message);
+                                        checkVoucher = false;
+                                    } else {
+                                        // Thông báo lỗi mặc định nếu không có message trong phản hồi
+                                        alert("Lỗi hệ thống, vui lòng thử lại sau.");
+                                        checkVoucher = false;
+                                    }
+                                    $('#discountPrice').empty();
+                                    $('#discountPrice').append(0);
+
+                                    $total.append(`${formatPrice(sum - 0)}`);
                                 }
                             })
 
@@ -524,7 +537,6 @@
                 });
 
             }
-
 
             // Hàm xóa item
             function removeCartItem(variantId) {
@@ -594,8 +606,9 @@
                     console.error('Error fetching cart quantity:', error);
                 }
             }
-
+            loadVoucherCodes(userId);
         });
+
         // Bắt đầu xử lý mini card
         function renderMiniCart(cartItems, summary) {
             const cartWrapper = document.querySelector(".minicart-item-wrapper ul");
@@ -821,13 +834,16 @@
                 console.error('Error fetching cart quantity:', error);
             }
         });
+
         $("#checkout").on("click", function (event) {
             // Ngăn chặn hành vi mặc định
             event.preventDefault();
-
             var selectedValue = $("#status-dropdown").val();
-
             // Thực hiện hành động nhảy đến đường link
+
+            if (!checkVoucher | !checkClickUpdateVoucher) {
+                selectedValue = "";
+            }
             window.location.href = "checkout.html?code=" + selectedValue;
         });
 
@@ -866,71 +882,85 @@
         margin-bottom: 20px;
     }
 
-     /* cart */
-     .minicart-inner-content {
+    /* cart */
+    .minicart-inner-content {
         display: flex;
         flex-direction: column;
-        height: 100%; /* Chiều cao toàn phần của nội dung */
+        height: 100%;
+        /* Chiều cao toàn phần của nội dung */
     }
-    
+
     .minicart-item-wrapper {
-        flex-grow: 1; /* Phần danh sách sản phẩm mở rộng để chiếm không gian còn lại */
-        overflow-y: auto; /* Kích hoạt cuộn dọc */
+        flex-grow: 1;
+        /* Phần danh sách sản phẩm mở rộng để chiếm không gian còn lại */
+        overflow-y: auto;
+        /* Kích hoạt cuộn dọc */
     }
 
     /* footer */
     /* Thiết lập mặc định cho footer */
-.footer-wrapper {
-    padding: 20px 0;
-}
-
-.footer-widget-area {
-    background-color: #f9f9f9;
-}
-
-.widget-item {
-    margin-bottom: 20px;
-}
-
-.location-wrap li {
-    font-size: 16px;
-    margin-bottom: 10px;
-}
-
-/* Thay đổi bố cục và kích thước cho màn hình nhỏ hơn */
-@media (max-width: 992px) {
-    .col-xl-5, .col-lg-3, .col-md-6 {
-        flex: 0 0 50%;
-        max-width: 50%;
+    .footer-wrapper {
+        padding: 20px 0;
     }
 
-    .col-xl-3, .col-lg-3, .col-md-4 {
-        flex: 0 0 100%;
-        max-width: 100%;
-        text-align: center; /* Căn giữa nội dung */
+    .footer-widget-area {
+        background-color: #f9f9f9;
     }
 
-    iframe {
-        width: 100%;
-        height: 150px; /* Điều chỉnh chiều cao iframe */
+    .widget-item {
+        margin-bottom: 20px;
     }
-}
 
-@media (max-width: 576px) {
     .location-wrap li {
-        font-size: 14px; /* Thu nhỏ font chữ */
+        font-size: 16px;
+        margin-bottom: 10px;
     }
 
-    .col-xl-5, .col-lg-3, .col-md-6,
-    .col-xl-3, .col-lg-3, .col-md-4 {
-        flex: 0 0 100%;
-        max-width: 100%;
+    /* Thay đổi bố cục và kích thước cho màn hình nhỏ hơn */
+    @media (max-width: 992px) {
+
+        .col-xl-5,
+        .col-lg-3,
+        .col-md-6 {
+            flex: 0 0 50%;
+            max-width: 50%;
+        }
+
+        .col-xl-3,
+        .col-lg-3,
+        .col-md-4 {
+            flex: 0 0 100%;
+            max-width: 100%;
+            text-align: center;
+            /* Căn giữa nội dung */
+        }
+
+        iframe {
+            width: 100%;
+            height: 150px;
+            /* Điều chỉnh chiều cao iframe */
+        }
     }
 
-    iframe {
-        height: 120px; /* Điều chỉnh thêm cho màn hình nhỏ */
+    @media (max-width: 576px) {
+        .location-wrap li {
+            font-size: 14px;
+            /* Thu nhỏ font chữ */
+        }
+
+        .col-xl-5,
+        .col-lg-3,
+        .col-md-6,
+        .col-xl-3,
+        .col-lg-3,
+        .col-md-4 {
+            flex: 0 0 100%;
+            max-width: 100%;
+        }
+
+        iframe {
+            height: 120px;
+            /* Điều chỉnh thêm cho màn hình nhỏ */
+        }
     }
-}
-
-
 </style>

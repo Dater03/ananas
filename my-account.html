@@ -278,7 +278,7 @@
                                             <div class="myaccount-content">
                                                 <h3>Đơn hàng của bạn</h3>
                                                 <!-- Thêm phân trang và dữ liệu từ API vào bảng -->
-                                                <div class="myaccount-table table-responsive text-center">
+                                                <div class="myaccount-table table-responsive text-center" style="height: 280px; overflow-y: auto;">
                                                     <table class="table table-bordered">
                                                         <thead class="thead-light">
                                                             <tr>
@@ -305,8 +305,9 @@
                                                         </li>
                                                         <li class="page-item" id="page-number">
                                                             <span class="page-link"
-                                                                style="width: 50px; text-align: center;">1</span>
+                                                                style="text-align: center;">1</span>
                                                             <!-- Số trang hiện tại -->
+                                                             
                                                         </li>
                                                         <li class="page-item" id="next-page">
                                                             <button class="page-link btn btn-success"
@@ -471,7 +472,7 @@
 
     // Biến lưu trạng thái của trang hiện tại
     let currentPage = 0;
-    let totalPages = 1; // Tổng số trang (mặc định là 1)
+    let totalPages = 1;
 
     // Hàm gọi API
     function fetchData(page) {
@@ -490,26 +491,6 @@
             })
             .catch(error => console.error('Error fetching data:', error));
     }
-
-    // Hàm hiển thị dữ liệu lên bảng
-    // function renderTable(orders) {
-    //     const tableBody = document.getElementById("order-table-body");
-    //     tableBody.innerHTML = ''; // Xóa dữ liệu cũ trong bảng
-
-    //     orders.forEach(order => {
-    //         const row = document.createElement('tr');
-    //         row.innerHTML = `
-    //         <td>${order.id}</td>
-    //         <td>TODO</td>
-    //         <td>${new Date(order.createdAt).toLocaleDateString()}</td>
-    //         <td>${order.status}</td>
-    //         <td>${order.totalAmount}</td>
-    //         <td><button class="btn btn-success">View Details</button></td>
-    //     `;
-    //         tableBody.appendChild(row);
-    //     });
-    // }
-
 
     // Hàm cập nhật phân trang
     function renderTable(orders) {
@@ -585,7 +566,7 @@
         const nextButton = document.getElementById('next-page').querySelector('button');
 
         // Cập nhật số trang hiện tại
-        pageNumberElement.querySelector('span').innerText = `${currentPage + 1}`;
+        pageNumberElement.querySelector('span').innerText = `${currentPage + 1}/${totalPages}`;
 
         // Kiểm tra trạng thái của nút Previous
         if (currentPage <= 0) {
