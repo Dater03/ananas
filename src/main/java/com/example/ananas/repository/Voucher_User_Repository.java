@@ -25,5 +25,4 @@ public interface Voucher_User_Repository extends JpaRepository<Voucher_User, Int
     @Modifying
     @Query(nativeQuery = true, value = "DELETE FROM voucher_user WHERE voucher_user_id IN (:list)")
     void deleteListVoucherUser(@Param("list") List<Integer> list);
-
 }

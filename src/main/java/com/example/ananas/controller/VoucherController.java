@@ -83,4 +83,9 @@ public class VoucherController {
     public ResponseEntity<Boolean> getVoucherUser(@PathVariable String code) {
         return ResponseEntity.ok(voucherService.deleteVoucherUser(code));
     }
+
+    @GetMapping("/checkVoucher")
+    public ResponseEntity<Boolean> checkVoucher(@RequestParam(name = "code" )String code, @RequestParam(name = "price") BigDecimal price ) {
+        return ResponseEntity.ok(voucherService.checkVoucher(code, price));
+    }
 }

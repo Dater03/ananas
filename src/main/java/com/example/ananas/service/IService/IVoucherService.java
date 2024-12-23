@@ -39,4 +39,7 @@ public interface IVoucherService {
     List<Integer> getVoucherUserByVoucherId(Integer voucherId);
 
     Boolean deleteVoucherUser(String code);
+
+    Boolean deleteVoucherApplied (Integer voucherId, Integer userId);
 }
+

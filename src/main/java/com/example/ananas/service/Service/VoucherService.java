@@ -23,6 +23,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.sql.Timestamp;
@@ -117,13 +118,20 @@ public class VoucherService implements IVoucherService {
         }
         // Kiểm tra điều kiện tối thiểu
         if (priceBefore.compareTo(voucher.getMinOrderValue()) < 0)
-            return false;
+        {
+            throw new AppException(ErrException.VOUCHER_NOT_ELIGIBLE);
+        }
         Date now = new Date(System.currentTimeMillis());
 
         if (now.before(voucher.getStartDate()) || now.after(voucher.getEndDate()))
-            return false; // Chưa được áp dụng or hết hạn áp dụng
+        {
+            throw new AppException(ErrException.VOUCHER_OUT_OF_DATE);
+        }
 
-        if (voucher.getUsageLimit() != null && voucher.getUsageLimit() <= 0) return false;
+        if (voucher.getUsageLimit() != null && voucher.getUsageLimit() <= 0)
+        {
+            throw new AppException(ErrException.VOUCHER_OUT_OF_STOCK);
+        }
         return true;
     }
 
@@ -214,6 +222,12 @@ public class VoucherService implements IVoucherService {
         }
         return true;
     }
-
-
+    @Transactional
+    @Override
+    public Boolean deleteVoucherApplied(Integer voucherId, Integer userId) {
+        Voucher_User vuc = voucherUserRepository.findVoucherByUserAndVoucher(userId, voucherId);
+        if(vuc == null) throw new AppException(ErrException.VOUCHER_NOT_EXISTED);
+        voucherUserRepository.delete(vuc);
+        return true;
+    }
 }

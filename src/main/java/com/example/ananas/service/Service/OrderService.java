@@ -54,6 +54,8 @@ public class OrderService implements IOrderService {
     Cart_Repository cartRepository;
     Cart_Item_Repository cartItemRepository;
     EmailService emailService;
+    private final Voucher_User_Repository voucher_User_Repository;
+
     @Override
     public ResultPaginationDTO getOrdersForAdmin(Pageable pageable) {
         Page<Order> orders = orderRepository.findAll(pageable);
@@ -183,6 +185,7 @@ public class OrderService implements IOrderService {
             sum_after = sum_before.subtract(BigDecimal.valueOf(vou));
             order.getVoucher().setUsageLimit(order.getVoucher().getUsageLimit()-1);
             voucherRepository.save(order.getVoucher());
+            voucherService.deleteVoucherApplied(order.getVoucher().getVoucherId(), userId);
         }
         else
         {
