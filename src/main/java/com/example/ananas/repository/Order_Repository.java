@@ -1,5 +1,6 @@
 package com.example.ananas.repository;
 
+import com.example.ananas.entity.User;
 import com.example.ananas.entity.order.Order;
 import com.example.ananas.entity.order.OrderStatus;
 import com.example.ananas.entity.order.PaymentStatus;
@@ -69,4 +70,11 @@ public interface Order_Repository extends JpaRepository<Order, Integer>, JpaSpec
 //            "FROM ananas.orders o " +
 //            "WHERE YEAR(o.created_at) = :year", nativeQuery = true)
 //    List<BigDecimal> getTotalOrderAmountByYear(@Param("year") int year);
+
+    // tim user theo don hang
+    @Query(value = "SELECT u.* " +
+            "FROM ananas.user u " +
+            "INNER JOIN ananas.orders o ON u.user_id = o.user_id " +
+            "WHERE o.id = :orderId", nativeQuery = true)
+    User findUserEmailByOrderId(@Param("orderId") Integer orderId);
 }

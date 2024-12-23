@@ -167,6 +167,7 @@ public class OrderService implements IOrderService {
             if(stock < item.getQuantity()) throw new AppException(ErrException.NOT_ENOUGH_STOCK);
             productVariant.setStock(stock - item.getQuantity());
             productVariantRepository.save(productVariant);
+
             // Tính toán luôn thuộc tính suy biến ở bảng order
             sum_before = sum_before.add(orderItem.getPrice().multiply(BigDecimal.valueOf(orderItem.getQuantity())));
         }
@@ -334,7 +335,10 @@ public class OrderService implements IOrderService {
         if(order.getStatus() == OrderStatus.DELIVERED || order.getStatus() == OrderStatus.CANCELED) {
             throw new AppException(ErrException.ORDER_ERROR_STATUS);
         }
-        if(status.equalsIgnoreCase(OrderStatus.SHIPPED.name())) order.setStatus(OrderStatus.SHIPPED);
+        if(status.equalsIgnoreCase(OrderStatus.SHIPPED.name())) {
+            order.setStatus(OrderStatus.SHIPPED);
+
+        }
         if(status.equalsIgnoreCase(OrderStatus.PENDING.name())) order.setStatus(OrderStatus.PENDING);
         if(status.equalsIgnoreCase(OrderStatus.DELIVERED.name())) order.setStatus(OrderStatus.DELIVERED);
         if(status.equalsIgnoreCase(OrderStatus.CANCELED.name())) order.setStatus(OrderStatus.CANCELED);

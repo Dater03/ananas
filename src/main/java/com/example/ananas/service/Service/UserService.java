@@ -89,6 +89,7 @@ public class UserService implements IUserService {
     @Override
     public List<UserResponse> getAllUsers() {
         return userRepository.findAll().stream()
+                .filter(user -> user.getRoles() == null || !user.getRoles().contains("Admin"))
                 .map(userMapper::toUserResponse)
                 .collect(Collectors.toList());
     }
