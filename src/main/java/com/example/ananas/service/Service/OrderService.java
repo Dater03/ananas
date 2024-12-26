@@ -350,6 +350,19 @@ public class OrderService implements IOrderService {
 //        }
 //    }
 
+    private void resetProductSaleAt(Order order) {
+        List<Order_Item> orderItems = order.getOrderItems();
+
+        for (Order_Item orderItem : orderItems) {
+            ProductVariant productVariant = orderItem.getProductVariant();
+            Product product = productVariant.getProduct();
+
+            // Đặt lại giá trị saleAt về null hoặc giá trị mặc định
+            product.setSaleAt(LocalDateTime.from(product.getCreatedAt())); // hoặc đặt giá trị khác nếu cần
+            productRepository.save(product);
+        }
+    }
+
 
     @Override
     public OrderResponse changeOrderStatus(Integer orderId, String status) {
@@ -367,7 +380,11 @@ public class OrderService implements IOrderService {
             order.setStatus(OrderStatus.DELIVERED);
 //            updateProductSaleAt(order);
         }
-        if(status.equalsIgnoreCase(OrderStatus.CANCELED.name())) order.setStatus(OrderStatus.CANCELED);
+        if(status.equalsIgnoreCase(OrderStatus.CANCELED.name()))
+        {
+            order.setStatus(OrderStatus.CANCELED);
+            resetProductSaleAt(order);
+        }
         order.setUpdatedAt(new Timestamp(System.currentTimeMillis()));
         return orderMapper.orderToOrderResponse(orderRepository.save(order));
     }
