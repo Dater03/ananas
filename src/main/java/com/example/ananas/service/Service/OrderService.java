@@ -28,6 +28,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -204,6 +205,15 @@ public class OrderService implements IOrderService {
         order.setOrderItems(orderItems);
         orderRepository.save(order);
 
+        // Update `saleAt` if status is SHIPPED or DELIVERED
+        if (order.getStatus() == OrderStatus.SHIPPED || order.getStatus() == OrderStatus.DELIVERED) {
+            for (Order_Item orderItem : orderItems) {
+                Product product = orderItem.getProductVariant().getProduct();
+                product.setSaleAt(LocalDateTime.now());
+                productRepository.save(product);
+            }
+        }
+
         Optional<User> user = userRepository.findById(userId);
 
         if (user.get().getEmail() != null && !user.get().getEmail().isEmpty()) {
@@ -328,6 +338,19 @@ public class OrderService implements IOrderService {
         return true; // Trả về true nếu xóa thành công
     }
 
+//    private void updateProductSaleAt(Order order) {
+//        List<Order_Item> orderItems = order.getOrderItems(); // Assuming this fetches items in the order
+//        Timestamp currentTime = new Timestamp(System.currentTimeMillis());
+//
+//        for (Order_Item item : orderItems) {
+//            ProductVariant productVariant = item.getProductVariant(); // Assuming this gets the associated ProductVariant
+//            Product product = productVariant.getProduct(); // Access the associated Product
+//            product.setSaleAt(LocalDateTime.now());
+//            productRepository.save(product); // Save the updated Product entity
+//        }
+//    }
+
+
     @Override
     public OrderResponse changeOrderStatus(Integer orderId, String status) {
         Order order = orderRepository.findById(orderId)
@@ -337,10 +360,13 @@ public class OrderService implements IOrderService {
         }
         if(status.equalsIgnoreCase(OrderStatus.SHIPPED.name())) {
             order.setStatus(OrderStatus.SHIPPED);
-
+//            updateProductSaleAt(order);
         }
         if(status.equalsIgnoreCase(OrderStatus.PENDING.name())) order.setStatus(OrderStatus.PENDING);
-        if(status.equalsIgnoreCase(OrderStatus.DELIVERED.name())) order.setStatus(OrderStatus.DELIVERED);
+        if(status.equalsIgnoreCase(OrderStatus.DELIVERED.name())) {
+            order.setStatus(OrderStatus.DELIVERED);
+//            updateProductSaleAt(order);
+        }
         if(status.equalsIgnoreCase(OrderStatus.CANCELED.name())) order.setStatus(OrderStatus.CANCELED);
         order.setUpdatedAt(new Timestamp(System.currentTimeMillis()));
         return orderMapper.orderToOrderResponse(orderRepository.save(order));

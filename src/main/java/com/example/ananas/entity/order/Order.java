@@ -4,6 +4,7 @@ import com.example.ananas.entity.Order_Item;
 import com.example.ananas.entity.User;
 import com.example.ananas.entity.voucher.Voucher;
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Data;
@@ -74,6 +75,7 @@ public class Order {
     Timestamp updatedAt;
 
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
+            @JsonManagedReference
     List<Order_Item> orderItems;
 
     public void addOrderItem(Order_Item orderItem) {

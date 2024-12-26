@@ -40,4 +40,6 @@ public interface ProductVariant_Repository extends JpaRepository<ProductVariant,
             "WHERE o.product_id = :product_id AND o.color = :color AND o.size = :size", nativeQuery = true)
     int getSumOfProduct(@Param("product_id") int product_id, @Param("color") String color, @Param("size") int size);
 
+    @Query(value = "SELECT p.* FROM product p JOIN product_variant pv ON p.product_id = pv.product_id WHERE pv.variant_id = :variantId", nativeQuery = true)
+    Product findProductByVariantId(@Param("variantId") int variantId);
 }

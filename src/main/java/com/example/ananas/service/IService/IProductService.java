@@ -56,4 +56,8 @@ public interface IProductService {
     List<Map<String, Object>> getProductNameAndStockAndCategoryName();
 
     List<Map<String, Object>> getMonthlyStatisticsForCurrentYear();
+
+    List<Product> getTopSaleProducts(String filter);
+
+    List<Product> getLeastSaleProducts(String filter);
 }

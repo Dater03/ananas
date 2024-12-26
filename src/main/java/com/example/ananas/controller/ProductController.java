@@ -193,4 +193,16 @@ public class ProductController {
         return new ResponseEntity<>(fileContent, headers, HttpStatus.OK);
     }
 
+    @GetMapping("product/top-sale")
+    public ResponseEntity<?> getTopSaleProducts(@RequestParam("filter") String filter) {
+        List<Product> products = productService.getTopSaleProducts(filter);
+        return ResponseEntity.ok(Map.of("result", products));
+    }
+
+    @GetMapping("product/least-sale")
+    public ResponseEntity<?> getLeastSaleProducts(@RequestParam("filter") String filter) {
+        List<Product> products = productService.getLeastSaleProducts(filter);
+        return ResponseEntity.ok(Map.of("result", products));
+    }
+
 }

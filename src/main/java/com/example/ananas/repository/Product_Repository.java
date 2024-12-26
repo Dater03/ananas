@@ -50,5 +50,28 @@ public interface Product_Repository extends JpaRepository<Product, Integer>, Jpa
             "ORDER BY MONTH(p.created_at)", nativeQuery = true)
     List<Object[]> findMonthlyStatisticsForCurrentYear();
 
+    @Query(value = "SELECT * FROM ananas.product WHERE DATE(sale_at) = CURDATE() ORDER BY sold_quantity DESC LIMIT 3", nativeQuery = true)
+    List<Product> findTopSalesByDay();
+
+    @Query(value = "SELECT * FROM ananas.product WHERE WEEK(sale_at) = WEEK(CURDATE()) AND YEAR(sale_at) = YEAR(CURDATE()) ORDER BY sold_quantity DESC LIMIT 3", nativeQuery = true)
+    List<Product> findTopSalesByWeek();
+
+    @Query(value = "SELECT * FROM ananas.product WHERE MONTH(sale_at) = MONTH(CURDATE()) AND YEAR(sale_at) = YEAR(CURDATE()) ORDER BY sold_quantity DESC LIMIT 3", nativeQuery = true)
+    List<Product> findTopSalesByMonth();
+
+    @Query(value = "SELECT * FROM ananas.product WHERE YEAR(sale_at) = YEAR(CURDATE()) ORDER BY sold_quantity DESC LIMIT 3", nativeQuery = true)
+    List<Product> findTopSalesByYear();
+
+    @Query(value = "SELECT * FROM ananas.product WHERE DATE(sale_at) = CURDATE() ORDER BY sold_quantity ASC LIMIT 3", nativeQuery = true)
+    List<Product> findLeastSalesByDay();
+
+    @Query(value = "SELECT * FROM ananas.product WHERE WEEK(sale_at) = WEEK(CURDATE()) AND YEAR(sale_at) = YEAR(CURDATE()) ORDER BY sold_quantity ASC LIMIT 3", nativeQuery = true)
+    List<Product> findLeastSalesByWeek();
+
+    @Query(value = "SELECT * FROM ananas.product WHERE MONTH(sale_at) = MONTH(CURDATE()) AND YEAR(sale_at) = YEAR(CURDATE()) ORDER BY sold_quantity ASC LIMIT 3", nativeQuery = true)
+    List<Product> findLeastSalesByMonth();
+
+    @Query(value = "SELECT * FROM ananas.product WHERE YEAR(sale_at) = YEAR(CURDATE()) ORDER BY sold_quantity ASC LIMIT 3", nativeQuery = true)
+    List<Product> findLeastSalesByYear();
 
 }

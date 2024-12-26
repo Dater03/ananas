@@ -30,6 +30,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.time.LocalDateTime;
 import java.util.*;
 
 @Service
@@ -54,6 +55,7 @@ public class ProductService implements IProductService {
         createProduct.setCategory(category);
 
         Product product =  this.productRepository.save(createProduct);
+        product.setSaleAt(LocalDateTime.now());
         List<ProductVatriantDTO> productVatriantDTOList = productCreateRequest.getVariants();
         productVatriantDTOList.stream().forEach(item ->{
             ProductVariant productVariant = new ProductVariant();
@@ -306,6 +308,38 @@ public class ProductService implements IProductService {
         }
 
         return monthlyStatistics;
+    }
+
+    @Override
+    public List<Product> getTopSaleProducts(String filter) {
+        switch (filter) {
+            case "day":
+                return productRepository.findTopSalesByDay();
+            case "week":
+                return productRepository.findTopSalesByWeek();
+            case "month":
+                return productRepository.findTopSalesByMonth();
+            case "year":
+                return productRepository.findTopSalesByYear();
+            default:
+                throw new IllegalArgumentException("Invalid filter");
+        }
+    }
+
+    @Override
+    public List<Product> getLeastSaleProducts(String filter) {
+        switch (filter) {
+            case "day":
+                return productRepository.findLeastSalesByDay();
+            case "week":
+                return productRepository.findLeastSalesByWeek();
+            case "month":
+                return productRepository.findLeastSalesByMonth();
+            case "year":
+                return productRepository.findLeastSalesByYear();
+            default:
+                throw new IllegalArgumentException("Invalid filter");
+        }
     }
 
 
