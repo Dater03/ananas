@@ -164,6 +164,11 @@ public class ProductController {
         return ResponseEntity.ok(productService.getNumberOfProductBySizeAndColor(productId,color, size));
     }
 
+    @GetMapping("product/sumVariant")
+    public ResponseEntity<Integer> getSumOfProductVariant(@RequestParam(name = "variant_id") int variant_id) throws IdException{
+        return ResponseEntity.ok(productService.getNumberOfProductVariant(variant_id));
+    }
+
     @GetMapping("chart/product/sum")
     public List<Map<String, Object>> getSumOfProductAdmin(){
         return productService.getProductNameAndStock();

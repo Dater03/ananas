@@ -1,6 +1,7 @@
 package com.example.ananas.controller;
 
 import com.example.ananas.dto.response.CartItemResponse;
+import com.example.ananas.entity.Cart;
 import com.example.ananas.entity.Cart_Item;
 import com.example.ananas.repository.User_Repository;
 import com.example.ananas.service.Service.CartService;
@@ -48,6 +49,14 @@ public class CartController {
     {
         return ResponseEntity.ok(this.cartService.getAllCartItem(userId));
     }
+
+    @PutMapping("/cart/update")
+    @Transactional
+    public ResponseEntity<Cart> updateCartItem(@RequestParam(name = "userId") int userId, @RequestBody Cart cart){
+        return ResponseEntity.ok(cartService.updateCart(userId, cart));
+
+    }
+
     @DeleteMapping("/cart")
     public ResponseEntity<String> deleteCart(@RequestParam(name = "userId") int userId)
     {

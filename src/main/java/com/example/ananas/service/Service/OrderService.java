@@ -206,13 +206,13 @@ public class OrderService implements IOrderService {
         orderRepository.save(order);
 
         // Update `saleAt` if status is SHIPPED or DELIVERED
-        if (order.getStatus() == OrderStatus.SHIPPED || order.getStatus() == OrderStatus.DELIVERED) {
+       // if (order.getStatus() == OrderStatus.SHIPPED || order.getStatus() == OrderStatus.DELIVERED) {
             for (Order_Item orderItem : orderItems) {
                 Product product = orderItem.getProductVariant().getProduct();
                 product.setSaleAt(LocalDateTime.now());
                 productRepository.save(product);
             }
-        }
+       // }
 
         Optional<User> user = userRepository.findById(userId);
 
@@ -338,17 +338,17 @@ public class OrderService implements IOrderService {
         return true; // Trả về true nếu xóa thành công
     }
 
-//    private void updateProductSaleAt(Order order) {
-//        List<Order_Item> orderItems = order.getOrderItems(); // Assuming this fetches items in the order
-//        Timestamp currentTime = new Timestamp(System.currentTimeMillis());
-//
-//        for (Order_Item item : orderItems) {
-//            ProductVariant productVariant = item.getProductVariant(); // Assuming this gets the associated ProductVariant
-//            Product product = productVariant.getProduct(); // Access the associated Product
-//            product.setSaleAt(LocalDateTime.now());
-//            productRepository.save(product); // Save the updated Product entity
-//        }
-//    }
+    private void updateProductSaleAt(Order order) {
+        List<Order_Item> orderItems = order.getOrderItems(); // Assuming this fetches items in the order
+        Timestamp currentTime = new Timestamp(System.currentTimeMillis());
+
+        for (Order_Item item : orderItems) {
+            ProductVariant productVariant = item.getProductVariant(); // Assuming this gets the associated ProductVariant
+            Product product = productVariant.getProduct(); // Access the associated Product
+            product.setSaleAt(LocalDateTime.now());
+            productRepository.save(product); // Save the updated Product entity
+        }
+    }
 
     private void resetProductSaleAt(Order order) {
         List<Order_Item> orderItems = order.getOrderItems();
@@ -373,12 +373,12 @@ public class OrderService implements IOrderService {
         }
         if(status.equalsIgnoreCase(OrderStatus.SHIPPED.name())) {
             order.setStatus(OrderStatus.SHIPPED);
-//            updateProductSaleAt(order);
+            updateProductSaleAt(order);
         }
         if(status.equalsIgnoreCase(OrderStatus.PENDING.name())) order.setStatus(OrderStatus.PENDING);
         if(status.equalsIgnoreCase(OrderStatus.DELIVERED.name())) {
             order.setStatus(OrderStatus.DELIVERED);
-//            updateProductSaleAt(order);
+            updateProductSaleAt(order);
         }
         if(status.equalsIgnoreCase(OrderStatus.CANCELED.name()))
         {
@@ -396,8 +396,14 @@ public class OrderService implements IOrderService {
         if(order.getStatus() == OrderStatus.DELIVERED || order.getStatus() == OrderStatus.CANCELED) {
             throw new AppException(ErrException.ORDER_ERROR_STATUS);
         }
-        if(paymentStatus.equalsIgnoreCase(PaymentStatus.PAID.name())) order.setPaymentStatus(PaymentStatus.PAID);
-        if(paymentStatus.equalsIgnoreCase(PaymentStatus.UNPAID.name())) order.setPaymentStatus(PaymentStatus.UNPAID);
+        if(paymentStatus.equalsIgnoreCase(PaymentStatus.PAID.name())) {
+            order.setPaymentStatus(PaymentStatus.PAID);
+            updateProductSaleAt(order);
+        }
+        if(paymentStatus.equalsIgnoreCase(PaymentStatus.UNPAID.name())) {
+            order.setPaymentStatus(PaymentStatus.UNPAID);
+            resetProductSaleAt(order);
+        }
         order.setUpdatedAt(new Timestamp(System.currentTimeMillis()));
         return orderMapper.orderToOrderResponse(orderRepository.save(order));
     }
@@ -421,6 +427,7 @@ public class OrderService implements IOrderService {
         }
         order.setStatus(OrderStatus.CANCELED);
         order.setUpdatedAt(new Timestamp(System.currentTimeMillis()));
+        resetProductSaleAt(order);
         orderRepository.save(order);
         return true;
     }

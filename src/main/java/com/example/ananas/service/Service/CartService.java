@@ -2,6 +2,8 @@ package com.example.ananas.service.Service;
 
 import com.example.ananas.dto.response.CartItemResponse;
 import com.example.ananas.entity.*;
+import com.example.ananas.exception.AppException;
+import com.example.ananas.exception.ErrException;
 import com.example.ananas.mapper.ICartItemMapper;
 import com.example.ananas.repository.*;
 import com.example.ananas.service.IService.ICartService;
@@ -11,6 +13,7 @@ import lombok.experimental.FieldDefaults;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -128,5 +131,14 @@ public class CartService implements ICartService {
         List<Cart_Item> cartItemList = this.cartItemRepository.findCart_ItemsByCart(currentCart);
         if(cartItemList.size() == 0)
             deleteCart(userId);
+    }
+
+    @Override
+    public Cart updateCart(int userid, Cart cart) {
+        User user = userRepository.findById(userid).orElseThrow(() -> new RuntimeException("User not found"));
+        Cart cartUpdate = cartRepository.findByUser(user);
+        cartUpdate.setSumQuantity(cart.getSumQuantity());
+        cartUpdate.setSumPrice(cart.getSumPrice());
+        return cartRepository.save(cartUpdate);
     }
 }

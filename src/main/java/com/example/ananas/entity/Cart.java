@@ -31,7 +31,7 @@ public class Cart {
     User user;
 
     @OneToMany(mappedBy = "cart")
-    @JsonManagedReference
+    @JsonManagedReference("cart-cartItem") // Đặt tên duy nhất cho tham chiếu này
     List<Cart_Item> cartItem;
 
 }

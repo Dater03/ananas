@@ -235,6 +235,14 @@ public class ProductService implements IProductService {
         }
     }
 
+    public int getNumberOfProductVariant(int productVariantId ) {
+        try {
+            return this.productVariantRepository.getSumOfProductVariant(productVariantId);
+        } catch (Exception e) {
+            return 0;
+        }
+    }
+
     @Override
     public List<Map<String, Object>> getProductNameAndStock() {
         List<Object[]> results = productRepository.getProductNameAndStock();
