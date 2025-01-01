@@ -800,15 +800,7 @@
                                     })
                                         .then(response2 => {
                                             if (response2.ok) {
-                                                Swal.fire({
-                                                    icon: 'success',
-                                                    title: 'Thành công',
-                                                    text: 'Đơn hàng đã được đặt thành công!',
-                                                    confirmButtonColor: '#3085d6',
-                                                }).then(() =>{
-                                                    window.location.href = 'index-2.html';
-                                                }); 
-                                               
+                                                window.location.href = 'index-2.html';
                                             } else {
                                                 throw new Error("Lỗi khi xóa giỏ hàng.");
                                             }
