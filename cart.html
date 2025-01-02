@@ -68,12 +68,16 @@
                                         </ul>
                                         <ul class="mt-1 mb-5">
                                             <li>
-                                                <input type="text" id="searchInput" style="width: 500px;" placeholder="Nhập sản phẩm cần tìm kiếm...">
-                                                <button id="searchBtn"><i class="ion-ios-search-strong"></i> Tìm kiếm</button>
+                                                <input type="text" id="searchInput" style="width: 500px;"
+                                                    placeholder="Nhập sản phẩm cần tìm kiếm...">
+                                                <button id="searchBtn"><i class="ion-ios-search-strong"></i> Tìm
+                                                    kiếm</button>
                                             </li>
                                         </ul>
-                                        
-                                        <div id="searchResults" class="search-results" style="display: none; width: 500px; border: 1px solid #ccc; padding: 10px; max-height: 300px; overflow-y: auto; margin-top: 10px;"></div>                                       
+
+                                        <div id="searchResults" class="search-results"
+                                            style="display: none; width: 500px; border: 1px solid #ccc; padding: 10px; max-height: 300px; overflow-y: auto; margin-top: 10px;">
+                                        </div>
                                     </nav>
                                     <!-- main menu navbar end -->
                                 </div>
@@ -777,7 +781,7 @@
         document.addEventListener("DOMContentLoaded", async function () {
             const userId = localStorage.getItem("userId"); // Lấy ID từ localStorage
             const token = localStorage.getItem("token"); // Lấy token từ localStorage
-        
+
             // API URLs
             const UserUrl = `http://localhost:8080/user/${userId}`;
             // Fetch user data
@@ -830,6 +834,16 @@
         $("#checkout").on("click", function (event) {
             // Ngăn chặn hành vi mặc định
             event.preventDefault();
+
+            // Lấy tổng giá từ phần tử HTML
+            var totalPrice = parseFloat($("#totalPrice").text().replace(/,/g, '')) || 0;
+
+            // Kiểm tra nếu tổng giá <= 0
+            if (totalPrice <= 0) {
+                alert("Giỏ hàng trống! Vui lòng thêm sản phẩm vào giỏ hàng trước khi đặt hàng.");
+                return; // Dừng việc tiếp tục đến trang thanh toán
+            }
+
             var selectedValue = $("#status-dropdown").val();
             // Thực hiện hành động nhảy đến đường link
 
@@ -840,18 +854,18 @@
         });
 
         document.getElementById("searchBtn").addEventListener("click", async function (e) {
-            e.preventDefault(); 
-        
+            e.preventDefault();
+
             const query = document.getElementById("searchInput").value.trim();
             if (!query) {
                 const resultsContainer = document.getElementById("searchResults");
                 resultsContainer.innerHTML = "<p>Nhập thông tin cần tìm kiếm.</p>";
-                resultsContainer.style.display = "block"; 
+                resultsContainer.style.display = "block";
                 return;
             }
-        
-            console.log("Search query:", query); 
-        
+
+            console.log("Search query:", query);
+
             try {
                 // Gửi yêu cầu đến API backend
                 const response = await fetch(`http://localhost:8080/product/name?search=productName:like:${encodeURIComponent(query)}&page=0&size=10`, {
@@ -860,28 +874,28 @@
                         "Content-Type": "application/json"
                     }
                 });
-        
-                console.log("Response status:", response.status); 
-        
+
+                console.log("Response status:", response.status);
+
                 if (!response.ok) {
                     throw new Error(`Failed to fetch data from API: ${response.status}`);
                 }
-        
+
                 const data = await response.json();
-                console.log("Response data:", data); 
-        
+                console.log("Response data:", data);
+
                 const resultsContainer = document.getElementById("searchResults");
-                resultsContainer.innerHTML = ""; 
-        
+                resultsContainer.innerHTML = "";
+
                 if (data.result.result && data.result.result.length > 0) {
                     data.result.result.forEach(item => {
                         const resultItem = document.createElement("div");
                         resultItem.classList.add("result-item");
-                
+
                         const link = document.createElement("a");
                         link.href = `product-details.html?id=${item.productId}`;
                         link.classList.add("result-link");
-                
+
                         link.innerHTML = `
                             <div class="result-thumbnail">
                                 <img src="http://localhost:8080/images/product/${item.images?.[0] || 'default-image.jpg'}" alt="${item.productName}">
@@ -891,21 +905,21 @@
                                 <span class="product-price">Giá: ${(item.price * (100 - item.discount) / 100).toLocaleString()} VND</span>
                             </div>
                         `;
-                
-                        resultItem.appendChild(link); 
-                        resultsContainer.appendChild(resultItem);  
+
+                        resultItem.appendChild(link);
+                        resultsContainer.appendChild(resultItem);
                     });
                     resultsContainer.style.display = "block";
                 } else {
                     resultsContainer.innerHTML = "<p>Không có sản phẩm nào được tìm thấy.</p>";
                     resultsContainer.style.display = "block";
                 }
-                    
+
             } catch (error) {
-                console.error("Error:", error.message); 
+                console.error("Error:", error.message);
                 const resultsContainer = document.getElementById("searchResults");
                 resultsContainer.innerHTML = "<p>Lỗi tìm kiếm.</p>";
-                resultsContainer.style.display = "block"; 
+                resultsContainer.style.display = "block";
             }
         });
 
@@ -915,7 +929,7 @@
             const searchBtn = document.getElementById("searchBtn");
 
             if (!resultsContainer.contains(event.target) && event.target !== searchInput && event.target !== searchBtn) {
-                resultsContainer.style.display = "none"; 
+                resultsContainer.style.display = "none";
             }
         });
 
@@ -1030,57 +1044,57 @@
             max-width: 100%;
         }
 
-    iframe {
-        height: 120px; /* Điều chỉnh thêm cho màn hình nhỏ */
+        iframe {
+            height: 120px;
+            /* Điều chỉnh thêm cho màn hình nhỏ */
+        }
     }
-}
 
-.search-results {
-    display: none;
-    position: absolute;
-    top: 73%;
-    left: 28%;
-    width: 500px;
-    border: 1px solid #ccc;
-    max-height: 300px;
-    overflow-y: auto;
-    background-color: white;
-    z-index: 9999;
-}
+    .search-results {
+        display: none;
+        position: absolute;
+        top: 73%;
+        left: 28%;
+        width: 500px;
+        border: 1px solid #ccc;
+        max-height: 300px;
+        overflow-y: auto;
+        background-color: white;
+        z-index: 9999;
+    }
 
-.result-item {
-    display: flex;
-    border-bottom: 1px solid #ccc;
-}
+    .result-item {
+        display: flex;
+        border-bottom: 1px solid #ccc;
+    }
 
-.result-link {
-    display: flex;
-    width: 100%;
-    text-decoration: none;  
-    color: #000;
-}
+    .result-link {
+        display: flex;
+        width: 100%;
+        text-decoration: none;
+        color: #000;
+    }
 
-.result-thumbnail {
-    margin-right: 10px;
-}
+    .result-thumbnail {
+        margin-right: 10px;
+    }
 
-.result-thumbnail img {
-    width: 50px;
-    height: 50px;
-}
+    .result-thumbnail img {
+        width: 50px;
+        height: 50px;
+    }
 
-.result-details {
-    display: flex;
-    flex-direction: column;  
-    justify-content: center;  
-}
+    .result-details {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
 
-.result-item + .result-item {
-    border-top: 1px solid #ccc;
-}
+    .result-item+.result-item {
+        border-top: 1px solid #ccc;
+    }
 
-.result-item::after {
-    content: "";
-}
-
+    .result-item::after {
+        content: "";
+    }
 </style>

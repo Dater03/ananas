@@ -826,16 +826,8 @@
                                             // alert(paymentUrl)
                                             const newTab = window.open(paymentUrl, '_blank');
                                             if (newTab) {
-
-                                                newTab.focus();
-                                                Swal.fire({
-                                                    icon: 'success',
-                                                    title: 'Thành công',
-                                                    text: 'Đơn hàng đã được đặt thành công!',
-                                                    confirmButtonColor: '#3085d6',
-                                                }).then(() =>{
-                                                    window.location.href = 'index-2.html';
-                                                }); 
+                                                newTab.focus(); 
+                                                window.location.href = 'index-2.html';
                                             } else {
                                                 alert("Trình duyệt chặn cửa sổ bật lên. Vui lòng cho phép cửa sổ bật lên và thử lại.");
                                             }
