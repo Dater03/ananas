@@ -91,17 +91,18 @@ public class PaymentController {
                 tempOrder.setStatus("success");
                 this.tempOrderService.save(tempOrder);
                 // Chuyển hướng tới trang thành công
-                response.sendRedirect("http://localhost:5500/success.html");
+                response.sendRedirect("http://localhost:5501/success.html");
             } else {
                 TempOrder tempOrder = this.tempOrderService.findByTxnRef(vnp_TxnRef);
                 this.orderService.deleteOrder(tempOrder.getOrderId());
                 tempOrder.setStatus("cancel");
                 // Chuyển hướng tới trang thất bại
-                response.sendRedirect("http://localhost:5500/fail.html");
+                response.sendRedirect("http://localhost:5501/fail.html");
+                this.tempOrderService.save(tempOrder);
             }
         } else {
             // Chữ ký không hợp lệ
-            response.sendRedirect("http://localhost:5500/fail.html");
+            response.sendRedirect("http://localhost:5501/fail.html");
         }
     }
 
