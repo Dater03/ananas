@@ -504,12 +504,19 @@
 
         //cancel-order-btn
         document.getElementById('cancel-order-btn').addEventListener('click', () => {
-            if (orderId) {
-                cancelOrder(orderId);
-            } else {
-                alert('Không tìm thấy ID đơn hàng!');
-            }
-        });
+    if (orderId) {
+        const confirmation = confirm('Bạn có chắc chắn muốn hủy đơn hàng này không?');
+        if (confirmation) {
+            cancelOrder(orderId);
+        }
+        else{
+            return;
+        }
+    } else {
+        alert('Không tìm thấy ID đơn hàng!');
+    }
+});
+
 
         document.addEventListener('DOMContentLoaded', async () => {
             const userId_2 = localStorage.getItem("userId");
